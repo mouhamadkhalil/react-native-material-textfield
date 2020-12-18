@@ -4,14 +4,13 @@ import {
   TextInput,
   Text,
   View,
+  Image,
   TouchableOpacity,
 } from "react-native";
-import AwesomeAlert from "react-native-awesome-alerts";
 import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
 import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
-import { MDBInput } from "mdbreact";
 
 export default class LoginScreen extends React.Component {
   state = {
@@ -22,23 +21,6 @@ export default class LoginScreen extends React.Component {
     rememberMe: "",
     scope: "",
     Token: "",
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = { showAlert: false };
-  }
-
-  showAlert = () => {
-    this.setState({
-      showAlert: true,
-    });
-  };
-
-  hideAlert = () => {
-    this.setState({
-      showAlert: false,
-    });
   };
 
   async handleChangeEmail(event) {
@@ -92,52 +74,48 @@ export default class LoginScreen extends React.Component {
   SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
   render() {
-    const { showAlert } = this.state;
     return (
       <View style={styles.container}>
+
         <TouchableOpacity onPress={this.Home}>
-          <label
-            style={{ fontSize: 25, fontFamily: "Arial", fontWeight: "bold" }}
-          >
+          <Text style={{ fontSize: 25 }}>
             FLY-FOOT
-          </label>
+          </Text>
         </TouchableOpacity>
-        <a href="/">
-          <img
-            src={Flyfoot}
-            style={{ marginLeft: -120, marginTop: -120 }}
-            width="60"
-          ></img>
-        </a>
+
+        <Image
+          source={Flyfoot}
+          style={{ marginLeft: -120, marginTop: -120 }}
+        ></Image>
+
         <TouchableOpacity>
-          <img
-            src={LoginWithFB}
+          <Image source={LoginWithFB}
             style={{
               marginTop: 20,
               marginLeft: -10,
               marginBottom: 20,
-              width: 350,
             }}
-          ></img>{" "}
+          ></Image>
         </TouchableOpacity>
+
         <TouchableOpacity>
-          <img
-            src={SignInGoogle}
+          <Image
+            source={SignInGoogle}
             style={{
               marginTop: -10,
               marginLeft: -10,
               marginBottom: 20,
-              width: 350,
             }}
-          ></img>{" "}
+          ></Image>
         </TouchableOpacity>
-        <Text style={{ fontSize: 20, fontWeight: "large", paddingTop: 10 }}>
-          LOGIN WITH EMAIL{" "}
+        <Text style={{ fontSize: 20, paddingTop: 10 }}>
+          LOGIN WITH EMAIL
         </Text>
-        <Text style={{ paddingTop: 30, marginLeft: -320, fontWeight: 10 }}>
+        <Text style={{ paddingTop: 30, marginLeft: -320 }}>
           Email
         </Text>
 
+        {/* 
         <MDBInput
           style={{ marginTop: 10, width: 332, marginLeft: -10 }}
           iconClass="white-text"
@@ -148,11 +126,13 @@ export default class LoginScreen extends React.Component {
           hint="hannibal@gma"
           required
         />
+ */}
 
-        <Text style={{ paddingTop: 30, marginLeft: -295, fontWeight: 10 }}>
+        <Text style={{ paddingTop: 30, marginLeft: -295 }}>
           Password
         </Text>
 
+        {/* 
         <MDBInput
           style={{ marginTop: 10, width: 332, marginLeft: -10 }}
           iconClass="white-text"
@@ -161,39 +141,25 @@ export default class LoginScreen extends React.Component {
           onChange={this.handleChangePassword.bind(this)}
           value={this.state.password}
           required
-        />
+        /> */}
 
         <Text
           style={{
-            fontWeight: "90",
             color: "gray",
             fontSize: 16,
             paddingRight: 110,
             paddingTop: 20,
           }}
         >
-          <Text onPress={() => onItemSelected("Contacts")} style={styles.item}>
-            <TouchableOpacity
-              onPress={() => {
-                this.showAlert();
-              }}
-            >
-              <View style={{ marginLeft: 0 }}>
-                <Text style={styles.text}>Forgot Password?</Text>
-              </View>
-            </TouchableOpacity>
-          </Text>
         </Text>
 
-        <Text style={{ paddingBottom: 20 }}></Text>
         <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
           <Text style={styles.loginText}>
-            LOGIN <Text style={{ marginLeft: 235 }}> &gt;</Text>
+            <Text style={{ marginLeft: 235 }}> &gt;</Text>
           </Text>
         </TouchableOpacity>
         <Text
           style={{
-            fontWeight: "90",
             color: "gray",
             marginLeft: 20,
             fontSize: 16,
@@ -202,36 +168,7 @@ export default class LoginScreen extends React.Component {
           }}
         >
           Don't have an account?
-          <a href="/Signup">
-            {" "}
-            <text style={{ color: "black" }}>
-              {" "}
-              Sign up here
-            </text>{" "}
-          </a>{" "}
         </Text>
-        <View style={{ width: 700, marginTop: -310 }}>
-          <AwesomeAlert
-            show={showAlert}
-            showProgress={false}
-            title="FORGOT YOUR PASSWORD?"
-            message="Enter your email address to request a password reset"
-            closeOnTouchOutside={true}
-            closeOnHardwareBackPress={false}
-            showCancelButton={true}
-            showConfirmButton={true}
-            cancelText="CANCEL"
-            confirmText="SUBMIT"
-            confirmButtonColor="blue"
-            cancelButtonColor="black"
-            onCancelPressed={() => {
-              this.hideAlert();
-            }}
-            onConfirmPressed={() => {
-              this.hideAlert();
-            }}
-          />
-        </View>
       </View>
     );
   }
@@ -254,7 +191,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     fontSize: 20,
-    fontWeight: "bold",
     paddingLeft: 20,
     paddingTop: 10,
     marginLeft: -10,
@@ -262,17 +198,14 @@ const styles = StyleSheet.create({
   },
   loginTextF: {
     color: "white",
-    fontWeight: "bold",
     paddingTop: 6,
   },
   loginTextG: {
     color: "white",
-    fontWeight: "bold",
     paddingTop: 6,
   },
   loginText: {
     color: "white",
-    fontWeight: "bold",
     paddingTop: 6,
   },
   txtInputEmail: {

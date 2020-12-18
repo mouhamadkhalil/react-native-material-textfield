@@ -4,19 +4,14 @@ import {
   TextInput,
   Text,
   View,
+  Image,
   TouchableOpacity,
 } from "react-native";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
 import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
-import { MDBInput } from "mdbreact";
 
-export default class SignupScreen extends React.Component {
+export default class SignUpScreen extends React.Component {
   state = {
     name: "",
     surname: "",
@@ -89,63 +84,52 @@ export default class SignupScreen extends React.Component {
   };
 
   render() {
-    var radio_props = [{ label: "" }];
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.Home}>
-          <label
-            style={{ fontSize: 25, fontFamily: "Arial", fontWeight: "bold" }}
-          >
-            FLY-FOOT
-          </label>
-        </TouchableOpacity>
-        <a href="/">
-          <img
-            src={Flyfoot}
-            style={{ marginLeft: -120, marginTop: -120 }}
-            width="60"
-          ></img>
-        </a>
-
         <TouchableOpacity>
-          <img
-            src={LoginWithFB}
+          <Text
+            style={{ fontSize: 25 }}  >      
+          FLY-FOOT 
+          </Text>
+        </TouchableOpacity>
+        <Image
+            source={Flyfoot}
+            style={{ marginLeft: -120, marginTop: -120 }}>             
+        </Image>
+        <TouchableOpacity>
+        <Image
+            source={LoginWithFB}
             style={{
               marginTop: 20,
               marginLeft: -10,
               marginBottom: 20,
-              width: 350,
-            }}
-          ></img>{" "}
+            }}>
+        </Image>
         </TouchableOpacity>
-        <TouchableOpacity>
-          {" "}
-          <img
-            src={SignInGoogle}
+        <TouchableOpacity>     
+          <Image
+            source={SignInGoogle}
             style={{
               marginTop: -10,
               marginLeft: -10,
               marginBottom: 20,
-              width: 350,
             }}
-          ></img>{" "}
+          ></Image>
         </TouchableOpacity>
-        <Text style={{ fontSize: 20, fontWeight: "large", paddingTop: 10 }}>
-          SIGN UP WITH EMAIL{" "}
+        <Text style={{ fontSize: 20, paddingTop: 10 }}>
+        <Text>SIGN UP WITH EMAIL</Text> 
         </Text>
-
         <Text
           style={{
             color: "gray",
             paddingTop: 30,
             paddingRight: 300,
-            fontWeight: 10,
+
           }}
         >
-          Name
+        Name 
         </Text>
-
         <TextInput
           underlineColorAndroid="transparent"
           style={{ marginRight: 185, marginTop: 10 }}
@@ -153,21 +137,18 @@ export default class SignupScreen extends React.Component {
           onChange={this.handleChangeName.bind(this)}
           value={this.state.name}
         />
-
-        <text style={{ paddingRight: 183 }}>___________________</text>
-
+        <Text style={{ paddingRight: 183 }}>___________________</Text>
         <Text
           style={{
             color: "gray",
             marginRight: 90,
             marginTop: -63,
             paddingLeft: 140,
-            fontWeight: 10,
+
           }}
         >
-          Surname
+        Surname  
         </Text>
-
         <TextInput
           underlineColorAndroid="transparent"
           style={{ marginRight: -150, marginTop: 10 }}
@@ -175,17 +156,13 @@ export default class SignupScreen extends React.Component {
           onChange={this.handleChangeSurname.bind(this)}
           value={this.state.surname}
         />
-
-        <text style={{ marginTop: -3, paddingLeft: 170 }}>
-          {" "}
-          _____________________
-        </text>
-
-        <Text style={{ paddingTop: 30, paddingRight: 300, fontWeight: 10 }}>
+        <Text style={{ marginTop: -3, paddingLeft: 170 }}>
+        _____________________
+        </Text>
+        <Text style={{ paddingTop: 30, paddingRight: 300 }}>
           Email
         </Text>
-
-        <MDBInput
+        {/* <MDBInput
           style={{ marginTop: 10, width: 335, marginLeft: 5 }}
           name="email"
           type="email"
@@ -193,25 +170,25 @@ export default class SignupScreen extends React.Component {
           value={this.state.email}
           hint="hannibal@gma"
           required
-        />
+        /> */}
         <Text
           style={{
             color: "gray",
             paddingTop: 30,
             paddingRight: 280,
-            fontWeight: 10,
+
           }}
         >
           Password
         </Text>
-        <MDBInput
+        {/* <MDBInput
           style={{ marginTop: 10, width: 160, marginLeft: -170 }}
           name="password"
           value={this.state.password}
           type="password"
           onChange={this.handleChangePassword.bind(this)}
           required
-        />
+        /> */}
         <Text
           style={{
             color: "gray",
@@ -219,64 +196,47 @@ export default class SignupScreen extends React.Component {
             marginRight: 70,
             marginTop: -63,
             paddingLeft: 184,
-            fontWeight: 10,
+
           }}
         >
           Repeat password
         </Text>
-        <MDBInput
+        {/* <MDBInput
           style={{ marginTop: 16, width: 160, marginLeft: 180 }}
           name="confirmPassword"
           type="password"
           value={this.state.confirmPassword}
           onChange={this.handleChangeConfirmPassword.bind(this)}
           required
-        />
-
+        /> */}
         <Text
           style={{
             color: "gray",
             paddingTop: 30,
             paddingRight: 250,
-            fontWeight: 10,
+
           }}
         >
           Favourite Team
         </Text>
         <TouchableOpacity style={styles.loginBtn} onPress={this.handleSubmit}>
-          <Text style={styles.loginText}>LOGIN <text style={{ marginLeft: 240 }}>&gt;</text></Text>
+          <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
-
-        <RadioForm
-          style={{ paddingRight: 300 }}
-          radio_props={radio_props}
-          initial={0}
-          labelColor={"#000"}
-          onPress={(value) => {
-            this.setState({ value: value });
-          }}
-        />
         <Text
           style={{
             color: "gray",
             marginTop: -30,
             marginRight: 30,
-            fontWeight: 10,
+
           }}
         >
-          By signing up,{" "}
-          <Text>
-            i agree with
-            <a href="/">
-              {" "}
-              <Text style={{ color: "gray" }}>FFT terms.</Text>{" "}
-            </a>{" "}
-          </Text>{" "}
+          By signing up,
+          <Text>i agree with
+              <Text style={{ color: "gray" }}>FFT terms.</Text>
+          </Text>
         </Text>
-
         <Text
           style={{
-            fontWeight: "90",
             color: "gray",
             fontSize: 16,
             paddingRight: 82,
@@ -286,13 +246,9 @@ export default class SignupScreen extends React.Component {
           }}
         >
           Already have an account?
-          <a href="/login">
-            {" "}
             <Text style={{ color: "black" }}>
-              {" "}
               Login up here
-            </Text>{" "}
-          </a>{" "}
+            </Text>
         </Text>
       </View>
     );
@@ -310,12 +266,12 @@ const styles = StyleSheet.create({
 
   loginTextF: {
     color: "white",
-    fontWeight: "bold",
+
     paddingTop: 6,
   },
   loginTextG: {
     color: "white",
-    fontWeight: "bold",
+
     paddingTop: 6,
   },
   txtInputName: {
@@ -342,14 +298,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     fontSize: 20,
-    fontWeight: "bold",
+
     paddingLeft: 20,
     paddingTop: 10,
     marginLeft: 10,
   },
   loginText: {
     color: "white",
-    fontWeight: "bold",
+
     paddingTop: 6,
   },
 });

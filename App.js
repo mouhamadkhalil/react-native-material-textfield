@@ -4,42 +4,10 @@ import { StyleSheet, Button, Text, View } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import SplashScreen from "./Components/Start/SplashScreen";
 import LoginScreen from "./Components/Start/LoginScreen";
-import SignupScreen from "./Components/Start/SignupScreen";
-// import SplashScreen from "../flyfoot2/Components/Start/Splash";
-
-function HomeScreen({ navigation }) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
-            <Button
-                title="Go to Details"
-                onPress={() => navigation.navigate('Details')}
-            />
-        </View>
-    );
-}
-
-
-
-
-function DetailsScreen({ navigation }) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Details Screen</Text>
-            <Button
-                title="Go to Details... again"
-                onPress={() => navigation.push('Details')}
-            />
-            <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-            <Button title="Go back" onPress={() => navigation.goBack()} />
-            <Button
-                title="Go back to first screen in stack"
-                onPress={() => navigation.popToTop()}
-            />
-        </View>
-    );
-}
+import SignUpScreen from "./Components/Start/SignupScreen";
+import TripDocuments from "./Components/TripDocs/TripDocuments";
 
 
 const Stack = createStackNavigator();
@@ -47,13 +15,19 @@ const Stack = createStackNavigator();
 function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Overview' }} />
-                <Stack.Screen name="Details" component={DetailsScreen} />
+            <Stack.Navigator initialRouteName="Signup">
 
-                <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Overview' }} />
-                <Stack.Screen name="Signup" component={SignupScreen} />
+
+                {/* Start */}
                 {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Signup" component={SignUpScreen} />
+
+                
+
+
+
+
 
             </Stack.Navigator>
         </NavigationContainer>
