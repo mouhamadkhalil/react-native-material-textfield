@@ -4,6 +4,10 @@ import { StyleSheet, Button, Text, View } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import LoginScreen from "./Components/Start/LoginScreen";
+import SignupScreen from "./Components/Start/SignupScreen";
+// import SplashScreen from "../flyfoot2/Components/Start/Splash";
+
 function HomeScreen({ navigation }) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -15,6 +19,9 @@ function HomeScreen({ navigation }) {
         </View>
     );
 }
+
+
+
 
 function DetailsScreen({ navigation }) {
     return (
@@ -34,6 +41,7 @@ function DetailsScreen({ navigation }) {
     );
 }
 
+
 const Stack = createStackNavigator();
 
 function App() {
@@ -42,6 +50,11 @@ function App() {
             <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Overview' }} />
                 <Stack.Screen name="Details" component={DetailsScreen} />
+
+                <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Overview' }} />
+                <Stack.Screen name="Signup" component={SignupScreen} />
+                {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
+
             </Stack.Navigator>
         </NavigationContainer>
     );
