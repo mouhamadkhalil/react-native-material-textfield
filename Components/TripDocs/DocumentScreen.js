@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   TextInput,
   Text,
   View,
+  Image,
   TouchableOpacity,
 } from "react-native";
-import { Link, Router } from "react-router-dom";
 import User from "../../assets/images/user.png";
 import Airplane from "../../assets/images/airplane.jpg";
 import Hotel from "../../assets/images/hotel.jpg";
 import Download from "../../assets/images/download.jpg";
 
-export default class App extends React.Component {
+export default class DocumentScreen extends React.Component {
 
   Back = () => {
     window.location = "/menu";
@@ -35,35 +35,35 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{ backgroundColor: "blue", width: "50%", height: 50 }}>
-        <TouchableOpacity onPress={this.Back}>
-            <text style={{ fontSize: 25, color: "yellow", marginLeft: 30, marginTop: 10, fontWeight: "bold" }}>&#8592;</text>
-        </TouchableOpacity>
-          <text
+          
+          <TouchableOpacity onPress={this.Back}>
+            <Text style={{ fontSize: 25, color: "yellow", marginLeft: 30, marginTop: 10, fontWeight: "bold" }}>&#8592;</Text>
+          </TouchableOpacity>
+
+          <Text
             style={{
               color: "white",
               fontSize: 19,
               fontWeight: "bold",
-              fontFamily: "Arial",
               textAlign: "center",
               marginTop: -25,
             }}
           >
             documents
-          </text>
+          </Text>
         </View>
         <View style={{ width: "50%", height: 400, backgroundColor: "white" }}>
           <View style={{ marginLeft: 130, marginTop: 30 }}>
-          <TouchableOpacity onPress={this.Flight1}>
-            <text style={{ color: "blue", fontWeight: "bold" }}>FLIGHT</text>
-            <img
-              style={{ marginLeft: -60 }}
-              src={Airplane}
-              height="25"
-              width="30"
-            ></img>
+            <TouchableOpacity onPress={this.Flight1}>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>FLIGHT</Text>
+              {/* <Image
+                style={{ marginLeft: -60 }}
+                source={Airplane}
+                height="25"
+                width="30"
+              ></Image> */}
             </TouchableOpacity>
-           
-            <view
+            <View
               style={{
                 backgroundColor: "#5FE903",
                 width: 7,
@@ -72,33 +72,33 @@ export default class App extends React.Component {
                 marginTop: -37,
                 paddingTop: -100,
               }}
-            ></view>
-            <text style={{ color: "gray", marginTop: -25 }}>
+            ></View>
+            <Text style={{ color: "gray", marginTop: -25 }}>
               {" "}
               Reference no:JZ9213
-            </text>
+            </Text>
             <TouchableOpacity>
-              <img
+              {/* <Image
                 style={{ marginLeft: 220, marginTop: -35 }}
-                src={Download}
+                source={Download}
                 height="25"
                 width="30"
-              ></img>
+              ></Image> */}
             </TouchableOpacity>
           </View>
           <View style={{ marginLeft: 130, marginTop: 30 }}>
             <TouchableOpacity onPress={this.PickUp}>
-            <text style={{ color: "blue", fontWeight: "bold" }}>
-              AIRPORT PICKUP
-            </text>
-            <img
-              style={{ marginLeft: -60 }}
-              src={Airplane}
-              height="25"
-              width="30"
-            ></img>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>
+                AIRPORT PICKUP
+            </Text>
+              {/* <Image
+                style={{ marginLeft: -60 }}
+                source={Airplane}
+                height="25"
+                width="30"
+              ></Image> */}
             </TouchableOpacity>
-            <view
+            <View
               style={{
                 backgroundColor: "#5FE903",
                 width: 7,
@@ -107,68 +107,33 @@ export default class App extends React.Component {
                 marginTop: -35,
                 paddingTop: -100,
               }}
-            ></view>
-            <text style={{ color: "gray", marginTop: -25 }}>
+            ></View>
+            <Text style={{ color: "gray", marginTop: -25 }}>
               {" "}
               Booking no:1239081
-            </text>
+            </Text>
             <TouchableOpacity>
-              <img
+              {/* <Image
                 style={{ marginLeft: 220, marginTop: -35 }}
-                src={Download}
+                source={Download}
                 height="25"
                 width="30"
-              ></img>
+              ></Image> */}
             </TouchableOpacity>
           </View>
           <View style={{ marginLeft: 130, marginTop: 30 }}>
             <TouchableOpacity onPress={this.Hotel}>
-            <text style={{ color: "blue", fontWeight: "bold" }}>
-              HOTEL RESERVATION
-            </text>
-            <img
-              style={{ marginLeft: -60 }}
-              src={Hotel}
-              height="25"
-              width="30"
-            ></img>
-            </TouchableOpacity>           
-            <view
-              style={{
-                backgroundColor: "#5FE903",
-                width: 7,
-                marginLeft: -100,
-                height: 50,
-                marginTop: -32,
-                paddingTop: -100,
-              }}
-            ></view>
-            <text style={{ color: "gray", marginTop: -25 }}>
-              {" "}
-              Booking ref:1239081
-            </text>
-            <TouchableOpacity>
-              <img
-                style={{ marginLeft: 220, marginTop: -35 }}
-                src={Download}
+              <Text style={{ color: "blue", fontWeight: "bold" }}>
+                HOTEL RESERVATION
+            </Text>
+              <Image
+                style={{ marginLeft: -60 }}
+                source={Hotel}
                 height="25"
                 width="30"
-              ></img>
+              ></Image>
             </TouchableOpacity>
-          </View>
-          <View style={{ marginLeft: 130, marginTop: 30 }}>
-            <TouchableOpacity>
-            <text style={{ color: "blue", fontWeight: "bold" }}>
-              GAME TICKETS
-            </text>
-            <img
-              style={{ marginLeft: -60 }}
-              src={Hotel}
-              height="25"
-              width="30"
-            ></img>
-            </TouchableOpacity>           
-            <view
+            <View
               style={{
                 backgroundColor: "#5FE903",
                 width: 7,
@@ -177,33 +142,68 @@ export default class App extends React.Component {
                 marginTop: -32,
                 paddingTop: -100,
               }}
-            ></view>
-            <text style={{ color: "gray", marginTop: -25 }}>
+            ></View>
+            <Text style={{ color: "gray", marginTop: 20 }}>
+              
+              Booking ref:1239081
+            </Text>
+            <TouchableOpacity>
+              <Image
+                style={{ marginLeft: 220, marginTop: -35 }}
+                source={Download}
+                height="25"
+                width="30"
+              ></Image>
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginLeft: -50, marginTop: 30 }}>
+            <TouchableOpacity>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>
+                GAME TICKETS
+            </Text>
+              <Image
+                style={{ marginLeft: -60 }}
+                source={Hotel}
+                height="25"
+                width="30"
+              ></Image>
+            </TouchableOpacity>
+            <View
+              style={{
+                backgroundColor: "#5FE903",
+                width: 7,
+                marginLeft: -100,
+                height: 50,
+                marginTop: -32,
+                paddingTop: -100,
+              }}
+            ></View>
+            <Text style={{ color: "gray", marginTop: -25 }}>
               {" "}
               Booking no:1239081
-            </text>
+            </Text>
             <TouchableOpacity>
-              <img
+              <Image
                 style={{ marginLeft: 220, marginTop: -35 }}
-                src={Download}
+                source={Download}
                 height="25"
                 width="30"
-              ></img>
+              ></Image>
             </TouchableOpacity>
           </View>
           <View style={{ marginLeft: 130, marginTop: 30 }}>
             <TouchableOpacity>
-            <text style={{ color: "blue", fontWeight: "bold" }}>
-              GAME TICKETS
-            </text>
-            <img
-              style={{ marginLeft: -60 }}
-              src={Hotel}
-              height="25"
-              width="30"
-            ></img>
-            </TouchableOpacity>         
-            <view
+              <Text style={{ color: "blue", fontWeight: "bold" }}>
+                GAME TICKETS
+            </Text>
+              <Image
+                style={{ marginLeft: -60 }}
+                source={Hotel}
+                height="25"
+                width="30"
+              ></Image>
+            </TouchableOpacity>
+            <View
               style={{
                 backgroundColor: "#402CC0",
                 width: 7,
@@ -212,33 +212,33 @@ export default class App extends React.Component {
                 marginTop: -32,
                 paddingTop: -100,
               }}
-            ></view>
-            <text style={{ color: "gray", marginTop: -25 }}>
+            ></View>
+            <Text style={{ color: "gray", marginTop: -25 }}>
               {" "}
               Booking no:1239081
-            </text>
+            </Text>
             <TouchableOpacity>
-              <img
+              <Image
                 style={{ marginLeft: 220, marginTop: -35 }}
-                src={Download}
+                source={Download}
                 height="25"
                 width="30"
-              ></img>
+              ></Image>
             </TouchableOpacity>
           </View>
           <View style={{ marginLeft: 130, marginTop: 30 }}>
             <TouchableOpacity>
-            <text style={{ color: "blue", fontWeight: "bold" }}>
-              DINNER AT RAO
-            </text>
-            <img
-              style={{ marginLeft: -60 }}
-              src={Hotel}
-              height="25"
-              width="30"
-            ></img>
-            </TouchableOpacity>          
-            <view
+              <Text style={{ color: "blue", fontWeight: "bold" }}>
+                DINNER AT RAO
+            </Text>
+              <Image
+                style={{ marginLeft: -60 }}
+                source={Hotel}
+                height="25"
+                width="30"
+              ></Image>
+            </TouchableOpacity>
+            <View
               style={{
                 backgroundColor: "#186F29",
                 width: 7,
@@ -247,18 +247,18 @@ export default class App extends React.Component {
                 marginTop: -32,
                 paddingTop: -100,
               }}
-            ></view>
-            <text style={{ color: "gray", marginTop: -25 }}>
+            ></View>
+            <Text style={{ color: "gray", marginTop: -25 }}>
               {" "}
               Booking ref:1239081
-            </text>
+            </Text>
             <TouchableOpacity>
-              <img
+              <Image
                 style={{ marginLeft: 220, marginTop: -35 }}
-                src={Download}
+                source={Download}
                 height="25"
                 width="30"
-              ></img>
+              ></Image>
             </TouchableOpacity>
           </View>
         </View>
@@ -272,9 +272,10 @@ const styles = StyleSheet.create({
     height: 700,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 300,
+    marginLeft: -100,
     marginTop: -50,
-    width: 800,
+    width: 500,
     marginBottom: 100,
+    backgroundColor:"white"
   },
 });
