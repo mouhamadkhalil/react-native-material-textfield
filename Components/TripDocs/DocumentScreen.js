@@ -15,7 +15,7 @@ import Download from "../../assets/images/download.jpg";
 export default class DocumentScreen extends React.Component {
 
   Back = () => {
-    window.location = "/menu";
+    window.location = "/";
   }
 
   Flight1 = () => {
@@ -30,107 +30,72 @@ export default class DocumentScreen extends React.Component {
     window.location = "/Hotel";
   }
 
-
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "50%", height: 50 }}>
-          
-          <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 25, color: "yellow", marginLeft: 30, marginTop: 10, fontWeight: "bold" }}>&#8592;</Text>
+        <View style={{ backgroundColor: "blue", width: "100%", height: 50, marginTop: -150 }}>
+          <TouchableOpacity >
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 155, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
-
           <Text
             style={{
               color: "white",
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -25,
+              marginTop: -35,
+              marginLeft: 50
             }}
           >
             documents
           </Text>
         </View>
         <View style={{ width: "50%", height: 400, backgroundColor: "white" }}>
-          <View style={{ marginLeft: 130, marginTop: 30 }}>
+          <View style={{ marginLeft: 105, marginTop: 25 }}>
             <TouchableOpacity onPress={this.Flight1}>
-              <Text style={{ color: "blue", fontWeight: "bold" }}>FLIGHT</Text>
-              {/* <Image
-                style={{ marginLeft: -60 }}
+              <Text style={{ color: "blue", fontWeight: "bold", marginTop: 10 }}>FLIGHT</Text>
+              <Image
+                style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
                 source={Airplane}
-                height="25"
-                width="30"
-              ></Image> */}
+              ></Image>
             </TouchableOpacity>
             <View
               style={{
-                backgroundColor: "#5FE903",
+                backgroundColor: "#48D52C",
                 width: 7,
                 marginLeft: -100,
                 height: 50,
-                marginTop: -37,
+                marginTop: -40,
                 paddingTop: -100,
               }}
             ></View>
-            <Text style={{ color: "gray", marginTop: -25 }}>
+            <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: -5 }}>
               {" "}
               Reference no:JZ9213
             </Text>
             <TouchableOpacity>
-              {/* <Image
-                style={{ marginLeft: 220, marginTop: -35 }}
+              <Image
+                style={{ marginLeft: 180, marginTop: -40, height: 40, width: 40 }}
                 source={Download}
-                height="25"
-                width="30"
-              ></Image> */}
+              ></Image>
             </TouchableOpacity>
           </View>
-          <View style={{ marginLeft: 130, marginTop: 30 }}>
-            <TouchableOpacity onPress={this.PickUp}>
-              <Text style={{ color: "blue", fontWeight: "bold" }}>
-                AIRPORT PICKUP
-            </Text>
-              {/* <Image
-                style={{ marginLeft: -60 }}
+          <View
+            style={{
+              backgroundColor: "#5FE903",
+              width: 7,
+              marginLeft: -100,
+              height: 50,
+              marginTop: -40,
+              paddingTop: -100,
+            }}>
+          </View>
+          <View style={{ marginLeft: 105, marginTop: 25 }}>
+            <TouchableOpacity onPress={this.Flight1}>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>AIRPORT PICKUP</Text>
+              <Image
+                style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
                 source={Airplane}
-                height="25"
-                width="30"
-              ></Image> */}
-            </TouchableOpacity>
-            <View
-              style={{
-                backgroundColor: "#5FE903",
-                width: 7,
-                marginLeft: -100,
-                height: 50,
-                marginTop: -35,
-                paddingTop: -100,
-              }}
-            ></View>
-            <Text style={{ color: "gray", marginTop: -25 }}>
-              {" "}
-              Booking no:1239081
-            </Text>
-            <TouchableOpacity>
-              {/* <Image
-                style={{ marginLeft: 220, marginTop: -35 }}
-                source={Download}
-                height="25"
-                width="30"
-              ></Image> */}
-            </TouchableOpacity>
-          </View>
-          <View style={{ marginLeft: 130, marginTop: 30 }}>
-            <TouchableOpacity onPress={this.Hotel}>
-              <Text style={{ color: "blue", fontWeight: "bold" }}>
-                HOTEL RESERVATION
-            </Text>
-              <Image
-                style={{ marginLeft: -60 }}
-                source={Hotel}
-                height="25"
-                width="30"
               ></Image>
             </TouchableOpacity>
             <View
@@ -139,33 +104,37 @@ export default class DocumentScreen extends React.Component {
                 width: 7,
                 marginLeft: -100,
                 height: 50,
-                marginTop: -32,
+                marginTop: -40,
                 paddingTop: -100,
               }}
             ></View>
-            <Text style={{ color: "gray", marginTop: 20 }}>
-              
-              Booking ref:1239081
+            <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: -5 }}>
+              {" "}
+              Reference no:1239081
             </Text>
             <TouchableOpacity>
               <Image
-                style={{ marginLeft: 220, marginTop: -35 }}
+                style={{ marginLeft: 180, marginTop: -40, height: 40, width: 40 }}
                 source={Download}
-                height="25"
-                width="30"
               ></Image>
             </TouchableOpacity>
           </View>
-          <View style={{ marginLeft: -50, marginTop: 30 }}>
-            <TouchableOpacity>
-              <Text style={{ color: "blue", fontWeight: "bold" }}>
-                GAME TICKETS
-            </Text>
+          <View
+            style={{
+              backgroundColor: "#5FE903",
+              width: 7,
+              marginLeft: -100,
+              height: 50,
+              marginTop: -40,
+              paddingTop: -100,
+            }}>
+          </View>
+          <View style={{ marginLeft: 105, marginTop: 25 }}>
+            <TouchableOpacity onPress={this.Flight1}>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>HOTEL RESERVATION</Text>
               <Image
-                style={{ marginLeft: -60 }}
+                style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
                 source={Hotel}
-                height="25"
-                width="30"
               ></Image>
             </TouchableOpacity>
             <View
@@ -174,90 +143,135 @@ export default class DocumentScreen extends React.Component {
                 width: 7,
                 marginLeft: -100,
                 height: 50,
-                marginTop: -32,
+                marginTop: -40,
                 paddingTop: -100,
               }}
             ></View>
-            <Text style={{ color: "gray", marginTop: -25 }}>
-              {" "}
-              Booking no:1239081
-            </Text>
-            <TouchableOpacity>
-              <Image
-                style={{ marginLeft: 220, marginTop: -35 }}
-                source={Download}
-                height="25"
-                width="30"
-              ></Image>
-            </TouchableOpacity>
-          </View>
-          <View style={{ marginLeft: 130, marginTop: 30 }}>
-            <TouchableOpacity>
-              <Text style={{ color: "blue", fontWeight: "bold" }}>
-                GAME TICKETS
-            </Text>
-              <Image
-                style={{ marginLeft: -60 }}
-                source={Hotel}
-                height="25"
-                width="30"
-              ></Image>
-            </TouchableOpacity>
-            <View
-              style={{
-                backgroundColor: "#402CC0",
-                width: 7,
-                marginLeft: -100,
-                height: 50,
-                marginTop: -32,
-                paddingTop: -100,
-              }}
-            ></View>
-            <Text style={{ color: "gray", marginTop: -25 }}>
-              {" "}
-              Booking no:1239081
-            </Text>
-            <TouchableOpacity>
-              <Image
-                style={{ marginLeft: 220, marginTop: -35 }}
-                source={Download}
-                height="25"
-                width="30"
-              ></Image>
-            </TouchableOpacity>
-          </View>
-          <View style={{ marginLeft: 130, marginTop: 30 }}>
-            <TouchableOpacity>
-              <Text style={{ color: "blue", fontWeight: "bold" }}>
-                DINNER AT RAO
-            </Text>
-              <Image
-                style={{ marginLeft: -60 }}
-                source={Hotel}
-                height="25"
-                width="30"
-              ></Image>
-            </TouchableOpacity>
-            <View
-              style={{
-                backgroundColor: "#186F29",
-                width: 7,
-                marginLeft: -100,
-                height: 50,
-                marginTop: -32,
-                paddingTop: -100,
-              }}
-            ></View>
-            <Text style={{ color: "gray", marginTop: -25 }}>
+            <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: -5 }}>
               {" "}
               Booking ref:1239081
             </Text>
             <TouchableOpacity>
               <Image
-                style={{ marginLeft: 220, marginTop: -35 }}
+                style={{ marginLeft: 180, marginTop: -40, height: 40, width: 40 }}
                 source={Download}
-                height="25"
-                width="30"
+              ></Image>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              backgroundColor: "#5FE903",
+              width: 7,
+              marginLeft: -100,
+              height: 50,
+              marginTop: -40,
+              paddingTop: -100,
+            }}>
+          </View>
+          <View style={{ marginLeft: 105, marginTop: 25 }}>
+            <TouchableOpacity onPress={this.Flight1}>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>GAME TICKETS</Text>
+              <Image
+                style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
+                source={Hotel}
+              ></Image>
+            </TouchableOpacity>
+            <View
+              style={{
+                backgroundColor: "#5FE903",
+                width: 7,
+                marginLeft: -100,
+                height: 50,
+                marginTop: -40,
+                paddingTop: -100,
+              }}
+            ></View>
+            <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: -5 }}>
+              {" "}
+              Booking no:123908123
+            </Text>
+            <TouchableOpacity>
+              <Image
+                style={{ marginLeft: 180, marginTop: -40, height: 40, width: 40 }}
+                source={Download}
+              ></Image>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              backgroundColor: "#5FE903",
+              width: 7,
+              marginLeft: -100,
+              height: 50,
+              marginTop: -40,
+              paddingTop: -100,
+            }}>
+          </View>
+          <View style={{ marginLeft: 105, marginTop: 25 }}>
+            <TouchableOpacity onPress={this.Flight1}>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>GAME TICKETS</Text>
+              <Image
+                style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
+                source={Hotel}
+              ></Image>
+            </TouchableOpacity>
+            <View
+              style={{
+                backgroundColor: "#0000FF",
+                width: 7,
+                marginLeft: -100,
+                height: 50,
+                marginTop: -40,
+                paddingTop: -100,
+              }}
+            ></View>
+            <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: -5 }}>
+              {" "}
+              Booking no:123908123
+            </Text>
+            <TouchableOpacity>
+              <Image
+                style={{ marginLeft: 180, marginTop: -40, height: 40, width: 40 }}
+                source={Download}
+              ></Image>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              backgroundColor: "#0000FF",
+              width: 7,
+              marginLeft: -100,
+              height: 50,
+              marginTop: -40,
+              paddingTop: -100,
+            }}>
+          </View>
+          <View style={{ marginLeft: 105, marginTop: 25 }}>
+            <TouchableOpacity onPress={this.Flight1}>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>DINNER AT RAO</Text>
+              <Image
+                style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
+                source={Hotel}
+              ></Image>
+            </TouchableOpacity>
+            <View
+              style={{
+                backgroundColor: "#006633",
+                width: 7,
+                marginLeft: -100,
+                height: 50,
+                marginTop: -40,
+                paddingTop: -100,
+              }}
+            ></View>
+            <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: -5 }}>
+              {" "}
+              Booking ref:123908123
+            </Text>
+            <TouchableOpacity>
+              <Image
+                style={{ marginLeft: 180, marginTop: -40, height: 40, width: 40 }}
+                source={Download}
               ></Image>
             </TouchableOpacity>
           </View>
@@ -276,6 +290,6 @@ const styles = StyleSheet.create({
     marginTop: -50,
     width: 500,
     marginBottom: 100,
-    backgroundColor:"white"
+    backgroundColor: "white"
   },
 });
