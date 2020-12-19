@@ -30,6 +30,8 @@ import SpotLightScreen from "./Components/NewsLetterInfo/SpotLightScreen";
 
 import AnyDayScreen from "./Components/Schedule/AnyDayScreen";
 
+import Day1Screen from "./Components/Home(Status)/Day1Screen";
+import Day2Screen from "./Components/Home(Status)/Day2Screen";
 
 
 const Stack = createStackNavigator();
@@ -37,7 +39,7 @@ const Stack = createStackNavigator();
 function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Any Day">
+            <Stack.Navigator initialRouteName="Day 2">
 
                 {/* Start */}
                 {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
@@ -80,6 +82,11 @@ function App() {
 
                 {/* SCHEULE */}
                 <Stack.Screen name="Any Day" component={AnyDayScreen} />
+
+
+                {/* HOME (STATUS) */}
+                <Stack.Screen name="Day 1" component={Day1Screen} />
+                <Stack.Screen name="Day 2" component={Day2Screen} />
 
 
 
