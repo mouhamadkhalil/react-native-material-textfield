@@ -26,6 +26,10 @@ import CompletePaymentScreen from "./Components/Manage Trip/CompletePaymentScree
 import Help1Screen from "./Components/Help/Help1Screen";
 import Help2Screen from "./Components/Help/Help2Screen";
 
+import SpotLightScreen from "./Components/NewsLetterInfo/SpotLightScreen";
+
+import AnyDayScreen from "./Components/Schedule/AnyDayScreen";
+
 
 
 const Stack = createStackNavigator();
@@ -33,7 +37,7 @@ const Stack = createStackNavigator();
 function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="FAQ 2">
+            <Stack.Navigator initialRouteName="Any Day">
 
                 {/* Start */}
                 {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
@@ -68,6 +72,14 @@ function App() {
                 {/* FAQ */}
                 <Stack.Screen name="FAQ 1" component={Help1Screen} />
                 <Stack.Screen name="FAQ 2" component={Help2Screen} />
+
+
+                {/* NEWSLETTER */}
+                <Stack.Screen name="Spot Light" component={SpotLightScreen} />
+
+
+                {/* SCHEULE */}
+                <Stack.Screen name="Any Day" component={AnyDayScreen} />
 
 
 
