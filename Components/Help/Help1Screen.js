@@ -3,6 +3,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
+  Image,
   View,
   TouchableOpacity,
 } from "react-native";
@@ -138,7 +139,7 @@ export default class Help1Screen extends React.Component {
               color: "pink",
               fontWeight: "bold",
               paddingLeft: 20,
-              marginTop: 30,
+              marginTop: 0,
               fontSize: 30
             }}
           >
@@ -155,7 +156,7 @@ export default class Help1Screen extends React.Component {
             }}
           >
             <TouchableOpacity onPress={this.Answer0}>
-              <Text style={{ width: 310, marginTop: -15, fontWeight: "bold" }}>{this.state.LName0}</Text>
+              <Text style={{ width: 310, marginTop: -15, fontWeight: "bold", color: "blue" }}>{this.state.LName0}</Text>
               <Text id="demo" style={{ color: "black" }}></Text>
             </TouchableOpacity>
           </Text>
@@ -165,7 +166,7 @@ export default class Help1Screen extends React.Component {
               color: "pink",
               fontWeight: "bold",
               paddingLeft: 20,
-              marginTop: 20,
+              marginTop: -10,
               fontSize: 30
             }}
           >
@@ -183,7 +184,7 @@ export default class Help1Screen extends React.Component {
           >
             <TouchableOpacity onPress={this.Answer1}>
               <Text> {" "}</Text>
-              <Text style={{ marginTop: -35, width: 300, fontWeight: "bold" }}>{this.state.LName1}</Text>
+              <Text style={{ marginTop: -35, width: 300, fontWeight: "bold", color: "blue" }}>{this.state.LName1}</Text>
               <Text id="demo1" style={{ color: "black" }}></Text>
             </TouchableOpacity>
           </Text>
@@ -193,7 +194,7 @@ export default class Help1Screen extends React.Component {
               color: "pink",
               fontWeight: "bold",
               paddingLeft: 20,
-              marginTop: 20,
+              marginTop: -10,
               fontSize: 30
             }}
           >
@@ -211,7 +212,7 @@ export default class Help1Screen extends React.Component {
           >
             <TouchableOpacity onPress={this.Answer2}>
               <Text>{" "}</Text>
-              <Text style={{ marginTop: -35, width: 300, fontWeight: "bold" }}> {this.state.LName2}</Text>
+              <Text style={{ marginTop: -35, width: 300, fontWeight: "bold", color: "blue" }}> {this.state.LName2}</Text>
               <Text id="demo2" style={{ color: "black" }}></Text>
             </TouchableOpacity>
           </Text>
@@ -220,7 +221,7 @@ export default class Help1Screen extends React.Component {
               color: "pink",
               fontWeight: "bold",
               paddingLeft: 20,
-              marginTop: 20,
+              marginTop: -10,
               fontSize: 30
             }}
           >
@@ -236,7 +237,7 @@ export default class Help1Screen extends React.Component {
             }}
           >
             <TouchableOpacity onPress={this.Answer3}>
-              <Text style={{ fontWeight: "bold", width: 300, marginTop: -15 }}>{this.state.LName3}</Text>
+              <Text style={{ fontWeight: "bold", width: 300, marginTop: -15, color: "blue" }}>{this.state.LName3}</Text>
               <Text id="demo3" style={{ color: "black" }}></Text>
             </TouchableOpacity>
           </Text>
@@ -251,24 +252,24 @@ export default class Help1Screen extends React.Component {
             }}
           >
             <TouchableOpacity onPress={this.Help2}>
-              <Text>BROWSE ALL FAQS</Text>
+              <Text style={{ color: "#3BEE20", fontSize: 16 }}>BROWSE ALL FAQS</Text>
             </TouchableOpacity>
           </Text>
         </View>
         <View
           style={{
-            marginTop: -300,
+            marginTop: -830,
             color: "#E912E9",
             fontWeight: "bold",
             fontSize: 14,
             marginLeft: -140,
           }}
         >
-          <Text>EMERGANCY CONTACTS SPAIN</Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 30, color: "black" }}>
+          <Text style={{ marginTop: -40, fontSize: 18, marginLeft: 40, color: "#ff00ff", fontWeight: "bold" }}>EMERGANCY CONTACTS SPAIN</Text>
+          <Text style={{ paddingTop: 20, paddingLeft: 70, color: "black", fontWeight: "bold" }}>
             112
           </Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 30, color: "black" }}>
+          <Text style={{ paddingTop: 20, paddingLeft: 70, color: "black", fontWeight: "bold" }}>
             +34 902 102 112
           </Text>
         </View>
@@ -281,11 +282,11 @@ export default class Help1Screen extends React.Component {
             marginLeft: -198,
           }}
         >
-          <Text>CONTACT FLY-FOOT</Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 35, color: "black" }}>
+          <Text style={{ fontSize: 18, marginLeft: 0, color: "#ff00ff", fontWeight: "bold" }}>CONTACT FLY-FOOT</Text>
+          <Text style={{ paddingTop: 20, paddingLeft: 35, color: "black", fontWeight: "bold" }}>
             + 91 1234 1234
           </Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 35, color: "black" }}>
+          <Text style={{ paddingTop: 20, paddingLeft: 35, color: "black", fontWeight: "bold" }}>
             help@fly-foot.com
           </Text>
         </View>
@@ -296,11 +297,11 @@ export default class Help1Screen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 1200,
+    height: 1300,
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -10,
+    marginTop: -350,
     width: 800,
     marginBottom: 100,
   },
