@@ -4,7 +4,7 @@ import {
   TextInput,
   Text,
   Image,
-  View,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 
@@ -104,8 +104,8 @@ export default class Help1Screen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
+      <ScrollView style={styles.container}>
+        <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 10, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
@@ -121,8 +121,8 @@ export default class Help1Screen extends React.Component {
           >
             help
           </Text>
-        </View>
-        <View style={{ width: "50%", height: 1200, backgroundColor: "#F7EEE8" }}>
+        </ScrollView>
+        <ScrollView style={{ width: "50%", height: 2000, backgroundColor: "#F7EEE8" }}>
           <Text
             style={{
               color: "#E912E9",
@@ -255,42 +255,44 @@ export default class Help1Screen extends React.Component {
               <Text style={{ color: "#3BEE20", fontSize: 16 }}>BROWSE ALL FAQS</Text>
             </TouchableOpacity>
           </Text>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
-            marginTop: -830,
+            marginTop: -2100,
             color: "#E912E9",
             fontWeight: "bold",
             fontSize: 14,
-            marginLeft: -140,
+            marginLeft: -70,
           }}
         >
-          <Text style={{ marginTop: -40, fontSize: 18, marginLeft: 40, color: "#ff00ff", fontWeight: "bold" }}>EMERGANCY CONTACTS SPAIN</Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 70, color: "black", fontWeight: "bold" }}>
+          <Text style={{ fontSize: 18, marginLeft: 120, marginTop: 450, color: "#ff00ff", fontWeight: "bold" }}>EMERGANCY CONTACTS SPAIN</Text>
+
+          <Text style={{ paddingTop: 20, paddingLeft: 120, color: "black", fontWeight: "bold" }}>
             112
           </Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 70, color: "black", fontWeight: "bold" }}>
+          <Text style={{ paddingTop: 20, paddingLeft: 120, color: "black", fontWeight: "bold" }}>
             +34 902 102 112
           </Text>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
             paddingTop: 30,
             color: "#E912E9",
             fontWeight: "bold",
             fontSize: 14,
-            marginLeft: -198,
+            marginLeft: 50,
+            marginBottom: 50
           }}
         >
           <Text style={{ fontSize: 18, marginLeft: 0, color: "#ff00ff", fontWeight: "bold" }}>CONTACT FLY-FOOT</Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 35, color: "black", fontWeight: "bold" }}>
+          <Text style={{ paddingTop: 20, paddingLeft: 0, color: "black", fontWeight: "bold" }}>
             + 91 1234 1234
           </Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 35, color: "black", fontWeight: "bold" }}>
+          <Text style={{ paddingTop: 20, paddingLeft: 0, color: "black", fontWeight: "bold" }}>
             help@fly-foot.com
           </Text>
-        </View>
-      </View >
+        </ScrollView>
+      </ScrollView >
     );
   }
 }
@@ -298,11 +300,9 @@ export default class Help1Screen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     height: 1300,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: -200,
-    marginTop: -350,
+    marginLeft: 0,
+    marginTop: 0,
     width: 800,
-    marginBottom: 100,
+    marginBottom: 0,
   },
 });

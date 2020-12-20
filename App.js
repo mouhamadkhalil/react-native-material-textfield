@@ -39,7 +39,7 @@ const Stack = createStackNavigator();
 function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Day 2">
+            <Stack.Navigator initialRouteName="FAQ 1">
 
                 {/* Start */}
                 {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}

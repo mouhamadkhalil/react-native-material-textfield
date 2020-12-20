@@ -3,15 +3,18 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  View,
   Image,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 
-export default class AnyDayScreen extends React.Component {
+export default class Day2Screen extends React.Component {
 
   state = {
-    Picture: ""
+    Picture1: "",
+    Picture2: "",
+    Picture3: "",
+    Picture4: ""
   };
 
   componentDidMount() {
@@ -29,20 +32,24 @@ export default class AnyDayScreen extends React.Component {
       .then((response) => {
 
         console.log("test", response.GenericGames[0].MatchBundleHotels[0])
-        this.setState({ Picture: response.GenericGames[0].MatchBundleHotels[0].Image });
+        this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[1] });
+        this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
+        this.setState({ Picture3: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
+        this.setState({ Picture4: response.GenericGames[0].MatchBundleHotels[0].Images[4] });
       });
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text
           style={{
             alignContent: "center",
             color: "#4c0099",
             fontWeight: "bold",
-            marginTop: 20,
-            fontSize: 22,
+            marginTop: 40,
+            fontSize: 19,
+            marginLeft: 210
           }}
         >
           MONDAY 12 SEPT
@@ -51,27 +58,28 @@ export default class AnyDayScreen extends React.Component {
           style={{
             marginTop: 20,
             color: "#4c0099",
-            fontSize: 90,
+            fontSize: 70,
+            marginLeft: 200
           }}
         >
           DAY 3
         </Text>
-        <Text style={{ color: "#4c0099", fontSize: 23 }}>
+        <Text style={{ color: "#4c0099", fontSize: 23, marginLeft: 195 }}>
           3 planned activities
         </Text>
-        <View
+        <ScrollView
           style={{
-            backgroundColor: "white",
-            marginTop: 30,
-            width: 430,
+            backgroundColor: "#e0e0e0",
+            marginTop: 10,
+            width: 310,
             height: 80,
+            marginLeft: 140
           }}
         >
-
           <Text
             style={{
               color: "#cc00cc",
-              marginLeft: 100,
+              marginLeft: 50,
               marginTop: 20,
               width: 190,
             }}
@@ -80,80 +88,118 @@ export default class AnyDayScreen extends React.Component {
           </Text>
           <Text
             style={{
-              fontSize: 38,
+              fontSize: 35,
               color: "#4c0099",
-              marginLeft: 310,
-              marginTop: -50,
+              marginLeft: 250,
+              marginTop: -42,
             }}
           >
-            23 &deg;
+            23&deg;
           </Text>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
             marginTop: 30,
             backgroundColor: "white",
-            width: 430,
-            height: 180,
+            width: 150,
+            height: 160,
+            marginLeft: 140,
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture }} style={{ width: 500, height: 210, marginTop: -30 }} />
+            <Image source={{ uri: this.state.Picture3 }} style={{ width: 150, height: 180, marginLeft: 0 }} />
           </TouchableOpacity>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
-            marginTop: 30,
+            marginTop: -160,
             backgroundColor: "white",
-            width: 210,
-            height: 180,
-            marginLeft: -220,
+            width: 150,
+            height: 160,
+            marginLeft: 300,
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture }} style={{ width: 210, height: 210 }} />
+            <Image source={{ uri: this.state.Picture2 }} style={{ width: 150, height: 180, marginLeft: 0 }} />
           </TouchableOpacity>
-        </View>
-        <View
-          style={{ marginTop: -180, width: 215, height: 210, marginLeft: 230 }}
-        >
-          <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture }} style={{ width: 210, height: 210 }} />
-          </TouchableOpacity>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
-            marginTop: 0,
+            marginTop: 10,
             backgroundColor: "white",
-            width: 210,
-            height: 180,
-            marginLeft: -220,
+            width: 310,
+            height: 160,
+            marginLeft: 140,
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture }} style={{ width: 500, height: 210, marginTop: 20 }} />
+            <Image source={{ uri: this.state.Picture1 }} style={{ marginLeft: 0, height: 160 }} />
           </TouchableOpacity>
-        </View>
-        <View
-          style={{ marginTop: 50, width: 215, height: 210, marginLeft: -150 }}
+        </ScrollView>
+        <ScrollView
+          style={{
+            marginTop: 10,
+            backgroundColor: "white",
+            width: 150,
+            height: 160,
+            marginLeft: 140,
+          }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture }} style={{ width: 500, height: 210, marginTop: 20 }} />
+            <Image source={{ uri: this.state.Picture4 }} style={{ marginLeft: 0, height: 160 }} />
           </TouchableOpacity>
-        </View>
-      </View>
+        </ScrollView>
+        <ScrollView
+          style={{
+            marginTop: -160,
+            backgroundColor: "white",
+            width: 150,
+            height: 160,
+            marginLeft: 300,
+          }}
+        >
+          <TouchableOpacity>
+            <Image source={{ uri: this.state.Picture2 }} style={{ width: 150, height: 160, marginLeft: 0 }} />
+          </TouchableOpacity>
+        </ScrollView>
+        <ScrollView
+          style={{
+            marginTop: 10,
+            backgroundColor: "white",
+            width: 310,
+            height: 160,
+            marginLeft: 140,
+          }}
+        >
+          <TouchableOpacity>
+            <Image source={{ uri: this.state.Picture3 }} style={{ marginLeft: 0, height: 160 }} />
+          </TouchableOpacity>
+        </ScrollView>
+        <ScrollView
+          style={{
+            marginTop: 10,
+            backgroundColor: "white",
+            width: 310,
+            height: 160,
+            marginLeft: 140,
+          }}
+        >
+          <TouchableOpacity>
+            <Image source={{ uri: this.state.Picture1 }} style={{ marginLeft: 0, height: 160 }} />
+          </TouchableOpacity>
+        </ScrollView>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 800,
-    alignItems: "center",
-    marginLeft: -70,
+    height: 1100,
+    marginLeft: -110,
     width: 500,
     marginTop: 0,
-    marginBottom: 80,
+    marginBottom: 70,
     backgroundColor: "#F5F7EC",
   },
 });

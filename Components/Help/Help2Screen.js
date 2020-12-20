@@ -4,7 +4,7 @@ import {
   TextInput,
   Text,
   Image,
-  View,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 
@@ -104,8 +104,8 @@ export default class Help1Screen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
+      <ScrollView style={styles.container}>
+        <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 10, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
@@ -121,8 +121,8 @@ export default class Help1Screen extends React.Component {
           >
             FAQ'S
           </Text>
-        </View>
-        <View style={{ width: "50%", height: 1200, backgroundColor: "#F7EEE8" }}>
+        </ScrollView>
+        <ScrollView style={{ width: "50%", height: 1200, backgroundColor: "#F7EEE8" }}>
           <Text
             style={{
               color: "#E912E9",
@@ -328,8 +328,8 @@ export default class Help1Screen extends React.Component {
             }}
           >
           </Text>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
             marginTop: -830,
             color: "#E912E9",
@@ -338,8 +338,8 @@ export default class Help1Screen extends React.Component {
             marginLeft: -140,
           }}
         >
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
             paddingTop: 30,
             color: "#E912E9",
@@ -348,8 +348,8 @@ export default class Help1Screen extends React.Component {
             marginLeft: -198,
           }}
         >
-        </View>
-      </View >
+        </ScrollView>
+      </ScrollView >
     );
   }
 }
@@ -357,10 +357,8 @@ export default class Help1Screen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     height: 1300,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: -200,
-    marginTop: -420,
+    marginLeft: 0,
+    marginTop: 0,
     width: 800,
     marginBottom: 100,
   },

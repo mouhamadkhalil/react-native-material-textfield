@@ -4,7 +4,7 @@ import {
   TextInput,
   Text,
   Image,
-  View,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 
@@ -41,7 +41,7 @@ export default class Day2Screen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text
           style={{
             alignContent: "center",
@@ -49,7 +49,7 @@ export default class Day2Screen extends React.Component {
             fontWeight: "bold",
             marginTop: 40,
             fontSize: 19,
-            marginLeft: 130
+            marginLeft: 210
           }}
         >
           MONDAY 12 SEPT
@@ -70,16 +70,16 @@ export default class Day2Screen extends React.Component {
           style={{
             marginTop: 20,
             color: "#4c0099",
-            fontSize: 60,
+            fontSize: 70,
             marginLeft: 140
           }}
         >
           Flight day
         </Text>
-        <Text style={{ color: "#4c0099", fontSize: 23, marginLeft: 120 }}>
+        <Text style={{ color: "#4c0099", fontSize: 23, marginLeft: 195 }}>
           3 planned activities
         </Text>
-        <View
+        <ScrollView
           style={{
             backgroundColor: "#80ff00",
             width: 310,
@@ -101,8 +101,8 @@ export default class Day2Screen extends React.Component {
           <Text style={{ marginLeft: 20, paddingTop: 8, fontSize: 12, fontWeight: "bold" }}>
             Great! You've checked in to your flight.
           </Text>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
             backgroundColor: "#e0e0e0",
             marginTop: 10,
@@ -131,60 +131,101 @@ export default class Day2Screen extends React.Component {
           >
             23&deg;
           </Text>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
             marginTop: 30,
             backgroundColor: "white",
-            width: 200,
-            height: 180,
-            marginLeft: -60,
+            width: 150,
+            height: 160,
+            marginLeft: 140,
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture3 }} style={{ width: 150, height: 180, marginLeft: 45 }} />
+            <Image source={{ uri: this.state.Picture3 }} style={{ width: 150, height: 180, marginLeft: 0 }} />
           </TouchableOpacity>
-        </View>
-        <View
-          style={{ marginTop: -180, width: 200, height: 180, marginLeft: 230 }}
-        >
-          <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture4 }} style={{ width: 150, height: 160, marginLeft: 60 }} />
-          </TouchableOpacity>
-        </View>
-        <View
+        </ScrollView>
+
+        <ScrollView
           style={{
-            marginTop: -20,
+            marginTop: -160,
             backgroundColor: "white",
-            width: 430,
-            height: 180,
+            width: 150,
+            height: 160,
+            marginLeft: 300,
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture2 }} style={{ width: 310, height: 160, marginLeft: 130, marginTop: 10 }} />
+            <Image source={{ uri: this.state.Picture2 }} style={{ width: 150, height: 180, marginLeft: 0 }} />
           </TouchableOpacity>
-        </View>
-        <View
+        </ScrollView>
+        <ScrollView
           style={{
-            marginTop: 30,
+            marginTop: 10,
             backgroundColor: "white",
-            width: 200,
-            height: 180,
-            marginLeft: -60,
+            width: 310,
+            height: 160,
+            marginLeft: 140,
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture4 }} style={{ width: 310, height: 160, marginLeft: 45, marginTop: -30 }} />
+            <Image source={{ uri: this.state.Picture1 }} style={{ marginLeft: 0, height: 160 }} />
           </TouchableOpacity>
-        </View>
-        <View
-          style={{ marginTop: 10, width: 600, height: 180, marginLeft: -60 }}
+        </ScrollView>
+
+        <ScrollView
+          style={{
+            marginTop: 10,
+            backgroundColor: "white",
+            width: 150,
+            height: 160,
+            marginLeft: 140,
+          }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture2 }} style={{ width: 310, height: 160, marginLeft: 245, marginTop: -50 }} />
+            <Image source={{ uri: this.state.Picture4 }} style={{ marginLeft: 0, height: 160 }} />
           </TouchableOpacity>
-        </View>
-      </View>
+        </ScrollView>
+        <ScrollView
+          style={{
+            marginTop: -160,
+            backgroundColor: "white",
+            width: 150,
+            height: 160,
+            marginLeft: 300,
+          }}
+        >
+          <TouchableOpacity>
+            <Image source={{ uri: this.state.Picture2 }} style={{ width: 150, height: 160, marginLeft: 0 }} />
+          </TouchableOpacity>
+        </ScrollView>
+        <ScrollView
+          style={{
+            marginTop: 10,
+            backgroundColor: "white",
+            width: 310,
+            height: 160,
+            marginLeft: 140,
+          }}
+        >
+          <TouchableOpacity>
+            <Image source={{ uri: this.state.Picture3 }} style={{ marginLeft: 0, height: 160 }} />
+          </TouchableOpacity>
+        </ScrollView>
+        <ScrollView
+          style={{
+            marginTop: 10,
+            backgroundColor: "white",
+            width: 310,
+            height: 160,
+            marginLeft: 140,
+          }}
+        >
+          <TouchableOpacity>
+            <Image source={{ uri: this.state.Picture1 }} style={{ marginLeft: 0, height: 160 }} />
+          </TouchableOpacity>
+        </ScrollView>
+      </ScrollView>
     );
   }
 }
@@ -192,8 +233,7 @@ export default class Day2Screen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     height: 1100,
-    alignItems: "center",
-    marginLeft: -140,
+    marginLeft: -110,
     width: 500,
     marginTop: 0,
     marginBottom: 70,

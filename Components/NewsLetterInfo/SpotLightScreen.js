@@ -3,7 +3,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  View,
+  ScrollView,
   Image,
   TouchableOpacity,
 } from "react-native";
@@ -32,17 +32,17 @@ export default class SpotLightScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{ width: "100%", backgroundColor: "white", height: 700 }}>
+      <ScrollView style={styles.container}>
+        <ScrollView style={{ width: "100%", backgroundColor: "white", height: 900 }}>
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture }} style={{ height: 250, width: 380, marginLeft: -30, marginTop: -50 }} />
+            <Image source={{ uri: this.state.Picture }} style={{ height: 250, width: 380, marginLeft: 0, marginTop: -50 }} />
           </TouchableOpacity>
-          <View style={{ width: 500, height: 600, backgroundColor: "#4E30C9", marginLeft: -30 }}>
+          <ScrollView style={{ width: 500, height: 800, backgroundColor: "#4E30C9", marginLeft: -30 }}>
             <Text
               style={{
                 color: "white",
                 fontSize: 25,
-                marginLeft: 65,
+                marginLeft: 100,
                 marginTop: 50,
                 width: 270,
               }}
@@ -58,7 +58,7 @@ export default class SpotLightScreen extends React.Component {
                 width: 370,
                 fontSize: 25,
                 paddingLeft: 20,
-                marginLeft: 52,
+                marginLeft: 85,
                 height: 55,
               }}
             >
@@ -70,65 +70,64 @@ export default class SpotLightScreen extends React.Component {
                 marginLeft: 100,
                 fontSize: 19,
                 marginTop: 60,
-                marginLeft: 100
+                marginLeft: 130
               }}
             >
               BOOK YOUR TRIPS
             </Text>
-            <Text style={{ color: "white", fontSize: 16, marginLeft: 115 }}>
+            <Text style={{ color: "white", fontSize: 16, marginLeft: 150 }}>
               STARTING FROM{" "}
             </Text>
-            <Text style={{ color: "yellow", fontSize: 35, marginLeft: 115 }}>
+            <Text style={{ color: "yellow", fontSize: 35, marginLeft: 150 }}>
               1,200 ${" "}
             </Text>
             <Text
               style={{
                 color: "white",
                 fontSize: 20,
-                marginLeft: 90,
-                marginTop: 30,
+                marginLeft: 120,
+                marginTop: 100,
                 marginBottom: 40,
               }}
             >
               THE PRICE INCLUDE
             </Text>
             <TouchableOpacity>
-              <Image source={{ uri: this.state.Picture }} style={{ marginTop: 15, marginLeft: 50, width: 70, height: 70 }} />
+              <Image source={{ uri: this.state.Picture }} style={{ marginTop: 15, marginLeft: 70, width: 70, height: 70 }} />
             </TouchableOpacity>
             <TouchableOpacity>
               <Image
                 source={{ uri: this.state.Picture }}
-                style={{ marginLeft: 50, marginTop: 20, width: 70, height: 70 }}
+                style={{ marginLeft: 70, marginTop: 20, width: 70, height: 70 }}
               />
             </TouchableOpacity>
             <TouchableOpacity>
               <Image
                 source={{ uri: this.state.Picture }}
-                style={{ marginLeft: 160, marginTop: -160, width: 70, height: 70 }}
+                style={{ marginLeft: 180, marginTop: -160, width: 70, height: 70 }}
               />
             </TouchableOpacity>
             <TouchableOpacity>
               <Image
                 source={{ uri: this.state.Picture }}
-                style={{ marginLeft: 160, marginTop: -70, width: 70, height: 70 }}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <Image
-                source={{ uri: this.state.Picture }}
-                style={{ marginLeft: 270, marginTop: -160, width: 70, height: 70 }}
+                style={{ marginLeft: 180, marginTop: -70, width: 70, height: 70 }}
               />
             </TouchableOpacity>
             <TouchableOpacity>
               <Image
                 source={{ uri: this.state.Picture }}
-                style={{ marginLeft: 270, marginTop: -70, width: 70, height: 70 }}
+                style={{ marginLeft: 290, marginTop: -160, width: 70, height: 70 }}
               />
             </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+            <TouchableOpacity>
+              <Image
+                source={{ uri: this.state.Picture }}
+                style={{ marginLeft: 290, marginTop: -70, width: 70, height: 70 }}
+              />
+            </TouchableOpacity>
+          </ScrollView>
+        </ScrollView>
+      </ScrollView>
     );
   }
 }
@@ -136,10 +135,9 @@ export default class SpotLightScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     height: 800,
-    alignItems: "center",
-    marginLeft: 30,
-    width: 300,
-    marginTop: 50,
+    marginLeft: 0,
+    width: 400,
+    marginTop: 0,
     marginBottom: 20,
     backgroundColor: "white",
   },
