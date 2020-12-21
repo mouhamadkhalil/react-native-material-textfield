@@ -41,13 +41,23 @@ import HotelScreen from "./Components/TripInfo/HotelScreen";
 import PerkScreen from "./Components/TripInfo/PerkScreen";
 import TripScreen from "./Components/TripInfo/TripScreen";
 
+import AnyDayHomeScreen from "./Components/Home/AnyDayHomeScreen";
+import ChatScreen from "./Components/Home/ChatScreen";
+import Day1HomeScreen from "./Components/Home/Day1HomeScreen";
+import GameDayScreen from "./Components/Home/GameDayScreen";
+import Home24HScreen from "./Components/Home/Home24HScreen";
+import HomePreScreen from "./Components/Home/HomePreScreen";
+import MenuScreen from "./Components/Home/MenuScreen";
+import Post2Screen from "./Components/Home/Post2Screen";
+import PostScreen from "./Components/Home/PostScreen";
+
 
 const Stack = createStackNavigator();
 
 function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Trip">
+            <Stack.Navigator initialRouteName="Post">
 
                 {/* Start */}
                 {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
@@ -105,6 +115,18 @@ function App() {
                 <Stack.Screen name="Hotel" component={HotelScreen} />
                 <Stack.Screen name="Perk" component={PerkScreen} />
                 <Stack.Screen name="Trip" component={TripScreen} />
+
+
+                {/* HOME */}
+                <Stack.Screen name="AnyDay Home" component={AnyDayHomeScreen} />
+                <Stack.Screen name="Day1 Home" component={Day1HomeScreen} />
+                <Stack.Screen name="Chat" component={ChatScreen} />
+                <Stack.Screen name="Game Day" component={GameDayScreen} />
+                <Stack.Screen name="Home 24 H" component={Home24HScreen} />
+                <Stack.Screen name="Home Pre" component={HomePreScreen} />
+                <Stack.Screen name="Menu" component={MenuScreen} />
+                <Stack.Screen name="Post 2" component={Post2Screen} />
+                <Stack.Screen name="Post" component={PostScreen} />
 
 
 

@@ -348,7 +348,7 @@ export default class TripScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 1100,
+    height: 900,
     marginLeft: 0,
     marginTop: 0,
     width: 800,
