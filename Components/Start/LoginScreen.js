@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   Image,
+  Button,
   TouchableOpacity,
 } from "react-native";
 import Signup from "./SignupScreen";
@@ -78,70 +79,63 @@ export default class LoginScreen extends React.Component {
       <ScrollView style={styles.container}>
 
         <TouchableOpacity onPress={this.Home}>
-          <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30 }}>
+          <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
             FLY-FOOT
           </Text>
         </TouchableOpacity>
 
         <Image
           source={Flyfoot}
-          style={{ marginLeft: 120, marginTop: -30, width: 30, height: 30 }}
-        ></Image>
+          style={{ marginLeft: 100, marginTop: -34, width: 40, height: 40 }}
+        />
 
-        <TouchableOpacity>
-          <Image source={LoginWithFB}
-            style={{
-              marginTop: 20,
-              marginLeft: -10,
-              marginBottom: 20,
-            }}
-          ></Image>
+        <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 50 }}>
+          <Button
+            title="LOGIN WITH FACEBOOK"
+            color="blue"
+            style={{ width: 500, padding: 300, height: 300 }}
+          />
         </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Image
-            source={SignInGoogle}
-            style={{
-              marginTop: -10,
-              marginLeft: -10,
-              marginBottom: 20,
-            }}
-          ></Image>
+        <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
+          <Button
+            title="LOGIN WITH GOOGLE"
+            color="red"
+          />
         </TouchableOpacity>
-        <Text style={{ fontSize: 20, paddingTop: 10 }}>
+        <Text style={{ fontSize: 20, paddingTop: 10, marginLeft: 90 }}>
           LOGIN WITH EMAIL
         </Text>
-        <Text style={{ paddingTop: 30, marginLeft: -320 }}>
+        <Text style={{ paddingTop: 30, marginLeft: 35 }}>
           Email
         </Text>
 
-        {/* 
-        <MDBInput
-          style={{ marginTop: 10, width: 332, marginLeft: -10 }}
-          iconClass="white-text"
-          name="email"
-          type="email"
-          onChange={this.handleChangeEmail.bind(this)}
-          value={this.state.email}
-          hint="hannibal@gma"
-          required
-        />
- */}
 
-        <Text style={{ paddingTop: 30, marginLeft: -295 }}>
+
+        <TextInput
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
+          onChangeText={this.handleChangeEmail.bind(this)}
+          placeholder="   hannibal@gma"
+          required
+          value={this.state.email}
+          type="email"
+        />
+
+
+        <Text style={{ paddingTop: 30, marginLeft: 35, width: 300 }}>
           Password
         </Text>
 
-        {/* 
-        <MDBInput
-          style={{ marginTop: 10, width: 332, marginLeft: -10 }}
-          iconClass="white-text"
-          name="password"
-          type="password"
-          onChange={this.handleChangePassword.bind(this)}
-          value={this.state.password}
+        <TextInput
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
+          onChangeText={this.handleChangePassword.bind(this)}
           required
-        /> */}
+          value={this.state.password}
+          type="password"
+        />
+
+
+
 
         <Text
           style={{
@@ -155,13 +149,13 @@ export default class LoginScreen extends React.Component {
 
         <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
           <Text style={styles.loginText}>
-            <Text style={{ marginLeft: 235 }}> &gt;</Text>
+            <Text style={{ marginLeft: 235 }}>LOGIN </Text>
           </Text>
         </TouchableOpacity>
         <Text
           style={{
             color: "gray",
-            marginLeft: 20,
+            marginLeft: 35,
             fontSize: 16,
             paddingRight: 110,
             paddingTop: 20,
@@ -169,6 +163,7 @@ export default class LoginScreen extends React.Component {
         >
           Don't have an account?
         </Text>
+        <TouchableOpacity><Text style={{ marginLeft: 206, marginTop: -20 }}>Sign up here </Text></TouchableOpacity>
       </ScrollView>
     );
   }
@@ -182,7 +177,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   loginBtn: {
-    width: "25%",
+    width: 295,
     backgroundColor: "#334CFF",
     borderRadius: 0,
     height: 50,
@@ -191,7 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingLeft: 20,
     paddingTop: 10,
-    marginLeft: -10,
+    marginLeft: 35,
     color: "white",
   },
   loginTextF: {
