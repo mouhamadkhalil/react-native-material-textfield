@@ -3,7 +3,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  View,
+  ScrollView,
   Image,
   TouchableOpacity,
 } from "react-native";
@@ -35,10 +35,10 @@ export default class CompletePaymentScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
+      <ScrollView style={styles.container}>
+        <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60, width: 375 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: 5, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -52,8 +52,8 @@ export default class CompletePaymentScreen extends React.Component {
           >
             payment
           </Text>
-        </View>
-        <View style={{ width: "50%", height: 3000, backgroundColor: "#E6F5F3" }}>
+        </ScrollView>
+        <ScrollView style={{ width: "50%", height: 750, backgroundColor: "#E6F5F3" }}>
           <Text
             style={{
               color: "red",
@@ -76,17 +76,17 @@ export default class CompletePaymentScreen extends React.Component {
             $ {this.state.Price}
           </Text>
           <Text
-            style={{ width: 320, marginTop: 20, marginLeft: 40, fontSize: 18 }}
+            style={{ width: 290, marginTop: 20, marginLeft: 40, fontSize: 18 }}
           >
             Once you have completed this payment you will gain full access to
             the app, and your travel documents.
           </Text>
 
-          <View
+          <ScrollView
             style={{
               backgroundColor: "white",
-              height: 900,
-              width: 325,
+              height: 430,
+              width: 290,
               marginLeft: 40,
               marginTop: 40,
             }}
@@ -135,7 +135,7 @@ export default class CompletePaymentScreen extends React.Component {
                 backgroundColor: "#322F29",
                 marginTop: 30,
                 height: 50,
-                width: 162.5,
+                width: 145,
               }}
             >
               <Text style={{ color: "white", paddingLeft: 55, paddingTop: 15 }}>
@@ -146,18 +146,18 @@ export default class CompletePaymentScreen extends React.Component {
               style={{
                 backgroundColor: "blue",
                 marginTop: -50,
-                marginLeft: 162.5,
+                marginLeft: 145,
                 height: 50,
-                width: 162.5,
+                width: 145,
               }}
             >
               <Text style={{ color: "white", paddingLeft: 55, paddingTop: 15 }}>
                 SUBMIT
               </Text>
             </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+          </ScrollView>
+        </ScrollView>
+      </ScrollView>
     );
   }
 }
@@ -165,10 +165,8 @@ export default class CompletePaymentScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     height: 800,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: -220,
-    marginTop: 1120,
-    width: 800,
+    marginLeft: 0,
+    marginTop: 0,
+    width: 700,
   },
 });

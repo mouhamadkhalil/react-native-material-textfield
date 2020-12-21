@@ -33,18 +33,26 @@ import AnyDayScreen from "./Components/Schedule/AnyDayScreen";
 import Day1Screen from "./Components/Home(Status)/Day1Screen";
 import Day2Screen from "./Components/Home(Status)/Day2Screen";
 
+import PickUpScreen from "./Components/TripInfo/PickUpScreen";
+import Flights1Screen from "./Components/TripInfo/Flights1Screen";
+import Flights2Screen from "./Components/TripInfo/Flights2Screen";
+import GameScreen from "./Components/TripInfo/GameScreen";
+import HotelScreen from "./Components/TripInfo/HotelScreen";
+import PerkScreen from "./Components/TripInfo/PerkScreen";
+import TripScreen from "./Components/TripInfo/TripScreen";
+
 
 const Stack = createStackNavigator();
 
 function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="FAQ 1">
+            <Stack.Navigator initialRouteName="Trip">
 
                 {/* Start */}
                 {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
                 <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="Signup" component={SignUpScreen} />
+                <Stack.Screen name="Sign up" component={SignUpScreen} />
 
 
                 {/* TripDocs */}
@@ -87,6 +95,16 @@ function App() {
                 {/* HOME (STATUS) */}
                 <Stack.Screen name="Day 1" component={Day1Screen} />
                 <Stack.Screen name="Day 2" component={Day2Screen} />
+
+
+                {/* TRIP INFO */}
+                <Stack.Screen name="Pick up" component={PickUpScreen} />
+                <Stack.Screen name="Flights 1" component={Flights1Screen} />
+                <Stack.Screen name="Flights 2" component={Flights2Screen} />
+                <Stack.Screen name="Game" component={GameScreen} />
+                <Stack.Screen name="Hotel" component={HotelScreen} />
+                <Stack.Screen name="Perk" component={PerkScreen} />
+                <Stack.Screen name="Trip" component={TripScreen} />
 
 
 

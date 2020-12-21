@@ -3,19 +3,9 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  View,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
-import User from "../../assets/images/user.png";
-import Airplane from "../../assets/images/airplane.jpg";
-import Hotel from "../../assets/images/hotel.jpg";
-import Download from "../../assets/images/download.jpg";
-import Ticket from "../../assets/images/ticket.png";
-import Car from "../../assets/images/car.jpg";
-import Hotel2 from "../../assets/images/Hotel2.jpg";
-import Sea from "../../assets/images/Sea.jpg";
-import Room from "../../assets/images/room.jpg";
-import Stadium from "../../assets/images/stadium.jpg";
 
 export default class ManageTripScreen extends React.Component {
 
@@ -25,8 +15,8 @@ export default class ManageTripScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
+      <ScrollView style={styles.container}>
+        <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
@@ -36,14 +26,14 @@ export default class ManageTripScreen extends React.Component {
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -30,
+              marginTop: -32,
               marginLeft: -20
             }}
           >
             manage trip
           </Text>
-        </View>
-        <View style={{ width: "50%", height: 600, backgroundColor: "#E6F5F3" }}>
+        </ScrollView>
+        <ScrollView style={{ width: "50%", height: 600, backgroundColor: "#E6F5F3" }}>
           <Text
             style={{
               color: "#DC1579",
@@ -54,9 +44,9 @@ export default class ManageTripScreen extends React.Component {
           >
             GENERAL
           </Text>
-          <View
+          <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></View>
+          ></ScrollView>
 
           <TouchableOpacity>
             <Text
@@ -81,9 +71,9 @@ export default class ManageTripScreen extends React.Component {
               &gt;
                 </Text>
           </TouchableOpacity>
-          <View
+          <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></View>
+          ></ScrollView>
           <TouchableOpacity>
             <Text
               style={{
@@ -107,9 +97,9 @@ export default class ManageTripScreen extends React.Component {
               &gt;
                 </Text>
           </TouchableOpacity>
-          <View
+          <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></View>
+          ></ScrollView>
 
           <Text
             style={{
@@ -121,9 +111,9 @@ export default class ManageTripScreen extends React.Component {
           >
             EDIT
           </Text>
-          <View
+          <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></View>
+          ></ScrollView>
           <TouchableOpacity>
             <Text
               style={{
@@ -148,9 +138,9 @@ export default class ManageTripScreen extends React.Component {
               &gt;
                 </Text>
           </TouchableOpacity>
-          <View
+          <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></View>
+          ></ScrollView>
           <TouchableOpacity>
             <Text
               style={{
@@ -175,11 +165,11 @@ export default class ManageTripScreen extends React.Component {
               &gt;
                 </Text>
           </TouchableOpacity>
-          <View
+          <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></View>
-        </View>
-      </View>
+          ></ScrollView>
+        </ScrollView>
+      </ScrollView>
     );
   }
 }
@@ -187,10 +177,8 @@ export default class ManageTripScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     height: 700,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: -200,
-    marginTop: -20,
+    marginLeft: 0,
+    marginTop: 0,
     width: 800,
   },
 });

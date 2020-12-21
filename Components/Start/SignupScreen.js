@@ -3,7 +3,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  View,
+  ScrollView,
   Image,
   TouchableOpacity,
 } from "react-native";
@@ -86,28 +86,28 @@ export default class SignUpScreen extends React.Component {
   render() {
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <TouchableOpacity>
           <Text
-            style={{ fontSize: 25 }}  >      
-          FLY-FOOT 
+            style={{ fontSize: 25 }}  >
+            FLY-FOOT
           </Text>
         </TouchableOpacity>
         <Image
-            source={Flyfoot}
-            style={{ marginLeft: -120, marginTop: -120 }}>             
+          source={Flyfoot}
+          style={{ marginLeft: -120, marginTop: -120 }}>
         </Image>
         <TouchableOpacity>
-        <Image
+          <Image
             source={LoginWithFB}
             style={{
               marginTop: 20,
               marginLeft: -10,
               marginBottom: 20,
             }}>
-        </Image>
+          </Image>
         </TouchableOpacity>
-        <TouchableOpacity>     
+        <TouchableOpacity>
           <Image
             source={SignInGoogle}
             style={{
@@ -118,17 +118,16 @@ export default class SignUpScreen extends React.Component {
           ></Image>
         </TouchableOpacity>
         <Text style={{ fontSize: 20, paddingTop: 10 }}>
-        <Text>SIGN UP WITH EMAIL</Text> 
+          <Text>SIGN UP WITH EMAIL</Text>
         </Text>
         <Text
           style={{
             color: "gray",
             paddingTop: 30,
             paddingRight: 300,
-
           }}
         >
-        Name 
+          Name
         </Text>
         <TextInput
           underlineColorAndroid="transparent"
@@ -144,10 +143,9 @@ export default class SignUpScreen extends React.Component {
             marginRight: 90,
             marginTop: -63,
             paddingLeft: 140,
-
           }}
         >
-        Surname  
+          Surname
         </Text>
         <TextInput
           underlineColorAndroid="transparent"
@@ -157,7 +155,7 @@ export default class SignUpScreen extends React.Component {
           value={this.state.surname}
         />
         <Text style={{ marginTop: -3, paddingLeft: 170 }}>
-        _____________________
+          _____________________
         </Text>
         <Text style={{ paddingTop: 30, paddingRight: 300 }}>
           Email
@@ -247,10 +245,10 @@ export default class SignUpScreen extends React.Component {
         >
           Already have an account?
             <Text style={{ color: "black" }}>
-              Login up here
+            Login up here
             </Text>
         </Text>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -259,8 +257,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
     marginTop: 50,
   },
 

@@ -55,7 +55,7 @@ export default class InviteToJoin3Screen extends React.Component {
           >
             Hannibal Lecter
           </Text>
-          <TouchableOpacity style={{ marginLeft: 240, marginTop: -15 }}>
+          <TouchableOpacity style={{ marginLeft: 220, marginTop: -15 }}>
             <Text
               style={{
                 color: "gray",
@@ -86,7 +86,7 @@ export default class InviteToJoin3Screen extends React.Component {
           >
             William Wallace
           </Text>
-          <TouchableOpacity style={{ marginLeft: 280, marginTop: -15 }}>
+          <TouchableOpacity style={{ marginLeft: 220, marginTop: -15 }}>
             <Text style={{ fontSize: 13 }}>
               INVITE TO APP
             </Text>

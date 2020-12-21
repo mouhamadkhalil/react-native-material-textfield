@@ -45,6 +45,7 @@ export default class Changes2Screen extends React.Component {
               marginTop: 30,
               marginRight: 33,
               color: "#292621",
+              width: 290
             }}
           >
             If there are any changes or cancellations that you would like to
@@ -55,7 +56,7 @@ export default class Changes2Screen extends React.Component {
             style={{
               backgroundColor: "white",
               marginLeft: 30,
-              width: 320,
+              width: 300,
               marginTop: 30,
               height: 270,
             }}
@@ -119,9 +120,9 @@ export default class Changes2Screen extends React.Component {
             style={{
               marginLeft: 30,
               backgroundColor: "#322F29",
-              marginTop: -10,
+              marginTop: 0,
               height: 50,
-              width: 160,
+              width: 150,
             }}
           >
             <Text style={{ color: "white", paddingLeft: 55, paddingTop: 15 }}>
@@ -134,10 +135,11 @@ export default class Changes2Screen extends React.Component {
               marginTop: -50,
               marginLeft: 190,
               height: 50,
-              width: 160,
+              width: 150,
+              marginLeft: 180
             }}
           >
-            <Text style={{ color: "white", paddingLeft: 55, paddingTop: 15 }}>
+            <Text style={{ color: "white", paddingLeft: 55, marginLeft: -10, paddingTop: 15 }}>
               SUBMIT
             </Text>
           </TouchableOpacity>

@@ -3,7 +3,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  View,
+  ScrollView,
   Image,
   TouchableOpacity,
 } from "react-native";
@@ -75,17 +75,17 @@ export default class LoginScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
 
         <TouchableOpacity onPress={this.Home}>
-          <Text style={{ fontSize: 25 }}>
+          <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30 }}>
             FLY-FOOT
           </Text>
         </TouchableOpacity>
 
         <Image
           source={Flyfoot}
-          style={{ marginLeft: -120, marginTop: -120 }}
+          style={{ marginLeft: 120, marginTop: -30, width: 30, height: 30 }}
         ></Image>
 
         <TouchableOpacity>
@@ -169,7 +169,7 @@ export default class LoginScreen extends React.Component {
         >
           Don't have an account?
         </Text>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -178,10 +178,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 60,
-    marginBottom: 400,
+    marginTop: 0,
+    marginBottom: 0,
   },
   loginBtn: {
     width: "25%",

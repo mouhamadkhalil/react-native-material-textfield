@@ -39,7 +39,7 @@ export default class Changes3Screen extends React.Component {
       <View style={styles.container}>
         <View style={{ backgroundColor: "blue", width: "50%", height: 50 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 25, color: "yellow", marginLeft: 40, marginTop: 10, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -47,7 +47,7 @@ export default class Changes3Screen extends React.Component {
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -25,
+              marginTop: -33,
             }}
           >
             trip changes
@@ -60,6 +60,7 @@ export default class Changes3Screen extends React.Component {
               marginTop: 30,
               marginRight: 33,
               color: "#292621",
+              width: 290
             }}
           >
             If there are any changes or cancellations that you would like to
@@ -70,7 +71,7 @@ export default class Changes3Screen extends React.Component {
             style={{
               backgroundColor: "white",
               marginLeft: 30,
-              width: 320,
+              width: 300,
               marginTop: 30,
               height: 220,
             }}

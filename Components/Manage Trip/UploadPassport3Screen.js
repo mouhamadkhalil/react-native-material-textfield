@@ -3,7 +3,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  View,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 
@@ -13,8 +13,8 @@ export default class UploadPassport3Screen extends React.Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
+      <ScrollView style={styles.container}>
+        <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 20, marginTop: 5, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
@@ -30,8 +30,8 @@ export default class UploadPassport3Screen extends React.Component {
           >
             upload passport
           </Text>
-        </View>
-        <View style={{ width: "50%", height: 600, backgroundColor: "#E6F5F3" }}>
+        </ScrollView>
+        <ScrollView style={{ width: "50%", height: 600, backgroundColor: "#E6F5F3" }}>
           <Text
             style={{
               color: "gray",
@@ -89,24 +89,23 @@ export default class UploadPassport3Screen extends React.Component {
               ADD FILE
             </Text>
           </TouchableOpacity>
-
-          <View style={{ marginTop: 340 }}>
+          <ScrollView style={{ marginTop: 340 }}>
             <Text
               style={{
                 marginLeft: 25,
                 width: 310,
-                paddingTop: 20,
+                paddingTop: 0,
                 backgroundColor: "black",
                 height: 60,
               }}
             >
             </Text>
-            <Text style={{ marginTop: -40, color: "white", marginLeft: 40 }}>
-              Passport has been updated
+            <Text style={{ marginTop: -30, color: "white", marginLeft: 40 }}>
+              <Text> Passport has been updated</Text>
             </Text>
-          </View>
-        </View>
-      </View>
+          </ScrollView>
+        </ScrollView>
+      </ScrollView>
     );
   }
 }
@@ -114,10 +113,8 @@ export default class UploadPassport3Screen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     height: 800,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: -200,
-    marginTop: -80,
+    marginLeft: 0,
+    marginTop: 0,
     width: 800,
   },
 });
