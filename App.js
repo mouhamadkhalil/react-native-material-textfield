@@ -3,7 +3,6 @@ import React from "react";
 // import { StyleSheet, Button, Text, View } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 // import BottomTabNavigator from "./TabNavigator";
-
 import DrawerNavigator from "./DrawerNavigator";
 
 
@@ -14,5 +13,5 @@ const App = () => {
         </NavigationContainer>
     );
 };
-  
+
 export default App;
