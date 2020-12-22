@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { API_URL, API_TOKEN } from "@env";
+
 export default class Help1Screen extends React.Component {
 
   Back = () => {
@@ -43,7 +45,7 @@ export default class Help1Screen extends React.Component {
   };
 
   componentDidMount() {
-    const url = "https://apitest.fly-foot.com/api/mobile/about/faq";
+    const url = `${API_URL}//mobile/about/faq`;
 
     fetch(url, {
       method: "GET",
