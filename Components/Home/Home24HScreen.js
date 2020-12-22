@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { API_URL, API_TOKEN } from "@env"
 
 export default class Home24HScreen extends React.Component {
 
@@ -18,7 +19,7 @@ export default class Home24HScreen extends React.Component {
   };
 
   componentDidMount() {
-    const url = "https://apitest.fly-foot.com/api/mobile/game/GetHomePageData";
+    const url = `${API_URL}/mobile/game/GetHomePageData`;
 
     fetch(url, {
       method: "GET",

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Splash from "../../assets/images/splash.png";
 import LoginScreen from "../Start/LoginScreen";
+import { API_URL, API_TOKEN } from "@env"
 
 export default class SplashScreen extends React.Component {
 

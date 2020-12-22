@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   TextInput,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { API_URL, API_TOKEN } from "@env"
 
 export default class PickUpScreen extends React.Component {
   Back = () => {
@@ -22,7 +23,8 @@ export default class PickUpScreen extends React.Component {
   };
 
   componentDidMount() {
-    const url = "https://apitest.fly-foot.com/api/mobile/game/GetHomePageData";
+    const url = `${API_URL}/api/mobile/game/GetHomePageData`;
+
     fetch(url, {
       method: "GET",
       headers: {

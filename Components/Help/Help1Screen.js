@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   TextInput,
@@ -7,8 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-
-import { API_URL, API_TOKEN } from "@env";
+import { API_URL, API_TOKEN } from "@env"
 
 export default class Help1Screen extends React.Component {
 
@@ -45,7 +44,7 @@ export default class Help1Screen extends React.Component {
   };
 
   componentDidMount() {
-    const url = `${API_URL}//mobile/about/faq`;
+    const url = `${API_URL}/mobile/about/faq`;
 
     fetch(url, {
       method: "GET",

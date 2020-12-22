@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   TextInput,
@@ -12,6 +12,7 @@ import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
 import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
+import { API_URL, API_TOKEN } from "@env"
 
 export default class SignUpScreen extends React.Component {
   state = {

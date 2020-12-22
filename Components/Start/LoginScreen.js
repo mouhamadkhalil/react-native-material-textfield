@@ -12,6 +12,8 @@ import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
 import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
+import { API_URL, API_TOKEN } from "@env"
+
 
 export default class LoginScreen extends React.Component {
     constructor(navigation) {
@@ -45,7 +47,7 @@ export default class LoginScreen extends React.Component {
         console.log("username : " + this.state.username);
         console.log("password : " + this.state.password);
 
-        const url = "https://apitest.fly-foot.com/api/mobile/profile/login";
+        const url = `${API_URL}/mobile/profile/login`;
 
         const data = {
             username: this.state.username,
