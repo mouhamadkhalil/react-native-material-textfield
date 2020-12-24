@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   container: {
     height: 1000,
     marginLeft: 0,
-    marginTop: 0,
+    marginTop: 50,
     width: 800,
   },
 });

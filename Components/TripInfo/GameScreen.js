@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env"
 
@@ -22,7 +23,8 @@ export default class GameScreen extends React.Component {
     Team1: "",
     Team2: "",
     Seat_Id: "",
-    GamePicture: ""
+    GamePicture: "",
+    isDone: false
   };
 
   componentDidMount() {
@@ -38,7 +40,7 @@ export default class GameScreen extends React.Component {
       .then((res) => res.json())
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
-        console.log("test", response.GamesList.Items[0].Price)
+        console.log("pic", response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3)
         this.setState({ Game_Start: response.GamesList.Items[0].StartDate });
         this.setState({ Arrival: response.GamesList.Items[0].EndDate });
         this.setState({ GamePicture: response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3 });
@@ -61,6 +63,8 @@ export default class GameScreen extends React.Component {
             response.GamesList.Items[0].MatchBundleDetail[0].GameSeats[0]
               .id_Team_Seating,
         });
+        this.setState({ isDone: true });
+
       });
   }
 
@@ -246,10 +250,10 @@ export default class GameScreen extends React.Component {
             <Text style={{ paddingTop: 20, marginLeft: 40 }}>
               {this.state.Seat_Id}
             </Text>
-            <Image
-              style={{ marginLeft: 50, marginRight: 50, marginTop: 20 }}
-              source={{ uri: this.state.Picture1 }}
-            />
+            {this.state.isDone ? <Image source={{ uri: this.state.GamePicture }}
+              style={{ marginLeft: 60, marginTop: 20, width: 180, height: 180 }} /> : <ActivityIndicator size="small" color="red"
+                style={{ marginTop: 80, marginLeft: -20 }}
+              />}
           </ScrollView>
 
           <ScrollView
@@ -427,7 +431,7 @@ const styles = StyleSheet.create({
   container: {
     height: 2100,
     marginLeft: -10,
-    marginTop: 0,
+    marginTop: 50,
     width: 800,
   },
 });

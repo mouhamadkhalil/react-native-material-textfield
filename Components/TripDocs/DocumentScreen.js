@@ -11,11 +11,13 @@ import User from "../../assets/images/user.png";
 import Airplane from "../../assets/images/airplane.jpg";
 import Hotel from "../../assets/images/hotel.jpg";
 import Download from "../../assets/images/download.jpg";
+import SignupScreen from "../Start/SignupScreen";
+import HotelScreen from "../TripInfo/HotelScreen";
 
 export default class DocumentScreen extends React.Component {
 
   Back = () => {
-    window.location = "/";
+    window.location = "/SignupScreen";
   }
 
   Flight1 = () => {
@@ -27,13 +29,13 @@ export default class DocumentScreen extends React.Component {
   }
 
   Hotel = () => {
-    window.location = "/Hotel";
+    window.location = "/HotelScreen";
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "100%", height: 50, marginTop: -150 }}>
+        <View style={{ backgroundColor: "blue", width: "100%", height: 60, marginTop: -100 }}>
           <TouchableOpacity >
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 155, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
@@ -43,14 +45,14 @@ export default class DocumentScreen extends React.Component {
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -35,
+              marginTop: -30,
               marginLeft: 50
             }}
           >
             documents
           </Text>
         </View>
-        <View style={{ width: "50%", height: 400, backgroundColor: "white" }}>
+        <View style={{ width: "50%", height: 450, backgroundColor: "white" }}>
           <View style={{ marginLeft: 105, marginTop: 25 }}>
             <TouchableOpacity onPress={this.Flight1}>
               <Text style={{ color: "blue", fontWeight: "bold", marginTop: 10 }}>FLIGHT</Text>
@@ -287,9 +289,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -100,
-    marginTop: -50,
+    marginTop: 0,
     width: 500,
-    marginBottom: 100,
+    marginBottom: -100,
     backgroundColor: "white"
   },
 });

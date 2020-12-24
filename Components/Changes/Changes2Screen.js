@@ -38,7 +38,7 @@ export default class Changes2Screen extends React.Component {
             trip changes
           </Text>
         </View>
-        <View style={{ width: "50%", height: 550, backgroundColor: "#E6F5F3" }}>
+        <View style={{ width: "50%", height: 800, backgroundColor: "#E6F5F3" }}>
           <Text
             style={{
               marginLeft: 30,
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -250,
+    marginTop: -70,
     width: 800,
     backgroundColor: "white"
   },

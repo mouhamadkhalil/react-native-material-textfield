@@ -25,7 +25,7 @@ export default class UploadPassport2Screen extends React.Component {
           }}
         >
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: 5, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
 
           <Text
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -80,
+    marginTop: -40,
     width: 800,
   },
 });

@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    marginTop: 0,
+    marginTop: 50,
     width: 510,
     marginLeft: 0
   },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   chatBox: {
     backgroundColor: "#F7EEE8",
     width: 410,
-    height: 250,
+    height: 350,
   },
   chatMsg: {
     backgroundColor: "white",

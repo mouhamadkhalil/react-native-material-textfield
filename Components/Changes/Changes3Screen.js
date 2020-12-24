@@ -37,9 +37,9 @@ export default class Changes3Screen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "50%", height: 50 }}>
+        <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -47,13 +47,14 @@ export default class Changes3Screen extends React.Component {
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -33,
+              marginTop: -30,
+              marginLeft: -10
             }}
           >
             trip changes
           </Text>
         </View>
-        <View style={{ width: "50%", height: 550, backgroundColor: "#E6F5F3" }}>
+        <View style={{ width: "50%", height: 800, backgroundColor: "#E6F5F3" }}>
           <Text
             style={{
               marginLeft: 30,
@@ -114,7 +115,8 @@ export default class Changes3Screen extends React.Component {
               backgroundColor: "#322F29",
               marginTop: 30,
               height: 50,
-              width: 160,
+              width: 150,
+
             }}
           >
             <Text style={{ color: "white", paddingLeft: 55, paddingTop: 15 }}>
@@ -128,9 +130,18 @@ export default class Changes3Screen extends React.Component {
                 this.showAlert();
               }}
             >
-              <View style={styles.button}>
-                <Text style={styles.text}>SUBMIT</Text>
-              </View>
+
+              <TouchableOpacity
+                style={{
+                  marginLeft: 30,
+                  backgroundColor: "blue",
+                  marginTop: -49,
+                  height: 50,
+                  width: 150,
+                  marginLeft: 180
+
+                }}
+              ><Text style={{ color: "white", marginTop: 15, marginLeft: 50 }}>SUBMIT</Text></TouchableOpacity>
             </TouchableOpacity>
           </Text>
 
@@ -168,20 +179,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -100,
+    marginTop: 80,
     width: 800,
     backgroundColor: "white"
   },
   button: {
     backgroundColor: "blue",
     marginLeft: 190,
-    width: 160,
+    width: 150,
+    marginLeft: 180,
     height: 50,
-    marginTop: -50,
+    marginTop: -49,
   },
   text: {
     color: "white",
     paddingLeft: 50,
-    paddingTop: 300,
+    paddingTop: 15,
   },
 });

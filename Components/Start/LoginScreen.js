@@ -7,12 +7,14 @@ import {
     Image,
     Button,
     TouchableOpacity,
+    ActivityIndicator
 } from "react-native";
 import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
 import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env"
+import SignupScreen from "./SignupScreen";
 
 export default class LoginScreen extends React.Component {
     constructor(navigation) {
@@ -27,6 +29,7 @@ export default class LoginScreen extends React.Component {
         rememberMe: "",
         scope: "",
         Token: "",
+        isDone: false
     };
 
     SubmitLoginBtn = (event) => {
@@ -59,10 +62,12 @@ export default class LoginScreen extends React.Component {
                     console.log("token is :", token_id);
                     this.setState({ Token: token_id });
                     localStorage.setItem("token", this.state.Token);
+                    this.setState({ isDone: true })
                     alert(localStorage.getItem("token", ""));
                     // window.location = "/HomePre";
                 }
             });
+
     };
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
@@ -83,8 +88,8 @@ export default class LoginScreen extends React.Component {
     render() {
         const { navigation } = this.props;
         return (
-            <ScrollView style={styles.container}>
 
+            <ScrollView style={styles.container}>
                 <TouchableOpacity>
                     <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
                         FLY-FOOT
@@ -102,6 +107,7 @@ export default class LoginScreen extends React.Component {
                         onPress={this.Facebook}
                     />
                 </TouchableOpacity>
+
                 <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
                     <Button
                         title="LOGIN WITH GOOGLE"
@@ -147,11 +153,13 @@ export default class LoginScreen extends React.Component {
                     }}
                 >
                 </Text>
-
                 <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
                     <Text style={styles.loginText}>
                         <Text style={{ marginLeft: 235 }}>LOGIN </Text>
                     </Text>
+                    {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 0 }} />
+                        : console.log("done")}
+
                 </TouchableOpacity>
                 <Text
                     style={{
@@ -174,7 +182,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "white",
-        marginTop: 0,
+        marginTop: 50,
         marginBottom: 0,
     },
     loginBtn: {

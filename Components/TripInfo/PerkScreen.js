@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env"
 
@@ -20,6 +21,7 @@ export default class PerkScreen extends React.Component {
     Ticket_Number: "",
     Time: "",
     Location: "",
+    isDone: false
   };
 
   componentDidMount() {
@@ -35,6 +37,7 @@ export default class PerkScreen extends React.Component {
       .then((res) => res.json())
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
+        this.setState({ isDone: true });
         this.setState({
           Picture: response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3,
         });
@@ -73,7 +76,10 @@ export default class PerkScreen extends React.Component {
         <ScrollView style={{ width: "50%", height: 850, backgroundColor: "#E6F5F3" }}>
           <ScrollView style={{ height: 200, backgroundColor: "white" }}>
             <TouchableOpacity>
-              <Image source={{ uri: this.state.Picture1 }} style={{ height: 210, marginLeft: 0 }} />
+              {this.state.isDone ? <Image source={{ uri: this.state.Picture1 }} style={{ height: 210, marginLeft: 0 }} />
+                : <ActivityIndicator size="large" color="blue"
+                  style={{ marginTop: 80, marginLeft: -20 }}
+                />}
             </TouchableOpacity>
           </ScrollView>
 
@@ -167,7 +173,11 @@ export default class PerkScreen extends React.Component {
             }}
           >
             <TouchableOpacity>
-              <Image source={{ uri: this.state.Picture }} style={{ height: 120, width: 120, marginLeft: 90 }} />
+              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+                style={{ height: 120, width: 120, marginLeft: 90 }} />
+                : <ActivityIndicator size="small" color="red"
+                  style={{ marginTop: 50, marginLeft: 0 }}
+                />}
             </TouchableOpacity>
           </ScrollView>
           <ScrollView
@@ -228,7 +238,7 @@ const styles = StyleSheet.create({
   container: {
     height: 1000,
     marginLeft: 0,
-    marginTop: 0,
+    marginTop: 50,
     width: 800,
   },
 });

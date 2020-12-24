@@ -18,9 +18,9 @@ export default class Changes1Screen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "50%", height: 70 }}>
+        <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 27, marginTop: 15, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 27, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -34,7 +34,7 @@ export default class Changes1Screen extends React.Component {
             trip changes
           </Text>
         </View>
-        <View style={{ width: "50%", height: 550, backgroundColor: "#E6F5F3" }}>
+        <View style={{ width: "50%", height: 800, backgroundColor: "#E6F5F3" }}>
           <Text
             style={{
               marginLeft: 30,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -180,
-    marginTop: -160,
+    marginTop: 20,
     width: 720,
     backgroundColor: "white"
   },

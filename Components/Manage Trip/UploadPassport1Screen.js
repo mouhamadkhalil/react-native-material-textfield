@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -70,
+    marginTop: -40,
     width: 800,
   },
 });

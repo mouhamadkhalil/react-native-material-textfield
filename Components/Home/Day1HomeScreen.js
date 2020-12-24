@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env"
 
@@ -15,7 +16,8 @@ export default class Day1HomeScreen extends React.Component {
     Picture1: "",
     Picture2: "",
     Picture3: "",
-    Picture4: ""
+    Picture4: "",
+    isDone: false
   };
 
   componentDidMount() {
@@ -31,7 +33,7 @@ export default class Day1HomeScreen extends React.Component {
       .then((res) => res.json())
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
-
+        this.setState({ isDone: true });
         console.log("test", response.GenericGames[0].MatchBundleHotels[0])
         this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[1] });
         this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
@@ -120,7 +122,10 @@ export default class Day1HomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture3 }} style={{ width: 150, height: 180, marginLeft: 0 }} />
+            {this.state.isDone ? <Image source={{ uri: this.state.Picture3 }}
+              style={{ width: 150, height: 180, marginLeft: 0 }} /> : <ActivityIndicator size="small" color="red"
+                style={{ marginTop: 80, marginLeft: 0 }}
+              />}
           </TouchableOpacity>
         </ScrollView>
 
@@ -134,7 +139,10 @@ export default class Day1HomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture2 }} style={{ width: 150, height: 180, marginLeft: 0 }} />
+            {this.state.isDone ? <Image source={{ uri: this.state.Picture2 }}
+              style={{ width: 150, height: 180, marginLeft: 0 }} /> : <ActivityIndicator size="small" color="red"
+                style={{ marginTop: 80, marginLeft: 0 }}
+              />}
           </TouchableOpacity>
         </ScrollView>
         <ScrollView
@@ -147,7 +155,10 @@ export default class Day1HomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture1 }} style={{ marginLeft: 0, height: 160 }} />
+            {this.state.isDone ? <Image source={{ uri: this.state.Picture1 }}
+              style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="red"
+                style={{ marginTop: 80, marginLeft: 0 }}
+              />}
           </TouchableOpacity>
         </ScrollView>
 
@@ -161,7 +172,10 @@ export default class Day1HomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture4 }} style={{ marginLeft: 0, height: 160 }} />
+            {this.state.isDone ? <Image source={{ uri: this.state.Picture4 }}
+              style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="red"
+                style={{ marginTop: 80, marginLeft: 0 }}
+              />}
           </TouchableOpacity>
         </ScrollView>
         <ScrollView
@@ -174,7 +188,10 @@ export default class Day1HomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture2 }} style={{ width: 150, height: 160, marginLeft: 0 }} />
+            {this.state.isDone ? <Image source={{ uri: this.state.Picture2 }}
+              style={{ width: 150, height: 160, marginLeft: 0 }} /> : <ActivityIndicator size="small" color="red"
+                style={{ marginTop: 80, marginLeft: 0 }}
+              />}
           </TouchableOpacity>
         </ScrollView>
         <ScrollView
@@ -187,7 +204,10 @@ export default class Day1HomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture3 }} style={{ marginLeft: 0, height: 160 }} />
+            {this.state.isDone ? <Image source={{ uri: this.state.Picture3 }}
+              style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="red"
+                style={{ marginTop: 80, marginLeft: 0 }}
+              />}
           </TouchableOpacity>
         </ScrollView>
         <ScrollView
@@ -200,7 +220,10 @@ export default class Day1HomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            <Image source={{ uri: this.state.Picture1 }} style={{ marginLeft: 0, height: 160 }} />
+            {this.state.isDone ? <Image source={{ uri: this.state.Picture1 }}
+              style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="red"
+                style={{ marginTop: 80, marginLeft: 0 }}
+              />}
           </TouchableOpacity>
         </ScrollView>
       </ScrollView>
@@ -213,7 +236,7 @@ const styles = StyleSheet.create({
     height: 1100,
     marginLeft: -110,
     width: 500,
-    marginTop: 0,
+    marginTop: 50,
     marginBottom: 70,
     backgroundColor: "#F5F7EC",
   },

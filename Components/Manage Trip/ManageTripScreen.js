@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   container: {
     height: 700,
     marginLeft: 0,
-    marginTop: 0,
+    marginTop: 30,
     width: 800,
   },
 });

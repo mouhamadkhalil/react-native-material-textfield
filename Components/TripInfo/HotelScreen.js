@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env"
 
@@ -21,6 +22,7 @@ export default class HotelScreen extends React.Component {
     Picture: "",
     Room_Number: "",
     Room_Type: "",
+    isDone: false
   };
 
   componentDidMount() {
@@ -36,7 +38,7 @@ export default class HotelScreen extends React.Component {
       .then((res) => res.json())
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
-
+        this.setState({ isDone: true })
         console.log("picture ", response.GamesList.Items[0].SelectedHotel.SelectedCategory
           .RoomType[0].NumRooms);
         this.setState({ Picture: response.GenericGames[0].MatchBundleHotels[0].Images[1] });
@@ -66,7 +68,8 @@ export default class HotelScreen extends React.Component {
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -35,
+              marginTop: -30,
+              marginLeft: -10
             }}
           >
             my hotel
@@ -75,7 +78,12 @@ export default class HotelScreen extends React.Component {
         <ScrollView style={{ width: "50%", height: 820, backgroundColor: "#E6F5F3" }}>
           <ScrollView style={{ height: 200, backgroundColor: "white" }}>
             <TouchableOpacity>
-              <Image source={{ uri: this.state.Picture }} style={{ height: 200 }} />
+
+              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+                style={{ height: 200 }} /> : <ActivityIndicator size="large" color="blue"
+                  style={{ marginTop: 80, marginLeft: -20 }}
+              />}
+
             </TouchableOpacity>
           </ScrollView>
 
@@ -198,7 +206,7 @@ const styles = StyleSheet.create({
   container: {
     height: 1000,
     marginLeft: 0,
-    marginTop: 0,
+    marginTop: 50,
     width: 800,
   },
 });

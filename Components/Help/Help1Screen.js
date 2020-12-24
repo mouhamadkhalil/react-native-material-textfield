@@ -108,7 +108,7 @@ export default class Help1Screen extends React.Component {
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 10, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 15, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -140,7 +140,7 @@ export default class Help1Screen extends React.Component {
               color: "pink",
               fontWeight: "bold",
               paddingLeft: 20,
-              marginTop: 0,
+              marginTop: 18,
               fontSize: 30
             }}
           >
@@ -300,9 +300,9 @@ export default class Help1Screen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 1300,
+    height: 1200,
     marginLeft: 0,
-    marginTop: 0,
+    marginTop: 50,
     width: 800,
     marginBottom: 0,
   },

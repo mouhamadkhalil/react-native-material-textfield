@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    marginTop: 0,
+    marginTop: 50,
     marginBottom: 0,
   },
   loginBtn: {
