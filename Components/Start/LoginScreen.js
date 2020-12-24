@@ -14,12 +14,10 @@ import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env"
 
-
 export default class LoginScreen extends React.Component {
     constructor(navigation) {
         super(navigation);
         console.log(navigation);
-        // this.navigation = navigation;
     }
     state = {
         client_id: "",
@@ -29,18 +27,6 @@ export default class LoginScreen extends React.Component {
         rememberMe: "",
         scope: "",
         Token: "",
-    };
-
-    async handleChangeEmail(event) {
-        this.setState({ username: event.target.value });
-    }
-
-    async handleChangePassword(event) {
-        this.setState({ password: event.target.value });
-    }
-
-    Home = () => {
-        window.location = "/";
     };
 
     SubmitLoginBtn = (event) => {
@@ -74,75 +60,83 @@ export default class LoginScreen extends React.Component {
                     this.setState({ Token: token_id });
                     localStorage.setItem("token", this.state.Token);
                     alert(localStorage.getItem("token", ""));
-                    window.location = "/HomePre";
+                    // window.location = "/HomePre";
                 }
             });
     };
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
+    Facebook = () => {
+        alert("Login with Facebook !");
+    }
+        ;
+    Facebook = this.Facebook.bind(this);
+
+    Google = () => {
+        alert("Login with Google !")
+    }
+
+    Google = this.Google.bind(this);
+
+
     render() {
+        const { navigation } = this.props;
         return (
             <ScrollView style={styles.container}>
 
-                <TouchableOpacity onPress={this.Home}>
+                <TouchableOpacity>
                     <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
                         FLY-FOOT
-          </Text>
+                    </Text>
                 </TouchableOpacity>
-
                 <Image
                     source={Flyfoot}
                     style={{ marginLeft: 100, marginTop: -34, width: 40, height: 40 }}
                 />
-
                 <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 50 }}>
                     <Button
                         title="LOGIN WITH FACEBOOK"
                         color="blue"
                         style={{ width: 500, padding: 300, height: 300 }}
+                        onPress={this.Facebook}
                     />
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
                     <Button
                         title="LOGIN WITH GOOGLE"
                         color="red"
+                        onPress={this.Google}
                     />
                 </TouchableOpacity>
                 <Text style={{ fontSize: 20, paddingTop: 10, marginLeft: 90 }}>
                     LOGIN WITH EMAIL
-        </Text>
+                </Text>
                 <Text style={{ paddingTop: 30, marginLeft: 35 }}>
                     Email
-        </Text>
-
-
+                </Text>
 
                 <TextInput
                     style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
-                    onChangeText={this.handleChangeEmail.bind(this)}
+                    onChangeText={(username) => this.setState({ username })}
                     placeholder="   hannibal@gma"
                     required
                     value={this.state.email}
                     type="email"
+                    keyboardType="email-address"
                 />
-
 
                 <Text style={{ paddingTop: 30, marginLeft: 35, width: 300 }}>
                     Password
-        </Text>
+                </Text>
 
                 <TextInput
                     style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
-                    onChangeText={this.handleChangePassword.bind(this)}
+                    onChangeText={(password) => this.setState({ password })}
                     required
                     value={this.state.password}
-                    type="password"
+                    secureTextEntry={true}
                 />
-
-
-
 
                 <Text
                     style={{
@@ -169,8 +163,8 @@ export default class LoginScreen extends React.Component {
                     }}
                 >
                     Don't have an account?
-        </Text>
-                <TouchableOpacity><Text style={{ marginLeft: 206, marginTop: -20 }}>Sign up here </Text></TouchableOpacity>
+                </Text>
+                <TouchableOpacity><Text style={{ marginLeft: 206, marginTop: -20 }} >Sign up here </Text></TouchableOpacity>
             </ScrollView>
         );
     }
