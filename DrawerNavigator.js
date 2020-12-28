@@ -50,11 +50,23 @@ import SpotLightScreen from "./Components/NewsLetterInfo/SpotLightScreen";
 
 import AnyDayScreen from "./Components/Schedule/AnyDayScreen";
 
-
-
-
-
-
+import ChatActive1Screen from "./Components/Fan Chat/ChatActive1Screen";
+import ChatActive2Screen from "./Components/Fan Chat/ChatActive2Screen";
+import ChatActive3Screen from "./Components/Fan Chat/ChatActive3Screen";
+import ChatHome1Screen from "./Components/Fan Chat/ChatHome1Screen";
+import ChatHome2Screen from "./Components/Fan Chat/ChatHome2Screen";
+import ChatHome3Screen from "./Components/Fan Chat/ChatHome3Screen";
+import ChatHome4Screen from "./Components/Fan Chat/ChatHome4Screen";
+import ChatHome5Screen from "./Components/Fan Chat/ChatHome5Screen";
+import ChatHome8Screen from "./Components/Fan Chat/ChatHome8Screen";
+import ChatHome10Screen from "./Components/Fan Chat/ChatHome10Screen";
+import ChatHome12Screen from "./Components/Fan Chat/ChatHome12Screen";
+import ChatHomeScreen from "./Components/Fan Chat/ChatHomeScreen";
+import ChatProfile1Screen from "./Components/Fan Chat/ChatProfile1Screen";
+import ChatProfile2Screen from "./Components/Fan Chat/ChatProfile2Screen";
+import ChatProfile3Screen from "./Components/Fan Chat/ChatProfile3Screen";
+import Group2bScreen from "./Components/Fan Chat/Group2bScreen";
+import Group2Screen from "./Components/Fan Chat/Group2Screen";
 
 const Drawer = createDrawerNavigator();
 
@@ -108,16 +120,23 @@ const DrawerNavigator = () => {
 
             <Drawer.Screen name="Any Day" component={AnyDayScreen} />
 
-
-
-
-
-
-
-
-
-
-
+            <Drawer.Screen name="Chat Active 1" component={ChatActive1Screen} />
+            <Drawer.Screen name="Chat Active 2" component={ChatActive2Screen} />
+            <Drawer.Screen name="Chat Active 3" component={ChatActive3Screen} />
+            <Drawer.Screen name="Chat Home 1" component={ChatHome1Screen} />
+            <Drawer.Screen name="Chat Home 2" component={ChatHome2Screen} />
+            <Drawer.Screen name="Chat Home 3" component={ChatHome3Screen} />
+            <Drawer.Screen name="Chat Home 4" component={ChatHome4Screen} />
+            <Drawer.Screen name="Chat Home 5" component={ChatHome5Screen} />
+            <Drawer.Screen name="Chat Home 8" component={ChatHome8Screen} />
+            <Drawer.Screen name="Chat Home 10" component={ChatHome10Screen} />
+            <Drawer.Screen name="Chat Home 12" component={ChatHome12Screen} />
+            <Drawer.Screen name="Chat Home" component={ChatHomeScreen} />
+            <Drawer.Screen name="Chat Profile 1" component={ChatProfile1Screen} />
+            <Drawer.Screen name="Chat Profile 2" component={ChatProfile2Screen} />
+            <Drawer.Screen name="Chat Profile 3" component={ChatProfile3Screen} />
+            <Drawer.Screen name="Group 2b" component={Group2bScreen} />
+            <Drawer.Screen name="Group 2" component={Group2Screen} />
 
         </Drawer.Navigator>
     );
