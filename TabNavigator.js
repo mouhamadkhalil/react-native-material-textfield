@@ -8,10 +8,9 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Home" component={MainStackNavigator} />
-            <Tab.Screen name="Book a trip" component={TripStackNavigator} />
-            <Tab.Screen name="My Boookings" component={TripStackNavigator} />
-            <Tab.Screen name="Trips" component={TripStackNavigator} />
+            <Tab.Screen name="book a trip" component={TripStackNavigator} />
+            <Tab.Screen name="my Boookings" component={TripStackNavigator} />
+            <Tab.Screen name="more" component={TripStackNavigator} />
             <Tab.Screen name="Settings" component={TripStackNavigator} />
         </Tab.Navigator>
     );

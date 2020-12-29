@@ -70,7 +70,6 @@ export default class SignUpScreen extends React.Component {
           FavouriteTeam4: response[3].TeamName
         })
         console.log("FavouriteTeam", this.state.FavouriteTeam4)
-
       });
   }
 
@@ -80,8 +79,7 @@ export default class SignUpScreen extends React.Component {
     console.log("Email : " + this.state.Email);
     console.log("Password : " + this.state.Password);
     console.log("ConfirmPassword : " + this.state.ConfirmPassword);
-    console.log("FavouriteTeam : " + this.state.FavouriteTeam);
-
+    console.log("FavouriteTeam : " + this.state.FavouriteTeam1);
 
     const url = `${API_URL}/mobile/profile/Create`;
 
@@ -91,7 +89,7 @@ export default class SignUpScreen extends React.Component {
       Email: this.state.Email,
       Password: this.state.Password,
       ConfirmPassword: this.state.ConfirmPassword,
-      FavouriteTeam: this.state.FavouriteTeam,
+      FavouriteTeam: this.state.FavouriteTeam1,
     };
 
     fetch(url, {
@@ -214,7 +212,6 @@ export default class SignUpScreen extends React.Component {
           placeholder="  hannibal@gmail.com"
         />
 
-
         <Text style={{ paddingTop: 30, marginLeft: 35, color: "gray" }}>
           Password
         </Text>
@@ -264,7 +261,6 @@ export default class SignUpScreen extends React.Component {
         {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 0 }} />
           : console.log("done")}
 
-
         <Text
           style={{
             color: "gray",
@@ -278,7 +274,6 @@ export default class SignUpScreen extends React.Component {
           By Signing up, i agree with <TouchableOpacity><Text style={{ marginTop: 40 }}>FFT Terms.</Text></TouchableOpacity>
 
         </Text>
-
         <Text
           style={{
             color: "gray",

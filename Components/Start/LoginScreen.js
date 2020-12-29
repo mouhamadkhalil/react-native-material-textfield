@@ -58,6 +58,8 @@ export default class LoginScreen extends React.Component {
                     window.location.reload();
                 } else {
                     console.log(response);
+                    alert("yes it is done, username is found")
+
                     let token_id = response.Token;
                     console.log("token is :", token_id);
                     this.setState({ Token: token_id });
@@ -159,7 +161,7 @@ export default class LoginScreen extends React.Component {
                     <Text style={styles.loginText}>
                         <Text style={{ marginLeft: 235 }}>LOGIN </Text>
                     </Text>
-                    {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 0 }} />
+                    {this.state.isDone ? <ActivityIndicator size="small" color="red" style={{ marginTop: 10 }} />
                         : console.log("done")}
 
                 </TouchableOpacity>

@@ -142,6 +142,8 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Post" component={PostScreen} />
 
 
+
+
         </Stack.Navigator>
     );
 };

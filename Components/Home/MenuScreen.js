@@ -14,6 +14,7 @@ import Document from "../../assets/images/document.png";
 import Help from "../../assets/images/help.jpg";
 import Logout from "../../assets/images/Logout.png";
 import FlyFoot from "../../assets/images/flyfoot.png";
+import User from "../../assets/images/user.png";
 
 
 const window = Dimensions.get("window");
@@ -62,6 +63,18 @@ export default class MenuScreen extends React.Component {
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
+              <TouchableOpacity><Text style={{ marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Profile</Text></TouchableOpacity>
+              <Image
+                source={User}
+                style={{ marginLeft: 26, marginTop: -35, width: 30, height: 30 }}
+              />
+            </TouchableOpacity>
+          </Text>
+
+          <Text style={{ marginTop: -26 }}>
+            <TouchableOpacity
+              style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
+            >
               <TouchableOpacity><Text style={{ marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Manage trip</Text></TouchableOpacity>
               <Image
                 source={Attachment}
@@ -69,7 +82,7 @@ export default class MenuScreen extends React.Component {
               />
             </TouchableOpacity>
           </Text>
-          <Text style={styles.item}>
+          <Text style={{ marginTop: 20 }}>
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
@@ -80,7 +93,7 @@ export default class MenuScreen extends React.Component {
               />
             </TouchableOpacity>
           </Text>
-          <Text style={styles.item}>
+          <Text style={{ marginTop: 20 }}>
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
@@ -91,7 +104,7 @@ export default class MenuScreen extends React.Component {
               />
             </TouchableOpacity>
           </Text>
-          <Text style={styles.item}>
+          <Text style={{ marginTop: 20 }}>
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
@@ -102,7 +115,7 @@ export default class MenuScreen extends React.Component {
               />
             </TouchableOpacity>
           </Text>
-          <Text style={styles.item}>
+          <Text style={{ marginTop: 20 }}>
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >

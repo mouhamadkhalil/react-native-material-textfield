@@ -68,6 +68,9 @@ import ChatProfile3Screen from "./Components/Fan Chat/ChatProfile3Screen";
 import Group2bScreen from "./Components/Fan Chat/Group2bScreen";
 import Group2Screen from "./Components/Fan Chat/Group2Screen";
 
+import Info from "./Components/More/Info";
+
+
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -137,6 +140,9 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="Chat Profile 3" component={ChatProfile3Screen} />
             <Drawer.Screen name="Group 2b" component={Group2bScreen} />
             <Drawer.Screen name="Group 2" component={Group2Screen} />
+
+            <Drawer.Screen name="Info" component={Info} />
+
 
         </Drawer.Navigator>
     );
