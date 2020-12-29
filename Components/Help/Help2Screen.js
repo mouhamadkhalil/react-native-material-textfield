@@ -118,7 +118,7 @@ export default class Help1Screen extends React.Component {
               fontWeight: "bold",
               textAlign: "center",
               marginTop: -30,
-              marginLeft: -20
+              marginLeft: -30
             }}
           >
             FAQ'S

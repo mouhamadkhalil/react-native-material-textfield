@@ -22,7 +22,7 @@ export default class UploadPassport1Screen extends React.Component {
       <View style={styles.container}>
         <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 25, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{

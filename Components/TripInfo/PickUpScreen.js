@@ -23,7 +23,7 @@ export default class PickUpScreen extends React.Component {
   };
 
   componentDidMount() {
-    const url = `${API_URL}/api/mobile/game/GetHomePageData`;
+    const url = `${API_URL}/mobile/game/GetHomePageData`;
 
     fetch(url, {
       method: "GET",
@@ -35,7 +35,7 @@ export default class PickUpScreen extends React.Component {
       .then((res) => res.json())
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
-        console.log("Contact ", response.GamesList);
+        console.log("Contact ", response.GamesList.Items[0].BundleCode);
         this.setState({
           Reservation_Number: response.GamesList.Items[0].BundleCode,
         });
@@ -53,7 +53,7 @@ export default class PickUpScreen extends React.Component {
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 50 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 20, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 25, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -62,6 +62,7 @@ export default class PickUpScreen extends React.Component {
               fontWeight: "bold",
               textAlign: "center",
               marginTop: -30,
+              marginLeft: -30
             }}
           >
             airport pickup
@@ -85,7 +86,7 @@ export default class PickUpScreen extends React.Component {
                 marginLeft: 30,
               }}
             >
-              BOOKING DETAILS{" "}
+              BOOKING DETAILS
             </Text>
             <Text
               style={{
@@ -102,7 +103,7 @@ export default class PickUpScreen extends React.Component {
                 fontWeight: "bold",
                 fontSize: 12,
                 marginLeft: 190,
-                marginTop: -16,
+                marginTop: -17,
               }}
             >
               {this.state.Reservation_Number}
@@ -126,7 +127,7 @@ export default class PickUpScreen extends React.Component {
             <Text
               style={{
                 color: "gray",
-                marginTop: -40,
+                marginTop: -45,
                 marginLeft: 190,
                 fontSize: 12,
               }}
@@ -155,7 +156,7 @@ export default class PickUpScreen extends React.Component {
             <Text
               style={{
                 color: "gray",
-                marginTop: -40,
+                marginTop: -46,
                 marginLeft: 190,
                 fontSize: 12,
               }}
@@ -167,7 +168,7 @@ export default class PickUpScreen extends React.Component {
               style={{ height: 1, backgroundColor: "#E9C2C2", marginTop: 20 }}
             ></ScrollView>
             <Text style={{ marginLeft: 30, paddingTop: 25 }}>Private Taxi</Text>
-            <Text style={{ marginLeft: 190, marginTop: -18 }}>2 adults</Text>
+            <Text style={{ marginLeft: 190, marginTop: -19 }}>2 adults</Text>
           </ScrollView>
           <ScrollView
             style={{
@@ -187,14 +188,14 @@ export default class PickUpScreen extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              DRIVER{" "}
+              DRIVER
             </Text>
             <Text style={{ marginLeft: 40, marginTop: 30, color: "gray" }}>
-              NAME{" "}
+              NAME
             </Text>
             <Text style={{ marginLeft: 40, marginTop: 15 }}>Hussain Bolt </Text>
             <Text style={{ marginLeft: 190, marginTop: -52, color: "gray" }}>
-              PHONE NO.{" "}
+              PHONE NO.
             </Text>
             <Text style={{ marginLeft: 190, marginTop: 16 }}>
               + 34 651 23 12 32
@@ -219,7 +220,7 @@ export default class PickUpScreen extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              DESTINATION{" "}
+              DESTINATION
             </Text>
 
             <Text style={{ paddingTop: 20, width: 260, marginLeft: 50 }}>
@@ -230,7 +231,6 @@ export default class PickUpScreen extends React.Component {
               +34 932 05 09 61
             </Text>
             <Text style={{ paddingTop: 20, marginLeft: 50 }}>
-              {" "}
               info@hotelgrandcentral.com
             </Text>
           </ScrollView>

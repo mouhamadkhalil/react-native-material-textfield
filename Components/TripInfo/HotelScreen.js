@@ -79,10 +79,10 @@ export default class HotelScreen extends React.Component {
           <ScrollView style={{ height: 200, backgroundColor: "white" }}>
             <TouchableOpacity>
 
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
                 style={{ height: 200 }} /> : <ActivityIndicator size="large" color="blue"
                   style={{ marginTop: 80, marginLeft: -20 }}
-              />}
+                />}
 
             </TouchableOpacity>
           </ScrollView>

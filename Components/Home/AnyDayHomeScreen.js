@@ -110,7 +110,7 @@ export default class AnyDayHomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={{ uri: this.state.Picture3 }}
+            {this.state.isDone ? <Image source={this.state.Picture3 ? { uri: this.state.Picture3 } : null}
               style={{ width: 150, height: 180, marginLeft: 0 }} /> : <ActivityIndicator size="small" color="blue"
                 style={{ marginTop: 80, marginLeft: -20 }}
               />}
@@ -126,7 +126,7 @@ export default class AnyDayHomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={{ uri: this.state.Picture2 }}
+            {this.state.isDone ? <Image source={this.state.Picture2 ? { uri: this.state.Picture2 } : null}
               style={{ width: 150, height: 180, marginLeft: 0 }} /> : <ActivityIndicator size="small" color="blue"
                 style={{ marginTop: 80, marginLeft: -20 }}
               />}
@@ -142,7 +142,7 @@ export default class AnyDayHomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={{ uri: this.state.Picture1 }}
+            {this.state.isDone ? <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null}
               style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="blue"
                 style={{ marginTop: 80, marginLeft: 0 }}
               />}
@@ -158,7 +158,7 @@ export default class AnyDayHomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={{ uri: this.state.Picture4 }}
+            {this.state.isDone ? <Image source={this.state.Picture4 ? { uri: this.state.Picture4 } : null}
               style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="blue"
                 style={{ marginTop: 80, marginLeft: -20 }}
               />}
@@ -174,7 +174,7 @@ export default class AnyDayHomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={{ uri: this.state.Picture2 }}
+            {this.state.isDone ? <Image source={this.state.Picture2 ? { uri: this.state.Picture2 } : null}
               style={{ width: 150, height: 160, marginLeft: 0 }} /> : <ActivityIndicator size="small" color="blue"
                 style={{ marginTop: 80, marginLeft: -20 }}
               />}
@@ -190,7 +190,7 @@ export default class AnyDayHomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={{ uri: this.state.Picture3 }}
+            {this.state.isDone ? <Image source={this.state.Picture4 ? { uri: this.state.Picture4 } : null}
               style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="blue"
                 style={{ marginTop: 80, marginLeft: 0 }}
               />}
@@ -206,7 +206,7 @@ export default class AnyDayHomeScreen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={{ uri: this.state.Picture1 }}
+            {this.state.isDone ? <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null}
               style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="blue"
                 style={{ marginTop: 80, marginLeft: 0 }}
               />}
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     marginLeft: -110,
     width: 500,
     marginTop: 50,
-    marginBottom: 0,
+    marginBottom: 10,
     backgroundColor: "#F5F7EC",
   },
 });

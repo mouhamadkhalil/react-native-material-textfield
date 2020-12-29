@@ -72,7 +72,7 @@ export default class ChatProfile3Screen extends React.Component {
             ></ScrollView>
             <Image
               source={User}
-              style={{ marginLeft: 30, marginTop: 40 ,width:25,height:25}}
+              style={{ marginLeft: 30, marginTop: 40, width: 25, height: 25 }}
             />
             <Text
               style={{ fontWeight: "bold", marginLeft: 80, marginTop: -30 }}
@@ -117,7 +117,7 @@ export default class ChatProfile3Screen extends React.Component {
                 color: "white",
                 marginLeft: 30,
                 fontSize: 14,
-                paddingLeft:30,
+                paddingLeft: 30,
               }}
             >
               Your profile picture has been uploaded

@@ -285,11 +285,11 @@ export default class DocumentScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 700,
+    height: 800,
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -100,
-    marginTop: 0,
+    marginTop: -50,
     width: 500,
     marginBottom: -100,
     backgroundColor: "white"

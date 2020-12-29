@@ -76,7 +76,7 @@ export default class PerkScreen extends React.Component {
         <ScrollView style={{ width: "50%", height: 850, backgroundColor: "#E6F5F3" }}>
           <ScrollView style={{ height: 200, backgroundColor: "white" }}>
             <TouchableOpacity>
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture1 }} style={{ height: 210, marginLeft: 0 }} />
+              {this.state.isDone ? <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null} style={{ height: 210, marginLeft: 0 }} />
                 : <ActivityIndicator size="large" color="blue"
                   style={{ marginTop: 80, marginLeft: -20 }}
                 />}
@@ -102,7 +102,7 @@ export default class PerkScreen extends React.Component {
                 fontSize: 18
               }}
             >
-              TICKET DETAILS{" "}
+              TICKET DETAILS
             </Text>
             <Text
               style={{
@@ -114,7 +114,7 @@ export default class PerkScreen extends React.Component {
                 width: 250,
               }}
             >
-              TICKET NUMBER{" "}
+              TICKET NUMBER
             </Text>
             <Text
               style={{
@@ -173,7 +173,7 @@ export default class PerkScreen extends React.Component {
             }}
           >
             <TouchableOpacity>
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
                 style={{ height: 120, width: 120, marginLeft: 90 }} />
                 : <ActivityIndicator size="small" color="red"
                   style={{ marginTop: 50, marginLeft: 0 }}
@@ -193,7 +193,7 @@ export default class PerkScreen extends React.Component {
             <Text
               style={{ marginLeft: 40, marginTop: 30, color: "blue", fontWeight: "bold", fontSize: 18 }}
             >
-              HOW TO GET THERE{" "}
+              HOW TO GET THERE
             </Text>
             <Text
               style={{
@@ -203,7 +203,7 @@ export default class PerkScreen extends React.Component {
                 marginTop: 19,
               }}
             >
-              Carrer de Mallocra, 401, 08013 Barcelona{" "}
+              Carrer de Mallocra, 401, 08013 Barcelona
             </Text>
             <Text
               style={{
@@ -214,7 +214,7 @@ export default class PerkScreen extends React.Component {
                 width: 200,
               }}
             >
-              Sagrada Familia (L2 - Purple, L4 - Blue){" "}
+              Sagrada Familia (L2 - Purple, L4 - Blue)
             </Text>
             <Text
               style={{

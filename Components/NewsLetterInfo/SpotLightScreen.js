@@ -42,7 +42,7 @@ export default class SpotLightScreen extends React.Component {
         <ScrollView style={{ width: "100%", backgroundColor: "white", height: 900 }}>
           <TouchableOpacity>
 
-            {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+            {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
               style={{ height: 250, width: 380, marginLeft: 0, marginTop: -50 }} /> : <ActivityIndicator size="large" color="blue"
                 style={{ marginTop: 0, marginLeft: 0 }}
               />}
@@ -58,7 +58,7 @@ export default class SpotLightScreen extends React.Component {
                 width: 270,
               }}
             >
-              THERE IS ONLY ONE{" "}
+              THERE IS ONLY ONE
             </Text>
             <Text
               style={{
@@ -73,7 +73,7 @@ export default class SpotLightScreen extends React.Component {
                 height: 55,
               }}
             >
-              PREMIERE LEAGUE{" "}
+              PREMIERE LEAGUE
             </Text>
             <Text
               style={{
@@ -87,10 +87,10 @@ export default class SpotLightScreen extends React.Component {
               BOOK YOUR TRIPS
             </Text>
             <Text style={{ color: "white", fontSize: 16, marginLeft: 150 }}>
-              STARTING FROM{" "}
+              STARTING FROM
             </Text>
             <Text style={{ color: "yellow", fontSize: 35, marginLeft: 150 }}>
-              1,200 ${" "}
+              1,200 $
             </Text>
             <Text
               style={{
@@ -104,37 +104,37 @@ export default class SpotLightScreen extends React.Component {
               THE PRICE INCLUDE
             </Text>
             <TouchableOpacity>
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
                 style={{ marginTop: 15, marginLeft: 70, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
                   style={{ marginTop: 0, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
             <TouchableOpacity>
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
                 style={{ marginLeft: 70, marginTop: 20, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
                   style={{ marginTop: 0, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
             <TouchableOpacity>
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
                 style={{ marginLeft: 180, marginTop: -160, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
                   style={{ marginTop: 0, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
             <TouchableOpacity>
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
                 style={{ marginLeft: 180, marginTop: -70, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
                   style={{ marginTop: 0, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
             <TouchableOpacity>
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
                 style={{ marginLeft: 290, marginTop: -160, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
                   style={{ marginTop: 0, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
             <TouchableOpacity>
-              {this.state.isDone ? <Image source={{ uri: this.state.Picture }}
+              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
                 style={{ marginLeft: 290, marginTop: -70, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
                   style={{ marginTop: 0, marginLeft: 0 }}
                 />}
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     width: 400,
     marginTop: 30,
-    marginBottom: 20,
+    marginBottom: 0,
     backgroundColor: "white",
   },
 });

@@ -24,7 +24,7 @@ export default class ChatHome8Screen extends React.Component {
           </TouchableOpacity>
           <Image
             source={User}
-            style={{ marginLeft: 70, marginTop: -30,width:25,height:25 }}
+            style={{ marginLeft: 70, marginTop: -30, width: 25, height: 25 }}
           />
           <Text
             style={{
@@ -88,7 +88,7 @@ export default class ChatHome8Screen extends React.Component {
                 height: 50,
                 marginTop: 150,
               }}
-              placeholder="Type your message here..."
+              placeholder="  Type your message here  ..."
             ></TextInput>
           </ScrollView>
         </ScrollView>

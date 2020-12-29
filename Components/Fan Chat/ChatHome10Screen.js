@@ -81,7 +81,7 @@ export default class ChatHome10Screen extends React.Component {
                 height: 50,
                 marginTop: 340,
               }}
-              placeholder="Type your message here..."
+              placeholder="  Type your message here  ..."
             ></TextInput>
           </ScrollView>
         </ScrollView>

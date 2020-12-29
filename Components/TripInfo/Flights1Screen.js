@@ -21,7 +21,7 @@ export default class Flights1Screen extends React.Component {
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 50 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 35, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -30,6 +30,7 @@ export default class Flights1Screen extends React.Component {
               fontWeight: "bold",
               textAlign: "center",
               marginTop: -30,
+              marginLeft:-15
             }}
           >
             my flights
@@ -244,9 +245,9 @@ export default class Flights1Screen extends React.Component {
             IMPORTANT INFORMATION ABOUT YOUR FLIGHT{" "}
           </Text>
           <Text
-            style={{ width: 260, fontSize: 13, paddingTop: 30, marginLeft: 40 }}
+            style={{ width: 260, fontSize: 13, paddingTop: 30, marginLeft: 45 }}
           >
-            {" "}
+            
             We recommend that you complete check in at least 2 hours before the
             departure of your flight.
           </Text>
@@ -255,7 +256,7 @@ export default class Flights1Screen extends React.Component {
               width: 260,
               fontSize: 13,
               paddingTop: 30,
-              marginLeft: 40,
+              marginLeft: 45,
               paddingTop: 6,
             }}
           >

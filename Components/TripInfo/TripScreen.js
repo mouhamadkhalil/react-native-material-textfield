@@ -27,7 +27,7 @@ export default class TripScreen extends React.Component {
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 25, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -53,7 +53,7 @@ export default class TripScreen extends React.Component {
             <Text style={{ color: "pink", fontWeight: "bold", fontSize: 19 }}>TRAVEL</Text>
           </ScrollView>
 
-          <ScrollView style={{}}>
+          <ScrollView>
             <Image
               source={Airplane}
               style={{ width: 50, height: 30, marginLeft: 30, paddingTop: 30, marginTop: 20 }}
@@ -83,8 +83,8 @@ export default class TripScreen extends React.Component {
                       color: "gray",
                       fontWeight: "bold",
                       marginLeft: 170,
-                      fontSize: 18,
-                      marginTop: -32
+                      fontSize: 22,
+                      marginTop: -39
                     }}
                   >
                     &gt;
@@ -104,7 +104,7 @@ export default class TripScreen extends React.Component {
           <ScrollView
             style={{ height: 2, backgroundColor: "white", marginTop: 20 }}
           ></ScrollView>
-          <ScrollView style={{}}>
+          <ScrollView>
             <Image
               source={Car}
               style={{ width: 50, height: 30, marginLeft: 30, marginTop: 30 }}
@@ -123,13 +123,13 @@ export default class TripScreen extends React.Component {
                   color: "gray",
                   fontWeight: "bold",
                   marginLeft: 170,
-                  fontSize: 18,
-
+                  fontSize: 22,
+                  marginTop: -18
                 }}
               >
                 &gt;
               </Text>
-              <TouchableOpacity style={{ marginTop: -40 }}>
+              <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}> AIRPORT PICKUP</Text>
               </TouchableOpacity>
               <Text style={{ color: "gray", marginLeft: -30, }}>8th October 15:00h </Text>
@@ -138,7 +138,7 @@ export default class TripScreen extends React.Component {
           <ScrollView
             style={{ height: 2, backgroundColor: "white", marginTop: 20 }}
           ></ScrollView>
-          <ScrollView style={{}}>
+          <ScrollView>
             <Image
               source={Hotel}
               style={{ width: 50, height: 30, marginLeft: 30, marginTop: 30 }}
@@ -157,21 +157,22 @@ export default class TripScreen extends React.Component {
                   color: "gray",
                   fontWeight: "bold",
                   marginLeft: 170,
-                  fontSize: 18,
+                  fontSize: 22,
+                  marginTop: -18
                 }}
               >
                 &gt;
-               </Text>
-              <TouchableOpacity style={{ marginTop: -40 }}>
-                <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>HOTEL RESERVATION</Text>
+              </Text>
+              <TouchableOpacity style={{ marginTop: -23 }}>
+                <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}> HOTEL RESERVATION</Text>
               </TouchableOpacity>
-              <Text style={{ color: "gray", marginLeft: -30 }}>Hotel Gran de Barcelona </Text>
+              <Text style={{ color: "gray", marginLeft: -30, }}>Hotel Gran de Barcelona</Text>
             </TouchableOpacity>
           </ScrollView>
           <ScrollView
             style={{ height: 2, backgroundColor: "white", marginTop: 20 }}
           ></ScrollView>
-          <ScrollView style={{}}>
+          <ScrollView>
             <Image
               source={Ticket}
               style={{ width: 50, height: 30, marginLeft: 30, marginTop: 30 }}
@@ -180,7 +181,7 @@ export default class TripScreen extends React.Component {
               style={{
                 fontSize: 15,
                 marginLeft: 150,
-                marginTop: -30,
+                marginTop: -20,
                 color: "blue",
                 fontWeight: "bold",
               }}
@@ -188,19 +189,18 @@ export default class TripScreen extends React.Component {
               <Text
                 style={{
                   color: "gray",
+                  fontWeight: "bold",
                   marginLeft: 170,
-                  fontSize: 18,
-                  fontWeight: "bold"
+                  fontSize: 22,
+                  marginTop: -18
                 }}
               >
                 &gt;
               </Text>
-              <TouchableOpacity style={{ marginTop: -30 }}>
-                <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}> GAME TICKETS</Text>
+              <TouchableOpacity style={{ marginTop: -23 }}>
+                <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>GAME TICKETS</Text>
               </TouchableOpacity>
-              <Text style={{ color: "gray", fontSize: 13, paddingTop: 0, marginLeft: -25 }}>
-                9 Oct Camp Nou Stadium
-              </Text>
+              <Text style={{ color: "gray", marginLeft: -30, }}>9 Oct Camp Nou Stadium</Text>
             </TouchableOpacity>
           </ScrollView>
           <ScrollView
@@ -219,7 +219,7 @@ export default class TripScreen extends React.Component {
           <ScrollView
             style={{ height: 2, backgroundColor: "white", marginTop: 20 }}
           ></ScrollView>
-          <ScrollView style={{}}>
+          <ScrollView>
             <Image
               source={Hotel2}
               style={{ width: 50, height: 30, marginLeft: 30, marginTop: 30 }}
@@ -228,7 +228,7 @@ export default class TripScreen extends React.Component {
               style={{
                 fontSize: 15,
                 marginLeft: 150,
-                marginTop: -30,
+                marginTop: -20,
                 color: "blue",
                 fontWeight: "bold",
               }}
@@ -236,25 +236,24 @@ export default class TripScreen extends React.Component {
               <Text
                 style={{
                   color: "gray",
-                  marginLeft: 170,
                   fontWeight: "bold",
-                  fontSize: 18,
+                  marginLeft: 170,
+                  fontSize: 22,
+                  marginTop: -18
                 }}
               >
                 &gt;
               </Text>
-              <TouchableOpacity style={{ marginTop: -30 }}>
+              <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>SAGRADA FAMILIA</Text>
               </TouchableOpacity>
-              <Text style={{ color: "gray", fontSize: 13, paddingTop: 0, marginLeft: -30 }}>
-                10 October, 14:30h
-              </Text>
+              <Text style={{ color: "gray", marginLeft: -30, }}>10 October, 14:30h </Text>
             </TouchableOpacity>
           </ScrollView>
           <ScrollView
             style={{ height: 2, backgroundColor: "white", marginTop: 20 }}
           ></ScrollView>
-          <ScrollView style={{}}>
+          <ScrollView>
             <Image
               source={Sea}
               style={{ width: 50, height: 30, marginLeft: 30, marginTop: 30 }}
@@ -263,7 +262,7 @@ export default class TripScreen extends React.Component {
               style={{
                 fontSize: 15,
                 marginLeft: 150,
-                marginTop: -30,
+                marginTop: -20,
                 color: "blue",
                 fontWeight: "bold",
               }}
@@ -271,19 +270,18 @@ export default class TripScreen extends React.Component {
               <Text
                 style={{
                   color: "gray",
+                  fontWeight: "bold",
                   marginLeft: 170,
-                  fontSize: 18,
-                  fontWeight: "bold"
+                  fontSize: 22,
+                  marginTop: -18
                 }}
               >
                 &gt;
               </Text>
-              <TouchableOpacity style={{ marginTop: -30 }}>
+              <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>SAGRADA FAMILIA</Text>
               </TouchableOpacity>
-              <Text style={{ color: "gray", fontSize: 13, paddingTop: 0, marginLeft: -30 }}>
-                10 October, 14:30h
-              </Text>
+              <Text style={{ color: "gray", marginLeft: -30, }}>10 October, 14:30h </Text>
             </TouchableOpacity>
           </ScrollView>
           <ScrollView
@@ -302,43 +300,36 @@ export default class TripScreen extends React.Component {
           <ScrollView
             style={{ height: 2, backgroundColor: "white", marginTop: 20 }}
           ></ScrollView>
-          <ScrollView style={{}}>
+          <ScrollView>
             <Image
               source={Airplane}
               style={{ width: 50, height: 30, marginLeft: 30, marginTop: 30 }}
-            ></Image>
-            <Text
+            />
+            <TouchableOpacity
               style={{
-                marginLeft: 130,
-                marginTop: -32,
+                fontSize: 15,
+                marginLeft: 150,
+                marginTop: -20,
                 color: "blue",
                 fontWeight: "bold",
               }}
             >
-              RAO RESTAURANT
-            </Text>
-            <Text
-              style={{
-                marginLeft: 130,
-                color: "blue",
-                paddingTop: 2,
-                color: "gray",
-              }}
-            >
-              10 October, 14:30h
-            </Text>
-            <Text
-              style={{
-                marginLeft: 320,
-                color: "#6B0B5E",
-                marginTop: -25,
-                color: "gray",
-                fontSize: 18,
-                fontWeight: "bold",
-              }}
-            >
-              &gt;
-            </Text>
+              <Text
+                style={{
+                  color: "gray",
+                  fontWeight: "bold",
+                  marginLeft: 170,
+                  fontSize: 22,
+                  marginTop: -18
+                }}
+              >
+                &gt;
+              </Text>
+              <TouchableOpacity style={{ marginTop: -23 }}>
+                <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>RAO RESTUARANT</Text>
+              </TouchableOpacity>
+              <Text style={{ color: "gray", marginLeft: -30, }}>10 October, 14:30h </Text>
+            </TouchableOpacity>
           </ScrollView>
         </ScrollView>
       </ScrollView>
@@ -350,7 +341,7 @@ const styles = StyleSheet.create({
   container: {
     height: 900,
     marginLeft: 0,
-    marginTop: 50,
+    marginTop: 0,
     width: 800,
   },
 });

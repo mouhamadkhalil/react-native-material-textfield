@@ -55,9 +55,10 @@ export default class ManageTripScreen extends React.Component {
                 fontWeight: "bold",
                 marginTop: 25,
                 marginLeft: 40,
+                fontSize: 18
               }}
             >
-              Complete payment{" "}
+              Complete payment
             </Text>
             <Text
               style={{
@@ -81,9 +82,10 @@ export default class ManageTripScreen extends React.Component {
                 fontWeight: "bold",
                 marginTop: 30,
                 marginLeft: 40,
+                fontSize: 18
               }}
             >
-              Upload passport{" "}
+              Upload passport
             </Text>
             <Text
               style={{
@@ -122,9 +124,10 @@ export default class ManageTripScreen extends React.Component {
                 marginTop: 30,
                 marginLeft: 40,
                 width: 500,
+                fontSize: 18
               }}
             >
-              Changes and cancellations{" "}
+              Changes and cancellations
             </Text>
             <Text
               style={{
@@ -149,9 +152,10 @@ export default class ManageTripScreen extends React.Component {
                 marginTop: 30,
                 marginLeft: 40,
                 width: 700,
+                fontSize: 18
               }}
             >
-              Travellers (invite to join){" "}
+              Travellers (invite to join)
             </Text>
             <Text
               style={{

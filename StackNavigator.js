@@ -10,7 +10,6 @@ import {
     Button
 } from "react-native";
 
-
 import LoginScreen from "./Components/Start/LoginScreen";
 import SignUpScreen from "./Components/Start/SignupScreen";
 import DocumentScreen from "./Components/TripDocs/DocumentScreen";

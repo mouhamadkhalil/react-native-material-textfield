@@ -105,7 +105,7 @@ export default class GameScreen extends React.Component {
                 marginLeft: 30,
               }}
             >
-              TTICKET DETAILS{" "}
+              TTICKET DETAILS
             </Text>
             <Text
               style={{
@@ -177,7 +177,7 @@ export default class GameScreen extends React.Component {
           <TouchableOpacity>
             <Image
               style={{ marginLeft: 0, marginTop: 0, width: 200 }}
-              source={{ uri: this.state.Picture1 }}
+              source={this.state.Picture1 ? { uri: this.state.Picture } : null}
             />
           </TouchableOpacity>
           <ScrollView
@@ -197,21 +197,20 @@ export default class GameScreen extends React.Component {
                 color: "blue",
               }}
             >
-              HOW TO GET THERE{" "}
+              HOW TO GET THERE
             </Text>
             <Text style={{ marginLeft: 70, marginTop: 10 }}>Camp Nou </Text>
             <Text style={{ marginLeft: 70, marginTop: 10 }}>
-              {" "}
-              C.d'Aristides Maillol,{" "}
+              C.d'Aristides Maillol,
             </Text>
             <Text style={{ marginLeft: 70, marginTop: 10 }}>
-              12 08028 Barcelona{" "}
+              12 08028 Barcelona
             </Text>
             <Text style={{ marginLeft: 70, marginTop: 15 }}>
-              Les Corts (L3 Green){" "}
+              Les Corts (L3 Green)
             </Text>
             <Text style={{ marginLeft: 70, marginTop: 10 }}>
-              Badal (L3 - Green){" "}
+              Badal (L3 - Green)
             </Text>
             <Text style={{ marginLeft: 70, marginTop: 10 }}>
               Arizala - Les Corts (52, 54, D20 or H10)
@@ -234,7 +233,7 @@ export default class GameScreen extends React.Component {
                 color: "blue",
               }}
             >
-              YOUR SEATING{" "}
+              YOUR SEATING
             </Text>
             <Text
               style={{
@@ -245,12 +244,12 @@ export default class GameScreen extends React.Component {
                 marginLeft: 40,
               }}
             >
-              CATEGORY{" "}
+              CATEGORY
             </Text>
             <Text style={{ paddingTop: 20, marginLeft: 40 }}>
               {this.state.Seat_Id}
             </Text>
-            {this.state.isDone ? <Image source={{ uri: this.state.GamePicture }}
+            {this.state.isDone ? <Image source={this.state.GamePicture ? { uri: this.state.GamePicture } : null}
               style={{ marginLeft: 60, marginTop: 20, width: 180, height: 180 }} /> : <ActivityIndicator size="small" color="red"
                 style={{ marginTop: 80, marginLeft: -20 }}
               />}
@@ -284,7 +283,7 @@ export default class GameScreen extends React.Component {
                 marginLeft: 40,
               }}
             >
-              E-TICKET{" "}
+              E-TICKET
             </Text>
             <Text style={{ paddingTop: 20, marginLeft: 40, paddingTop: 5 }}>
               1 ticket
@@ -312,7 +311,7 @@ export default class GameScreen extends React.Component {
                 marginLeft: 40,
               }}
             >
-              PAPER TICKET{" "}
+              PAPER TICKET
             </Text>
             <Text style={{ paddingTop: 20, marginLeft: 40, paddingTop: 5 }}>
               5 tickets
@@ -326,7 +325,7 @@ export default class GameScreen extends React.Component {
                 marginLeft: 40,
               }}
             >
-              TICKET COLLECTION{" "}
+              TICKET COLLECTION
             </Text>
             <Text
               style={{
@@ -347,7 +346,7 @@ export default class GameScreen extends React.Component {
                 marginLeft: 40,
               }}
             >
-              TICKET RETUTN{" "}
+              TICKET RETUTN
             </Text>
             <Text
               style={{
@@ -373,7 +372,7 @@ export default class GameScreen extends React.Component {
                 marginLeft: 40,
               }}
             >
-              CRAD TICKET{" "}
+              CRAD TICKET
             </Text>
             <Text style={{ paddingTop: 20, marginLeft: 40, paddingTop: 5 }}>
               5 tickets
@@ -387,7 +386,7 @@ export default class GameScreen extends React.Component {
                 marginLeft: 40,
               }}
             >
-              TICKET COLLECTION{" "}
+              TICKET COLLECTION
             </Text>
             <Text
               style={{
@@ -408,7 +407,7 @@ export default class GameScreen extends React.Component {
                 marginLeft: 40,
               }}
             >
-              TICKET RETUTN{" "}
+              TICKET RETUTN
             </Text>
             <Text
               style={{

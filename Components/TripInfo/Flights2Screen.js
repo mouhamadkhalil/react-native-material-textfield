@@ -14,7 +14,7 @@ export default class Flights2Screen extends React.Component {
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 35, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 37, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -37,7 +37,7 @@ export default class Flights2Screen extends React.Component {
               backgroundColor: "white",
               marginLeft: 42,
               marginTop: 30,
-              height: 180,
+              height: 185,
               width: "80%",
               textAlign: "center",
             }}
@@ -68,7 +68,7 @@ export default class Flights2Screen extends React.Component {
                 color: "black",
                 fontWeight: "bold",
                 fontSize: 19,
-                marginLeft: 140,
+                marginLeft: 195,
                 marginTop: -22,
               }}
             >
@@ -78,12 +78,12 @@ export default class Flights2Screen extends React.Component {
               style={{ height: 2, backgroundColor: "#F9E8E8", marginTop: 20 }}
             ></ScrollView>
 
-            <Text style={{ color: "blue", marginTop: 20, marginLeft: 40 }}>
+            <Text style={{ color: "blue", marginTop: 25, marginLeft: 40 }}>
               Economy class
             </Text>
 
             <Text style={{ color: "blue", marginLeft: 200, marginTop: -22 }}>
-              20kg Luggage{" "}
+              20kg Luggage
             </Text>
           </ScrollView>
           <ScrollView
@@ -128,7 +128,7 @@ export default class Flights2Screen extends React.Component {
               PASSENGER 2
             </Text>
             <Text style={{ marginLeft: 40, paddingTop: 10 }}>
-              Jamie Oliver{" "}
+              Jamie Oliver
             </Text>
             <Text style={{ marginLeft: 185, marginTop: -20 }}>
               Gordon Ramsey
@@ -178,18 +178,18 @@ export default class Flights2Screen extends React.Component {
             >
               10:45
             </Text>
-            <Text style={{ marginLeft: 110 }}>BEY</Text>
+            <Text style={{ marginLeft: 113 }}>BEY</Text>
             <Text
               style={{
                 marginLeft: 250,
                 fontSize: 22,
                 fontWeight: "bold",
-                marginTop: -44,
+                marginTop: -48,
               }}
             >
               10:45
             </Text>
-            <Text style={{ marginLeft: 260 }}>BCN</Text>
+            <Text style={{ marginLeft: 252 }}>BCN</Text>
           </ScrollView>
           <ScrollView
             style={{
@@ -301,18 +301,18 @@ export default class Flights2Screen extends React.Component {
             >
               10:45
             </Text>
-            <Text style={{ marginLeft: 110 }}>BEY</Text>
+            <Text style={{ marginLeft: 114 }}>BEY</Text>
             <Text
               style={{
                 marginLeft: 250,
                 fontSize: 22,
                 fontWeight: "bold",
-                marginTop: -44,
+                marginTop: -48,
               }}
             >
               10:45
             </Text>
-            <Text style={{ marginLeft: 260 }}>BCN</Text>
+            <Text style={{ marginLeft: 254 }}>BCN</Text>
           </ScrollView>
           <Text
             style={{
@@ -322,12 +322,12 @@ export default class Flights2Screen extends React.Component {
               marginLeft: 70,
             }}
           >
-            IMPORTANT INFORMATION ABOUT YOUR FLIGHT{" "}
+            IMPORTANT INFORMATION ABOUT YOUR FLIGHT
           </Text>
           <Text
-            style={{ width: 340, fontSize: 13, paddingTop: 30, marginLeft: 40 }}
+            style={{ width: 340, fontSize: 13, paddingTop: 30, marginLeft: 45 }}
           >
-            {" "}
+
             We recommend that you complete check in at least 2 hours before the
             departure of your flight.
           </Text>
@@ -336,7 +336,7 @@ export default class Flights2Screen extends React.Component {
               width: 340,
               fontSize: 13,
               paddingTop: 30,
-              marginLeft: 40,
+              marginLeft: 45,
               paddingTop: 6,
             }}
           >
