@@ -63,6 +63,7 @@ export default class LoginScreen extends React.Component {
                     this.setState({ Token: token_id });
                     localStorage.setItem("token", this.state.Token);
                     this.setState({ isDone: true })
+                    alert("yes it is done, username is found")
                     alert(localStorage.getItem("token", ""));
                     // window.location = "/HomePre";
                 }
@@ -74,20 +75,20 @@ export default class LoginScreen extends React.Component {
 
     Facebook = () => {
         alert("Login with Facebook !");
-    }
-        ;
+    };
+
     Facebook = this.Facebook.bind(this);
 
     Google = () => {
         alert("Login with Google !")
-    }
+    };
 
     Google = this.Google.bind(this);
 
 
     render() {
         const { navigation } = this.props;
-        
+
         return (
 
             <ScrollView style={styles.container}>

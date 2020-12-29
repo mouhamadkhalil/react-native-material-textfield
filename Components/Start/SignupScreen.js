@@ -18,35 +18,41 @@ export default class SignUpScreen extends React.Component {
   state = {
     client_id: "",
     grant_type: "Bearer Token",
-    username: "",
-    password: "",
     rememberMe: "",
     scope: "",
     Token: "",
+    Name: "",
+    SurName: "",
+    Email: "",
+    Password: "",
+    ConfirmPassword: "",
+    FavouriteTeam: ""
   };
-
-  async handleChangeEmail(event) {
-    this.setState({ username: event.target.value });
-  }
-
-  async handleChangePassword(event) {
-    this.setState({ password: event.target.value });
-  }
 
   Home = () => {
     window.location = "/";
   };
 
   SubmitLoginBtn = (event) => {
-    console.log("username : " + this.state.username);
-    console.log("password : " + this.state.password);
+    console.log("Name : " + this.state.Name);
+    console.log("SurName : " + this.state.SurName);
+    console.log("Email : " + this.state.Email);
+    console.log("Password : " + this.state.Password);
+    console.log("ConfirmPassword : " + this.state.ConfirmPassword);
+    console.log("FavouriteTeam : " + this.state.FavouriteTeam);
 
-    const url = "https://apitest.fly-foot.com/api/mobile/profile/login";
+
+    const url = `${API_URL}/mobile/profile/Create`;
 
     const data = {
-      username: this.state.username,
-      password: this.state.password,
+      Name: this.state.Name,
+      SurName: this.state.SurName,
+      Email: this.state.Email,
+      Password: this.state.Password,
+      ConfirmPassword: this.state.ConfirmPassword,
+      FavouriteTeam: this.state.FavouriteTeam,
     };
+
     fetch(url, {
       method: "POST",
       body: JSON.stringify(data),
@@ -59,7 +65,7 @@ export default class SignUpScreen extends React.Component {
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
         if (response.ErrorId) {
-          alert("Error: The user name or password is incorrect");
+          alert("Something went wrong, please try again later !");
           window.location.reload();
         } else {
           console.log(response)
@@ -67,6 +73,7 @@ export default class SignUpScreen extends React.Component {
           console.log("token is :", token_id)
           this.setState({ Token: token_id });
           localStorage.setItem("token", this.state.Token);
+          alert("you have successfully registered !")
           alert(localStorage.getItem("token", ""))
           window.location = "/HomePre";
         }
@@ -74,6 +81,18 @@ export default class SignUpScreen extends React.Component {
   };
 
   SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
+
+  Facebook = () => {
+    alert("Login with Facebook !");
+  };
+
+  Facebook = this.Facebook.bind(this);
+
+  Google = () => {
+    alert("Login with Google !")
+  };
+
+  Google = this.Google.bind(this);
 
   render() {
     return (
@@ -95,6 +114,7 @@ export default class SignUpScreen extends React.Component {
             title="LOGIN WITH FACEBOOK"
             color="blue"
             style={{ width: 500, padding: 300, height: 300 }}
+            onPress={this.Facebook}
           />
         </TouchableOpacity>
 
@@ -102,6 +122,7 @@ export default class SignUpScreen extends React.Component {
           <Button
             title="LOGIN WITH GOOGLE"
             color="red"
+            onPress={this.Google}
           />
         </TouchableOpacity>
         <Text style={{ fontSize: 20, paddingTop: 10, marginLeft: 90 }}>
@@ -113,10 +134,10 @@ export default class SignUpScreen extends React.Component {
 
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 35 }}
-          // onChangeText={this.handleChangeEmail.bind(this)}
+          onChangeText={(Name) => this.setState({ Name })}
           placeholder="   Hann"
           required
-          // value={this.state.email}
+          value={this.state.Name}
           type="text"
         />
 
@@ -126,10 +147,10 @@ export default class SignUpScreen extends React.Component {
 
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 190 }}
-          onChangeText={this.handleChangeEmail.bind(this)}
+          onChangeText={(SurName) => this.setState({ SurName })}
           placeholder="   Hann"
           required
-          // value={this.state.email}
+          value={this.state.SurName}
           type="text"
         />
 
@@ -139,10 +160,9 @@ export default class SignUpScreen extends React.Component {
 
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
-          // onChangeText={this.handleChangePassword.bind(this)}
+          onChangeText={(Email) => this.setState({ Email })}
           required
-          // value={this.state.password}
-          // type="email"
+          value={this.state.Email}
           placeholder="  hannibal@gmail.com"
         />
 
@@ -153,11 +173,11 @@ export default class SignUpScreen extends React.Component {
 
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 35 }}
-          // onChangeText={this.handleChangeEmail.bind(this)}
+          onChangeText={(Password) => this.setState({ Password })}
           placeholder="   Hann"
           required
-          // value={this.state.email}
-          type="text"
+          value={this.state.Password}
+          secureTextEntry={true}
         />
 
         <Text style={{ marginTop: -79, marginLeft: 190, color: "gray" }}>
@@ -166,13 +186,12 @@ export default class SignUpScreen extends React.Component {
 
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 190 }}
-          onChangeText={this.handleChangeEmail.bind(this)}
+          onChangeText={(ConfirmPassword) => this.setState({ ConfirmPassword })}
           placeholder="   Hann"
           required
-          // value={this.state.email}
-          type="text"
+          value={this.state.ConfirmPassword}
+          secureTextEntry={true}
         />
-
 
         <Text style={{ paddingTop: 30, marginLeft: 35, width: 300, color: "gray" }}>
           Favourite Team
@@ -180,15 +199,11 @@ export default class SignUpScreen extends React.Component {
 
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
-          // onChangeText={this.handleChangePassword.bind(this)}
+          onChangeText={(FavouriteTeam) => this.setState({ FavouriteTeam })}
           required
-          // value={this.state.password}
-          // type="email"
-          placeholder=" Choose one"
+          placeholder="   Choose one"
+          value={this.state.FavouriteTeam}
         />
-
-
-
 
         <Text
           style={{
@@ -219,7 +234,6 @@ export default class SignUpScreen extends React.Component {
           By Signing up, i agree with <TouchableOpacity><Text style={{ marginTop: 40 }}>FFT Terms.</Text></TouchableOpacity>
 
         </Text>
-
 
         <Text
           style={{
