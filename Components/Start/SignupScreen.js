@@ -7,6 +7,8 @@ import {
   Image,
   Button,
   TouchableOpacity,
+  Picker,
+  ActivityIndicator
 } from "react-native";
 import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
@@ -15,6 +17,11 @@ import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env"
 
 export default class SignUpScreen extends React.Component {
+  constructor(navigation) {
+    super(navigation);
+    console.log(navigation);
+  }
+
   state = {
     client_id: "",
     grant_type: "Bearer Token",
@@ -26,12 +33,46 @@ export default class SignUpScreen extends React.Component {
     Email: "",
     Password: "",
     ConfirmPassword: "",
-    FavouriteTeam: ""
+    FavouriteTeam1: "",
+    FavouriteTeam2: "",
+    FavouriteTeam3: "",
+    FavouriteTeam4: "",
+    isDone: false
   };
 
   Home = () => {
     window.location = "/";
   };
+
+  componentDidMount() {
+    const url = `${API_URL}/mobile/team/all`;
+
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .catch((error) => console.error("Error: ", error))
+      .then((response) => {
+        this.setState({
+          FavouriteTeam1: response[0].TeamName
+        })
+        this.setState({
+          FavouriteTeam2: response[1].TeamName
+        })
+        this.setState({
+          FavouriteTeam3: response[2].TeamName
+        })
+        this.setState({
+          FavouriteTeam4: response[3].TeamName
+        })
+        console.log("FavouriteTeam", this.state.FavouriteTeam4)
+
+      });
+  }
 
   SubmitLoginBtn = (event) => {
     console.log("Name : " + this.state.Name);
@@ -58,7 +99,7 @@ export default class SignUpScreen extends React.Component {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "Accept": "application/json",
       },
     })
       .then((res) => res.json())
@@ -68,14 +109,21 @@ export default class SignUpScreen extends React.Component {
           alert("Something went wrong, please try again later !");
           window.location.reload();
         } else {
-          console.log(response)
-          let token_id = response.Token;
-          console.log("token is :", token_id)
-          this.setState({ Token: token_id });
-          localStorage.setItem("token", this.state.Token);
-          alert("you have successfully registered !")
-          alert(localStorage.getItem("token", ""))
-          window.location = "/HomePre";
+          if (this.state.Password !== this.state.ConfirmPassword) {
+            alert("password don't match ")
+            window.location.reload();
+          }
+          else {
+            console.log(response)
+            let token_id = response.Token;
+            console.log("token is :", token_id)
+            this.setState({ Token: token_id });
+            this.setState({ isDone: true })
+            localStorage.setItem("token", this.state.Token);
+            alert("you have successfully registered !")
+            alert(localStorage.getItem("token", ""))
+            // window.location = "/HomePre";
+          }
         }
       });
   };
@@ -197,23 +245,15 @@ export default class SignUpScreen extends React.Component {
           Favourite Team
         </Text>
 
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
-          onChangeText={(FavouriteTeam) => this.setState({ FavouriteTeam })}
-          required
-          placeholder="   Choose one"
-          value={this.state.FavouriteTeam}
-        />
-
-        <Text
-          style={{
-            color: "gray",
-            fontSize: 16,
-            paddingRight: 110,
-            paddingTop: 20,
-          }}
-        >
-        </Text>
+        <Picker
+          selectedValue={this.state.FavouriteTeam1}
+          style={{ height: 50, width: 320, marginLeft: 30, borderColor: 'gray' }}
+          onValueChange={(itemValue, itemIndex) => this.setState({ FavouriteTeam1: itemValue })}>
+          <Picker.Item label={this.state.FavouriteTeam1} value={this.state.FavouriteTeam1} />
+          <Picker.Item label={this.state.FavouriteTeam2} value={this.state.FavouriteTeam2} />
+          <Picker.Item label={this.state.FavouriteTeam3} value={this.state.FavouriteTeam3} />
+          <Picker.Item label={this.state.FavouriteTeam4} value={this.state.FavouriteTeam4} />
+        </Picker>
 
         <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
           <Text style={styles.loginText}>
@@ -221,10 +261,14 @@ export default class SignUpScreen extends React.Component {
           </Text>
         </TouchableOpacity>
 
+        {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 0 }} />
+          : console.log("done")}
+
+
         <Text
           style={{
             color: "gray",
-            marginLeft: 35,
+            marginLeft: 40,
             fontSize: 16,
             paddingRight: 110,
             paddingTop: 20,
@@ -238,7 +282,7 @@ export default class SignUpScreen extends React.Component {
         <Text
           style={{
             color: "gray",
-            marginLeft: 35,
+            marginLeft: 40,
             fontSize: 16,
             paddingRight: 110,
             paddingTop: 20,
@@ -246,7 +290,7 @@ export default class SignUpScreen extends React.Component {
         >
           Already have an account?
         </Text>
-        <TouchableOpacity><Text style={{ marginLeft: 215, marginTop: -20, marginBottom: 30 }}>  Login here </Text></TouchableOpacity>
+        <TouchableOpacity><Text style={{ marginLeft: 215, marginTop: -20, marginBottom: 30 }}> &nbsp; Login here </Text></TouchableOpacity>
       </ScrollView>
     );
   }
