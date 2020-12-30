@@ -17,16 +17,16 @@ export default class ChatActive1Screen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          {/* <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 25, color: "yellow", marginLeft: 30, marginTop: 10, fontWeight: "bold" }}>&#8592;</Text>
-          </TouchableOpacity> */}
+          <TouchableOpacity onPress={this.Back}>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+          </TouchableOpacity>
           <Image
             source={User}
-            style={{ marginLeft: 30, marginTop: 15,width:25,height:25 }}
+            style={{ marginLeft: 75, marginTop: -28, width: 25, height: 25 }}
           />
           <Text
             style={{
-              marginLeft: 80,
+              marginLeft: 120,
               color: "white",
               fontSize: 19,
               fontWeight: "bold",
@@ -36,7 +36,7 @@ export default class ChatActive1Screen extends React.Component {
             Henry Rollins
           </Text>
         </ScrollView>
-        <ScrollView style={{ width: "50%", height: 600, backgroundColor: "#F9F4EC",marginLeft:-35 }}>
+        <ScrollView style={{ width: "50%", height: 600, backgroundColor: "#F9F4EC", marginLeft: -35 }}>
           <ScrollView>
             <TouchableOpacity>
               <Text
@@ -76,7 +76,7 @@ export default class ChatActive1Screen extends React.Component {
             ></ScrollView>
             <Image
               source={User}
-              style={{ marginLeft: 185, marginTop: 80 ,width:50,height:50}}
+              style={{ marginLeft: 185, marginTop: 80, width: 50, height: 50 }}
             />
             <Text
               style={{

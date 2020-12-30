@@ -19,11 +19,11 @@ export default class ChatProfile3Screen extends React.Component {
           </TouchableOpacity>
           <Image
             source={User}
-            style={{ marginLeft: 80, marginTop: -27, width: 25, height: 25 }}
+            style={{ marginLeft: 75, marginTop: -28, width: 25, height: 25 }}
           />
           <Text
             style={{
-              marginLeft: 115,
+              marginLeft: 120,
               color: "white",
               fontSize: 19,
               fontWeight: "bold",

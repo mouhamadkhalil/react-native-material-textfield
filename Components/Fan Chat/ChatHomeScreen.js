@@ -19,7 +19,7 @@ export default class ChatHomeScreen extends React.Component {
           </TouchableOpacity>
           <Image
             source={User}
-            style={{ marginLeft: 75, marginTop: -27, width: 25, height: 25 }}
+            style={{ marginLeft: 75, marginTop: -28, width: 25, height: 25 }}
           />
           <Text
             style={{
@@ -27,7 +27,7 @@ export default class ChatHomeScreen extends React.Component {
               color: "white",
               fontSize: 19,
               fontWeight: "bold",
-              marginTop: -27,
+              marginTop: -25,
             }}
           >
             Henry Rollins

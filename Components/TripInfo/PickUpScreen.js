@@ -51,9 +51,9 @@ export default class PickUpScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 50 }}>
+        <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 25, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 25, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{

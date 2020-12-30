@@ -8,13 +8,17 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AwesomeAlert from "react-native-awesome-alerts";
-import Attachment from "../../assets/images/attachment.png";
-import Location from "../../assets/images/location.png";
-import Document from "../../assets/images/document.png";
-import Help from "../../assets/images/help.jpg";
-import Logout from "../../assets/images/Logout.png";
-import FlyFoot from "../../assets/images/flyfoot.png";
-import User from "../../assets/images/user.png";
+import Attachment from "../../assets/Images_Design/attachment1.png";
+import Location from "../../assets/Images_Design/location1.png";
+import Document from "../../assets/Images_Design/document1.png";
+import Help from "../../assets/Images_Design/information1.png";
+import Logout from "../../assets/Images_Design/logout1.png";
+import FlyFoot from "../../assets/Images_Design/flyfoot2.png";
+import User from "../../assets/Images_Design/profile1.png";
+import Close from "../../assets/Images_Design/close1.png";
+import Twitter from "../../assets/Images_Design/twitter2.png";
+import Facebook from "../../assets/Images_Design/facebook.png";
+import Instagram from "../../assets/Images_Design/insta1.png";
 
 
 const window = Dimensions.get("window");
@@ -57,6 +61,7 @@ export default class MenuScreen extends React.Component {
               <TouchableOpacity>
                 <Text style={styles.name}>FLY-FOOT</Text>
               </TouchableOpacity>
+              <Image source={Close} style={{ marginLeft: 310, marginTop: -35 }} />
             </TouchableOpacity>
           </View>
           <Text style={styles.item}>
@@ -66,7 +71,7 @@ export default class MenuScreen extends React.Component {
               <TouchableOpacity><Text style={{ marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Profile</Text></TouchableOpacity>
               <Image
                 source={User}
-                style={{ marginLeft: 26, marginTop: -35, width: 30, height: 30 }}
+                style={{ marginLeft: 26, marginTop: -35, width: 25, height: 32 }}
               />
             </TouchableOpacity>
           </Text>
@@ -78,7 +83,7 @@ export default class MenuScreen extends React.Component {
               <TouchableOpacity><Text style={{ marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Manage trip</Text></TouchableOpacity>
               <Image
                 source={Attachment}
-                style={{ marginLeft: 26, marginTop: -35, width: 30, height: 30 }}
+                style={{ marginLeft: 26, marginTop: -35, width: 25, height: 32 }}
               />
             </TouchableOpacity>
           </Text>
@@ -89,7 +94,7 @@ export default class MenuScreen extends React.Component {
               <TouchableOpacity><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Trip Information</Text></TouchableOpacity>
               <Image
                 source={Location}
-                style={{ marginLeft: 26, marginTop: -32, width: 25, height: 30 }}
+                style={{ marginLeft: 26, marginTop: -32, width: 25, height: 32 }}
               />
             </TouchableOpacity>
           </Text>
@@ -124,29 +129,15 @@ export default class MenuScreen extends React.Component {
                 source={Logout}
                 style={{ marginLeft: 26, marginTop: -32, width: 30, height: 30 }}
               />
+              <Image source={Facebook} style={{ marginLeft: 30, width: 12, height: 32, marginTop: 150 }} />
+              <Image source={Twitter} style={{ marginLeft: 65, width: 37, height: 29, marginTop: -30 }} />
+              <Image source={Instagram} style={{ marginLeft: 120, width: 35, height: 33, marginTop: -31 }} />
+              <TouchableOpacity>
+                <Text style={{ color: "blue", fontWeight: "bold", fontSize: 19, marginLeft: 230, marginTop: -20 }}>fly-foot.com</Text>
+              </TouchableOpacity>
             </TouchableOpacity>
           </Text>
-          <Text
-            style={{
-              paddingTop: 108,
-              paddingLeft: 100,
-              color: "gray",
-              marginBottom: 80,
-            }}
-          >
-            ARABIC
-          </Text>
-          <Text
-            style={{
-              color: "blue",
-              paddingLeft: 190,
-              marginTop: -98,
-            }}
-          >
-            ENGLISH
-          </Text>
         </View>
-
         {/* <ScrollView style={{ width: 950, marginTop: -230, marginLeft: 190 }}>
           <AwesomeAlert
             show={showAlert}
@@ -183,9 +174,9 @@ const styles = StyleSheet.create({
   },
   avatar: {
     width: 35,
-    height: 35,
+    height: 45,
     paddingTop: 10,
-    marginTop: 20,
+    marginTop: 25,
     marginLeft: 26,
   },
   name: {
@@ -194,7 +185,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     fontSize: 25,
     color: "blue",
-    marginTop: -55,
+    marginTop: -60,
     fontWeight: "bold"
   },
   item: {

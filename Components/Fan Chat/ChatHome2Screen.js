@@ -15,13 +15,16 @@ export default class ChatHome2Screen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
+          <TouchableOpacity onPress={this.Back}>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+          </TouchableOpacity>
           <Image
             source={User}
-            style={{ marginLeft: 30, marginTop: 15, width: 25, height: 25 }}
+            style={{ marginLeft: 75, marginTop: -28, width: 25, height: 25 }}
           />
           <Text
             style={{
-              marginLeft: 80,
+              marginLeft: 120,
               color: "white",
               fontSize: 19,
               fontWeight: "bold",

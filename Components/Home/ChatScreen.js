@@ -31,7 +31,7 @@ export default class ChatScreen extends React.Component {
           </Text>
         </ScrollView>
         <TouchableOpacity onPress={this.Back}>
-          <Text style={{ fontSize: 35, color: "yellow", marginLeft: 20, marginTop: -60, fontWeight: "bold" }}>&#8592;</Text>
+          <Text style={{ fontSize: 35, color: "yellow", marginLeft: 10, marginTop: -60, fontWeight: "bold" }}>&#8592;</Text>
         </TouchableOpacity>
         <ScrollView style={styles.div}>
           <Text style={{ paddingTop: 30, marginLeft: 20, fontWeight: "bold" }}>

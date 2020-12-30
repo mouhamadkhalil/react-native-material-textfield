@@ -21,13 +21,16 @@ export default class ChatProfile2Screen extends React.Component {
             marginLeft: -40,
           }}
         >
+          <TouchableOpacity onPress={this.Back}>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 73, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
+          </TouchableOpacity>
           <Text
             style={{
               color: "black",
               fontSize: 19,
               fontWeight: "bold",
-              marginLeft: 80,
-              paddingTop: 10,
+              marginLeft: 125,
+              marginTop: -30,
             }}
           >
             select images

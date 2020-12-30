@@ -23,21 +23,21 @@ export default class Group2bScreen extends React.Component {
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
           <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 25, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.Profile}>
             <Image
               source={User}
-              style={{ marginLeft: 70, marginTop: -27, width: 25, height: 25 }}
+              style={{ marginLeft: 75, marginTop: -28, width: 25, height: 25 }}
             />
           </TouchableOpacity>
           <Text
             style={{
-              marginLeft: 110,
+              marginLeft: 120,
               color: "white",
               fontSize: 19,
               fontWeight: "bold",
-              marginTop: -27,
+              marginTop: -30,
             }}
           >
             FLY-FOOT

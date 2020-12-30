@@ -19,11 +19,11 @@ export default class ChatHome10Screen extends React.Component {
           </TouchableOpacity>
           <Image
             source={User}
-            style={{ marginLeft: 70, marginTop: -30, width: 25, height: 25 }}
+            style={{ marginLeft: 75, marginTop: -28, width: 25, height: 25 }}
           />
           <Text
             style={{
-              marginLeft: 110,
+              marginLeft: 120,
               color: "white",
               fontSize: 19,
               fontWeight: "bold",

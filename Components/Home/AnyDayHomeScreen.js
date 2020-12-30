@@ -8,7 +8,13 @@ import {
   TouchableOpacity,
   ActivityIndicator
 } from "react-native";
-import { API_URL, API_TOKEN } from "@env"
+import { API_URL, API_TOKEN } from "@env";
+import Line1 from "../../assets/Images_Design/line1.png";
+import Line2 from "../../assets/Images_Design/line2.png";
+import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
+import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
+import Search from "../../assets/Images_Design/search1.png";
+import Notifictaion from "../../assets/Images_Design/notification1.png";
 
 export default class AnyDayHomeScreen extends React.Component {
 
@@ -50,16 +56,23 @@ export default class AnyDayHomeScreen extends React.Component {
             alignContent: "center",
             color: "#4c0099",
             fontWeight: "bold",
-            marginTop: 40,
+            marginTop: 30,
             fontSize: 19,
             marginLeft: 210
           }}
         >
           MONDAY 12 SEPT
         </Text>
+        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 375, marginTop: -30 }} />
+        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 430, marginTop: -30 }} />
+        <TouchableOpacity>
+          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 137, marginTop: -25 }} />
+          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 137, marginTop: -5 }} />
+          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 137, marginTop: -5 }} />
+        </TouchableOpacity>
         <Text
           style={{
-            marginTop: 5,
+            marginTop: 30,
             color: "#4c0099",
             fontSize: 70,
             marginLeft: 200
