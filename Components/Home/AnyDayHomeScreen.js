@@ -15,6 +15,8 @@ import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
 import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
+import Chat from "../../assets/Images_Design/chat1.png";
+
 
 export default class AnyDayHomeScreen extends React.Component {
 
@@ -83,6 +85,7 @@ export default class AnyDayHomeScreen extends React.Component {
         <Text style={{ color: "#4c0099", fontSize: 23, marginLeft: 195 }}>
           3 planned activities
         </Text>
+
         <ScrollView
           style={{
             backgroundColor: "#e0e0e0",
@@ -160,6 +163,7 @@ export default class AnyDayHomeScreen extends React.Component {
                 style={{ marginTop: 80, marginLeft: 0 }}
               />}
           </TouchableOpacity>
+
         </ScrollView>
         <ScrollView
           style={{
@@ -224,7 +228,14 @@ export default class AnyDayHomeScreen extends React.Component {
                 style={{ marginTop: 80, marginLeft: 0 }}
               />}
           </TouchableOpacity>
+
+
+
+
         </ScrollView>
+        <TouchableOpacity>
+          <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
+        </TouchableOpacity>
       </ScrollView>
     );
   }
@@ -236,7 +247,7 @@ const styles = StyleSheet.create({
     marginLeft: -110,
     width: 500,
     marginTop: 30,
-    marginBottom: 10,
+    marginBottom: 0,
     backgroundColor: "#F5F7EC",
   },
 });

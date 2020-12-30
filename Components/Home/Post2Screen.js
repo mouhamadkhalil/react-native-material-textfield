@@ -15,6 +15,7 @@ import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
 import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
+import Chat from "../../assets/Images_Design/chat1.png";
 
 export default class Post2Screen extends React.Component {
 
@@ -133,7 +134,9 @@ export default class Post2Screen extends React.Component {
               />}
           </TouchableOpacity>
         </ScrollView>
-
+        <TouchableOpacity>
+          <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
+        </TouchableOpacity>
       </ScrollView>
     );
   }

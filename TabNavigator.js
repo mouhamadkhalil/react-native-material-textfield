@@ -10,7 +10,7 @@ const BottomTabNavigator = () => {
         <Tab.Navigator>
             <Tab.Screen name="Home" component={MainStackNavigator} />
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
-            <Tab.Screen name="my b  oookings" component={TripStackNavigator} />
+            <Tab.Screen name="my bookings" component={TripStackNavigator} />
             <Tab.Screen name="more" component={TripStackNavigator} />
             <Tab.Screen name="contact us" component={TripStackNavigator} />
         </Tab.Navigator>

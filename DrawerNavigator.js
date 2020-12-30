@@ -78,7 +78,7 @@ const DrawerNavigator = () => {
         <Drawer.Navigator>
             <Drawer.Screen name="Home" component={TabNavigator} />
             <Drawer.Screen name="Trip" component={TripStackNavigator} />
-            <Drawer.Screen name="Login" component={LoginScreen} />
+            {/* <Drawer.Screen name="Login" component={LoginScreen} /> */}
             <Drawer.Screen name="Sign Up" component={SignUpScreen} />
             <Drawer.Screen name="Document" component={DocumentScreen} />
 

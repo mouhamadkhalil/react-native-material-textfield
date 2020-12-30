@@ -176,7 +176,7 @@ export default class LoginScreen extends React.Component {
                 >
                     Don't have an account?
                 </Text>
-                <TouchableOpacity><Text style={{ marginLeft: 206, marginTop: -20 }} >Sign up here </Text></TouchableOpacity>
+                <TouchableOpacity><Text style={{ marginLeft: 206, marginTop: -20, marginBottom: 30 }} >Sign up here </Text></TouchableOpacity>
             </ScrollView>
         );
     }
