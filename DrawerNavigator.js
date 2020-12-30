@@ -67,6 +67,8 @@ import ChatProfile2Screen from "./Components/Fan Chat/ChatProfile2Screen";
 import ChatProfile3Screen from "./Components/Fan Chat/ChatProfile3Screen";
 import Group2bScreen from "./Components/Fan Chat/Group2bScreen";
 import Group2Screen from "./Components/Fan Chat/Group2Screen";
+import SpecialGame from "./Components/Special Games/SpecialGame";
+
 
 import Info from "./Components/More/Info";
 
@@ -142,6 +144,9 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="Group 2" component={Group2Screen} />
 
             <Drawer.Screen name="Info" component={Info} />
+
+            <Drawer.Screen name="Special Games" component={SpecialGame} />
+
 
 
         </Drawer.Navigator>
