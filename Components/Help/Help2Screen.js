@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
   container: {
     height: 1300,
     marginLeft: 0,
-    marginTop: 50,
+    marginTop: 30,
     width: 800,
     marginBottom: 100,
   },

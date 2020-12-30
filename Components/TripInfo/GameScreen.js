@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
   container: {
     height: 2100,
     marginLeft: -10,
-    marginTop: 50,
+    marginTop: 30,
     width: 800,
   },
 });

@@ -30,7 +30,7 @@ export default class Flights1Screen extends React.Component {
               fontWeight: "bold",
               textAlign: "center",
               marginTop: -30,
-              marginLeft:-15
+              marginLeft: -15
             }}
           >
             my flights
@@ -247,7 +247,7 @@ export default class Flights1Screen extends React.Component {
           <Text
             style={{ width: 260, fontSize: 13, paddingTop: 30, marginLeft: 45 }}
           >
-            
+
             We recommend that you complete check in at least 2 hours before the
             departure of your flight.
           </Text>
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   container: {
     height: 1000,
     marginLeft: 0,
-    marginTop: 50,
+    marginTop: 30,
     width: 800,
   },
 });

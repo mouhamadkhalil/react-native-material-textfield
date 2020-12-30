@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   container: {
     height: 1000,
     marginLeft: 0,
-    marginTop: 50,
+    marginTop: 30,
     width: 800,
   },
 });

@@ -63,9 +63,6 @@ const MainStackNavigator = () => {
     return (
 
         <Stack.Navigator initialRouteName="Login">
-
-            {/* Start */}
-            {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
             <Stack.Screen name="Login" component={LoginScreen} options={({ navigation, route }) => ({
                 headerLeft: () => (
                     <Button
@@ -77,22 +74,18 @@ const MainStackNavigator = () => {
             })} />
             <Stack.Screen name="Sign up" component={SignUpScreen} />
 
-
             {/* TripDocs */}
             <Stack.Screen name="Documents" component={DocumentScreen} />
-
 
             {/* Changes */}
             <Stack.Screen name="Changes 1" component={Changes1Screen} />
             <Stack.Screen name="Changes 2" component={Changes2Screen} />
             <Stack.Screen name="Changes 3" component={Changes3Screen} />
 
-
             {/* Invite To Join */}
             <Stack.Screen name="Join 1" component={InviteToJoin1Screen} />
             <Stack.Screen name="Join 2" component={InviteToJoin2Screen} />
             <Stack.Screen name="Join 3" component={InviteToJoin3Screen} />
-
 
             {/* Manage Trip */}
             <Stack.Screen name="Upload Passport 1" component={UploadPassport1Screen} />
@@ -101,24 +94,19 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Manage Trip" component={ManageTripScreen} />
             <Stack.Screen name="Complete Payment" component={CompletePaymentScreen} />
 
-
             {/* FAQ */}
             <Stack.Screen name="FAQ 1" component={Help1Screen} />
             <Stack.Screen name="FAQ 2" component={Help2Screen} />
 
-
             {/* NEWSLETTER */}
             <Stack.Screen name="Spot Light" component={SpotLightScreen} />
-
 
             {/* SCHEULE */}
             <Stack.Screen name="Any Day" component={AnyDayScreen} />
 
-
             {/* HOME (STATUS) */}
             <Stack.Screen name="Day 1" component={Day1Screen} />
             <Stack.Screen name="Day 2" component={Day2Screen} />
-
 
             {/* TRIP INFO */}
             <Stack.Screen name="Pick up" component={PickUpScreen} />
@@ -128,7 +116,6 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Hotel" component={HotelScreen} />
             <Stack.Screen name="Perk" component={PerkScreen} />
             <Stack.Screen name="Trip" component={TripScreen} />
-
 
             {/* HOME */}
             <Stack.Screen name="AnyDay Home" component={AnyDayHomeScreen} />
@@ -140,9 +127,6 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Menu" component={MenuScreen} />
             <Stack.Screen name="Post 2" component={Post2Screen} />
             <Stack.Screen name="Post" component={PostScreen} />
-
-
-
 
         </Stack.Navigator>
     );

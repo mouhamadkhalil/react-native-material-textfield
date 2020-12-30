@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -70,
+    marginTop: -90,
     width: 800,
     backgroundColor: "white"
   },
