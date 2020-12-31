@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
     ActivityIndicator
 } from "react-native";
-import { GameDayStackNavigator, HelpStackNavigator, TripStackNavigator, BookingStackNavigator, MainStackNavigator, InfoStackNavigator } from "./StackNavigator";
+import { GameDayStackNavigator, HelpStackNavigator, BookingStackNavigator, MainStackNavigator, InfoStackNavigator } from "./StackNavigator";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -18,15 +18,6 @@ const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
     return (
-        // <Tab.Navigator>
-        //     <Tab.Screen name="Home" component={MainStackNavigator} />
-        //     <Tab.Screen name="book a trip" component={TripStackNavigator} />
-        //     <Tab.Screen name="my bookings" component={TripStackNavigator} />
-        //     <Tab.Screen name="more" component={TripStackNavigator} />
-        //     <Tab.Screen name="contact us" component={TripStackNavigator} />
-        // </Tab.Navigator>
-
-
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -82,7 +73,7 @@ const BottomTabNavigator = () => {
         >
             <Tab.Screen name="home" component={MainStackNavigator} />
             <Tab.Screen name="book a trip" component={GameDayStackNavigator} />
-            <Tab.Screen name="my bookings" component={BookingStackNavigator} options={{ tabBarBadge: 3 }} />
+            <Tab.Screen name="my bookings" component={BookingStackNavigator} />
             <Tab.Screen name="more" component={InfoStackNavigator} />
             <Tab.Screen name="contact us" component={HelpStackNavigator} />
         </Tab.Navigator>

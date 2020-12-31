@@ -58,25 +58,25 @@ import PostScreen from "./Components/Home/PostScreen";
 
 import InfoScreen from "./Components/More/Info";
 
+import SpecialGamesScreen from "./Components/Special Games/SpecialGame";
+
 
 const Stack = createStackNavigator();
 
 const MainStackNavigator = () => {
     return (
-
         <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Login" component={LoginScreen} options={({ navigation, route }) => ({
                 headerLeft: () => (
-
                     <Button
                         onPress={() => navigation.toggleDrawer()}
                         title="menu"
                         color="#333"
                     />
-
                 ),
             })} />
 
+            {/* Start */}
             <Stack.Screen name="Sign up" component={SignUpScreen} />
 
             {/* TripDocs */}
@@ -133,8 +133,11 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Post 2" component={Post2Screen} />
             <Stack.Screen name="Post" component={PostScreen} />
 
+            {/* More */}
             <Stack.Screen name="Info" component={InfoScreen} />
 
+            {/* Special Games */}
+            <Stack.Screen name="Special Games" component={SpecialGamesScreen} />
 
         </Stack.Navigator>
     );
@@ -148,15 +151,13 @@ const TripStackNavigator = () => {
     );
 };
 
-
 const BookingStackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Flights" component={Flights1Screen} />
+            <Stack.Screen name="Flights" component={AnyDayScreen} />
         </Stack.Navigator>
     );
 };
-
 
 const InfoStackNavigator = () => {
     return (
@@ -165,8 +166,6 @@ const InfoStackNavigator = () => {
         </Stack.Navigator>
     );
 };
-
-
 
 const HelpStackNavigator = () => {
     return (
@@ -179,10 +178,9 @@ const HelpStackNavigator = () => {
 const GameDayStackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Game" component={GameDayScreen} />
+            <Stack.Screen name="Special Games" component={SpecialGamesScreen} />
         </Stack.Navigator>
     );
 };
-
 
 export { GameDayStackNavigator, HelpStackNavigator, MainStackNavigator, TripStackNavigator, BookingStackNavigator, InfoStackNavigator };
