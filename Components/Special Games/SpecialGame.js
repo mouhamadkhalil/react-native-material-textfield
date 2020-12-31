@@ -43,55 +43,65 @@ export default class Day2Screen extends React.Component {
                     <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
                     <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
                 </TouchableOpacity>
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 160, marginTop: 50 }}></ScrollView>
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 50 }}></ScrollView>
                 <Text
                     style={{
                         marginTop: -22,
                         color: "black",
                         fontSize: 20,
-                        marginLeft: 220
+                        marginLeft: 200
                     }}
                 >
                     SPECIAL GAME
                 </Text>
                 <ScrollView>
-                    <Image source={Card1} style={{ marginLeft: 140, marginTop: 30 }} />
+                    <TouchableOpacity>
+                        <Image source={Card1} style={{ marginLeft: 140, marginTop: 30 }} />
+                    </TouchableOpacity>
                     <Image source={Btn2} style={{ marginLeft: 175, marginTop: -25 }} />
-                    <Image source={Card2} style={{ marginLeft: 340, marginTop: -275 }} />
+                    <TouchableOpacity>
+                        <Image source={Card2} style={{ marginLeft: 340, marginTop: -275 }} />
+                    </TouchableOpacity>
                     <Image source={Btn1} style={{ marginLeft: 380, marginTop: -25 }} />
                 </ScrollView>
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 160, marginTop: 50 }}>
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 50 }}>
                 </ScrollView>
                 <Text
                     style={{
                         marginTop: -22,
                         color: "black",
                         fontSize: 20,
-                        marginLeft: 220
+                        marginLeft: 200
                     }}
                 >
                     POPULAR GAMES
                 </Text>
-                <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 20 }}>
-                    <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>31 JAN</Text>
-                    <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Barcelona</Text>
-                    <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>CHELESEA FC.</Text>
-                    <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
-                </ScrollView>
+                <TouchableOpacity>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 20 }}>
+                        <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>31 JAN</Text>
+                        <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Barcelona</Text>
+                        <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>CHELESEA FC.</Text>
+                        <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
+                    </ScrollView>
+                </TouchableOpacity>
 
-                <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 20 }}>
-                    <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>05 JAN</Text>
-                    <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>BV. dortmun</Text>
-                    <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>Real madrid</Text>
-                    <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
-                </ScrollView>
+                <TouchableOpacity>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 20 }}>
+                        <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>05 JAN</Text>
+                        <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>BV. dortmun</Text>
+                        <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>Real madrid</Text>
+                        <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
+                    </ScrollView>
+                </TouchableOpacity>
 
-                <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, marginBottom: 30, borderRadius: 20 }}>
-                    <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>24 JAN</Text>
-                    <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>AS. Roma</Text>
-                    <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Bayern</Text>
-                    <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
-                </ScrollView>
+                <TouchableOpacity>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, marginBottom: 30, borderRadius: 20 }}>
+                        <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>24 JAN</Text>
+                        <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>AS. Roma</Text>
+                        <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Bayern</Text>
+                        <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
+                    </ScrollView>
+                </TouchableOpacity>
             </ScrollView>
         );
     }

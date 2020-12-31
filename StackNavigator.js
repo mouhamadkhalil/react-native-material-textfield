@@ -56,6 +56,8 @@ import MenuScreen from "./Components/Home/MenuScreen";
 import Post2Screen from "./Components/Home/Post2Screen";
 import PostScreen from "./Components/Home/PostScreen";
 
+import InfoScreen from "./Components/More/Info";
+
 
 const Stack = createStackNavigator();
 
@@ -65,13 +67,16 @@ const MainStackNavigator = () => {
         <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Login" component={LoginScreen} options={({ navigation, route }) => ({
                 headerLeft: () => (
+
                     <Button
                         onPress={() => navigation.toggleDrawer()}
                         title="menu"
                         color="#333"
                     />
+
                 ),
             })} />
+
             <Stack.Screen name="Sign up" component={SignUpScreen} />
 
             {/* TripDocs */}
@@ -128,6 +133,9 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Post 2" component={Post2Screen} />
             <Stack.Screen name="Post" component={PostScreen} />
 
+            <Stack.Screen name="Info" component={InfoScreen} />
+
+
         </Stack.Navigator>
     );
 };
@@ -139,4 +147,42 @@ const TripStackNavigator = () => {
         </Stack.Navigator>
     );
 };
-export { MainStackNavigator, TripStackNavigator };
+
+
+const BookingStackNavigator = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Flights" component={Flights1Screen} />
+        </Stack.Navigator>
+    );
+};
+
+
+const InfoStackNavigator = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Info" component={InfoScreen} />
+        </Stack.Navigator>
+    );
+};
+
+
+
+const HelpStackNavigator = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="FAQ" component={Help2Screen} />
+        </Stack.Navigator>
+    );
+};
+
+const GameDayStackNavigator = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Game" component={GameDayScreen} />
+        </Stack.Navigator>
+    );
+};
+
+
+export { GameDayStackNavigator, HelpStackNavigator, MainStackNavigator, TripStackNavigator, BookingStackNavigator, InfoStackNavigator };

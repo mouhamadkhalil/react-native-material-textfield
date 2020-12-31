@@ -15,6 +15,8 @@ import Ticket from "../../assets/images/ticket.png";
 import Car from "../../assets/images/car.jpg";
 import Hotel2 from "../../assets/images/Hotel2.jpg";
 import Sea from "../../assets/images/Sea.jpg";
+import Arrow from "../../assets/Images_Design/arrow_right1.png";
+
 
 export default class TripScreen extends React.Component {
 
@@ -78,17 +80,7 @@ export default class TripScreen extends React.Component {
                   <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>FLIGHT</Text>
                   <Text style={{ fontSize: 14, marginLeft: -30, color: "gray" }}>#123456</Text>
 
-                  <Text
-                    style={{
-                      color: "gray",
-                      fontWeight: "bold",
-                      marginLeft: 170,
-                      fontSize: 22,
-                      marginTop: -39
-                    }}
-                  >
-                    &gt;
-                  </Text>
+                  <Image source={Arrow} style={{ marginLeft: 170, width: 10, height: 10, marginTop: -20 }} />
                 </TouchableOpacity>
               </Text>
             </Text>
@@ -118,17 +110,7 @@ export default class TripScreen extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              <Text
-                style={{
-                  color: "gray",
-                  fontWeight: "bold",
-                  marginLeft: 170,
-                  fontSize: 22,
-                  marginTop: -18
-                }}
-              >
-                &gt;
-              </Text>
+              <Image source={Arrow} style={{ marginLeft: 170, width: 10, height: 10 }} />
               <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}> AIRPORT PICKUP</Text>
               </TouchableOpacity>
@@ -152,17 +134,9 @@ export default class TripScreen extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              <Text
-                style={{
-                  color: "gray",
-                  fontWeight: "bold",
-                  marginLeft: 170,
-                  fontSize: 22,
-                  marginTop: -18
-                }}
-              >
-                &gt;
-              </Text>
+
+              <Image source={Arrow} style={{ marginLeft: 170, width: 10, height: 10 }} />
+
               <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}> HOTEL RESERVATION</Text>
               </TouchableOpacity>
@@ -186,17 +160,8 @@ export default class TripScreen extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              <Text
-                style={{
-                  color: "gray",
-                  fontWeight: "bold",
-                  marginLeft: 170,
-                  fontSize: 22,
-                  marginTop: -18
-                }}
-              >
-                &gt;
-              </Text>
+              <Image source={Arrow} style={{ marginLeft: 170, width: 10, height: 10 }} />
+
               <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>GAME TICKETS</Text>
               </TouchableOpacity>
@@ -233,17 +198,8 @@ export default class TripScreen extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              <Text
-                style={{
-                  color: "gray",
-                  fontWeight: "bold",
-                  marginLeft: 170,
-                  fontSize: 22,
-                  marginTop: -18
-                }}
-              >
-                &gt;
-              </Text>
+              <Image source={Arrow} style={{ marginLeft: 170, width: 10, height: 10 }} />
+
               <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>SAGRADA FAMILIA</Text>
               </TouchableOpacity>
@@ -267,17 +223,8 @@ export default class TripScreen extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              <Text
-                style={{
-                  color: "gray",
-                  fontWeight: "bold",
-                  marginLeft: 170,
-                  fontSize: 22,
-                  marginTop: -18
-                }}
-              >
-                &gt;
-              </Text>
+              <Image source={Arrow} style={{ marginLeft: 170, width: 10, height: 10 }} />
+
               <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>SAGRADA FAMILIA</Text>
               </TouchableOpacity>
@@ -314,17 +261,8 @@ export default class TripScreen extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              <Text
-                style={{
-                  color: "gray",
-                  fontWeight: "bold",
-                  marginLeft: 170,
-                  fontSize: 22,
-                  marginTop: -18
-                }}
-              >
-                &gt;
-              </Text>
+              <Image source={Arrow} style={{ marginLeft: 170, width: 10, height: 10 }} />
+
               <TouchableOpacity style={{ marginTop: -23 }}>
                 <Text style={{ fontWeight: "bold", color: "blue", marginLeft: -30 }}>RAO RESTUARANT</Text>
               </TouchableOpacity>
