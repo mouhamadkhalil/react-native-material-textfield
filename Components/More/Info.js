@@ -21,8 +21,6 @@ import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
 
-
-
 export default class Info extends React.Component {
 
     render() {
@@ -99,8 +97,6 @@ export default class Info extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
-
-
             </ScrollView>
         );
     }

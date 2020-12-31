@@ -6,7 +6,8 @@ import {
     Image,
     ScrollView,
     TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator,
+    Button
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Line1 from "../../assets/Images_Design/line1.png";
@@ -62,7 +63,7 @@ export default class Day2Screen extends React.Component {
                     <TouchableOpacity>
                         <Image source={Card2} style={{ marginLeft: 340, marginTop: -275 }} />
                     </TouchableOpacity>
-                    <Image source={Btn1} style={{ marginLeft: 380, marginTop: -25 }} />
+                    <Image source={Btn1} style={{ marginLeft: 380, marginTop: -45 }} />
                 </ScrollView>
                 <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 50 }}>
                 </ScrollView>
@@ -102,6 +103,94 @@ export default class Day2Screen extends React.Component {
                         <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
                     </ScrollView>
                 </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 0, marginBottom: 30, borderRadius: 20 }}>
+                        <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>24 JAN</Text>
+                        <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>AS. Roma</Text>
+                        <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Bayern</Text>
+                        <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
+                    </ScrollView>
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 0, marginBottom: 30, borderRadius: 20 }}>
+                        <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>24 JAN</Text>
+                        <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>AS. Roma</Text>
+                        <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Bayern</Text>
+                        <Image source={Arrow} style={{ marginLeft: 295, marginTop: -16 }} />
+                    </ScrollView>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, marginLeft: 220, marginBottom: 30, marginTop: -45, borderRadius: 20 }}>
+                    <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
+                </TouchableOpacity>
+
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 0 }}></ScrollView>
+                <Text
+                    style={{
+                        marginTop: -22,
+                        color: "black",
+                        fontSize: 20,
+                        marginLeft: 200
+                    }}
+                >
+                    HOT GAMES
+                </Text>
+                <ScrollView>
+                    <TouchableOpacity>
+                        <Image source={Card1} style={{ marginLeft: 140, marginTop: 30 }} />
+                    </TouchableOpacity>
+                    <Image source={Btn2} style={{ marginLeft: 175, marginTop: -25 }} />
+                    <TouchableOpacity>
+                        <Image source={Card2} style={{ marginLeft: 340, marginTop: -275 }} />
+                    </TouchableOpacity>
+                    <Image source={Btn1} style={{ marginLeft: 380, marginTop: -45 }} />
+                </ScrollView>
+
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 90 }}></ScrollView>
+                <Text
+                    style={{
+                        marginTop: -22,
+                        color: "black",
+                        fontSize: 20,
+                        marginLeft: 200
+                    }}
+                >
+                    POPULAR TEAMS
+                </Text>
+                <ScrollView>
+                    <TouchableOpacity>
+                        <Image source={Card1} style={{ marginLeft: 140, marginTop: 30 }} />
+                    </TouchableOpacity>
+                    <Image source={Btn2} style={{ marginLeft: 175, marginTop: -25 }} />
+                    <TouchableOpacity>
+                        <Image source={Card2} style={{ marginLeft: 340, marginTop: -275 }} />
+                    </TouchableOpacity>
+                    <Image source={Btn1} style={{ marginLeft: 380, marginTop: -45 }} />
+                </ScrollView>
+
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 90 }}></ScrollView>
+                <Text
+                    style={{
+                        marginTop: -22,
+                        color: "black",
+                        fontSize: 20,
+                        marginLeft: 200
+                    }}
+                >
+                    COMPETETIONS
+                </Text>
+                <ScrollView>
+                    <TouchableOpacity>
+                        <Image source={Card1} style={{ marginLeft: 140, marginTop: 30 }} />
+                    </TouchableOpacity>
+                    <Image source={Btn2} style={{ marginLeft: 175, marginTop: -25 }} />
+                    <TouchableOpacity>
+                        <Image source={Card2} style={{ marginLeft: 340, marginTop: -275 }} />
+                    </TouchableOpacity>
+                    <Image source={Btn1} style={{ marginLeft: 380, marginTop: -45 }} />
+                </ScrollView>
             </ScrollView>
         );
     }
