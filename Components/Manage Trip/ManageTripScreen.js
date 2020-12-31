@@ -3,9 +3,11 @@ import {
   StyleSheet,
   TextInput,
   Text,
+  Image,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import Arrow from "../../assets/Images_Design/arrow_right1.png";
 
 export default class ManageTripScreen extends React.Component {
 
@@ -60,17 +62,7 @@ export default class ManageTripScreen extends React.Component {
             >
               Complete payment
             </Text>
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: "#F717AD",
-                marginTop: -30,
-                marginLeft: 320,
-                fontSize: 25
-              }}
-            >
-              &gt;
-                </Text>
+            <Image source={Arrow} style={{marginLeft:320,marginTop:-15,width:15,height:15}} />
           </TouchableOpacity>
           <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
@@ -87,17 +79,8 @@ export default class ManageTripScreen extends React.Component {
             >
               Upload passport
             </Text>
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: "#F717AD",
-                marginTop: -30,
-                marginLeft: 320,
-                fontSize: 25
-              }}
-            >
-              &gt;
-                </Text>
+            <Image source={Arrow} style={{marginLeft:320,marginTop:-15,width:15,height:15}} />
+
           </TouchableOpacity>
           <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
@@ -129,17 +112,8 @@ export default class ManageTripScreen extends React.Component {
             >
               Changes and cancellations
             </Text>
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: "#F717AD",
-                marginTop: -30,
-                marginLeft: 320,
-                fontSize: 25
-              }}
-            >
-              &gt;
-                </Text>
+            <Image source={Arrow} style={{marginLeft:320,marginTop:-15,width:15,height:15}} />
+
           </TouchableOpacity>
           <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
@@ -157,17 +131,8 @@ export default class ManageTripScreen extends React.Component {
             >
               Travellers (invite to join)
             </Text>
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: "#F717AD",
-                marginTop: -30,
-                marginLeft: 320,
-                fontSize: 25
-              }}
-            >
-              &gt;
-                </Text>
+            <Image source={Arrow} style={{marginLeft:320,marginTop:-15,width:15,height:15}} />
+
           </TouchableOpacity>
           <ScrollView
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}

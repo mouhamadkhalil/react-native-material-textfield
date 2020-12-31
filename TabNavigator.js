@@ -82,7 +82,7 @@ const BottomTabNavigator = () => {
         >
             <Tab.Screen name="home" component={MainStackNavigator} />
             <Tab.Screen name="book a trip" component={GameDayStackNavigator} />
-            <Tab.Screen name="my bookings" component={BookingStackNavigator} />
+            <Tab.Screen name="my bookings" component={BookingStackNavigator} options={{ tabBarBadge: 3 }} />
             <Tab.Screen name="more" component={InfoStackNavigator} />
             <Tab.Screen name="contact us" component={HelpStackNavigator} />
         </Tab.Navigator>

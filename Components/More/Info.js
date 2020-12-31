@@ -100,6 +100,7 @@ export default class Info extends React.Component {
                     </ScrollView>
                 </TouchableOpacity>
 
+
             </ScrollView>
         );
     }

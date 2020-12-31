@@ -54,14 +54,10 @@ export default class MenuScreen extends React.Component {
       <View style={styles.container}>
         <View scrollsToTop={false} style={styles.menu}>
           <View style={styles.avatarContainer}>
-            <TouchableOpacity
-              style={{ marginLeft: 0, color: "blue" }}
-            >
-              <Image style={styles.avatar} source={FlyFoot} />
-              <TouchableOpacity>
-                <Text style={styles.name}>FLY-FOOT</Text>
-              </TouchableOpacity>
-              <Image source={Close} style={{ marginLeft: 310, marginTop: -35 }} />
+            <Image style={styles.avatar} source={FlyFoot} />
+            <Text style={styles.name}>FLY-FOOT</Text>
+            <TouchableOpacity>
+              <Image source={Close} style={{ marginLeft: 310, marginTop: -5 }} />
             </TouchableOpacity>
           </View>
           <Text style={styles.item}>
