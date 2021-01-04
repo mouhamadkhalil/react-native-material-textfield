@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env"
 
@@ -42,6 +43,7 @@ export default class Help1Screen extends React.Component {
     LDescription7: "",
     LDescription8: "",
     LDescription9: "",
+    isDone: false
   };
 
   componentDidMount() {
@@ -77,6 +79,7 @@ export default class Help1Screen extends React.Component {
         this.setState({ LDescription7: response[7].LDescription });
         this.setState({ LDescription8: response[8].LDescription });
         this.setState({ LDescription9: response[9].LDescription });
+        this.setState({ isDone: true });
       });
   }
 
@@ -124,7 +127,7 @@ export default class Help1Screen extends React.Component {
             FAQ'S
           </Text>
         </ScrollView>
-        <ScrollView style={{ width: "50%", height: 1200, backgroundColor: "#F7EEE8" }}>
+        <ScrollView style={{ width: "50%", height: 1500, backgroundColor: "#F7EEE8" }}>
           <Text
             style={{
               color: "#E912E9",
@@ -146,8 +149,7 @@ export default class Help1Screen extends React.Component {
             }}
           >
             &gt;
-          </Text>
-
+          </Text>    
           <Text
             style={{
               fontSize: 16,
@@ -162,7 +164,6 @@ export default class Help1Screen extends React.Component {
               <Text id="demo" style={{ color: "black" }}></Text>
             </TouchableOpacity>
           </Text>
-
           <Text
             style={{
               color: "pink",
@@ -174,7 +175,6 @@ export default class Help1Screen extends React.Component {
           >
             &gt;
           </Text>
-
           <Text
             style={{
               fontSize: 16,
@@ -189,8 +189,7 @@ export default class Help1Screen extends React.Component {
               <Text style={{ marginTop: -35, width: 300, fontWeight: "bold", color: "blue" }}>{this.state.LName1}</Text>
               <Text id="demo1" style={{ color: "black" }}></Text>
             </TouchableOpacity>
-          </Text>
-
+          </Text>   
           <Text
             style={{
               color: "pink",
@@ -202,7 +201,6 @@ export default class Help1Screen extends React.Component {
           >
             &gt;
           </Text>
-
           <Text
             style={{
               fontSize: 16,
@@ -229,10 +227,15 @@ export default class Help1Screen extends React.Component {
           >
             &gt;
           </Text>
+          <Text style={{marginLeft:85}}>
+              {this.state.isDone ? console.log("Component is Ready!") : <ActivityIndicator size="large" 
+              color="blue" style={{width:200, marginTop: 0 ,marginLeft:0}} 
+          />}
+          </Text>
           <Text
             style={{
               fontSize: 16,
-              marginTop: -18,
+              marginTop: -30,
               color: "blue",
               marginLeft: 50,
               width: 320,
@@ -267,7 +270,6 @@ export default class Help1Screen extends React.Component {
               <Text style={{ fontWeight: "bold", width: 300, marginTop: -15, color: "blue" }}>{this.state.LName4}</Text>
               <Text id="demo3" style={{ color: "black" }}></Text>
             </TouchableOpacity>
-
           </Text>
           <Text
             style={{
@@ -293,7 +295,6 @@ export default class Help1Screen extends React.Component {
               <Text style={{ fontWeight: "bold", width: 300, marginTop: -15, color: "blue" }}>{this.state.LName5}</Text>
               <Text id="demo3" style={{ color: "black" }}></Text>
             </TouchableOpacity>
-
           </Text>
           <Text
             style={{
@@ -350,7 +351,7 @@ export default class Help1Screen extends React.Component {
             marginLeft: -198,
           }}
         >
-        </ScrollView>
+        </ScrollView>   
       </ScrollView >
     );
   }
@@ -362,6 +363,6 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginTop: 30,
     width: 800,
-    marginBottom: 100,
+    marginBottom: 0,
   },
 });

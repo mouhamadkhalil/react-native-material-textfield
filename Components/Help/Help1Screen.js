@@ -6,8 +6,9 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
-import { API_URL, API_TOKEN } from "@env"
+import { API_URL, API_TOKEN } from "@env";
 
 export default class Help1Screen extends React.Component {
 
@@ -41,6 +42,7 @@ export default class Help1Screen extends React.Component {
     LDescription7: "",
     LDescription8: "",
     LDescription9: "",
+    isDone: false
   };
 
   componentDidMount() {
@@ -76,6 +78,7 @@ export default class Help1Screen extends React.Component {
         this.setState({ LDescription7: response[7].LDescription });
         this.setState({ LDescription8: response[8].LDescription });
         this.setState({ LDescription9: response[9].LDescription });
+        this.setState({ isDone: true });
       });
   }
 
@@ -123,7 +126,7 @@ export default class Help1Screen extends React.Component {
             help
           </Text>
         </ScrollView>
-        <ScrollView style={{ width: "50%", height: 2000, backgroundColor: "#F7EEE8" }}>
+        <ScrollView style={{ width: "50%", height: 2050, backgroundColor: "#F7EEE8" }}>
           <Text
             style={{
               color: "#E912E9",
@@ -146,7 +149,11 @@ export default class Help1Screen extends React.Component {
           >
             &gt;
           </Text>
-
+          <Text style={{marginLeft:85}}>
+              {this.state.isDone ? console.log("Component is Ready!") : <ActivityIndicator size="large" 
+              color="blue" style={{width:200, marginTop: 40 ,marginLeft:110}} 
+          />}
+          </Text>
           <Text
             style={{
               fontSize: 16,
@@ -157,7 +164,7 @@ export default class Help1Screen extends React.Component {
             }}
           >
             <TouchableOpacity onPress={this.Answer0}>
-              <Text style={{ width: 310, marginTop: -15, fontWeight: "bold", color: "blue" }}>{this.state.LName0}</Text>
+              <Text style={{ width: 310, marginTop: -30, fontWeight: "bold", color: "blue" }}>{this.state.LName0}</Text>
               <Text id="demo" style={{ color: "black" }}></Text>
             </TouchableOpacity>
           </Text>
@@ -255,8 +262,9 @@ export default class Help1Screen extends React.Component {
             <TouchableOpacity onPress={this.Help2}>
               <Text style={{ color: "#3BEE20", fontSize: 16 }}>BROWSE ALL FAQS</Text>
             </TouchableOpacity>
-          </Text>
+          </Text>      
         </ScrollView>
+        
         <ScrollView
           style={{
             marginTop: -2100,

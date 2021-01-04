@@ -4,7 +4,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start",
+    "start": "nodemon App.js",
     "test": "jest"
   },
   "dependencies": {
@@ -18,6 +18,7 @@
     "expo-status-bar": "~1.0.3",
     "expo-updates": "~0.4.0",
     "mdbreact": "^5.0.1",
+    "nodemon": "^2.0.6",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
