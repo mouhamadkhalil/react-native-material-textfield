@@ -72,7 +72,7 @@ const MainStackNavigator = () => {
                         onPress={() => navigation.toggleDrawer()}
                         title="menu"
                         color="#333"
-                    />
+                    />                  
                 ),
             })} />
 

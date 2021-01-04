@@ -60,11 +60,11 @@ export default class MenuScreen extends React.Component {
               <Image source={Close} style={{ marginLeft: 310, marginTop: -5 }} />
             </TouchableOpacity>
           </View>
-          <Text style={styles.item}>
+          <Text>
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
-              <TouchableOpacity><Text style={{ marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Profile</Text></TouchableOpacity>
+              <TouchableOpacity><Text style={{marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Profile</Text></TouchableOpacity>
               <Image
                 source={User}
                 style={{ marginLeft: 26, marginTop: -35, width: 25, height: 32 }}
@@ -72,17 +72,22 @@ export default class MenuScreen extends React.Component {
             </TouchableOpacity>
           </Text>
 
+
+        <View>
           <Text style={{ marginTop: -26 }}>
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
-              <TouchableOpacity><Text style={{ marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Manage trip</Text></TouchableOpacity>
+              <TouchableOpacity><Text style={{marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Manage trip</Text></TouchableOpacity>
               <Image
                 source={Attachment}
                 style={{ marginLeft: 26, marginTop: -35, width: 25, height: 32 }}
               />
             </TouchableOpacity>
           </Text>
+          </View>
+
+
           <Text style={{ marginTop: 20 }}>
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
@@ -125,7 +130,13 @@ export default class MenuScreen extends React.Component {
                 source={Logout}
                 style={{ marginLeft: 26, marginTop: -32, width: 30, height: 30 }}
               />
-              <Image source={Facebook} style={{ marginLeft: 30, width: 12, height: 32, marginTop: 150 }} />
+
+              <View style={{backgroundColor:"pink",marginLeft: 30,width:12,height:32,marginTop:150}}>
+              <TouchableOpacity >
+              <Image source={Facebook} style={{width: 12, height: 32}} />
+              </TouchableOpacity>
+              </View>
+
               <Image source={Twitter} style={{ marginLeft: 65, width: 37, height: 29, marginTop: -30 }} />
               <Image source={Instagram} style={{ marginLeft: 120, width: 35, height: 33, marginTop: -31 }} />
               <TouchableOpacity>

@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
+  AsyncStorage,
   ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
@@ -25,8 +26,35 @@ export default class Day1HomeScreen extends React.Component {
     Picture2: "",
     Picture3: "",
     Picture4: "",
-    isDone: false
+    isDone: false,
+    // isLoggedIn: false,
+    // loginChecked: false,
   };
+
+//   async getItem(token){
+//     console.log("the state is : ",this.state.isLoggedIn)
+//     try{
+//         const value = await AsyncStorage.getItem(token);
+//         console.log("my token is : ",value);
+//         if(value !== null){
+//             this.setState({
+//                 isLoggedIn: true,
+//                 loginChecked: true
+//             })
+//         }
+//         else{
+//             this.setState({
+//                 isLoggedIn: false,
+//                 loginChecked: true
+//             })
+//         }
+//     }
+//     catch(error){
+//         console.log(error)
+//     }
+//     console.log(this.state.isLoggedIn)
+// }
+
 
   componentDidMount() {
     const url = `${API_URL}/mobile/game/GetHomePageData`;
@@ -47,8 +75,16 @@ export default class Day1HomeScreen extends React.Component {
         this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
         this.setState({ Picture3: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
         this.setState({ Picture4: response.GenericGames[0].MatchBundleHotels[0].Images[4] });
+        // this.setState({ isLoggedIn: true });
+        // this.setState({ loginChecked: true });
       });
-  }
+
+      // this.getItem(this.state.Token);
+
+      
+
+    }
+
 
   render() {
     return (
@@ -65,19 +101,20 @@ export default class Day1HomeScreen extends React.Component {
         >
           MONDAY 12 SEPT
         </Text>
+        <Text style={{  marginLeft: 210}}></Text>
         <View style={{marginTop:-35,marginLeft:380,width:40,height:50}}>
         <TouchableOpacity>
-        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
+        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: -15 }} />
         </TouchableOpacity>
         </View>
 
         <View style={{marginTop:-40,marginLeft:430,width:40,height:50}}>
         <TouchableOpacity>
-        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
+        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: -15 }} />
         </TouchableOpacity>
         </View>
 
-        <View style={{marginTop:-49,width:190}}>
+        <View style={{marginTop:-65,width:190}}>
         <TouchableOpacity>
           <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
           <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
@@ -254,7 +291,7 @@ const styles = StyleSheet.create({
     height: 1100,
     marginLeft: -110,
     width: 500,
-    marginTop: 30,
+    marginTop: 10,
     marginBottom: 0,
     backgroundColor: "#F5F7EC",
   },

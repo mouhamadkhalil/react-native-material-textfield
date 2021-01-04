@@ -8,6 +8,7 @@ import {
   Button,
   TouchableOpacity,
   Picker,
+  AsyncStorage,
   ActivityIndicator
 } from "react-native";
 import Signup from "./SignupScreen";
@@ -117,10 +118,10 @@ export default class SignUpScreen extends React.Component {
             console.log("token is :", token_id)
             this.setState({ Token: token_id });
             this.setState({ isDone: true })
-            localStorage.setItem("token", this.state.Token);
-            alert("you have successfully registered !")
-            alert(localStorage.getItem("token", ""))
-            // window.location = "/HomePre";
+            AsyncStorage.setItem("token", this.state.Token);
+            alert("you have successfully registered !");
+            // console.log("token issssss: ",AsyncStorage.getItem('token'));
+            this.props.navigation.navigate('Day1 Home');
           }
         }
       });
@@ -267,7 +268,7 @@ export default class SignUpScreen extends React.Component {
             marginLeft: 40,
             fontSize: 16,
             paddingRight: 110,
-            paddingTop: 20,
+            paddingTop: 0,
             width: 500
           }}
         >
@@ -285,7 +286,8 @@ export default class SignUpScreen extends React.Component {
         >
           Already have an account?
         </Text>
-        <TouchableOpacity><Text style={{ marginLeft: 215, marginTop: -20, marginBottom: 30 }}> &nbsp; Login here </Text></TouchableOpacity>
+        <TouchableOpacity onPress={()=>this.props.navigation.navigate('Login')}>
+          <Text style={{ marginLeft: 215, marginTop: -20, marginBottom: 20,width:100,height:50,marginTop:-20 }}> &nbsp; Login here </Text></TouchableOpacity>
       </ScrollView>
     );
   }
@@ -295,7 +297,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    marginTop: 50,
+    marginTop: 0,
     marginBottom: 0,
   },
   loginBtn: {
