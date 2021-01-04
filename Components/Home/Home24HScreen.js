@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   ScrollView,
+  View,
   TouchableOpacity,
   ActivityIndicator
 } from "react-native";
@@ -65,13 +66,25 @@ export default class Home24HScreen extends React.Component {
         >
           MONDAY 12 SEPT
         </Text>
-        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 380, marginTop: -30 }} />
-        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 430, marginTop: -30 }} />
+        <View style={{marginTop:-35,marginLeft:380,width:40,height:50}}>
         <TouchableOpacity>
-          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -25 }} />
+        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
+        </TouchableOpacity>
+        </View>
+
+        <View style={{marginTop:-40,marginLeft:430,width:40,height:50}}>
+        <TouchableOpacity>
+        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
+        </TouchableOpacity>
+        </View>
+
+        <View style={{marginTop:-49,width:190}}>
+        <TouchableOpacity>
+          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
           <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
           <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
         </TouchableOpacity>
+        </View> 
         <Text
           style={{
             marginTop: 30,

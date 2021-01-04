@@ -4,6 +4,7 @@ import {
     TextInput,
     Text,
     Image,
+    View,
     ScrollView,
     TouchableOpacity,
     ActivityIndicator
@@ -31,25 +32,30 @@ export default class Info extends React.Component {
                         alignContent: "center",
                         color: "#4c0099",
                         fontWeight: "bold",
-                        marginTop: 20,
+                        marginTop: 40,
                         fontSize: 15,
                         marginLeft: 230
                     }}
                 >
                     MONDAY 12 SEPT
                 </Text>
-                <TouchableOpacity>
-                    <Image source={Search} style={{ width: 40, height: 40, marginLeft: 375, marginTop: -30 }} />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 430, marginTop: -30 }} />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 130, marginTop: -31 }} />
-                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 130, marginTop: -5 }} />
-                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 130, marginTop: -5 }} />
-                </TouchableOpacity>
-
+                <View style={{marginTop:-35,marginLeft:380,width:40,height:50}}>
+                    <TouchableOpacity>
+                        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{marginTop:-40,marginLeft:430,width:40,height:50}}>
+                    <TouchableOpacity>
+                        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{marginTop:-49,width:190}}>
+                    <TouchableOpacity>
+                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
+                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+                    </TouchableOpacity>
+                </View> 
                 <TouchableOpacity>
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 70 }}>
                         <Image source={Flyfoot} style={{ width: 20, height: 25, marginLeft: 20, marginTop: 20 }} />
@@ -57,7 +63,6 @@ export default class Info extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
-
                 <TouchableOpacity>
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
                         <Image source={Flag2} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
@@ -65,7 +70,6 @@ export default class Info extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
-
                 <TouchableOpacity>
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
                         <Image source={Chat} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
@@ -73,7 +77,6 @@ export default class Info extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
-
                 <TouchableOpacity>
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
                         <Image source={Question} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
@@ -81,7 +84,6 @@ export default class Info extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
-
                 <TouchableOpacity>
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
                         <Image source={Setting} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
@@ -89,7 +91,6 @@ export default class Info extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
-
                 <TouchableOpacity>
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
                         <Image source={Setting} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
