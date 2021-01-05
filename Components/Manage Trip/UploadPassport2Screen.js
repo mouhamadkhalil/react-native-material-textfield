@@ -10,9 +10,11 @@ import {
 import Zomato from "../../assets/images/zomato.png";
 
 export default class UploadPassport2Screen extends React.Component {
+
   Back = () => {
-    window.location = "/UploadPassport1";
+    this.props.navigation.navigate('Upload Passport 1');
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -40,
+    marginTop: -70,
     width: 800,
   },
 });

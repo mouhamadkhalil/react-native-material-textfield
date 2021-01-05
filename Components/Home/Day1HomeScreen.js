@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
+  Button,
   AsyncStorage,
   ActivityIndicator
 } from "react-native";
@@ -29,6 +30,7 @@ export default class Day1HomeScreen extends React.Component {
     isDone: false,
     // isLoggedIn: false,
     // loginChecked: false,
+    isSearchClicked:false
   };
 
 //   async getItem(token){
@@ -80,11 +82,7 @@ export default class Day1HomeScreen extends React.Component {
       });
 
       // this.getItem(this.state.Token);
-
-      
-
     }
-
 
   render() {
     return (
@@ -101,13 +99,15 @@ export default class Day1HomeScreen extends React.Component {
         >
           MONDAY 12 SEPT
         </Text>
+
+      
+        <TextInput style={{width:150,display: "none", marginLeft: 210,backgroundColor:"#EBC5C5"}}/>  
         <Text style={{  marginLeft: 210}}></Text>
         <View style={{marginTop:-35,marginLeft:380,width:40,height:50}}>
         <TouchableOpacity>
         <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: -15 }} />
         </TouchableOpacity>
         </View>
-
         <View style={{marginTop:-40,marginLeft:430,width:40,height:50}}>
         <TouchableOpacity>
         <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: -15 }} />
@@ -130,7 +130,7 @@ export default class Day1HomeScreen extends React.Component {
           }}
         >
           Flight day
-        </Text>
+        </Text>          
         <Text style={{ color: "#4c0099", fontSize: 23, marginLeft: 195 }}>
           3 planned activities
         </Text>

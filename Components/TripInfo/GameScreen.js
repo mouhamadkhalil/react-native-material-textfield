@@ -11,8 +11,9 @@ import {
 import { API_URL, API_TOKEN } from "@env"
 
 export default class GameScreen extends React.Component {
+
   Back = () => {
-    window.location = "/tripInfo";
+    this.props.navigation.navigate('Trip');
   }
 
   state = {
@@ -72,15 +73,18 @@ export default class GameScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back}>
+          <TouchableOpacity onPress={this.Back} style={{ width: 110, marginLeft: 0, height: 65, marginTop: 0 }}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 35, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
               color: "white",
               fontSize: 19,
+              fontWeight: "bold",
               textAlign: "center",
-              marginTop: -30,
+              marginTop: -50,
+              marginLeft: -15,
+              marginBottom: 30
             }}
           >
             the game

@@ -43,8 +43,24 @@ export default class MenuScreen extends React.Component {
     });
   };
 
-  Home = () => {
-    window.location = "/";
+  Profile = () => {
+    this.props.navigation.navigate('Chat Home 4');
+  };
+
+  ManageTrip = () => {
+    this.props.navigation.navigate('Manage Trip');
+  };
+
+  TripInfo = () => {
+    this.props.navigation.navigate('Trip');
+  };
+
+  TripDocs = () => {
+    this.props.navigation.navigate('Documents');
+  };
+
+  Help = () => {
+    this.props.navigation.navigate('FAQ 1');
   };
 
   render() {
@@ -64,7 +80,7 @@ export default class MenuScreen extends React.Component {
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
-              <TouchableOpacity><Text style={{marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Profile</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.Profile} style={{ width: 500 }}><Text style={{ marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Profile</Text></TouchableOpacity>
               <Image
                 source={User}
                 style={{ marginLeft: 26, marginTop: -35, width: 25, height: 32 }}
@@ -73,18 +89,18 @@ export default class MenuScreen extends React.Component {
           </Text>
 
 
-        <View>
-          <Text style={{ marginTop: -26 }}>
-            <TouchableOpacity
-              style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
-            >
-              <TouchableOpacity><Text style={{marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Manage trip</Text></TouchableOpacity>
-              <Image
-                source={Attachment}
-                style={{ marginLeft: 26, marginTop: -35, width: 25, height: 32 }}
-              />
-            </TouchableOpacity>
-          </Text>
+          <View>
+            <Text style={{ marginTop: -26 }}>
+              <TouchableOpacity
+                style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
+              >
+                <TouchableOpacity style={{ height: 100 }} onPress={this.ManageTrip}><Text style={{ marginLeft: 80, fontWeight: "bold", color: "blue", fontSize: 30, marginTop: 50 }}>Manage trip</Text></TouchableOpacity>
+                <Image
+                  source={Attachment}
+                  style={{ marginLeft: 26, marginTop: -35, width: 25, height: 32 }}
+                />
+              </TouchableOpacity>
+            </Text>
           </View>
 
 
@@ -92,7 +108,7 @@ export default class MenuScreen extends React.Component {
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
-              <TouchableOpacity><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Trip Information</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.TripInfo} ><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Trip Information</Text></TouchableOpacity>
               <Image
                 source={Location}
                 style={{ marginLeft: 26, marginTop: -32, width: 25, height: 32 }}
@@ -103,7 +119,7 @@ export default class MenuScreen extends React.Component {
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
-              <TouchableOpacity><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Trip Documents</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.TripDocs}><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Trip Documents</Text></TouchableOpacity>
               <Image
                 source={Document}
                 style={{ marginLeft: 26, marginTop: -32, width: 30, height: 30 }}
@@ -114,7 +130,7 @@ export default class MenuScreen extends React.Component {
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
-              <TouchableOpacity><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Help</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.Help}><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Help</Text></TouchableOpacity>
               <Image
                 source={Help}
                 style={{ marginLeft: 26, marginTop: -32, width: 30, height: 30 }}
@@ -131,10 +147,10 @@ export default class MenuScreen extends React.Component {
                 style={{ marginLeft: 26, marginTop: -32, width: 30, height: 30 }}
               />
 
-              <View style={{backgroundColor:"pink",marginLeft: 30,width:12,height:32,marginTop:150}}>
-              <TouchableOpacity >
-              <Image source={Facebook} style={{width: 12, height: 32}} />
-              </TouchableOpacity>
+              <View style={{ backgroundColor: "pink", marginLeft: 30, width: 12, height: 32, marginTop: 150 }}>
+                <TouchableOpacity >
+                  <Image source={Facebook} style={{ width: 12, height: 32 }} />
+                </TouchableOpacity>
               </View>
 
               <Image source={Twitter} style={{ marginLeft: 65, width: 37, height: 29, marginTop: -30 }} />

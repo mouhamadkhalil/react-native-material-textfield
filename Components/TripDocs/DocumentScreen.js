@@ -17,27 +17,40 @@ import HotelScreen from "../TripInfo/HotelScreen";
 export default class DocumentScreen extends React.Component {
 
   Back = () => {
-    window.location = "/SignupScreen";
+    this.props.navigation.navigate('Menu');
   }
 
   Flight1 = () => {
-    window.location = "/Flights1";
+    this.props.navigation.navigate('Flights 2');
   }
 
-  PickUp = () => {
-    window.location = "/AirportPickup";
+  Pickup = () => {
+    this.props.navigation.navigate('Pick up');
   }
 
   Hotel = () => {
-    window.location = "/HotelScreen";
+    this.props.navigation.navigate('Hotel');
   }
+
+  Game = () => {
+    this.props.navigation.navigate('Game');
+  }
+
+  Sagrada = () => {
+    this.props.navigation.navigate('Perk');
+  }
+
+  Restaurant = () => {
+    this.props.navigation.navigate('Pick up');
+  }
+
 
   render() {
     return (
       <View style={styles.container}>
         <View style={{ backgroundColor: "blue", width: "100%", height: 60, marginTop: -100 }}>
-          <TouchableOpacity >
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 155, marginTop: -5, fontWeight: "bold" }}>&#8592;</Text>
+          <TouchableOpacity style={{ width: 110, marginLeft: 100, height: 60, marginTop: 0 }} onPress={this.Back} >
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 50, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -45,7 +58,7 @@ export default class DocumentScreen extends React.Component {
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -30,
+              marginTop: -45,
               marginLeft: 50
             }}
           >
@@ -66,7 +79,7 @@ export default class DocumentScreen extends React.Component {
                 backgroundColor: "#48D52C",
                 width: 7,
                 marginLeft: -100,
-                height: 50,
+                height: 60,
                 marginTop: -40,
                 paddingTop: -100,
               }}
@@ -87,13 +100,13 @@ export default class DocumentScreen extends React.Component {
               backgroundColor: "#5FE903",
               width: 7,
               marginLeft: -100,
-              height: 50,
+              height: 60,
               marginTop: -40,
               paddingTop: -100,
             }}>
           </View>
           <View style={{ marginLeft: 105, marginTop: 25 }}>
-            <TouchableOpacity onPress={this.Flight1}>
+            <TouchableOpacity onPress={this.Pickup}>
               <Text style={{ color: "blue", fontWeight: "bold" }}>AIRPORT PICKUP</Text>
               <Image
                 style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
@@ -105,7 +118,7 @@ export default class DocumentScreen extends React.Component {
                 backgroundColor: "#5FE903",
                 width: 7,
                 marginLeft: -100,
-                height: 50,
+                height: 60,
                 marginTop: -40,
                 paddingTop: -100,
               }}
@@ -126,13 +139,13 @@ export default class DocumentScreen extends React.Component {
               backgroundColor: "#5FE903",
               width: 7,
               marginLeft: -100,
-              height: 50,
+              height: 60,
               marginTop: -40,
               paddingTop: -100,
             }}>
           </View>
           <View style={{ marginLeft: 105, marginTop: 25 }}>
-            <TouchableOpacity onPress={this.Flight1}>
+            <TouchableOpacity onPress={this.Hotel}>
               <Text style={{ color: "blue", fontWeight: "bold" }}>HOTEL RESERVATION</Text>
               <Image
                 style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
@@ -144,7 +157,7 @@ export default class DocumentScreen extends React.Component {
                 backgroundColor: "#5FE903",
                 width: 7,
                 marginLeft: -100,
-                height: 50,
+                height: 60,
                 marginTop: -40,
                 paddingTop: -100,
               }}
@@ -165,13 +178,13 @@ export default class DocumentScreen extends React.Component {
               backgroundColor: "#5FE903",
               width: 7,
               marginLeft: -100,
-              height: 50,
+              height: 60,
               marginTop: -40,
               paddingTop: -100,
             }}>
           </View>
           <View style={{ marginLeft: 105, marginTop: 25 }}>
-            <TouchableOpacity onPress={this.Flight1}>
+            <TouchableOpacity onPress={this.Game}>
               <Text style={{ color: "blue", fontWeight: "bold" }}>GAME TICKETS</Text>
               <Image
                 style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
@@ -183,7 +196,7 @@ export default class DocumentScreen extends React.Component {
                 backgroundColor: "#5FE903",
                 width: 7,
                 marginLeft: -100,
-                height: 50,
+                height: 60,
                 marginTop: -40,
                 paddingTop: -100,
               }}
@@ -204,13 +217,13 @@ export default class DocumentScreen extends React.Component {
               backgroundColor: "#5FE903",
               width: 7,
               marginLeft: -100,
-              height: 50,
+              height: 60,
               marginTop: -40,
               paddingTop: -100,
             }}>
           </View>
           <View style={{ marginLeft: 105, marginTop: 25 }}>
-            <TouchableOpacity onPress={this.Flight1}>
+            <TouchableOpacity onPress={this.Game}>
               <Text style={{ color: "blue", fontWeight: "bold" }}>GAME TICKETS</Text>
               <Image
                 style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
@@ -222,7 +235,7 @@ export default class DocumentScreen extends React.Component {
                 backgroundColor: "#0000FF",
                 width: 7,
                 marginLeft: -100,
-                height: 50,
+                height: 60,
                 marginTop: -40,
                 paddingTop: -100,
               }}
@@ -243,13 +256,13 @@ export default class DocumentScreen extends React.Component {
               backgroundColor: "#0000FF",
               width: 7,
               marginLeft: -100,
-              height: 50,
+              height: 60,
               marginTop: -40,
               paddingTop: -100,
             }}>
           </View>
           <View style={{ marginLeft: 105, marginTop: 25 }}>
-            <TouchableOpacity onPress={this.Flight1}>
+            <TouchableOpacity onPress={this.Restaurant}>
               <Text style={{ color: "blue", fontWeight: "bold" }}>DINNER AT RAO</Text>
               <Image
                 style={{ marginLeft: -70, height: 30, width: 30, marginTop: -10 }}
@@ -261,7 +274,7 @@ export default class DocumentScreen extends React.Component {
                 backgroundColor: "#006633",
                 width: 7,
                 marginLeft: -100,
-                height: 50,
+                height: 60,
                 marginTop: -40,
                 paddingTop: -100,
               }}
@@ -291,7 +304,7 @@ const styles = StyleSheet.create({
     marginLeft: -100,
     marginTop: -50,
     width: 500,
-    marginBottom: -100,
+    marginBottom: 0,
     backgroundColor: "white"
   },
 });

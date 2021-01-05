@@ -14,7 +14,7 @@ import { API_URL, API_TOKEN } from "@env"
 export default class Help1Screen extends React.Component {
 
   Back = () => {
-    window.location = "/menu";
+    this.props.navigation.navigate('Menu');
   }
 
   Help2 = () => {
@@ -111,7 +111,7 @@ export default class Help1Screen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back}>
+          <TouchableOpacity onPress={this.Back} style={{ width: 100 }}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 10, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
@@ -149,7 +149,7 @@ export default class Help1Screen extends React.Component {
             }}
           >
             &gt;
-          </Text>    
+          </Text>
           <Text
             style={{
               fontSize: 16,
@@ -189,7 +189,7 @@ export default class Help1Screen extends React.Component {
               <Text style={{ marginTop: -35, width: 300, fontWeight: "bold", color: "blue" }}>{this.state.LName1}</Text>
               <Text id="demo1" style={{ color: "black" }}></Text>
             </TouchableOpacity>
-          </Text>   
+          </Text>
           <Text
             style={{
               color: "pink",
@@ -227,10 +227,10 @@ export default class Help1Screen extends React.Component {
           >
             &gt;
           </Text>
-          <Text style={{marginLeft:85}}>
-              {this.state.isDone ? console.log("Component is Ready!") : <ActivityIndicator size="large" 
-              color="blue" style={{width:200, marginTop: 0 ,marginLeft:0}} 
-          />}
+          <Text style={{ marginLeft: 85 }}>
+            {this.state.isDone ? console.log("Component is Ready!") : <ActivityIndicator size="large"
+              color="blue" style={{ width: 200, marginTop: 0, marginLeft: 0 }}
+            />}
           </Text>
           <Text
             style={{
@@ -351,7 +351,7 @@ export default class Help1Screen extends React.Component {
             marginLeft: -198,
           }}
         >
-        </ScrollView>   
+        </ScrollView>
       </ScrollView >
     );
   }
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
   container: {
     height: 1300,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
     marginBottom: 0,
   },

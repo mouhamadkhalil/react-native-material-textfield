@@ -10,11 +10,11 @@ import {
 export default class UploadPassport1Screen extends React.Component {
 
   Back = () => {
-    window.location = "/ManageTrip";
+    this.props.navigation.navigate('Manage Trip');
   }
 
   AddFile = () => {
-    window.location = "/UploadPassport2";
+    this.props.navigation.navigate('Upload Passport 2');
   }
 
   render() {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -40,
+    marginTop: -70,
     width: 800,
   },
 });

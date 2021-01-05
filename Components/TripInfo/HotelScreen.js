@@ -12,7 +12,7 @@ import { API_URL, API_TOKEN } from "@env"
 
 export default class HotelScreen extends React.Component {
   Back = () => {
-    window.location = "/tripInfo";
+    this.props.navigation.navigate('Trip');
   }
 
   state = {
@@ -59,8 +59,8 @@ export default class HotelScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+          <TouchableOpacity onPress={this.Back} style={{ width: 110, marginLeft: 0, height: 65, marginTop: 0 }}>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 20, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -68,8 +68,9 @@ export default class HotelScreen extends React.Component {
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -30,
-              marginLeft: -10
+              marginTop: -50,
+              marginLeft: -30,
+              marginBottom: 30
             }}
           >
             my hotel

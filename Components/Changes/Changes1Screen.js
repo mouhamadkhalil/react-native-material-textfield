@@ -11,6 +11,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 export default class Changes1Screen extends React.Component {
 
+  Back = () => {
+    this.props.navigation.navigate('Manage Trip');
+  }
+
   state = {
     country: "uk",
   };
@@ -19,7 +23,7 @@ export default class Changes1Screen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back}>
+          <TouchableOpacity onPress={this.Back} style={{ width: 100 }}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 27, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
@@ -151,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -180,
-    marginTop: 10,
+    marginTop: -20,
     width: 720,
     backgroundColor: "white"
   },

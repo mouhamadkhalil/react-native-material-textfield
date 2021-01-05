@@ -13,29 +13,30 @@ import Bag from "../../assets/images/bag.jpg";
 export default class Flights1Screen extends React.Component {
 
   Back = () => {
-    window.location = "/tripInfo";
+    this.props.navigation.navigate('Trip');
   }
 
   render() {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 35, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+          <TouchableOpacity onPress={this.Back} style={{ width: 110, marginLeft: 0, height: 65, marginTop: 0 }}>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 40, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
-          <Text
-            style={{
-              color: "white",
-              fontSize: 19,
-              fontWeight: "bold",
-              textAlign: "center",
-              marginTop: -30,
-              marginLeft: -15
-            }}
-          >
-            my flights
-          </Text>
         </ScrollView>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 19,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginTop: -40,
+            marginLeft: -430,
+            marginBottom: 30
+          }}
+        >
+          my flights
+          </Text>
         <ScrollView style={{ width: "50%", height: 950, backgroundColor: "#E6F5F3" }}>
           <ScrollView
             style={{

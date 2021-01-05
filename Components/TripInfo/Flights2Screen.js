@@ -9,26 +9,33 @@ import {
 } from "react-native";
 
 export default class Flights2Screen extends React.Component {
+
+  Back = () => {
+    this.props.navigation.navigate('Menu');
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back}>
+          <TouchableOpacity onPress={this.Back} style={{ width: 130, marginLeft: 0, height: 60, marginTop: 0 }}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 35, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
-          <Text
-            style={{
-              color: "white",
-              fontSize: 19,
-              fontWeight: "bold",
-              textAlign: "center",
-              paddingTop: 13,
-              marginTop: -40,
-            }}
-          >
-            my flights
-          </Text>
+
         </ScrollView>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 19,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginTop: -40,
+            marginBottom: 20,
+            marginLeft: -400
+          }}
+        >
+          my flights
+          </Text>
         <ScrollView
           style={{ width: "50%", height: 1300, backgroundColor: "#E6F5F3" }}
         >

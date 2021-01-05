@@ -56,6 +56,8 @@ import MenuScreen from "./Components/Home/MenuScreen";
 import Post2Screen from "./Components/Home/Post2Screen";
 import PostScreen from "./Components/Home/PostScreen";
 
+import ChatHome4 from "./Components/Fan Chat/ChatHome4Screen";
+
 import InfoScreen from "./Components/More/Info";
 
 import SpecialGamesScreen from "./Components/Special Games/SpecialGame";
@@ -72,7 +74,7 @@ const MainStackNavigator = () => {
                         onPress={() => navigation.toggleDrawer()}
                         title="menu"
                         color="#333"
-                    />                  
+                    />
                 ),
             })} />
 
@@ -98,6 +100,9 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Upload Passport 3" component={UploadPassport3Screen} />
             <Stack.Screen name="Manage Trip" component={ManageTripScreen} />
             <Stack.Screen name="Complete Payment" component={CompletePaymentScreen} />
+
+            {/* Fan Chat */}
+            <Stack.Screen name="Chat Home 4" component={ChatHome4} />
 
             {/* FAQ */}
             <Stack.Screen name="FAQ 1" component={Help1Screen} />

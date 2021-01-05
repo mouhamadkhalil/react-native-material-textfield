@@ -286,8 +286,8 @@ export default class SignUpScreen extends React.Component {
         >
           Already have an account?
         </Text>
-        <TouchableOpacity onPress={()=>this.props.navigation.navigate('Login')}>
-          <Text style={{ marginLeft: 215, marginTop: -20, marginBottom: 20,width:100,height:50,marginTop:-20 }}> &nbsp; Login here </Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
+          <Text style={{ marginLeft: 215, marginTop: -20, marginBottom: 20, width: 100, height: 50, marginTop: -20 }}> &nbsp; Login here </Text></TouchableOpacity>
       </ScrollView>
     );
   }
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    marginTop: 0,
+    marginTop: 40,
     marginBottom: 0,
   },
   loginBtn: {
