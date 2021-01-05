@@ -10,8 +10,9 @@ import {
 import User from "../../assets/images/user.png";
 
 export default class Group2bScreen extends React.Component {
+
   Back = () => {
-    window.location = "/ChatActive3";
+    this.props.navigation.navigate('Group 2b Screen');
   }
 
   Profile = () => {

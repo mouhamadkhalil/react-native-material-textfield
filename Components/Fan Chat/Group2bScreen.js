@@ -10,8 +10,9 @@ import {
 import User from "../../assets/images/user.png";
 
 export default class Group2bScreen extends React.Component {
+
   Back = () => {
-    window.location = "/Group2";
+    this.props.navigation.navigate('Chat Profile 3');
   }
 
   Profile = () => {
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   container: {
     height: 800,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
     marginBottom: 50,
   },

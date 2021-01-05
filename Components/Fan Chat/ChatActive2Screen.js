@@ -11,8 +11,9 @@ import User from "../../assets/images/user.png";
 import Bar from "../../assets/images/bar.png";
 
 export default class ChatActive2Screen extends React.Component {
+
   Back = () => {
-    window.location = "/ChatActive1";
+    this.props.navigation.navigate('Chat Active 1');
   }
 
   render() {
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
   container: {
     height: 800,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
   },
 });

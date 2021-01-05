@@ -12,9 +12,11 @@ import Bar from "../../assets/images/bar.png";
 import Off from "../../assets/images/off.png";
 
 export default class ChatActive3Screen extends React.Component {
+
   Back = () => {
-    window.location = "/ChatActive2";
+    this.props.navigation.navigate('Chat Active 2');
   }
+
 
   render() {
     return (
@@ -25,7 +27,7 @@ export default class ChatActive3Screen extends React.Component {
           </TouchableOpacity>
           <Image
             source={User}
-            style={{ marginLeft: 75, marginTop:-28,width:25,height:25 }}
+            style={{ marginLeft: 75, marginTop: -28, width: 25, height: 25 }}
           />
           <Text
             style={{
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
   container: {
     height: 800,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
   },
 });

@@ -56,7 +56,28 @@ import MenuScreen from "./Components/Home/MenuScreen";
 import Post2Screen from "./Components/Home/Post2Screen";
 import PostScreen from "./Components/Home/PostScreen";
 
-import ChatHome4 from "./Components/Fan Chat/ChatHome4Screen";
+import ChatActive1Screen from "./Components/Fan Chat/ChatActive1Screen";
+import ChatActive2Screen from "./Components/Fan Chat/ChatActive2Screen";
+import ChatActive3Screen from "./Components/Fan Chat/ChatActive3Screen";
+import ChatHome1Screen from "./Components/Fan Chat/ChatHome1Screen";
+import ChatHome2Screen from "./Components/Fan Chat/ChatHome2Screen";
+import ChatHome3Screen from "./Components/Fan Chat/ChatHome3Screen";
+import ChatHome4Screen from "./Components/Fan Chat/ChatHome4Screen";
+import ChatHome5Screen from "./Components/Fan Chat/ChatHome5Screen";
+import ChatHome8Screen from "./Components/Fan Chat/ChatHome8Screen";
+import ChatHome10Screen from "./Components/Fan Chat/ChatHome10Screen";
+import ChatHome12Screen from "./Components/Fan Chat/ChatHome12Screen";
+import ChatHomeScreen from "./Components/Fan Chat/ChatHomeScreen";
+import ChatProfile1 from "./Components/Fan Chat/ChatProfile1Screen";
+import ChatProfile2 from "./Components/Fan Chat/ChatProfile2Screen";
+import ChatProfile3 from "./Components/Fan Chat/ChatProfile3Screen";
+import Group2bScreen from "./Components/Fan Chat/Group2bScreen";
+import Group2Screen from "./Components/Fan Chat/Group2Screen";
+
+
+
+
+
 
 import InfoScreen from "./Components/More/Info";
 
@@ -102,7 +123,25 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Complete Payment" component={CompletePaymentScreen} />
 
             {/* Fan Chat */}
-            <Stack.Screen name="Chat Home 4" component={ChatHome4} />
+            <Stack.Screen name="Group 2b Screen" component={Group2bScreen} />
+            <Stack.Screen name="Group 2 Screen" component={Group2Screen} />
+            <Stack.Screen name="Chat Profile 1" component={ChatProfile1} />
+            <Stack.Screen name="Chat Profile 2" component={ChatProfile2} />
+            <Stack.Screen name="Chat Profile 3" component={ChatProfile3} />
+            <Stack.Screen name="Chat Home Screen" component={ChatHomeScreen} />
+            <Stack.Screen name="Chat Home 12 Screen" component={ChatHome12Screen} />
+            <Stack.Screen name="Chat Home 10 Screen" component={ChatHome10Screen} />
+            <Stack.Screen name="Chat Home 8 Screen" component={ChatHome8Screen} />
+            <Stack.Screen name="Chat Home 5 Screen" component={ChatHome5Screen} />
+            <Stack.Screen name="Chat Home 4 Screen" component={ChatHome4Screen} />
+            <Stack.Screen name="Chat Active 1" component={ChatActive1Screen} />
+            <Stack.Screen name="Chat Active 2" component={ChatActive2Screen} />
+            <Stack.Screen name="Chat Active 3" component={ChatActive3Screen} />
+            <Stack.Screen name="Chat Home 1" component={ChatHome1Screen} />
+            <Stack.Screen name="Chat Home 2" component={ChatHome2Screen} />
+            <Stack.Screen name="Chat Home 3" component={ChatHome3Screen} />
+
+
 
             {/* FAQ */}
             <Stack.Screen name="FAQ 1" component={Help1Screen} />

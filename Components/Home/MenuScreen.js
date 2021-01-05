@@ -26,6 +26,7 @@ const uri =
   "https://media-exp1.licdn.com/dms/image/C4E0BAQH7PWLgwhKFcw/company-logo_200_200/0?e=2159024400&v=beta&t=KJDoqyv_HeIk8_XfhCo-IUgjVvw0OebXlKICT5HgR-A";
 
 export default class MenuScreen extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = { showAlert: false };
@@ -44,7 +45,7 @@ export default class MenuScreen extends React.Component {
   };
 
   Profile = () => {
-    this.props.navigation.navigate('Chat Home 4');
+    this.props.navigation.navigate('Chat Active 1');
   };
 
   ManageTrip = () => {

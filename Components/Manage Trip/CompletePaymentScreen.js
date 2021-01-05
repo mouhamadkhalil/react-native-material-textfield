@@ -40,8 +40,8 @@ export default class CompletePaymentScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60, width: 375 }}>
-          <TouchableOpacity onPress={this.Back} style={{ marginTop: 5, width: 100, height: 60 }}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 35, marginTop: -7, fontWeight: "bold" }}>&#8592;</Text>
+          <TouchableOpacity onPress={this.Back} style={{width:100,height:60}}>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 25, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
@@ -49,7 +49,7 @@ export default class CompletePaymentScreen extends React.Component {
               fontSize: 19,
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: -45,
+              marginTop: -40,
               marginLeft: -20
             }}
           >
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   container: {
     height: 800,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 700,
   },
 });

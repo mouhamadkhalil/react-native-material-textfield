@@ -10,6 +10,11 @@ import {
 import Zomato from "../../assets/images/zomato.png";
 
 export default class ChatProfile2Screen extends React.Component {
+
+  Back = () => {
+    this.props.navigation.navigate('Chat Profile 1');
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     height: 800,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 900,
   },
 });

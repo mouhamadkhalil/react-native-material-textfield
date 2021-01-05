@@ -11,7 +11,7 @@ import AwesomeAlert from "react-native-awesome-alerts";
 export default class InviteToJoin2Screen extends React.Component {
 
   Back = () => {
-    window.location = "/InviteToJoin1";
+    this.props.navigation.navigate('Join 1');
   }
 
   InviteTravller = () => {
@@ -21,6 +21,7 @@ export default class InviteToJoin2Screen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showAlert: false };
+    this.state = { showAlert1: false };
   }
 
   showAlert = () => {
@@ -35,8 +36,23 @@ export default class InviteToJoin2Screen extends React.Component {
     });
   };
 
+  showAlert1 = () => {
+    this.setState({
+      showAlert1: true,
+    });
+  };
+
+  hideAlert1 = () => {
+    this.setState({
+      showAlert1: false,
+    });
+  };
+
   render() {
+
     const { showAlert } = this.state;
+    const { showAlert1 } = this.state;
+
     return (
       <View style={styles.container}>
         <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
@@ -78,17 +94,52 @@ export default class InviteToJoin2Screen extends React.Component {
           >
             Hannibal Lecter
           </Text>
-          <TouchableOpacity style={{ marginLeft: 300, marginTop: -15 }} onPress={this.InviteTravller}>
-            <Text style={{ marginLeft: -50 }}>
-              INVITE TO APP
+          <TouchableOpacity style={{ marginLeft: 300, marginTop: -15 }}>
+            <Text
+              onPress={() => onItemSelected("Contacts")}
+              style={styles.item}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  this.showAlert1();
+                }}
+              >
+                <View style={styles.button}>
+                  <Text style={styles.text}>INVITE TO APP</Text>
+                </View>
+              </TouchableOpacity>
             </Text>
+
+            <View style={{ width: 900, marginTop: 80, marginLeft: -560 }}>
+              <AwesomeAlert
+                show={showAlert1}
+                showProgress={false}
+                title="INVITE Hannibal TO JOIN APP"
+                message="Email address"
+                hintInput={"HINT INPUT"}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={true}
+                showConfirmButton={true}
+                cancelText="CANCEL "
+                confirmText="SUBMIT"
+                confirmButtonColor="blue"
+                cancelButtonColor="black"
+                onCancelPressed={() => {
+                  this.hideAlert1();
+                }}
+                onConfirmPressed={() => {
+                  this.hideAlert1();
+                }}
+              />
+            </View>
           </TouchableOpacity>
           <Text
             style={{
               color: "gray",
               fontSize: 13,
               marginLeft: 30,
-              marginTop: 30,
+              marginTop: -30,
             }}
           >
             TRAVELLER 2
@@ -156,7 +207,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: -200,
-    marginTop: -40,
+    marginTop: -70,
     width: 800,
   },
   text: {

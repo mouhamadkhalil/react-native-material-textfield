@@ -10,9 +10,11 @@ import {
 import User from "../../assets/images/user.png";
 
 export default class ChatActive1Screen extends React.Component {
+
   Back = () => {
-    window.location = "/ChatHome1";
+    this.props.navigation.navigate('Menu');
   }
+
   render() {
     return (
       <ScrollView style={styles.container}>

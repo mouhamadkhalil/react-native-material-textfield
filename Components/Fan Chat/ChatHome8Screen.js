@@ -12,7 +12,7 @@ import User from "../../assets/images/user.png";
 export default class ChatHome8Screen extends React.Component {
 
   Back = () => {
-    window.location = "/Group2b";
+    this.props.navigation.navigate('Chat Home 5 Screen');
   }
 
   render() {
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   container: {
     height: 800,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
   },
 });

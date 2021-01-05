@@ -12,7 +12,7 @@ import User from "../../assets/images/user.png";
 export default class ChatHome5Screen extends React.Component {
 
   Back = () => {
-    window.location = "/ChatHome4";
+    this.props.navigation.navigate('Chat Home 4 Screen');
   }
 
   render() {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   container: {
     height: 900,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
   },
 });

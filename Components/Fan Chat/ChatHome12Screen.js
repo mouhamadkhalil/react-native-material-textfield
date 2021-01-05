@@ -11,6 +11,11 @@ import User from "../../assets/images/user.png";
 import Bar from "../../assets/images/bar.png";
 
 export default class ChatHome12Screen extends React.Component {
+
+  Back = () => {
+    this.props.navigation.navigate('Chat Home 10 Screen');
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -228,7 +233,7 @@ const styles = StyleSheet.create({
   container: {
     height: 800,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
   },
 });

@@ -16,7 +16,6 @@ export default class InviteToJoin1Screen extends React.Component {
 
   InviteTraveller = () => {
     this.props.navigation.navigate('Join 2');
-
   }
 
   constructor(props) {
@@ -41,8 +40,8 @@ export default class InviteToJoin1Screen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back} style={{ width: 100, marginTop: 10 }}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
+          <TouchableOpacity onPress={this.Back} style={{ width: 120, marginTop: 10 }}>
+            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: -10, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text
             style={{
