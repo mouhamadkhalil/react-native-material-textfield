@@ -15,32 +15,42 @@ export default class ChatActive1Screen extends React.Component {
     this.props.navigation.navigate('Menu');
   }
 
+  Chats = () => {
+    this.props.navigation.navigate('Chat Active 2');
+  }
+
+  Profile1 = () => {
+    this.props.navigation.navigate('Chat Profile 1');
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back}>
+          <TouchableOpacity onPress={this.Back} style={{ width: 70 }}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Image
             source={User}
             style={{ marginLeft: 75, marginTop: -28, width: 25, height: 25 }}
           />
-          <Text
-            style={{
-              marginLeft: 120,
-              color: "white",
-              fontSize: 19,
-              fontWeight: "bold",
-              marginTop: -25,
-            }}
-          >
-            Henry Rollins
+          <TouchableOpacity style={{ width: 300,height: 60, marginTop: 0,marginLeft:30 }} onPress={this.Profile1}>
+            <Text
+              style={{
+                marginLeft: 80,
+                color: "white",
+                fontSize: 19,
+                fontWeight: "bold",
+                marginTop: -30,
+              }}
+            >
+              Henry Rollins
           </Text>
+          </TouchableOpacity>
         </ScrollView>
         <ScrollView style={{ width: "50%", height: 600, backgroundColor: "#F9F4EC", marginLeft: -35 }}>
           <ScrollView>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.Chats}>
               <Text
                 style={{
                   color: "blue",
@@ -129,7 +139,7 @@ const styles = StyleSheet.create({
   container: {
     height: 800,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
   },
 });

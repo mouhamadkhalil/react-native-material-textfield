@@ -15,7 +15,7 @@ export default class InviteToJoin2Screen extends React.Component {
   }
 
   InviteTravller = () => {
-    window.location = "/InviteToJoin3";
+    this.props.navigation.navigate('Join 3');
   }
 
   constructor(props) {

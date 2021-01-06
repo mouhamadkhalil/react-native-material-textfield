@@ -10,9 +10,8 @@ import {
 export default class InviteToJoin3Screen extends React.Component {
 
   Back = () => {
-    window.location = "/InviteToJoin2";
+    this.props.navigation.navigate('Join 2');
   }
-
   render() {
     return (
       <View style={styles.container}>

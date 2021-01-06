@@ -9,7 +9,7 @@ import {
     AsyncStorage,
     TouchableOpacity,
     ActivityIndicator,
-    ToastAndroid 
+    ToastAndroid
 } from "react-native";
 import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
@@ -45,49 +45,49 @@ export default class LoginScreen extends React.Component {
 
         const url = `${API_URL}/mobile/profile/login`;
 
-        if(this.state.username != '' && this.state.password != ''){
-        
-        const data = {
-            username: this.state.username,
-            password: this.state.password,
-        };
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                if (response.ErrorId) {
-                    // alert("Error: The user name or password is incorrect"); 
-                    ToastAndroid.showWithGravity(
-                        'Error: The user name or password is incorrect' ,
-                        ToastAndroid.LONG,
-                        ToastAndroid.CENTER
-                      );                 
-                    window.location.reload();
-                } else {
-                    console.log(response);
-                    let token_id = response.Token;
-                    this.setState({ Token: token_id });
-                    AsyncStorage.setItem("token", this.state.Token);
-                    // this.setState({ isLoggedIn: true });
-                    // this.setState({ loginChecked: true });
-                    this.setState({ isDone: true });
-                    this.props.navigation.navigate('Day1 Home');
-                }
-            });
+        if (this.state.username != '' && this.state.password != '') {
+
+            const data = {
+                username: this.state.username,
+                password: this.state.password,
+            };
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+            })
+                .then((res) => res.json())
+                .catch((error) => console.error("Error: ", error))
+                .then((response) => {
+                    if (response.ErrorId) {
+                        // alert("Error: The user name or password is incorrect"); 
+                        ToastAndroid.showWithGravity(
+                            'Error: The user name or password is incorrect',
+                            ToastAndroid.LONG,
+                            ToastAndroid.CENTER
+                        );
+                        window.location.reload();
+                    } else {
+                        console.log(response);
+                        let token_id = response.Token;
+                        this.setState({ Token: token_id });
+                        AsyncStorage.setItem("token", this.state.Token);
+                        // this.setState({ isLoggedIn: true });
+                        // this.setState({ loginChecked: true });
+                        this.setState({ isDone: true });
+                        this.props.navigation.navigate('Home Pre');
+                    }
+                });
         }
-        else{
+        else {
             ToastAndroid.showWithGravity(
-                'Please Enter Credentials' ,
+                'Please Enter Credentials',
                 ToastAndroid.LONG,
                 ToastAndroid.CENTER
-              );
+            );
         }
     };
 
@@ -216,8 +216,8 @@ export default class LoginScreen extends React.Component {
                         <Text style={{ marginLeft: 235 }}>LOGIN </Text>
                     </Text>
 
-                    {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22,marginLeft:-10 }} />
-                        : console.log("done") }
+                    {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
+                        : console.log("done")}
 
                 </TouchableOpacity>
                 <Text
@@ -231,8 +231,8 @@ export default class LoginScreen extends React.Component {
                 >
                     Don't have an account?
                 </Text>
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate('Sign up')}>
-                    <Text style={{ marginLeft: 206, marginTop: -20, marginBottom: 0,width:100,height:70,marginTop:-20 }} >Sign up here </Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Sign up')}>
+                    <Text style={{ marginLeft: 206, marginTop: -20, marginBottom: 0, width: 100, height: 70, marginTop: -20 }} >Sign up here </Text></TouchableOpacity>
             </ScrollView>
         );
     }

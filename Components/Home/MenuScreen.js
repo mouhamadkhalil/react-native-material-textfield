@@ -73,8 +73,8 @@ export default class MenuScreen extends React.Component {
           <View style={styles.avatarContainer}>
             <Image style={styles.avatar} source={FlyFoot} />
             <Text style={styles.name}>FLY-FOOT</Text>
-            <TouchableOpacity>
-              <Image source={Close} style={{ marginLeft: 310, marginTop: -5 }} />
+            <TouchableOpacity style={{ width: 70, marginLeft: 280, height: 50, marginTop: -20 }}>
+              <Image source={Close} style={{ marginLeft: 25, marginTop: 15 }} />
             </TouchableOpacity>
           </View>
           <Text>
@@ -142,7 +142,9 @@ export default class MenuScreen extends React.Component {
             <TouchableOpacity
               style={{ marginLeft: 200, color: "blue", textDecoration: "none" }}
             >
-              <TouchableOpacity><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Logout</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                this.showAlert();
+              }} ><Text style={{ marginLeft: 75, fontWeight: "bold", color: "blue", fontSize: 30 }}>Logout</Text></TouchableOpacity>
               <Image
                 source={Logout}
                 style={{ marginLeft: 26, marginTop: -32, width: 30, height: 30 }}
@@ -162,11 +164,10 @@ export default class MenuScreen extends React.Component {
             </TouchableOpacity>
           </Text>
         </View>
-        {/* <ScrollView style={{ width: 950, marginTop: -230, marginLeft: 190 }}>
+        <View style={{ width: 1540, marginTop: -230, marginLeft: 190 }}>
           <AwesomeAlert
             show={showAlert}
             showProgress={false}
-            title=""
             message="Are you sure you want to log out?"
             closeOnTouchOutside={true}
             closeOnHardwareBackPress={false}
@@ -179,11 +180,13 @@ export default class MenuScreen extends React.Component {
             onCancelPressed={() => {
               this.hideAlert();
             }}
+
+            //remove token by calling the function removeItem.
             onConfirmPressed={() => {
               this.hideAlert();
             }}
           />
-        </ScrollView> */}
+        </View>
       </View>
     );
   }

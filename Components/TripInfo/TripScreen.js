@@ -44,7 +44,9 @@ export default class TripScreen extends React.Component {
     this.props.navigation.navigate('Pick up');
   }
 
-
+  Back = () => {
+    this.props.navigation.navigate('Menu');
+  }
 
 
 

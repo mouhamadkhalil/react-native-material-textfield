@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   container: {
     height: 1000,
     marginLeft: 0,
-    marginTop: 30,
+    marginTop: 0,
     width: 800,
   },
 });
