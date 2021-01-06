@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   Picker,
   AsyncStorage,
-  ActivityIndicator
+  ActivityIndicator,
+  ToastAndroid
 } from "react-native";
 import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
@@ -39,10 +40,6 @@ export default class SignUpScreen extends React.Component {
     FavouriteTeam3: "",
     FavouriteTeam4: "",
     isDone: false
-  };
-
-  Home = () => {
-    window.location = "/";
   };
 
   componentDidMount() {
@@ -119,7 +116,13 @@ export default class SignUpScreen extends React.Component {
             this.setState({ Token: token_id });
             this.setState({ isDone: true })
             AsyncStorage.setItem("token", this.state.Token);
-            alert("you have successfully registered !");
+            // alert("you have successfully registered !");
+            ToastAndroid.showWithGravity(
+              'you have successfully registered !',
+              ToastAndroid.LONG,
+              ToastAndroid.CENTER
+            );
+
             // console.log("token issssss: ",AsyncStorage.getItem('token'));
             this.props.navigation.navigate('Day1 Home');
           }
@@ -129,49 +132,45 @@ export default class SignUpScreen extends React.Component {
 
   SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
-  Facebook = () => {
-    alert("Login with Facebook !");
-  };
+  // Facebook = () => {
+  //   alert("Login with Facebook !");
+  // };
 
-  Facebook = this.Facebook.bind(this);
+  // Facebook = this.Facebook.bind(this);
 
-  Google = () => {
-    alert("Login with Google !")
-  };
+  // Google = () => {
+  //   alert("Login with Google !")
+  // };
 
-  Google = this.Google.bind(this);
+  // Google = this.Google.bind(this);
 
   render() {
     return (
       <ScrollView style={styles.container}>
 
-        <TouchableOpacity onPress={this.Home}>
-          <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
-            FLY-FOOT
+        <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
+          FLY-FOOT
           </Text>
-        </TouchableOpacity>
-
         <Image
           source={Flyfoot}
           style={{ marginLeft: 100, marginTop: -34, width: 40, height: 40 }}
         />
-
-        <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 50 }}>
+        {/* <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 50 }}>
           <Button
             title="LOGIN WITH FACEBOOK"
             color="blue"
             style={{ width: 500, padding: 300, height: 300 }}
             onPress={this.Facebook}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
+        {/* <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
           <Button
             title="LOGIN WITH GOOGLE"
             color="red"
             onPress={this.Google}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Text style={{ fontSize: 20, paddingTop: 10, marginLeft: 90 }}>
           SIGN UP WITH EMAIL
         </Text>

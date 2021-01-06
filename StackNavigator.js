@@ -74,14 +74,11 @@ import ChatProfile3 from "./Components/Fan Chat/ChatProfile3Screen";
 import Group2bScreen from "./Components/Fan Chat/Group2bScreen";
 import Group2Screen from "./Components/Fan Chat/Group2Screen";
 
-
-
-
-
-
 import InfoScreen from "./Components/More/Info";
 
 import SpecialGamesScreen from "./Components/Special Games/SpecialGame";
+import AllGamesScreen from "./Components/Special Games/AllGames";
+
 
 
 const Stack = createStackNavigator();
@@ -182,6 +179,8 @@ const MainStackNavigator = () => {
 
             {/* Special Games */}
             <Stack.Screen name="Special Games" component={SpecialGamesScreen} />
+            <Stack.Screen name="All Games" component={AllGamesScreen} />
+
 
         </Stack.Navigator>
     );

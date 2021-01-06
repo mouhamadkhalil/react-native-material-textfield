@@ -153,11 +153,9 @@ export default class LoginScreen extends React.Component {
         const { navigation } = this.props;
         return (
             <ScrollView style={styles.container}>
-                <TouchableOpacity>
                     <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
                         FLY-FOOT
                     </Text>
-                </TouchableOpacity>
                 <Image
                     source={Flyfoot}
                     style={{ marginLeft: 100, marginTop: -34, width: 40, height: 40 }}
