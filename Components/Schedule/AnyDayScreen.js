@@ -65,25 +65,25 @@ export default class Day2Screen extends React.Component {
         >
           MONDAY 12 SEPT
         </Text>
-        <View style={{marginTop:-35,marginLeft:380,width:40,height:50}}>
-        <TouchableOpacity>
-        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
-        </TouchableOpacity>
+        <View style={{ marginTop: -35, marginLeft: 380, width: 40, height: 50 }}>
+          <TouchableOpacity>
+            <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
+          </TouchableOpacity>
         </View>
 
-        <View style={{marginTop:-40,marginLeft:430,width:40,height:50}}>
-        <TouchableOpacity>
-        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
-        </TouchableOpacity>
+        <View style={{ marginTop: -40, marginLeft: 430, width: 40, height: 50 }}>
+          <TouchableOpacity>
+            <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
+          </TouchableOpacity>
         </View>
 
-        <View style={{marginTop:-49,width:190}}>
-        <TouchableOpacity>
-          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
-          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-        </TouchableOpacity>
-        </View> 
+        <View style={{ marginTop: -49, width: 190 }}>
+          <TouchableOpacity>
+            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
+            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+          </TouchableOpacity>
+        </View>
         <Text
           style={{
             marginTop: 30,
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     height: 1100,
     marginLeft: -110,
     width: 500,
-    marginTop: 30,
+    marginTop: 0,
     marginBottom: 0,
     backgroundColor: "#F5F7EC",
   },
