@@ -122,17 +122,12 @@ export default class HomePreScreen extends React.Component {
         >
           MONDAY 12 SEPT
         </Text>
-
-
         <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -95 }}>
           <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
         </TouchableOpacity>
-
-
         <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
           <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
         </TouchableOpacity>
-
         <View style={{ marginTop: -24, width: 190 }}>
           <TouchableOpacity>
             <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
@@ -154,7 +149,6 @@ export default class HomePreScreen extends React.Component {
           Pack your bag!
         </Text>
         <Image source={DownArrow} style={{ width: 20, height: 20, marginLeft: 285, marginTop: 10 }} />
-
         <ScrollView
           style={{
             marginTop: 30,
@@ -280,7 +274,7 @@ const styles = StyleSheet.create({
     height: 1100,
     marginLeft: -110,
     width: 500,
-    marginTop: 0,
+    marginTop: 30,
     marginBottom: 10,
     backgroundColor: "#F5F7EC",
   },
