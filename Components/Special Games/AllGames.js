@@ -25,32 +25,85 @@ import Arrow1 from "../../assets/Images_Design/arrow_down.png";
 
 export default class AllGames extends React.Component {
 
+    state = {
+        Picture1: "",
+        Picture2: "",
+        Picture3: "",
+        Picture4: "",
+        isDone: false,
+        searchText: "",
+        idMatch: "",
+        City: "",
+        Stade: "",
+        GameDate: "",
+        LeaguesName: "",
+        GameCode: "",
+        HomeTeam: "",
+        AwayTeam: "",
+        StadeCity: ""
+    };
+
+
+    searchGame = () => {
+        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`
+        fetch(urlSearch, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                console.log("test", response[0].City);
+                this.setState({ idMatch: response[0].idMatch });
+                this.setState({ City: response[0].City });
+                this.setState({ Stade: response[0].Stade });
+                this.setState({ GameDate: response[0].GameDate });
+                this.setState({ LeaguesName: response[0].LeaguesName });
+                this.setState({ GameCode: response[0].GameCode });
+                this.setState({ HomeTeam: response[0].HomeTeam });
+                this.setState({ AwayTeam: response[0].AwayTeam });
+                this.setState({ StadeCity: response[0].StadeCity });
+
+            });
+    }
+
     render() {
         return (
             <ScrollView style={styles.container}>
+                <TextInput
+                    style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
+                    placeholder="  &nbsp;&nbsp;Search your game ... "
+                    placeholderTextColor="#46D822"
+                    autoCapitalize="none"
+                    onChangeText={searchText => {
+                        this.setState({ searchText });
+                    }}
+                    onSubmitEditing={this.searchGame}
+                    value={this.state.searchText}
+                />
+
                 <Text
                     style={{
                         alignContent: "center",
                         color: "#4c0099",
                         fontWeight: "bold",
-                        marginTop: 40,
+                        marginTop: 30,
                         fontSize: 19,
                         marginLeft: 210
                     }}
                 >
                     MONDAY 12 SEPT
-                </Text>
-                <View style={{ marginTop: -35, marginLeft: 380, width: 40, height: 50 }}>
-                    <TouchableOpacity>
-                        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
-                    </TouchableOpacity>
-                </View>
-                <View style={{ marginTop: -40, marginLeft: 430, width: 40, height: 50 }}>
-                    <TouchableOpacity>
-                        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
-                    </TouchableOpacity>
-                </View>
-                <View style={{ marginTop: -49, width: 190 }}>
+        </Text>
+                <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -95 }}>
+                    <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
+                    <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
+                </TouchableOpacity>
+                <View style={{ marginTop: -24, width: 190 }}>
                     <TouchableOpacity>
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
@@ -58,7 +111,11 @@ export default class AllGames extends React.Component {
                     </TouchableOpacity>
                 </View>
 
-                <Image source={Game} style={{ height: 200, marginTop: 20 }} />
+
+
+
+
+                <Image source={Game} style={{ height: 200, marginTop: 80 }} />
                 <Text style={{ color: "red", marginLeft: 230, marginTop: 50, fontSize: 30 }}></Text>
 
                 <ScrollView style={{ backgroundColor: "white", width: 300, height: 70, marginLeft: 145, marginTop: -120 }}>
@@ -157,7 +214,7 @@ const styles = StyleSheet.create({
         height: 1100,
         marginLeft: -110,
         width: 500,
-        marginTop: 0,
+        marginTop: 30,
         marginBottom: 30,
         backgroundColor: "#F5F7EC",
     },

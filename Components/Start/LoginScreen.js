@@ -48,6 +48,7 @@ export default class LoginScreen extends React.Component {
         isDone: false,
         // isLoggedIn: false,
         // loginChecked: false,
+
     };
 
     // componentDidMount(){
