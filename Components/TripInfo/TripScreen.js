@@ -17,7 +17,6 @@ import Hotel2 from "../../assets/images/Hotel2.jpg";
 import Sea from "../../assets/images/Sea.jpg";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 
-
 export default class TripScreen extends React.Component {
 
   Flight = () => {

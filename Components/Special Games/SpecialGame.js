@@ -22,7 +22,39 @@ import Btn2 from "../../assets/Images_Design/btn2.png";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import { RNCarousel } from 'react-native-carousel-cards';
 
+const sourceFile = require('../../services.js');
+
 export default class Day2Screen extends React.Component {
+
+    //needed to be changed the url  from the test api ?
+    // state = {
+    //     Picture: "",
+    //     isDone: false
+    //   };
+
+    //   componentDidMount() {
+    //     const url = `${API_URL}/mobile/game/GetHomePageData`;
+
+    //     fetch(url, {
+    //       method: "GET",
+    //       headers: {
+    //         "Content-Type": sourceFile.Content_Type,
+    //         "Accept": sourceFile.Accept,
+    //         "ff_version": sourceFile.ff_version,
+    //         "ff_language": sourceFile.ff_language,
+    //         "source": sourceFile.source,
+    //         // "authorization" : sourceFile.authorization,
+    //       },
+    //     })
+    //       .then((res) => res.json())
+    //       .catch((error) => console.error("Error: ", error))
+    //       .then((response) => {
+    //         this.setState({ isDone: true })
+    //         console.log("test", response.GenericGames[0].MatchBundleHotels[0].Image)
+    //         this.setState({ Picture: response.GenericGames[0].MatchBundleHotels[0].Image });
+    //       });
+    //   }
+
 
     render() {
         return (

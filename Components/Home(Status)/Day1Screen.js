@@ -18,6 +18,8 @@ import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
 
+const sourceFile = require('../../services.js');
+
 export default class Day2Screen extends React.Component {
 
   state = {
@@ -34,8 +36,12 @@ export default class Day2Screen extends React.Component {
     fetch(url, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
+        "Content-Type": sourceFile.Content_Type,
+        "Accept": sourceFile.Accept,
+        "ff_version": sourceFile.ff_version,
+        "ff_language": sourceFile.ff_language,
+        "source": sourceFile.source,
+        // "authorization" : sourceFile.authorization,
       },
     })
       .then((res) => res.json())
@@ -65,25 +71,25 @@ export default class Day2Screen extends React.Component {
         >
           MONDAY 12 SEPT
         </Text>
-        <View style={{marginTop:-35,marginLeft:380,width:40,height:50}}>
-        <TouchableOpacity>
-        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
-        </TouchableOpacity>
+        <View style={{ marginTop: -35, marginLeft: 380, width: 40, height: 50 }}>
+          <TouchableOpacity>
+            <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
+          </TouchableOpacity>
         </View>
 
-        <View style={{marginTop:-40,marginLeft:430,width:40,height:50}}>
-        <TouchableOpacity>
-        <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
-        </TouchableOpacity>
+        <View style={{ marginTop: -40, marginLeft: 430, width: 40, height: 50 }}>
+          <TouchableOpacity>
+            <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
+          </TouchableOpacity>
         </View>
 
-        <View style={{marginTop:-49,width:190}}>
-        <TouchableOpacity>
-          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
-          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-          <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-        </TouchableOpacity>
-        </View> 
+        <View style={{ marginTop: -49, width: 190 }}>
+          <TouchableOpacity>
+            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
+            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+          </TouchableOpacity>
+        </View>
         <Text
           style={{
             marginTop: 30,

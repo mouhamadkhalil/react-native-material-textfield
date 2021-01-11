@@ -19,6 +19,8 @@ import Notifictaion from "../../assets/Images_Design/notification1.png";
 import DownArrow from "../../assets/Images_Design/down_arrow_1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
 
+const sourceFile = require('../../services.js');
+
 export default class HomePreScreen extends React.Component {
 
   state = {
@@ -45,15 +47,19 @@ export default class HomePreScreen extends React.Component {
     fetch(url, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
+        "Content-Type": sourceFile.Content_Type,
+        "Accept": sourceFile.Accept,
+        "ff_version": sourceFile.ff_version,
+        "ff_language": sourceFile.ff_language,
+        "source": sourceFile.source,
+        // "authorization" : sourceFile.authorization,
       },
     })
       .then((res) => res.json())
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
         this.setState({ isDone: true });
-        console.log("test", response.GenericGames[0].MatchBundleHotels[0])
+        console.log("test", response.GenericGames[0].MatchBundleHotels[0].Images[1])
         this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[1] });
         this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
         this.setState({ Picture3: response.GenericGames[0].MatchBundleHotels[0].Images[3] });

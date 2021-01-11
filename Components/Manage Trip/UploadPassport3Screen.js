@@ -8,9 +8,11 @@ import {
 } from "react-native";
 
 export default class UploadPassport3Screen extends React.Component {
+
   Back = () => {
-    window.location = "/UploadPassport2";
+    this.props.navigation.navigate('Upload Passport 2');
   }
+
   render() {
     return (
       <ScrollView style={styles.container}>
