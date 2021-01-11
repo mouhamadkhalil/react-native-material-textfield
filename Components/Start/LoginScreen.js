@@ -17,11 +17,26 @@ import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env";
 import SignupScreen from "./SignupScreen";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 export default class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { showAlert: false };
     }
+
+    showAlert = () => {
+        this.setState({
+            showAlert: true,
+        });
+    };
+
+    hideAlert = () => {
+        this.setState({
+            showAlert: false,
+        });
+    };
+
     state = {
         client_id: "",
         grant_type: "Bearer Token",
@@ -150,11 +165,13 @@ export default class LoginScreen extends React.Component {
     Google = this.Google.bind(this);
 
     render() {
+
         const { navigation } = this.props;
+        const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
-                    <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
-                        FLY-FOOT
+                <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
+                    FLY-FOOT
                     </Text>
                 <Image
                     source={Flyfoot}
@@ -209,14 +226,31 @@ export default class LoginScreen extends React.Component {
                     }}
                 >
                 </Text>
+                <Text
+                    style={{
+                        fontWeight: "90",
+                        color: "gray",
+                        fontSize: 16,
+                        paddingRight: 110,
+                        paddingTop: 20,
+                    }}
+                >
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.showAlert();
+                        }}
+                    >
+                        <ScrollView>
+                            <Text style={{ marginLeft: 35, color: "gray", textDecorationLine: "underline" }}>Forgot Password?</Text>
+                        </ScrollView>
+                    </TouchableOpacity>
+                </Text>
                 <TouchableOpacity style={styles.loginBtn} onPress={(this.SubmitLoginBtn)}>
                     <Text style={styles.loginText}>
                         <Text style={{ marginLeft: 235 }}>LOGIN </Text>
                     </Text>
-
                     {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
                         : console.log("done")}
-
                 </TouchableOpacity>
                 <Text
                     style={{
@@ -231,6 +265,28 @@ export default class LoginScreen extends React.Component {
                 </Text>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Sign up')}>
                     <Text style={{ marginLeft: 206, marginTop: -20, marginBottom: 0, width: 100, height: 70, marginTop: -20 }} >Sign up here </Text></TouchableOpacity>
+                <ScrollView style={{ width: 1000, marginTop: 0 }}>
+                    <AwesomeAlert
+                        show={showAlert}
+                        showProgress={false}
+                        title="FORGOT YOUR PASSWORD?"
+                        message="Enter your email address to request a password reset"
+                        closeOnTouchOutside={true}
+                        closeOnHardwareBackPress={false}
+                        showCancelButton={true}
+                        showConfirmButton={true}
+                        cancelText="CANCEL"
+                        confirmText="SUBMIT"
+                        confirmButtonColor="blue"
+                        cancelButtonColor="black"
+                        onCancelPressed={() => {
+                            this.hideAlert();
+                        }}
+                        onConfirmPressed={() => {
+                            this.hideAlert();
+                        }}
+                    />
+                </ScrollView>
             </ScrollView>
         );
     }

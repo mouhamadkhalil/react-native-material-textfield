@@ -40,7 +40,7 @@ export default class CompletePaymentScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60, width: 375 }}>
-          <TouchableOpacity onPress={this.Back} style={{width:100,height:60}}>
+          <TouchableOpacity onPress={this.Back} style={{ width: 100, height: 60 }}>
             <Text style={{ fontSize: 35, color: "yellow", marginLeft: 25, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
           </TouchableOpacity>
           <Text

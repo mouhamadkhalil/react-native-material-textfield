@@ -9,3 +9,8 @@ registerRootComponent(App);
 
 //remove all warnings 
 console.disableYellowBox = true;
+
+
+
+
+
