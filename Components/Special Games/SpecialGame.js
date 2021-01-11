@@ -20,8 +20,41 @@ import Card2 from "../../assets/Images_Design/card2.png";
 import Btn1 from "../../assets/Images_Design/btn1.png";
 import Btn2 from "../../assets/Images_Design/btn2.png";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
+import { RNCarousel } from 'react-native-carousel-cards';
+
+const sourceFile = require('../../services.js');
 
 export default class Day2Screen extends React.Component {
+
+    //needed to be changed the url  from the test api ?
+    // state = {
+    //     Picture: "",
+    //     isDone: false
+    //   };
+
+    //   componentDidMount() {
+    //     const url = `${API_URL}/mobile/game/GetHomePageData`;
+
+    //     fetch(url, {
+    //       method: "GET",
+    //       headers: {
+    //         "Content-Type": sourceFile.Content_Type,
+    //         "Accept": sourceFile.Accept,
+    //         "ff_version": sourceFile.ff_version,
+    //         "ff_language": sourceFile.ff_language,
+    //         "source": sourceFile.source,
+    //         // "authorization" : sourceFile.authorization,
+    //       },
+    //     })
+    //       .then((res) => res.json())
+    //       .catch((error) => console.error("Error: ", error))
+    //       .then((response) => {
+    //         this.setState({ isDone: true })
+    //         console.log("test", response.GenericGames[0].MatchBundleHotels[0].Image)
+    //         this.setState({ Picture: response.GenericGames[0].MatchBundleHotels[0].Image });
+    //       });
+    //   }
+
 
     render() {
         return (
@@ -38,23 +71,23 @@ export default class Day2Screen extends React.Component {
                 >
                     MONDAY 12 SEPT
                 </Text>
-                <View style={{marginTop:-35,marginLeft:380,width:40,height:50}}>
-                <TouchableOpacity>
-                    <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
-                </TouchableOpacity>
+                <View style={{ marginTop: -35, marginLeft: 380, width: 40, height: 50 }}>
+                    <TouchableOpacity>
+                        <Image source={Search} style={{ width: 40, height: 40, marginLeft: 0, marginTop: 4 }} />
+                    </TouchableOpacity>
                 </View>
-                <View style={{marginTop:-40,marginLeft:430,width:40,height:50}}>
+                <View style={{ marginTop: -40, marginLeft: 430, width: 40, height: 50 }}>
                     <TouchableOpacity>
                         <Image source={Notifictaion} style={{ width: 20, height: 20, marginLeft: 0, marginTop: 4 }} />
                     </TouchableOpacity>
                 </View>
-                <View style={{marginTop:-49,width:190}}>
+                <View style={{ marginTop: -49, width: 190 }}>
                     <TouchableOpacity>
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                        </TouchableOpacity>
-                </View> 
+                    </TouchableOpacity>
+                </View>
                 <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 50 }}></ScrollView>
                 <Text
                     style={{
@@ -67,14 +100,27 @@ export default class Day2Screen extends React.Component {
                     SPECIAL GAME
                 </Text>
                 <ScrollView>
-                    <TouchableOpacity>
+                    {/* <TouchableOpacity>
                         <Image source={Card1} style={{ marginLeft: 140, marginTop: 30 }} />
                     </TouchableOpacity>
                     <Image source={Btn2} style={{ marginLeft: 175, marginTop: -25 }} />
                     <TouchableOpacity>
                         <Image source={Card2} style={{ marginLeft: 340, marginTop: -275 }} />
                     </TouchableOpacity>
-                    <Image source={Btn1} style={{ marginLeft: 380, marginTop: -45 }} />
+                    <Image source={Btn1} style={{ marginLeft: 380, marginTop: -45 }} /> */}
+
+                    <ScrollView style={{ width: 310, marginTop: 40, marginLeft: 140 }}>
+                        <RNCarousel
+                            data={[
+                                { url: "https://media.istockphoto.com/photos/soccer-player-receives-successful-pass-and-kicks-ball-to-score-goal-picture-id1161534865?k=6&m=1161534865&s=612x612&w=0&h=JtED6RuKyUK7Eb3P9v3oPyQ8AtwJ81c8E1aWg_X52Nc=" },
+                                { url: "https://i.pinimg.com/564x/fa/77/21/fa77213753dc0a086e28a45038a4ee16.jpg" },
+                                { url: "https://techynickk.com/wp-content/uploads/2019/12/fifa2.jpg" },
+                                { url: "https://media.istockphoto.com/photos/soccer-player-receives-successful-pass-and-kicks-ball-to-score-goal-picture-id1161534865?k=6&m=1161534865&s=612x612&w=0&h=JtED6RuKyUK7Eb3P9v3oPyQ8AtwJ81c8E1aWg_X52Nc=" },
+                                { url: "https://i.pinimg.com/564x/fa/77/21/fa77213753dc0a086e28a45038a4ee16.jpg" },
+                                { url: "https://techynickk.com/wp-content/uploads/2019/12/fifa2.jpg" },
+                            ]}
+                        />
+                    </ScrollView>
                 </ScrollView>
                 <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 50 }}>
                 </ScrollView>

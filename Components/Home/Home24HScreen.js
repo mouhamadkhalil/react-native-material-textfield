@@ -19,6 +19,8 @@ import Notifictaion from "../../assets/Images_Design/notification1.png";
 import DownArrow from "../../assets/Images_Design/down_arrow_1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
 
+const sourceFile = require('../../services.js');
+
 export default class Home24HScreen extends React.Component {
 
   state = {
@@ -35,8 +37,12 @@ export default class Home24HScreen extends React.Component {
     fetch(url, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
+        "Content-Type": sourceFile.Content_Type,
+        "Accept": sourceFile.Accept,
+        "ff_version": sourceFile.ff_version,
+        "ff_language": sourceFile.ff_language,
+        "source": sourceFile.source,
+        // "authorization" : sourceFile.authorization,
       },
     })
       .then((res) => res.json())

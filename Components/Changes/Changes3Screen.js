@@ -7,9 +7,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AwesomeAlert from "react-native-awesome-alerts";
+import DropDownPicker from "react-native-dropdown-picker";
+
 
 export default class Changes3Screen extends React.Component {
 
+  state = {
+    country: "uk",
+  };
 
   Back = () => {
     window.location = "/changes2";
@@ -88,10 +93,27 @@ export default class Changes3Screen extends React.Component {
             >
               CHANGES AND CANCELLATIONS
             </Text>
-            <TextInput
-              placeholder="Choose one "
-              style={{ marginLeft: 15, marginTop: 20, width: 150 }}
-            ></TextInput>
+            <View style={{ width: 200, marginTop: 20, marginLeft: 15 }}>
+              <DropDownPicker
+                items={[
+                  { label: "reason one", value: "reason 1", hidden: true },
+                  { label: "reason two ", value: "uk" },
+                  { label: "reason three", value: "reason 2" },
+                ]}
+                defaultValue={this.state.country}
+                containerStyle={{ height: 40 }}
+                style={{ backgroundColor: "#fafafa" }}
+                itemStyle={{
+                  justifyContent: "flex-start",
+                }}
+                dropDownStyle={{ color: "gray" }}
+                onChangeItem={(item) =>
+                  this.setState({
+                    country: item.value,
+                  })
+                }
+              />
+            </View>
             <Text
               style={{
                 color: "gray",
