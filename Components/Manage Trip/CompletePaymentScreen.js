@@ -32,6 +32,7 @@ export default class CompletePaymentScreen extends React.Component {
       .then((res) => res.json())
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
+        console.log(response.GamesList.Items[0].Price)
         this.setState({ Price: response.GamesList.Items[0].Price });
       });
   }
