@@ -28,7 +28,6 @@ export default class SignUpScreen extends React.Component {
 
   state = {
     client_id: "",
-    grant_type: "Bearer Token",
     rememberMe: "",
     scope: "",
     Token: "",
