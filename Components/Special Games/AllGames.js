@@ -68,7 +68,7 @@ export default class AllGames extends React.Component {
                 this.setState({ HomeTeam: response[0].HomeTeam });
                 this.setState({ AwayTeam: response[0].AwayTeam });
                 this.setState({ StadeCity: response[0].StadeCity });
-
+                //test
             });
     };
 
