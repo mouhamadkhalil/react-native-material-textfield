@@ -23,6 +23,8 @@ import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import Game from "../../assets/images/football.jpg";
 import Arrow1 from "../../assets/Images_Design/arrow_down.png";
 import DropDownPicker from "react-native-dropdown-picker";
+import Carousal from "./Carousal.js";
+import Carousal2 from "./Carousal2.js";
 
 const sourceFile = require('../../services.js');
 
@@ -114,6 +116,9 @@ export default class AllGames extends React.Component {
             });
     };
 
+
+
+
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -186,7 +191,11 @@ export default class AllGames extends React.Component {
                     }
                 />
 
-                <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
+                <Carousal />
+                <Carousal2 />
+                <Carousal />
+
+                {/* <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
                     <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
                         <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate1.substring(8, 10)}</Text>
                         <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate1.substring(5, 7)}</Text>
@@ -196,17 +205,17 @@ export default class AllGames extends React.Component {
                         <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName} LEAGUE</Text>
                         <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity1}</Text>
                     </ScrollView>
-                </TouchableOpacity>
-
+                </TouchableOpacity> */}
+                {/* 
                 <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 172, marginTop: -25 }}>
                     <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
                         <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice1}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
                         <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
                         <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ marginTop: -275, width: 140, height: 250, marginLeft: 310 }}>
+                {/* <TouchableOpacity style={{ marginTop: -275, width: 140, height: 250, marginLeft: 310 }}>
                     <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
                         <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate2.substring(8, 10)}</Text>
                         <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate2.substring(5, 7)}</Text>
@@ -216,17 +225,17 @@ export default class AllGames extends React.Component {
                         <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName} LEAGUE</Text>
                         <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity2}</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 330, marginTop: -25 }}>
+                {/* <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 330, marginTop: -25 }}>
                     <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
                         <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice2}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
                         <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
                         <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <ScrollView style={{ backgroundColor: "white", marginTop: 30, width: 295, height: 250, marginLeft: 150, borderRadius: 20 }}>
                         <Text style={{ fontSize: 30, marginTop: 60, marginLeft: 10 }}>{this.state.GameDate1.substring(8, 10)}</Text>
                         <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>{this.state.GameDate1.substring(5, 7)}</Text>
@@ -243,17 +252,17 @@ export default class AllGames extends React.Component {
                         <Text style={{ marginLeft: 210, marginTop: 20, fontSize: 10, width: 200 }}>{this.state.LeaguesName}  LEAGUE</Text>
                         <Text style={{ marginLeft: 210, marginTop: 20 }}>{this.state.GameCity2}</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 250, marginTop: -25 }}>
+                {/* <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 250, marginTop: -25 }}>
                     <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
                         <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice1}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
                         <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
                         <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
+                {/* <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
                     <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
                         <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate1.substring(8, 10)}</Text>
                         <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate1.substring(5, 7)}</Text>
@@ -263,17 +272,17 @@ export default class AllGames extends React.Component {
                         <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName}  LEAGUE</Text>
                         <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity1}</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 172, marginTop: -25 }}>
+                {/* <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 172, marginTop: -25 }}>
                     <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
                         <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice1}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
                         <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
                         <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ marginTop: -275, width: 140, height: 250, marginLeft: 310 }}>
+                {/* <TouchableOpacity style={{ marginTop: -275, width: 140, height: 250, marginLeft: 310 }}>
                     <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
                         <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate2.substring(8, 10)}</Text>
                         <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate2.substring(5, 7)}</Text>
@@ -283,15 +292,15 @@ export default class AllGames extends React.Component {
                         <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName}  LEAGUE</Text>
                         <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity2}</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 330, marginTop: -25 }}>
+                {/* <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 330, marginTop: -25 }}>
                     <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
                         <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice2}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
                         <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
                         <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
                     </ScrollView>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </ScrollView>
         );
     }
