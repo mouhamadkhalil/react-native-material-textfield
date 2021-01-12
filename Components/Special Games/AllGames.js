@@ -22,6 +22,7 @@ import Btn2 from "../../assets/Images_Design/btn2.png";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import Game from "../../assets/images/football.jpg";
 import Arrow1 from "../../assets/Images_Design/arrow_down.png";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const sourceFile = require('../../services.js');
 
@@ -42,17 +43,26 @@ export default class AllGames extends React.Component {
         GameCode: "",
         HomeTeam: "",
         AwayTeam: "",
-        StadeCity: ""
+        StadeCity: "",
+        GameCity: "",
+        GamePrice: "",
+        pageNumber: 1,
+        pageSize: 15,
+        idTeam: 2122,
+        orderBy: "",
     };
-
 
     searchGame = () => {
         const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
         fetch(urlSearch, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
             },
         })
             .then((res) => res.json())
@@ -68,7 +78,29 @@ export default class AllGames extends React.Component {
                 this.setState({ HomeTeam: response[0].HomeTeam });
                 this.setState({ AwayTeam: response[0].AwayTeam });
                 this.setState({ StadeCity: response[0].StadeCity });
-                //test
+            });
+    };
+
+    FilterGame = () => {
+        const urlFilter = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
+        fetch(urlFilter, {
+            method: "GET",
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                console.log("Game Date ===> ", response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan);
+                this.setState({ GameDate: response.Items[0].MatchBundleDetail[0].Game.GameDate })
+                this.setState({ GameCity: response.Items[0].MatchBundleDetail[0].Game.City })
+                this.setState({ GamePrice: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
             });
     };
 
@@ -86,7 +118,6 @@ export default class AllGames extends React.Component {
                     onSubmitEditing={this.searchGame}
                     value={this.state.searchText}
                 />
-
                 <Text
                     style={{
                         alignContent: "center",
@@ -98,7 +129,7 @@ export default class AllGames extends React.Component {
                     }}
                 >
                     MONDAY 12 SEPT
-        </Text>
+                </Text>
                 <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -95 }}>
                     <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
                 </TouchableOpacity>
@@ -112,29 +143,33 @@ export default class AllGames extends React.Component {
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
                     </TouchableOpacity>
                 </View>
-
-
-
-
-
                 <Image source={Game} style={{ height: 200, marginTop: 80 }} />
                 <Text style={{ color: "red", marginLeft: 230, marginTop: 50, fontSize: 30 }}></Text>
-
                 <ScrollView style={{ backgroundColor: "white", width: 300, height: 70, marginLeft: 145, marginTop: -120 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity style={{ height: 70, width: 150 }} onPress={this.FilterGame}>
                         <Text style={{ marginLeft: 40, marginTop: 20 }}>FILTER</Text>
                         <Image source={Arrow1} style={{ marginLeft: 100, marginTop: -13, width: 12, height: 12 }} />
                     </TouchableOpacity>
                 </ScrollView>
-
-                <ScrollView style={{ backgroundColor: "white", width: 120, height: 40, marginLeft: 325, marginTop: 20 }}>
-                    <TouchableOpacity>
-                        <Text style={{ color: "blue", fontWeight: "bold", marginLeft: 10, marginTop: 10 }}>sort by date </Text>
-                        <Image source={Arrow1} style={{ marginLeft: 95, marginTop: -14, width: 12, height: 12 }} />
-                    </TouchableOpacity>
-                </ScrollView>
-
-                <ScrollView style={{ backgroundColor: "white", marginTop: 20, width: 140, height: 250, marginLeft: 150, borderRadius: 20 }}>
+                <DropDownPicker
+                    items={[
+                        { label: "sort by date", value: "date" },
+                        { label: "sort by price", value: "price" },
+                    ]}
+                    defaultValue={this.state.orderBy}
+                    containerStyle={{ height: 75 }}
+                    style={{ backgroundColor: "#fafafa", width: 130, marginLeft: 315, marginTop: 30 }}
+                    itemStyle={{
+                        justifyContent: "flex-start",
+                    }}
+                    dropDownStyle={{ width: 130, marginLeft: 315 }}
+                    onChangeItem={(item) =>
+                        this.setState({
+                            orderBy: item.value,
+                        })
+                    }
+                />
+                <ScrollView style={{ backgroundColor: "white", marginTop: 50, width: 140, height: 250, marginLeft: 150, borderRadius: 20 }}>
                     <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>30</Text>
                     <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>DEC</Text>
                     <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >4 DAYS</Text>
@@ -146,7 +181,6 @@ export default class AllGames extends React.Component {
                 <TouchableOpacity>
                     <Image source={Btn1} style={{ marginLeft: 165, marginTop: -25 }} />
                 </TouchableOpacity>
-
                 <ScrollView style={{ backgroundColor: "white", marginTop: -270, width: 140, height: 250, marginLeft: 305, borderRadius: 20 }}>
                     <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>30</Text>
                     <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>DEC</Text>
@@ -159,7 +193,6 @@ export default class AllGames extends React.Component {
                 <TouchableOpacity>
                     <Image source={Btn1} style={{ marginLeft: 320, marginTop: -25 }} />
                 </TouchableOpacity>
-
                 <ScrollView style={{ backgroundColor: "white", marginTop: 30, width: 295, height: 250, marginLeft: 150, borderRadius: 20 }}>
                     <Text style={{ fontSize: 30, marginTop: 60, marginLeft: 10 }}>30</Text>
                     <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>DEC</Text>
@@ -179,7 +212,6 @@ export default class AllGames extends React.Component {
                 <TouchableOpacity>
                     <Image source={Btn1} style={{ marginLeft: 240, marginTop: -25 }} />
                 </TouchableOpacity>
-
                 <ScrollView style={{ backgroundColor: "white", marginTop: 20, width: 140, height: 250, marginLeft: 150, borderRadius: 20 }}>
                     <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>30</Text>
                     <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>DEC</Text>
@@ -192,7 +224,6 @@ export default class AllGames extends React.Component {
                 <TouchableOpacity>
                     <Image source={Btn1} style={{ marginLeft: 165, marginTop: -25 }} />
                 </TouchableOpacity>
-
                 <ScrollView style={{ backgroundColor: "white", marginTop: -270, width: 140, height: 250, marginLeft: 305, borderRadius: 20 }}>
                     <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>30</Text>
                     <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>DEC</Text>
@@ -205,7 +236,6 @@ export default class AllGames extends React.Component {
                 <TouchableOpacity>
                     <Image source={Btn1} style={{ marginLeft: 320, marginTop: -25 }} />
                 </TouchableOpacity>
-
             </ScrollView>
         );
     }

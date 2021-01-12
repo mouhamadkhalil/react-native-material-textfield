@@ -23,6 +23,8 @@ import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
 
+const sourceFile = require('../../services.js');
+
 export default class Info extends React.Component {
 
     state = {
@@ -52,8 +54,12 @@ export default class Info extends React.Component {
         fetch(urlSearch, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
             },
         })
             .then((res) => res.json())
