@@ -99,8 +99,12 @@ export default class SignUpScreen extends React.Component {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
+        "Content-Type": sourceFile.Content_Type,
+        "Accept": sourceFile.Accept,
+        "ff_version": sourceFile.ff_version,
+        "ff_language": sourceFile.ff_language,
+        "source": sourceFile.source,
+        // "authorization" : sourceFile.authorization,
       },
     })
       .then((res) => res.json())
@@ -127,8 +131,6 @@ export default class SignUpScreen extends React.Component {
               ToastAndroid.LONG,
               ToastAndroid.CENTER
             );
-
-            // console.log("token issssss: ",AsyncStorage.getItem('token'));
             this.props.navigation.navigate('Day1 Home');
           }
         }
