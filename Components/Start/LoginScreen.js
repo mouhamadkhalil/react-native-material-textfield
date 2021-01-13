@@ -18,6 +18,7 @@ import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env";
 import SignupScreen from "./SignupScreen";
 import AwesomeAlert from "react-native-awesome-alerts";
+import * as Facebook from 'expo-facebook';
 
 export default class LoginScreen extends React.Component {
     constructor(props) {
@@ -152,17 +153,44 @@ export default class LoginScreen extends React.Component {
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
-    Facebook = () => {
-        alert("Login with Facebook !");
-    };
+    // Facebook = () => {
+    //     alert("Login with Facebook !");
+    // };
 
-    Facebook = this.Facebook.bind(this);
+    // Facebook = this.Facebook.bind(this);
 
-    Google = () => {
-        alert("Login with Google !")
-    };
+    // Google = () => {
+    //     alert("Login with Google !");
+    // };
 
-    Google = this.Google.bind(this);
+    // Google = this.Google.bind(this);
+
+    async FBLogin() {
+        try {
+            await Facebook.initializeAsync({
+                appId: '431386654654341',
+            });
+            const {
+                type,
+                token,
+                expirationDate,
+                permissions,
+                declinedPermissions,
+            } = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile'],
+            });
+            if (type === 'success') {
+                // Get the user's name using Facebook's Graph API
+                const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+                Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+            } else {
+                // type === 'cancel'
+            }
+        } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
+        }
+    }
+
 
     render() {
 
@@ -182,7 +210,7 @@ export default class LoginScreen extends React.Component {
                         title="LOGIN WITH FACEBOOK"
                         color="blue"
                         style={{ width: 500, padding: 300, height: 300 }}
-                        onPress={this.Facebook}
+                        onPress={this.FBLogin.bind(this)}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
