@@ -8,7 +8,8 @@ import {
     View,
     TouchableOpacity,
     ActivityIndicator,
-    Button
+    Button,
+    SafeAreaView
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Line1 from "../../assets/Images_Design/line1.png";
@@ -23,8 +24,7 @@ import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import Game from "../../assets/images/football.jpg";
 import Arrow1 from "../../assets/Images_Design/arrow_down.png";
 import DropDownPicker from "react-native-dropdown-picker";
-import Carousal from "./Carousal.js";
-import Carousal2 from "./Carousal2.js";
+import Carousel from 'react-native-snap-carousel';
 
 const sourceFile = require('../../services.js');
 
@@ -57,6 +57,25 @@ export default class AllGames extends React.Component {
         pageSize: 15,
         idTeam: 2122,
         orderBy: "",
+        activeIndex: 0,
+        carouselItems: [
+            {
+                title: "Item 1",
+                text: "Text 1",
+            },
+            {
+                title: "Item 2",
+                text: "Text 2",
+            },
+            {
+                title: "Item 3",
+                text: "Text 3",
+            },
+            {
+                title: "Item 4",
+                text: "Text 4",
+            },
+        ],
     };
 
     searchGame = () => {
@@ -116,8 +135,62 @@ export default class AllGames extends React.Component {
             });
     };
 
+    _renderItem1({ item, index, state }) {
+        return (
+            <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
+                <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
+                    <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>30</Text>
+                    <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 12 }}>Dec</Text>
+                    <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >4 DAYS</Text>
+                    <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
+                    <Text style={{ marginLeft: 55 }} >FULHAN</Text>
+                    <Text style={{ marginLeft: 55, marginTop: 20 }}>PREMIERE LEAGUE</Text>
+                    <Text style={{ marginLeft: 55, marginTop: 20 }}>LONDON</Text>
+                </ScrollView>
 
+                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 20, marginTop: -25 }}>
+                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
+                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>730$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
+                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
+                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
+                    </ScrollView>
+                </TouchableOpacity>
+            </TouchableOpacity>
+        )
+    }
 
+    _renderItem2({ item, index }) {
+        return (
+            <>
+                <TouchableOpacity>
+                    <ScrollView style={{ backgroundColor: "white", marginTop: 30, width: 295, height: 250, marginLeft: 150, borderRadius: 20 }}>
+                        <Text style={{ fontSize: 30, marginTop: 60, marginLeft: 10 }}>30</Text>
+                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>Dec</Text>
+                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >4 DAYS</Text>
+                        <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
+                        <Text style={{ marginLeft: 55 }} >FULHAN</Text>
+                        <Text style={{ marginLeft: 55, marginTop: 20, fontSize: 10 }}>PREMIERE LEAGUE</Text>
+                        <Text style={{ marginLeft: 55, marginTop: 20 }}>MUNICH</Text>
+                        <Text style={{ fontSize: 30, marginTop: -125, marginLeft: 170 }}>21</Text>
+                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 170 }}>Jan</Text>
+                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 170 }} >4 DAYS</Text>
+                        <Text style={{ marginLeft: 210, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
+                        <Text style={{ marginLeft: 210 }} >FULHAN</Text>
+                        <Text style={{ marginLeft: 210, marginTop: 20, fontSize: 10, width: 200 }}>PREMIERE LEAGUE</Text>
+                        <Text style={{ marginLeft: 210, marginTop: 20 }}>USA</Text>
+                    </ScrollView>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 250, marginTop: -25 }}>
+                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
+                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>230 $<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
+                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
+                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
+                    </ScrollView>
+                </TouchableOpacity>
+            </>
+        )
+    }
 
     render() {
         return (
@@ -191,9 +264,54 @@ export default class AllGames extends React.Component {
                     }
                 />
 
-                <Carousal />
-                <Carousal2 />
-                <Carousal />
+                {/* carousel 1 */}
+                <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+                        <Carousel
+                            style={{ marginLeft: 50 }}
+                            layout={"default"}
+                            ref={ref => this.carousel = ref}
+                            data={this.state.carouselItems}
+                            sliderWidth={170}
+                            itemWidth={290}
+                            // autoplay={true}
+                            renderItem={this._renderItem1}
+                            onSnapToItem={index => this.setState({ activeIndex: index })} />
+                    </View>
+                </SafeAreaView>
+
+                {/* carousal 2 */}
+                <SafeAreaView style={{ flex: 1, paddingTop: 50, marginTop: 0, marginLeft: 0, paddingRight: 34 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+                        <Carousel
+                            style={{ marginLeft: 0 }}
+                            layout={"default"}
+                            ref={ref => this.carousel = ref}
+                            data={this.state.carouselItems}
+                            sliderWidth={170}
+                            itemWidth={290}
+                            autoplay={true}
+                            renderItem={this._renderItem2}
+                            onSnapToItem={index => this.setState({ activeIndex: index })} />
+                    </View>
+                </SafeAreaView>
+
+                {/* carousel 1 */}
+                <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+                        <Carousel
+                            style={{ marginLeft: 50 }}
+                            layout={"default"}
+                            ref={ref => this.carousel = ref}
+                            data={this.state.carouselItems}
+                            sliderWidth={170}
+                            itemWidth={290}
+                            // autoplay={true}
+                            renderItem={this._renderItem1}
+                            onSnapToItem={index => this.setState({ activeIndex: index })} />
+                    </View>
+                </SafeAreaView>
+
 
                 {/* <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
                     <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
@@ -215,92 +333,6 @@ export default class AllGames extends React.Component {
                     </ScrollView>
                 </TouchableOpacity> */}
 
-                {/* <TouchableOpacity style={{ marginTop: -275, width: 140, height: 250, marginLeft: 310 }}>
-                    <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
-                        <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate2.substring(8, 10)}</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate2.substring(5, 7)}</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >{this.state.DaysLeft} DAYS</Text>
-                        <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 55 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName} LEAGUE</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity2}</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 330, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice2}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
-                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "white", marginTop: 30, width: 295, height: 250, marginLeft: 150, borderRadius: 20 }}>
-                        <Text style={{ fontSize: 30, marginTop: 60, marginLeft: 10 }}>{this.state.GameDate1.substring(8, 10)}</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>{this.state.GameDate1.substring(5, 7)}</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >{this.state.DaysLeft} DAYS</Text>
-                        <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 55 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20, fontSize: 10 }}>{this.state.LeaguesName}  LEAGUE</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity1}</Text>
-                        <Text style={{ fontSize: 30, marginTop: -125, marginLeft: 170 }}>{this.state.GameDate2.substring(8, 10)}</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 170 }}>{this.state.GameDate2.substring(5, 7)}</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 170 }} >{this.state.DaysLeft} DAYS</Text>
-                        <Text style={{ marginLeft: 210, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 210 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 210, marginTop: 20, fontSize: 10, width: 200 }}>{this.state.LeaguesName}  LEAGUE</Text>
-                        <Text style={{ marginLeft: 210, marginTop: 20 }}>{this.state.GameCity2}</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 250, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice1}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
-                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
-                    <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
-                        <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate1.substring(8, 10)}</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate1.substring(5, 7)}</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >{this.state.DaysLeft} DAYS</Text>
-                        <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 55 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName}  LEAGUE</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity1}</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 172, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice1}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
-                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity style={{ marginTop: -275, width: 140, height: 250, marginLeft: 310 }}>
-                    <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
-                        <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate2.substring(8, 10)}</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate2.substring(5, 7)}</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >{this.state.DaysLeft} DAYS</Text>
-                        <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 55 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName}  LEAGUE</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity2}</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
-                {/* <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 330, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice2}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
-                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
             </ScrollView>
         );
     }
