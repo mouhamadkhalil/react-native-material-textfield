@@ -18,6 +18,9 @@ import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env";
 import SignupScreen from "./SignupScreen";
 import AwesomeAlert from "react-native-awesome-alerts";
+import * as Facebook from 'expo-facebook';
+import * as GoogleSignIn from 'expo-google-sign-in';
+
 
 export default class LoginScreen extends React.Component {
     constructor(props) {
@@ -50,9 +53,10 @@ export default class LoginScreen extends React.Component {
         // loginChecked: false,
     };
 
-    // componentDidMount(){
-    //     this.getItem(this.state.Token);
-    // }
+    componentDidMount() {
+        //     this.getItem(this.state.Token);
+        this.initGoogleAsync();
+    }
 
     SubmitLoginBtn = (event) => {
         console.log("username : " + this.state.username);
@@ -152,17 +156,67 @@ export default class LoginScreen extends React.Component {
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
-    Facebook = () => {
+    /*Facebook = async () => {
         alert("Login with Facebook !");
     };
 
-    Facebook = this.Facebook.bind(this);
+    Facebook = this.Facebook.bind(this);*/
 
-    Google = () => {
-        alert("Login with Google !")
+    async FBLogin() {
+        try {
+            await Facebook.initializeAsync({
+                appId: '431386654654341',
+            });
+            const {
+                type,
+                token,
+                expirationDate,
+                permissions,
+                declinedPermissions,
+            } = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile'],
+            });
+            if (type === 'success') {
+                // Get the user's name using Facebook's Graph API
+                const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+                Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+            } else {
+                // type === 'cancel'
+            }
+        } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
+        }
+    }
+
+    async initGoogleAsync() {
+        await GoogleSignIn.initAsync({
+            androidClientId: '323098123619-3uje2damb46h37lj5eqa718v6jb4ilrp.apps.googleusercontent.com',
+            iosClientId: '323098123619-ul6i03vhbqea3jghjbp29nookq9i3ao0.apps.googleusercontent.com',
+        });
+        this._syncUserWithStateAsync();
     };
 
-    Google = this.Google.bind(this);
+    _syncUserWithStateAsync = async () => {
+        const user = await GoogleSignIn.signInSilentlyAsync();
+        this.setState({ user });
+    };
+
+    signOutAsync = async () => {
+        await GoogleSignIn.signOutAsync();
+        this.setState({ user: null });
+    };
+
+    GoogleLogin = async () => {
+        try {
+            await GoogleSignIn.askForPlayServicesAsync();
+            const { type, user } = await GoogleSignIn.signInAsync();
+            if (type === 'success') {
+                this._syncUserWithStateAsync();
+            }
+        } catch ({ message }) {
+            alert('login: Error:' + message);
+        }
+    };
 
     render() {
 
@@ -182,14 +236,15 @@ export default class LoginScreen extends React.Component {
                         title="LOGIN WITH FACEBOOK"
                         color="blue"
                         style={{ width: 500, padding: 300, height: 300 }}
-                        onPress={this.Facebook}
+                        onPress={this.FBLogin.bind(this)}
                     />
                 </TouchableOpacity>
+
                 <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
                     <Button
                         title="LOGIN WITH GOOGLE"
                         color="red"
-                        onPress={this.Google}
+                        onPress={this.GoogleLogin.bind(this)}
                     />
                 </TouchableOpacity>
                 <Text style={{ fontSize: 20, paddingTop: 10, marginLeft: 90 }}>

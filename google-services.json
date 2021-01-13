@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "323098123619",
+    "project_id": "fly-foot-940e3",
+    "storage_bucket": "fly-foot-940e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323098123619:android:2d04cd45ad1beac1680756",
+        "android_client_info": {
+          "package_name": "com.ids.flyfoot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323098123619-3uje2damb46h37lj5eqa718v6jb4ilrp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ids.flyfoot",
+            "certificate_hash": "5b7724f320ba06c19c519a6ed968f1d860f3c049"
+          }
+        },
+        {
+          "client_id": "323098123619-gagd8g97r62k0u2ssrhl5omef1noqk4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkZjETDImBS3Q_-Q1jMc1CbQb7MePc7ik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323098123619-gagd8g97r62k0u2ssrhl5omef1noqk4k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "323098123619-ul6i03vhbqea3jghjbp29nookq9i3ao0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ids.flyfoot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
