@@ -1,15 +1,34 @@
 {
-  "name": "flyfoot",
-  "displayName": "flyfoot",
-  "expo": {
     "name": "flyfoot",
-    "slug": "flyfoot",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "android": {
-      "package": "com.ids.flyfoot"
+    "displayName": "flyfoot",
+    "expo": {
+        "name": "flyfoot",
+        "displayName": "flyfoot",
+        "expo": {
+            "name": "flyfoot",
+            "slug": "flyfoot",
+            "version": "1.0.0",
+            "facebookScheme": "fb431386654654341",
+            "facebookAppId": "431386654654341",
+            "facebookDisplayName": "FlyFoot",
+            "assetBundlePatterns": [
+                "**/*"
+            ],
+            "ios": {
+                "bundleIdentifier": "com.ids.flyfoot",
+                "buildNumber": "1.0.0",
+                "config": {
+                    "googleSignIn": {
+                        "reservedClientId": "com.googleusercontent.apps.323098123619-ul6i03vhbqea3jghjbp29nookq9i3ao0"
+                    }
+                },
+                "googleServicesFile": "./GoogleService-Info.plist"
+            },
+            "android": {
+                "package": "com.ids.flyfoot",
+                "versionCode": 1,
+                "googleServicesFile": "./google-services.json"
+            }
+        }
     }
-  }
 }
