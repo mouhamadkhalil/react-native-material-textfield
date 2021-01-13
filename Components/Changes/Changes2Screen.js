@@ -75,9 +75,9 @@ export default class Changes2Screen extends React.Component {
             <View style={{ width: 200, marginTop: 20, marginLeft: 15 }}>
               <DropDownPicker
                 items={[
-                  { label: "Item 1", value: "usa", hidden: true },
-                  { label: "Choose one ", value: "uk" },
-                  { label: "Item 3", value: "france" },
+                  { label: "reason one", value: "reason 1", hidden: true },
+                  { label: "reason two ", value: "uk" },
+                  { label: "reason three", value: "reason 2" },
                 ]}
                 defaultValue={this.state.country}
                 containerStyle={{ height: 40 }}

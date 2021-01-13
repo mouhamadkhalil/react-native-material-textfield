@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   ActivityIndicator
 } from "react-native";
-import { API_URL, API_TOKEN } from "@env"
+import { API_URL, API_TOKEN } from "@env";
+
+const sourceFile = require('../../services.js');
 
 export default class PerkScreen extends React.Component {
   Back = () => {
@@ -30,8 +32,12 @@ export default class PerkScreen extends React.Component {
     fetch(url, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        "Content-Type": sourceFile.Content_Type,
+        "Accept": sourceFile.Accept,
+        "ff_version": sourceFile.ff_version,
+        "ff_language": sourceFile.ff_language,
+        "source": sourceFile.source,
+        // "authorization" : sourceFile.authorization,
       },
     })
       .then((res) => res.json())
