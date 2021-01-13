@@ -93,12 +93,11 @@ export default class Day2Screen extends React.Component {
                 <Text
                     style={{
                         alignContent: "center",
-                        color: "#374BBF",
+                        color: "#4c0099",
                         fontWeight: "bold",
                         marginTop: 30,
                         fontSize: 19,
-                        marginLeft: 210,
-                        backgroundColor: "#FFF",
+                        marginLeft: 210
                     }}
                 >
                     MONDAY 12 SEPT
@@ -114,6 +113,10 @@ export default class Day2Screen extends React.Component {
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+                    </TouchableOpacity>
+                </View>
+
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 100 }}></ScrollView>
                 <Text
                     style={{
                         marginTop: -20,
@@ -147,7 +150,7 @@ export default class Day2Screen extends React.Component {
                         />
                     </ScrollView>
                 </ScrollView>
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 35, marginLeft: 160, marginTop: 50 }}>
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 50 }}>
                 </ScrollView>
                 <Text
                     style={{
@@ -160,7 +163,7 @@ export default class Day2Screen extends React.Component {
                     POPULAR GAMES
                 </Text>
                 <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "#F7F7F7", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 5, shadowColor: "#000",shadowOffset: {width: 0,height: 5,}, shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5, }}>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 20 }}>
                         <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>31 JAN</Text>
                         <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Barcelona</Text>
                         <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>CHELESEA FC.</Text>
@@ -169,7 +172,7 @@ export default class Day2Screen extends React.Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "#F7F7F7", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 5,shadowColor: "#000",shadowOffset: {width: 0,height: 5,}, shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5, }}>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 20 }}>
                         <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>05 JAN</Text>
                         <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>BV. dortmun</Text>
                         <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>Real madrid</Text>
@@ -178,7 +181,7 @@ export default class Day2Screen extends React.Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "#F7F7F7", width: 310, height: 70, marginLeft: 140, marginTop: 30, marginBottom: 30, borderRadius: 5, shadowColor: "#000",shadowOffset: {width: 0,height: 5,}, shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5, }}>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 30, marginBottom: 30, borderRadius: 20 }}>
                         <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>24 JAN</Text>
                         <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>AS. Roma</Text>
                         <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Bayern</Text>
@@ -187,7 +190,7 @@ export default class Day2Screen extends React.Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "#F7F7F7", width: 310, height: 70, marginLeft: 140, marginTop: 0, marginBottom: 30, borderRadius: 5, shadowColor: "#000",shadowOffset: {width: 0,height: 5,}, shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5, }}>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 0, marginBottom: 30, borderRadius: 20 }}>
                         <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>24 JAN</Text>
                         <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>AS. Roma</Text>
                         <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Bayern</Text>
@@ -196,7 +199,7 @@ export default class Day2Screen extends React.Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "#F7F7F7", width: 310, height: 70, marginLeft: 140, marginTop: 0, marginBottom: 30, borderRadius: 5, shadowColor: "#000",shadowOffset: {width: 0,height: 5,}, shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5, }}>
+                    <ScrollView style={{ backgroundColor: "#F2E0E0", width: 310, height: 70, marginLeft: 140, marginTop: 0, marginBottom: 30, borderRadius: 20 }}>
                         <Text style={{ marginLeft: 20, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>24 JAN</Text>
                         <Text style={{ marginLeft: 75, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>AS. Roma</Text>
                         <Text style={{ marginLeft: 185, fontSize: 15, fontWeight: "bold", marginTop: -20 }}>FC. Bayern</Text>
@@ -204,11 +207,11 @@ export default class Day2Screen extends React.Component {
                     </ScrollView>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ backgroundColor: "#31CB02", width: 150, height: 50, marginLeft: 220, marginBottom: 30, marginTop: -45, borderRadius: 20 }}>
+                <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, marginLeft: 220, marginBottom: 30, marginTop: -45, borderRadius: 20 }}>
                     <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
                 </TouchableOpacity>
 
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 35, marginLeft: 160, marginTop: 0 }}></ScrollView>
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 0 }}></ScrollView>
                 <Text
                     style={{
                         marginTop: -22,
@@ -230,7 +233,7 @@ export default class Day2Screen extends React.Component {
                     <Image source={Btn1} style={{ marginLeft: 380, marginTop: -45 }} />
                 </ScrollView>
 
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 35, marginLeft: 160, marginTop: 90 }}></ScrollView>
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 90 }}></ScrollView>
                 <Text
                     style={{
                         marginTop: -22,
@@ -252,7 +255,7 @@ export default class Day2Screen extends React.Component {
                     <Image source={Btn1} style={{ marginLeft: 380, marginTop: -45 }} />
                 </ScrollView>
 
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 35, marginLeft: 160, marginTop: 90 }}></ScrollView>
+                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 90 }}></ScrollView>
                 <Text
                     style={{
                         marginTop: -22,
@@ -285,6 +288,6 @@ const styles = StyleSheet.create({
         width: 500,
         marginTop: 30,
         marginBottom: 0,
-        backgroundColor: "#FFF",
+        backgroundColor: "#F5F7EC",
     },
 });
