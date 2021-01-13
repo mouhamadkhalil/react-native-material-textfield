@@ -1,12 +1,15 @@
 {
+  "name": "flyfoot",
+  "displayName": "flyfoot",
+  "expo": {
     "name": "flyfoot",
-    "displayName": "flyfoot",
-    "expo": {
-        "name": "flyfoot",
-        "slug": "flyfoot",
-        "version": "1.0.0",
-        "assetBundlePatterns": [
-            "**/*"
-        ]
+    "slug": "flyfoot",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.ids.flyfoot"
     }
+  }
 }
