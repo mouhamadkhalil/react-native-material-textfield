@@ -19,11 +19,15 @@ import { API_URL, API_TOKEN } from "@env";
 import SignupScreen from "./SignupScreen";
 import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
+import PasswordInputText from 'react-native-hide-show-password-input';
 
 export default class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showAlert: false };
+        this.state =
+        {
+            showAlert: false,
+        };
     }
 
     showAlert = () => {
@@ -51,18 +55,13 @@ export default class LoginScreen extends React.Component {
         // loginChecked: false,
     };
 
-    // componentDidMount(){
-    //     this.getItem(this.state.Token);
-    // }
-
     SubmitLoginBtn = (event) => {
         console.log("username : " + this.state.username);
         console.log("password : " + this.state.password);
 
         const url = `${API_URL}/mobile/profile/login`;
 
-        if (this.state.username != '' && this.state.password != '') {
-
+        if (this.state.username != ' ' && this.state.password != ' ') {
             const data = {
                 username: this.state.username,
                 password: this.state.password,
@@ -79,7 +78,6 @@ export default class LoginScreen extends React.Component {
                 .catch((error) => console.error("Error: ", error))
                 .then((response) => {
                     if (response.ErrorId) {
-                        // alert("Error: The user name or password is incorrect"); 
                         ToastAndroid.showWithGravity(
                             'Error: The user name or password is incorrect',
                             ToastAndroid.LONG,
@@ -95,6 +93,11 @@ export default class LoginScreen extends React.Component {
                         // this.setState({ loginChecked: true });
                         this.setState({ isDone: true });
                         this.props.navigation.navigate('Home Pre');
+                        ToastAndroid.showWithGravity(
+                            'you are successfully logged in !',
+                            ToastAndroid.SHORT,
+                            ToastAndroid.CENTER
+                        );
                     }
                 });
         }
@@ -133,8 +136,6 @@ export default class LoginScreen extends React.Component {
     //     console.log(this.state.isLoggedIn)
     // }
 
-
-
     //function to remove storage token 
 
     // async removeItem(item){
@@ -152,18 +153,6 @@ export default class LoginScreen extends React.Component {
     // }
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
-
-    // Facebook = () => {
-    //     alert("Login with Facebook !");
-    // };
-
-    // Facebook = this.Facebook.bind(this);
-
-    // Google = () => {
-    //     alert("Login with Google !");
-    // };
-
-    // Google = this.Google.bind(this);
 
     async FBLogin() {
         try {
@@ -190,7 +179,6 @@ export default class LoginScreen extends React.Component {
             alert(`Facebook Login Error: ${message}`);
         }
     }
-
 
     render() {
 
@@ -233,17 +221,19 @@ export default class LoginScreen extends React.Component {
                     required
                     value={this.state.email}
                     type="email"
+                    autoCapitalize="none"
                     keyboardType="email-address"
                 />
                 <Text style={{ paddingTop: 30, marginLeft: 35, width: 300 }}>
                     Password
                 </Text>
-                <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
-                    onChangeText={(password) => this.setState({ password })}
-                    required
+                <PasswordInputText
+                    style={{ marginLeft: 35, width: 295 }}
+                    getRef={input => this.input = input}
                     value={this.state.password}
+                    required
                     secureTextEntry={true}
+                    onChangeText={(password) => this.setState({ password })}
                 />
                 <Text
                     style={{
