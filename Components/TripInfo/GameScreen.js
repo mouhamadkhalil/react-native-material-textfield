@@ -9,6 +9,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
+import Lightbox from 'react-native-lightbox-v2';
 
 const sourceFile = require('../../services.js');
 
@@ -231,7 +232,7 @@ export default class GameScreen extends React.Component {
               marginLeft: 40,
               paddingLeft: -7,
               marginTop: 30,
-              height: 400,
+              height: 380,
               marginRight: 40,
               backgroundColor: "white",
             }}
@@ -259,10 +260,17 @@ export default class GameScreen extends React.Component {
             <Text style={{ paddingTop: 20, marginLeft: 40 }}>
               {this.state.Seat_Id}
             </Text>
-            {this.state.isDone ? <Image source={this.state.GamePicture ? { uri: this.state.GamePicture } : null}
-              style={{ marginLeft: 60, marginTop: 20, width: 180, height: 180 }} /> : <ActivityIndicator size="small" color="red"
-                style={{ marginTop: 80, marginLeft: -20 }}
-              />}
+            <TouchableOpacity>
+              {this.state.isDone ?
+                <Lightbox >
+                  <Image source={this.state.GamePicture ? { uri: this.state.GamePicture } : null}
+                    style={{ width: 300, height: 200, marginLeft: 10, marginTop: 20 }} />
+                </Lightbox>
+                :
+                <ActivityIndicator size="small" color="blue"
+                  style={{ marginTop: 80, marginLeft: 0 }}
+                />}
+            </TouchableOpacity>
           </ScrollView>
 
           <ScrollView
@@ -301,11 +309,9 @@ export default class GameScreen extends React.Component {
             <ScrollView
               style={{ height: 1, backgroundColor: "#E9C2C2", marginTop: 20 }}
             ></ScrollView>
-            <TouchableOpacity>
+            <TouchableOpacity style={{ marginLeft: 200, marginTop: -42 }} onPress={() => alert("Are you sure you want to dowload your ticket? ")}>
               <Text
                 style={{
-                  marginLeft: 200,
-                  marginTop: -42,
                   color: "#8D6C6C",
                 }}
               >
@@ -314,7 +320,7 @@ export default class GameScreen extends React.Component {
             </TouchableOpacity>
             <Text
               style={{
-                paddingTop: 20,
+                paddingTop: 40,
                 color: "gray",
                 fontSize: 12,
                 width: 260,

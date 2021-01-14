@@ -17,6 +17,7 @@ import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
+import Lightbox from 'react-native-lightbox-v2';
 
 const sourceFile = require('../../services.js');
 
@@ -160,9 +161,14 @@ export default class Post2Screen extends React.Component {
             marginLeft: 140,
           }}
         >
-          <TouchableOpacity>
-            {this.state.isDone ? <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null}
-              style={{ marginLeft: 0, height: 160 }} /> : <ActivityIndicator size="small" color="red"
+         <TouchableOpacity>
+            {this.state.isDone ?
+              <Lightbox >
+                <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null}
+                  style={{ width: 310, height: 180, marginLeft: 0 }} />
+              </Lightbox>
+              :
+              <ActivityIndicator size="small" color="blue"
                 style={{ marginTop: 80, marginLeft: 0 }}
               />}
           </TouchableOpacity>
@@ -178,9 +184,14 @@ export default class Post2Screen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={this.state.Picture3 ? { uri: this.state.Picture3 } : null}
-              style={{ width: 150, height: 180, marginLeft: 0 }} /> : <ActivityIndicator size="small" color="red"
-                style={{ marginTop: 80, marginLeft: 0 }}
+            {this.state.isDone ?
+              <Lightbox >
+                <Image source={this.state.Picture3 ? { uri: this.state.Picture3 } : null}
+                  style={{ width: 150, height: 180, marginLeft: 0 }} />
+              </Lightbox>
+              :
+              <ActivityIndicator size="small" color="blue"
+                style={{ marginTop: 80, marginLeft: -20 }}
               />}
           </TouchableOpacity>
         </ScrollView>
@@ -195,9 +206,14 @@ export default class Post2Screen extends React.Component {
           }}
         >
           <TouchableOpacity>
-            {this.state.isDone ? <Image source={this.state.Picture2 ? { uri: this.state.Picture2 } : null}
-              style={{ width: 150, height: 180, marginLeft: 0 }} /> : <ActivityIndicator size="small" color="red"
-                style={{ marginTop: 80, marginLeft: 0 }}
+            {this.state.isDone ?
+              <Lightbox >
+                <Image source={this.state.Picture2 ? { uri: this.state.Picture2 } : null}
+                  style={{ width: 150, height: 180, marginLeft: 0 }} />
+              </Lightbox>
+              :
+              <ActivityIndicator size="small" color="blue"
+                style={{ marginTop: 80, marginLeft: -20 }}
               />}
           </TouchableOpacity>
         </ScrollView>
