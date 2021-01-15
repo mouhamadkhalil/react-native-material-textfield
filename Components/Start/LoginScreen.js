@@ -201,13 +201,6 @@ export default class LoginScreen extends React.Component {
                         onPress={this.FBLogin.bind(this)}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
-                    <Button
-                        title="LOGIN WITH GOOGLE"
-                        color="red"
-                        onPress={this.Google}
-                    />
-                </TouchableOpacity>
                 <Text style={{ fontSize: 20, paddingTop: 10, marginLeft: 90 }}>
                     LOGIN WITH EMAIL
                 </Text>

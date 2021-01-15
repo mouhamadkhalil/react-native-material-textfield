@@ -5,9 +5,9 @@
     "name": "flyfoot",
     "slug": "flyfoot",
     "version": "1.0.0",
+    "facebookAutoInitEnabled": true,
     "facebookScheme": "fb431386654654341",
-    "facebookAppId": "431386654654341",
-    "facebookDisplayName": "FlyFoot",
+    "facebookDisplayName": "Fly Foot",
     "assetBundlePatterns": [
       "**/*"
     ],
