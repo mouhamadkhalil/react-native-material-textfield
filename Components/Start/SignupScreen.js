@@ -263,7 +263,7 @@ export default class SignUpScreen extends React.Component {
 
         <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
           <Text style={styles.loginText}>
-            <Text style={{ marginLeft: 235 }}>LOGIN </Text>
+            <Text style={{ marginLeft: 235 }}>SIGNUP </Text>
           </Text>
         </TouchableOpacity>
 
