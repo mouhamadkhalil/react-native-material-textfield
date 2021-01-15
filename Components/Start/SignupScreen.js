@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   Button,
+  Linking,
   TouchableOpacity,
   Picker,
   AsyncStorage,
@@ -17,6 +18,7 @@ import LoginWithFB from "../../assets/images/LoginWithFB.png";
 import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env";
+import PasswordInputText from 'react-native-hide-show-password-input';
 
 const sourceFile = require('../../services.js');
 
@@ -223,29 +225,29 @@ export default class SignUpScreen extends React.Component {
           Password
         </Text>
 
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 35 }}
-          onChangeText={(Password) => this.setState({ Password })}
-          placeholder="   Hann"
+        <PasswordInputText
+          style={{ width: 140, marginTop: 20, marginLeft: 35 }}
+          value={this.state.password}
           required
-          value={this.state.Password}
+          placeholder="   Hann"
           secureTextEntry={true}
+          onChangeText={(password) => this.setState({ password })}
         />
 
-        <Text style={{ marginTop: -79, marginLeft: 190, color: "gray" }}>
+        <Text style={{ marginTop: -110, marginLeft: 190, color: "gray" }}>
           Repeat Password
         </Text>
 
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 190 }}
-          onChangeText={(ConfirmPassword) => this.setState({ ConfirmPassword })}
-          placeholder="   Hann"
-          required
+        <PasswordInputText
+          style={{ width: 140, marginTop: 20, marginLeft: 190 }}
           value={this.state.ConfirmPassword}
+          required
+          placeholder="   Hann"
           secureTextEntry={true}
+          onChangeText={(ConfirmPassword) => this.setState({ ConfirmPassword })}
         />
 
-        <Text style={{ paddingTop: 30, marginLeft: 35, width: 300, color: "gray" }}>
+        <Text style={{ paddingTop: 50, marginLeft: 35, width: 300, color: "gray" }}>
           Favourite Team
         </Text>
 
@@ -261,7 +263,7 @@ export default class SignUpScreen extends React.Component {
 
         <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
           <Text style={styles.loginText}>
-            <Text style={{ marginLeft: 235 }}>LOGIN </Text>
+            <Text style={{ marginLeft: 235 }}>SIGNUP </Text>
           </Text>
         </TouchableOpacity>
 
@@ -278,7 +280,9 @@ export default class SignUpScreen extends React.Component {
             width: 500
           }}
         >
-          By Signing up, i agree with <TouchableOpacity><Text style={{ marginTop: 40 }}>FFT Terms.</Text></TouchableOpacity>
+          By Signing up, i agree with <TouchableOpacity onPress={() => {
+            Linking.openURL('https://fly-foot.com/en/about/TC');
+          }}><Text style={{ marginTop: 40 }}>FFT Terms.</Text></TouchableOpacity>
 
         </Text>
         <Text

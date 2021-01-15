@@ -135,13 +135,7 @@ export default class Info extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
-                        <Image source={Flag2} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
-                        <Text style={{ color: "blue", fontSize: 15, marginLeft: 60, marginTop: -22 }}>Loyalty Program</Text>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
-                    </ScrollView>
-                </TouchableOpacity>
+
                 <TouchableOpacity>
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
                         <Image source={Chat} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
@@ -158,13 +152,6 @@ export default class Info extends React.Component {
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
                         <Image source={Question} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
                         <Text style={{ color: "blue", fontSize: 15, marginLeft: 60, marginTop: -22 }}>FAQ</Text>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
-                    </ScrollView>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
-                        <Image source={Setting} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
-                        <Text style={{ color: "blue", fontSize: 15, marginLeft: 60, marginTop: -22 }}>Settings</Text>
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
