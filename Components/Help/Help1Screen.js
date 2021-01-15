@@ -4,6 +4,7 @@ import {
   TextInput,
   Text,
   Image,
+  Linking,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator
@@ -271,12 +272,16 @@ export default class Help1Screen extends React.Component {
         >
           <Text style={{ fontSize: 18, marginLeft: 120, marginTop: 450, color: "#ff00ff", fontWeight: "bold" }}>EMERGANCY CONTACTS SPAIN</Text>
 
-          <Text style={{ paddingTop: 20, paddingLeft: 120, color: "black", fontWeight: "bold" }}>
-            112
+          <TouchableOpacity onPress={() => Linking.openURL(`tel:${112}`)}>
+            <Text style={{ paddingTop: 20, paddingLeft: 120, color: "black", fontWeight: "bold" }}>
+              112
           </Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 120, color: "black", fontWeight: "bold" }}>
-            +34 902 102 112
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Linking.openURL(`tel:${+34902102112}`)}>
+            <Text style={{ paddingTop: 20, paddingLeft: 120, color: "black", fontWeight: "bold" }}>
+              +34 902 102 112
           </Text>
+          </TouchableOpacity>
         </ScrollView>
         <ScrollView
           style={{
@@ -289,9 +294,11 @@ export default class Help1Screen extends React.Component {
           }}
         >
           <Text style={{ fontSize: 18, marginLeft: 0, color: "#ff00ff", fontWeight: "bold" }}>CONTACT FLY-FOOT</Text>
-          <Text style={{ paddingTop: 20, paddingLeft: 0, color: "black", fontWeight: "bold" }}>
-            + 91 1234 1234
+          <TouchableOpacity onPress={() => Linking.openURL(`tel:${+9112341234}`)}>
+            <Text style={{ paddingTop: 20, paddingLeft: 0, color: "black", fontWeight: "bold" }}>
+              + 91 1234 1234
           </Text>
+          </TouchableOpacity>
           <Text style={{ paddingTop: 20, paddingLeft: 0, color: "black", fontWeight: "bold" }}>
             help@fly-foot.com
           </Text>
