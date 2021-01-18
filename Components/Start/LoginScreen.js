@@ -199,15 +199,15 @@ export default class LoginScreen extends React.Component {
                     </View>
                     <TouchableOpacity onPress={this.FBLogin.bind(this)} style={{ marginRight: 35, marginLeft: 35 }}>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 30, backgroundColor: '#37568F' }}>
-                            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FAFDFD', height: 60, lineHeight:60, paddingLeft: 20, textTransform: 'uppercase' }}>
+                            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
                                 login  with  facebook
                             </Text>
-                            <View style={{ flex:1, flexDirection:'row', justifyContent:'flex-end', alignItems:'center'}}>
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <Ionicons
                                     name='logo-facebook'
                                     size={20}
                                     color='white'
-                                    style={{marginRight:20}}
+                                    style={{ marginRight: 20 }}
                                 />
                             </View>
                         </View>
@@ -252,22 +252,30 @@ export default class LoginScreen extends React.Component {
                             fontSize: 16,
                             paddingRight: 110,
                             paddingTop: 20,
-                        }}
-                    >
+                        }}>
                         <TouchableOpacity
                             onPress={() => {
                                 this.showAlert();
-                            }}
-                        >
+                            }}>
                             <Text style={{ marginLeft: 35, color: "gray", fontSize: 16, textDecorationLine: "underline" }}>Forgot password?</Text>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={styles.loginBtn} onPress={(this.SubmitLoginBtn)}>
-                        <Text style={styles.loginText}>
-                            login
-                        </Text>
-                        {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
-                            : console.log("done")}
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Text style={styles.loginText}>
+                                login
+                            </Text>
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                                <Ionicons
+                                    name='chevron-forward-outline'
+                                    size={20}
+                                    color='white'
+                                    style={{ marginRight: 20 }}
+                                />
+                            </View>
+                            {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
+                                : console.log("done")}
+                        </View>
                     </TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>
                         <Text

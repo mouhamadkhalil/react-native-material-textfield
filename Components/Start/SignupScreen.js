@@ -257,9 +257,19 @@ export default class SignUpScreen extends React.Component {
           </Picker>
 
           <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
-            <Text style={styles.loginText}>
-              <Text style={{ marginLeft: 235 }}>register</Text>
-            </Text>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <Text style={styles.loginText}>
+                register
+              </Text>
+              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                <Ionicons
+                  name='chevron-forward-outline'
+                  size={20}
+                  color='white'
+                  style={{ marginRight: 20 }}
+                />
+              </View>
+            </View>
           </TouchableOpacity>
 
           {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 0 }} />
