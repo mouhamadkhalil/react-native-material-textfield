@@ -8,6 +8,7 @@ import {
     View,
     TouchableOpacity,
     Picker,
+    Linking,
     AsyncStorage,
     ActivityIndicator,
     ToastAndroid
