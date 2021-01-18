@@ -186,7 +186,7 @@ export default class LoginScreen extends React.Component {
         const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
-                <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
+                <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center' }}>
                     <Image
                         source={Flyfoot}
                         style={{ marginLeft: -30, width: 60, height: 60 }}
@@ -260,7 +260,7 @@ export default class LoginScreen extends React.Component {
                         {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
                             : console.log("done")}
                     </TouchableOpacity>
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop:20 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>
                         <Text
                             style={{
                                 color: "gray",
@@ -271,7 +271,7 @@ export default class LoginScreen extends React.Component {
                             Don't have an account?
                         </Text>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Sign up')}>
-                            <Text style={{marginLeft:5, fontSize:18, textDecorationLine: 'underline'}}>Sign up here </Text>
+                            <Text style={{ marginLeft: 5, fontSize: 18, textDecorationLine: 'underline' }}>Sign up here </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -305,7 +305,7 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F7F7F7",
+        backgroundColor: "white",
         marginTop: 0,
         marginBottom: 0,
     },

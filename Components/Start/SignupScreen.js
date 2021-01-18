@@ -127,7 +127,6 @@ export default class SignUpScreen extends React.Component {
                         this.setState({ Token: token_id });
                         this.setState({ isDone: true });
                         AsyncStorage.setItem("token", this.state.Token);
-                        // alert("you have successfully registered !");
                         ToastAndroid.showWithGravity(
                             'you have successfully registered !',
                             ToastAndroid.LONG,
@@ -140,18 +139,6 @@ export default class SignUpScreen extends React.Component {
     };
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
-
-    // Facebook = () => {
-    //   alert("Login with Facebook !");
-    // };
-
-    // Facebook = this.Facebook.bind(this);
-
-    // Google = () => {
-    //   alert("Login with Google !")
-    // };
-
-    // Google = this.Google.bind(this);
 
     render() {
         return (
@@ -274,12 +261,8 @@ export default class SignUpScreen extends React.Component {
                         By Signing up, i agree with <TouchableOpacity onPress={() => {
                             Linking.openURL('https://fly-foot.com/en/about/TC');
                         }}><Text style={{ marginTop: 40 }}>FFT Terms.</Text></TouchableOpacity>
-
                     </Text>
                     <TouchableOpacity >
-                        <Text style={{ marginLeft: 5, textDecorationLine: 'underline', color: "gray" }}>
-                            FFT Terms.
-          </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, }}>
@@ -303,7 +286,7 @@ export default class SignUpScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F7F7F7",
+        backgroundColor: "white",
         marginTop: 0,
         marginBottom: 0,
     },
