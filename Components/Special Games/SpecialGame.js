@@ -6,6 +6,7 @@ import {
     Image,
     ScrollView,
     View,
+    ImageBackground,
     TouchableOpacity,
     ActivityIndicator,
     SafeAreaView,
@@ -13,6 +14,8 @@ import {
     Dimensions
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
+import LocationIcon from "../../assets/Images_Design/location-icon.png";
+import CalendarIcon from "../../assets/Images_Design/calendar.png";
 import Line1 from "../../assets/Images_Design/line1.png";
 import Line2 from "../../assets/Images_Design/line2.png";
 import Search from "../../assets/Images_Design/search1.png";
@@ -21,6 +24,7 @@ import Card1 from "../../assets/Images_Design/card1.png";
 import Card2 from "../../assets/Images_Design/card2.png";
 import Btn1 from "../../assets/Images_Design/btn1.png";
 import Btn2 from "../../assets/Images_Design/btn2.png";
+import BtnBg from "../../assets/Images_Design/btn-bg.png";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import Liverppol from "../../assets/Images_Design/liverpool.png";
 import Real from "../../assets/Images_Design/real.png";
@@ -46,7 +50,7 @@ export default class Day2Screen extends React.Component {
             isDone: false,
             searchText: "",
             activeIndex: 0,
-            carouselItems:[{
+            carouselItems: [{
                 idMatch: "",
                 City: "",
                 Stade: "",
@@ -83,7 +87,7 @@ export default class Day2Screen extends React.Component {
                     StadeCity: ""
                 }
             ],
-            hotGames:[{
+            hotGames: [{
                 idMatch: "",
                 City: "",
                 Stade: "",
@@ -165,7 +169,7 @@ export default class Day2Screen extends React.Component {
                 });
                 this.setState({ specialGames: data });
             });
-    }
+    };
 
     getPopularGames = () => {
         const url = `${API_URL}/mobile/game/getall?pageNumber=1&pageSize=6&source=homepage`;
@@ -203,7 +207,7 @@ export default class Day2Screen extends React.Component {
                 });
                 this.setState({ popularGames: data });
             });
-    }
+    };
 
     getHotGames = () => {
         const url = `${API_URL}/mobile/game/getSuggestedGames`;
@@ -236,7 +240,7 @@ export default class Day2Screen extends React.Component {
                 });
                 this.setState({ hotGames: data });
             });
-    }
+    };
 
     renderPopularGames = () => {
         const buttons = [];
@@ -244,62 +248,83 @@ export default class Day2Screen extends React.Component {
             buttons.push(
                 <TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'row', backgroundColor: "#F7F7F7", width: 350, height: 70, marginLeft: 130, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, }}>
-                        <Text style={{ marginLeft: 10, marginTop: 27, fontSize: 12, fontWeight: "bold", width:22 }}>{Moment(new Date(game.GameDate)).format('DD MMM')}</Text>
-                        <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: "bold", marginTop: 25, width:60 }}>{game.HomeTeam}</Text>
-                        <View style={{marginTop:25, marginLeft:10}}>
+                        <Text style={{ marginLeft: 10, marginTop: 27, fontSize: 12, fontWeight: "bold", width: 22 }}>{Moment(new Date(game.GameDate)).format('DD MMM')}</Text>
+                        <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: "bold", marginTop: 25, width: 60 }}>{game.HomeTeam}</Text>
+                        <View style={{ marginTop: 25, marginLeft: 10 }}>
                             <LinearGradient
                                 colors={[game.Team1Color1, game.Team1Color2]}
                                 style={styles.linearGradient}
-                                start={[0,0]}
-                                end={[1,0]}
-                                locations={[0.5,0.5]}
+                                start={[0, 0]}
+                                end={[1, 0]}
+                                locations={[0.5, 0.5]}
                             ></LinearGradient>
                         </View>
-                        <View style={{marginTop:25, marginLeft:30}}>
+                        <View style={{ marginTop: 25, marginLeft: 30 }}>
                             <LinearGradient
                                 colors={[game.Team2Color1, game.Team2Color2]}
                                 style={styles.linearGradient}
-                                start={[0,0]}
-                                end={[1,0]}
-                                locations={[0.5,0.5]}
+                                start={[0, 0]}
+                                end={[1, 0]}
+                                locations={[0.5, 0.5]}
                             >
                             </LinearGradient>
                         </View>
-                        <Text style={{ fontSize: 15, fontWeight: "bold", marginTop: 25, marginLeft:10, width:60 }}>{game.AwayTeam}</Text>
-                        <Text style={{ fontSize: 12, marginTop: 10, marginLeft:8, width:65 }}>{game.City} from 1360$</Text>
-                        <Image source={Arrow} style={{ marginTop: 30, marginLeft:15 }} />
+                        <Text style={{ fontSize: 15, fontWeight: "bold", marginTop: 25, marginLeft: 10, width: 60 }}>{game.AwayTeam}</Text>
+                        <Text style={{ fontSize: 12, marginTop: 10, marginLeft: 8, width: 65 }}>{game.City} from 1360$</Text>
+                        <Image source={Arrow} style={{ marginTop: 30, marginLeft: 15 }} />
                     </View>
                 </TouchableOpacity>
-            )
+            );
         }
         return buttons;
-    }
+    };
 
 
     // Special Game
     specialGameItem({ item, index, state }) {
         return (
-            <TouchableOpacity style={{ marginTop: 60, width: 170, height: 250, marginLeft: 150 }}>
-                <ScrollView style={{ backgroundColor: "#483ED4", borderRadius: 20 }}>
-                    <Text style={{ color: "white", fontWeight: "bold", marginTop: 20, marginLeft: 20, fontSize: 16 }}>{item.LeagueName}</Text>
-                    <Text style={{ marginLeft: 20, color: "white", marginTop: 10, fontSize: 10 }}>{item.City}</Text>
-                    <Text style={{ marginLeft: 100, color: "white", marginTop: -14, fontSize: 10 }}>5 DAYS TRIP </Text>
-                    <Text style={{ color: "white", marginLeft: 20, marginTop: 20 }}>12 </Text>
-                    <Text style={{ color: "white", marginLeft: 70, marginTop: -19 }}>{item.HomeTeam}</Text>
-                    <Text style={{ color: "white", marginLeft: 20, marginTop: 5 }}>sep </Text>
-                    <Text style={{ color: "white", marginLeft: 70, marginTop: -19 }}>{item.AwayTeam}</Text>
-                    <Text style={{ color: "white", marginLeft: 20, marginTop: 10, fontWeight: "bold" }}>Early Bird Form</Text>
-                    <Text style={{ color: "white", fontSize: 7, marginLeft: 20, marginTop: 4 }}>* price based on 2 fans flyings together</Text>
-                </ScrollView>
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 33, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>1450$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 87, marginTop: -10 }} />
-                        <Text style={{ marginTop: -3, marginLeft: 11, fontSize: 9, color: "gray" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity>
-            </TouchableOpacity>
-        )
+            <TouchableOpacity style={{ marginTop: 60, width: 200, height: 310, marginLeft: 150 }}>
+                <View style={{ backgroundColor: "#483ED4", borderRadius: 20, paddingTop: 40, paddingLeft: 20, paddingRight: 20 }}>
+                    <View style={{ justifyContent: "space-between", height: 250 }}>
+                        <View>
+                            <Text style={{ color: "white", fontWeight: "bold", fontSize: 18, marginBottom: 10 }}>{item.LeagueName}</Text>
+                            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                                <View style={{ flexDirection: "row", flex: 0, width: 75, marginRight: 5 }}>
+                                    <Image source={LocationIcon} style={{ height: 14, width: 12, marginRight: 7, flex: 0 }} />
+                                    <Text style={{ color: "white", fontSize: 8.5, flex: 1 }}>{item.City}</Text>
+                                </View>
+                                <View style={{ flexDirection: "row", width: 75 }}>
+                                    <Image source={CalendarIcon} style={{ height: 14, width: 14, marginRight: 7, flex: 0 }} />
+                                    <Text style={{ color: "white", fontSize: 8.5, width: 70, flex: 1 }}>5 DAYS TRIP</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                            <View style={{}}>
+                                <Text style={{ color: "white" }}>12</Text>
+                                <Text style={{ color: "white" }}>sep</Text>
+                            </View>
+                            <View style={{ borderLeftWidth: 1, borderLeftColor: "white", width: 0, height: 60, marginLeft: 15, marginRight: 15 }}></View>
+                            <View style={{ flex: 1 }}>
+                                <Text style={{ color: "white" }}>{item.HomeTeam} </Text>
+                                <Text style={{ color: "white" }}>{item.AwayTeam}</Text>
+                            </View>
+                        </View>
+                        <View>
+                            <Text style={{ color: "white", fontWeight: "bold" }}>Early Bird Form</Text>
+                            <Text style={{ color: "white", fontSize: 7 }}>* price based on 2 fans flyings together</Text>
+                        </View>
+                        <TouchableOpacity style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
+                            <ImageBackground source={BtnBg} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "center" }}>
+                                <Text style={{ fontWeight: "bold", fontSize: 15 }}>1450$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
+                                <Text style={{ fontSize: 9, color: "gray" }}>BOOK NOW</Text>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+            </TouchableOpacity >
+        );
     }
 
     // Hot Game
@@ -323,7 +348,7 @@ export default class Day2Screen extends React.Component {
                     </ScrollView>
                 </TouchableOpacity>
             </TouchableOpacity>
-        )
+        );
     }
 
     // Carousal 3
@@ -337,7 +362,7 @@ export default class Day2Screen extends React.Component {
                 </TouchableOpacity>
             </TouchableOpacity>
         );
-    }
+    };
 
     // Carousal 4
     _renderItem4({ item, index, state }) {
@@ -348,7 +373,7 @@ export default class Day2Screen extends React.Component {
                 </TouchableOpacity>
                 <Image source={Btn2} style={{ marginLeft: 185, marginTop: -22 }} />
             </TouchableOpacity>
-        )
+        );
     }
 
     render() {
