@@ -5,7 +5,7 @@ import {
   Text,
   ScrollView,
   Image,
-  Button,
+  View,
   TouchableOpacity,
   Picker,
   AsyncStorage,
@@ -154,104 +154,98 @@ export default class SignUpScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-
-        <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
-          FLY-FOOT
+        <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
+          <Image
+            source={Flyfoot}
+            style={{ marginLeft: -30, width: 60, height: 60 }}
+          />
+          <Text style={{ marginTop: 10, marginLeft: 10, fontSize: 25, fontWeight: "bold" }}>
+            FLY-FOOT
           </Text>
-        <Image
-          source={Flyfoot}
-          style={{ marginLeft: 100, marginTop: -34, width: 40, height: 40 }}
-        />
-        {/* <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 50 }}>
-          <Button
-            title="LOGIN WITH FACEBOOK"
-            color="blue"
-            style={{ width: 500, padding: 300, height: 300 }}
-            onPress={this.Facebook}
+        </View>
+        <View style={{ flex: 1, flexDirection: 'column', marginTop: 30, alignItems: 'center' }}>
+          <TouchableOpacity style={{ width: 350 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', backgroundColor: '#37568F', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
+              sign  up  with  facebook
+                        </Text>
+          </TouchableOpacity>
+          <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
+            <View style={styles.lineStyle} />
+            <Text style={{ fontSize: 18, textTransform: 'uppercase', marginLeft: 10, marginRight: 10 }}>
+              sign  up  with  email
+                        </Text>
+            <View style={styles.lineStyle} />
+          </View>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row', marginTop: 30 }}>
+          <Text style={{ width: 160, marginLeft: 35, color: "gray" }}>
+            Name
+          </Text>
+          <Text style={{ marginLeft: 20, color: "gray" }}>
+            Surname
+          </Text>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <TextInput
+            style={{ width: 160, height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 35 }}
+            onChangeText={(Name) => this.setState({ Name })}
+            placeholder="Hann"
+            required
+            value={this.state.Name}
+            type="text"
           />
-        </TouchableOpacity> */}
-
-        {/* <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 20 }}>
-          <Button
-            title="LOGIN WITH GOOGLE"
-            color="red"
-            onPress={this.Google}
+          <TextInput
+            style={{ width: 160, height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 20 }}
+            onChangeText={(SurName) => this.setState({ SurName })}
+            placeholder="Hann"
+            required
+            value={this.state.SurName}
+            type="text"
           />
-        </TouchableOpacity> */}
-        <Text style={{ fontSize: 20, paddingTop: 10, marginLeft: 90 }}>
-          SIGN UP WITH EMAIL
-        </Text>
-        <Text style={{ paddingTop: 30, marginLeft: 35, color: "gray" }}>
-          Name
-        </Text>
-
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 35 }}
-          onChangeText={(Name) => this.setState({ Name })}
-          placeholder="   Hann"
-          required
-          value={this.state.Name}
-          type="text"
-        />
-
-        <Text style={{ marginTop: -79, marginLeft: 190, color: "gray" }}>
-          Surname
-        </Text>
-
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 190 }}
-          onChangeText={(SurName) => this.setState({ SurName })}
-          placeholder="   Hann"
-          required
-          value={this.state.SurName}
-          type="text"
-        />
-
-        <Text style={{ paddingTop: 30, marginLeft: 35, width: 300, color: "gray" }}>
+        </View>
+        <Text style={{ marginTop: 30, marginLeft: 35, color: "gray" }}>
           Email
-        </Text>
-
+          </Text>
         <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
+          style={{ height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 35, marginRight: 35 }}
           onChangeText={(Email) => this.setState({ Email })}
           required
           value={this.state.Email}
-          placeholder="  hannibal@gmail.com"
+          placeholder="hannibal@gmail.com"
         />
-
-        <Text style={{ paddingTop: 30, marginLeft: 35, color: "gray" }}>
-          Password
-        </Text>
-
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 35 }}
-          onChangeText={(Password) => this.setState({ Password })}
-          placeholder="   Hann"
-          required
-          value={this.state.Password}
-          secureTextEntry={true}
-        />
-
-        <Text style={{ marginTop: -79, marginLeft: 190, color: "gray" }}>
-          Repeat Password
-        </Text>
-
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 140, marginTop: 20, marginLeft: 190 }}
-          onChangeText={(ConfirmPassword) => this.setState({ ConfirmPassword })}
-          placeholder="   Hann"
-          required
-          value={this.state.ConfirmPassword}
-          secureTextEntry={true}
-        />
+        <View style={{ flex: 1, flexDirection: 'row', marginTop: 30 }}>
+          <Text style={{ width: 160, marginLeft: 35, color: "gray" }}>
+            Password
+          </Text>
+          <Text style={{ marginLeft: 20, color: "gray" }}>
+            Reapeat password
+          </Text>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <TextInput
+            style={{ width: 160, height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 35 }}
+            onChangeText={(Password) => this.setState({ Password })}
+            placeholder="Hann"
+            required
+            value={this.state.Password}
+            secureTextEntry={true}
+          />
+          <TextInput
+            style={{ width: 160, height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 20 }}
+            onChangeText={(ConfirmPassword) => this.setState({ ConfirmPassword })}
+            placeholder="Hann"
+            required
+            value={this.state.ConfirmPassword}
+            secureTextEntry={true}
+          />
+        </View>
 
         <Text style={{ paddingTop: 30, marginLeft: 35, width: 300, color: "gray" }}>
           Favourite Team
         </Text>
-
         <Picker
           selectedValue={this.state.FavouriteTeam1}
-          style={{ height: 50, width: 320, marginLeft: 30, borderColor: 'gray' }}
+          style={{ height: 50, marginLeft: 28, marginRight: 15, borderBottomWidth: 1, borderColor: 'gray' }}
           onValueChange={(itemValue, itemIndex) => this.setState({ FavouriteTeam1: itemValue })}>
           <Picker.Item label={this.state.FavouriteTeam1} value={this.state.FavouriteTeam1} />
           <Picker.Item label={this.state.FavouriteTeam2} value={this.state.FavouriteTeam2} />
@@ -261,39 +255,41 @@ export default class SignUpScreen extends React.Component {
 
         <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
           <Text style={styles.loginText}>
-            <Text style={{ marginLeft: 235 }}>LOGIN </Text>
+            <Text style={{ marginLeft: 235 }}>register</Text>
           </Text>
         </TouchableOpacity>
 
         {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 0 }} />
           : console.log("done")}
 
-        <Text
-          style={{
+        <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, }}>
+          <Text style={{
             color: "gray",
-            marginLeft: 40,
+            marginLeft: 35,
             fontSize: 16,
-            paddingRight: 110,
-            paddingTop: 0,
-            width: 500
           }}
-        >
-          By Signing up, i agree with <TouchableOpacity><Text style={{ marginTop: 40 }}>FFT Terms.</Text></TouchableOpacity>
-
+          >
+            By Signing up, i agree with
         </Text>
-        <Text
-          style={{
-            color: "gray",
-            marginLeft: 40,
-            fontSize: 16,
-            paddingRight: 110,
-            paddingTop: 20,
-          }}
-        >
-          Already have an account?
+          <TouchableOpacity >
+            <Text style={{ marginLeft: 5, textDecorationLine: 'underline', color: "gray" }}>
+              FFT Terms.
+          </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, }}>
+          <Text
+            style={{
+              color: "gray",
+              marginLeft: 35,
+              fontSize: 16,
+            }}
+          >
+            Already have an account?
         </Text>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
-          <Text style={{ marginLeft: 215, marginTop: -20, marginBottom: 20, width: 100, height: 50, marginTop: -20 }}> &nbsp; Login here </Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
+            <Text style={{ marginLeft: 4, color:'#374BBE' }}> Login here </Text></TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
@@ -302,22 +298,16 @@ export default class SignUpScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#F7F7F7",
     marginTop: 0,
     marginBottom: 0,
   },
   loginBtn: {
-    width: 295,
-    backgroundColor: "#334CFF",
-    borderRadius: 0,
-    height: 50,
+    backgroundColor: "#374BBE",
+    height: 60,
     marginTop: 10,
-    marginBottom: 10,
-    fontSize: 20,
-    paddingLeft: 20,
-    paddingTop: 10,
     marginLeft: 35,
-    color: "white",
+    marginRight: 35,
   },
   loginTextF: {
     color: "white",
@@ -328,8 +318,13 @@ const styles = StyleSheet.create({
     paddingTop: 6,
   },
   loginText: {
+    paddingLeft: 20,
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 60,
     color: "white",
-    paddingTop: 6,
+    letterSpacing: 2,
+    textTransform: 'uppercase'
   },
   txtInputEmail: {
     paddingRight: 180,
@@ -352,4 +347,11 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: -120,
   },
+  lineStyle: {
+    width: 70,
+    height: 1,
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: 'black'
+  }
 });

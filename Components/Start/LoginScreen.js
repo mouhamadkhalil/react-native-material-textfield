@@ -4,8 +4,8 @@ import {
     TextInput,
     Text,
     ScrollView,
+    View,
     Image,
-    Button,
     AsyncStorage,
     TouchableOpacity,
     ActivityIndicator,
@@ -186,96 +186,95 @@ export default class LoginScreen extends React.Component {
         const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
-                <Text style={{ fontSize: 25, marginLeft: 150, marginTop: 30, fontWeight: "bold" }}>
-                    FLY-FOOT
-                    </Text>
-                <Image
-                    source={Flyfoot}
-                    style={{ marginLeft: 100, marginTop: -34, width: 40, height: 40 }}
-                />
-                <TouchableOpacity style={{ width: 300, marginLeft: 30, marginTop: 50 }}>
-                    <Button
-                        title="LOGIN WITH FACEBOOK"
-                        color="blue"
-                        style={{ width: 500, padding: 300, height: 300 }}
-                        onPress={this.FBLogin.bind(this)}
+                <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
+                    <Image
+                        source={Flyfoot}
+                        style={{ marginLeft: -30, width: 60, height: 60 }}
                     />
-                </TouchableOpacity>
-                <Text style={{ fontSize: 20, paddingTop: 10, marginLeft: 90 }}>
-                    LOGIN WITH EMAIL
-                </Text>
-                <Text style={{ paddingTop: 30, marginLeft: 35 }}>
-                    Email
-                </Text>
-                <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: 295, marginTop: 20, marginLeft: 35 }}
-                    onChangeText={(username) => this.setState({ username })}
-                    placeholder="   hannibal@gma"
-                    required
-                    value={this.state.email}
-                    type="email"
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                />
-                <Text style={{ paddingTop: 30, marginLeft: 35, width: 300 }}>
-                    Password
-                </Text>
-                <PasswordInputText
-                    style={{ marginLeft: 35, width: 295 }}
-                    getRef={input => this.input = input}
-                    value={this.state.password}
-                    required
-                    secureTextEntry={true}
-                    onChangeText={(password) => this.setState({ password })}
-                />
-                <Text
-                    style={{
-                        color: "gray",
-                        fontSize: 16,
-                        paddingRight: 110,
-                        paddingTop: 20,
-                    }}
-                >
-                </Text>
-                <Text
-                    style={{
-                        fontWeight: "90",
-                        color: "gray",
-                        fontSize: 16,
-                        paddingRight: 110,
-                        paddingTop: 20,
-                    }}
-                >
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.showAlert();
+                    <Text style={{ marginTop: 10, marginLeft: 10, fontSize: 25, fontWeight: "bold" }}>
+                        FLY-FOOT
+                    </Text>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'column', marginTop: 30, alignItems: 'center' }}>
+                    <TouchableOpacity onPress={this.FBLogin.bind(this)} style={{ width: 350 }}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', backgroundColor: '#37568F', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
+                            login   with   facebook
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
+                        <View style={styles.lineStyle} />
+                        <Text style={{ fontSize: 18, textTransform: 'uppercase', marginLeft: 15, marginRight: 15 }}>
+                            login   with   email
+                        </Text>
+                        <View style={styles.lineStyle} />
+                    </View>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'column' }}>
+                    <Text style={{ paddingTop: 30, marginLeft: 35 }}>
+                        Email
+                    </Text>
+                    <TextInput
+                        style={{ height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 35, marginRight: 35 }}
+                        onChangeText={(username) => this.setState({ username })}
+                        placeholder="hannibal@gma"
+                        required
+                        value={this.state.email}
+                        type="email"
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                    />
+                    <Text style={{ marginTop: 30, marginLeft: 35 }}>
+                        Password
+                    </Text>
+                    <PasswordInputText
+                        style={{ marginLeft: 35, marginRight: 35, marginTop: -25 }}
+                        label=''
+                        lineWidth={2}
+                        getRef={input => this.input = input}
+                        value={this.state.password}
+                        required
+                        secureTextEntry={true}
+                        onChangeText={(password) => this.setState({ password })}
+                    />
+                    <View
+                        style={{
+                            fontWeight: "90",
+                            color: "gray",
+                            fontSize: 16,
+                            paddingRight: 110,
+                            paddingTop: 20,
                         }}
                     >
-                        <ScrollView>
-                            <Text style={{ marginLeft: 35, color: "gray", textDecorationLine: "underline" }}>Forgot Password?</Text>
-                        </ScrollView>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.showAlert();
+                            }}
+                        >
+                            <Text style={{ marginLeft: 35, color: "gray", fontSize: 16, textDecorationLine: "underline" }}>Forgot password?</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.loginBtn} onPress={(this.SubmitLoginBtn)}>
+                        <Text style={styles.loginText}>
+                            login
+                        </Text>
+                        {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
+                            : console.log("done")}
                     </TouchableOpacity>
-                </Text>
-                <TouchableOpacity style={styles.loginBtn} onPress={(this.SubmitLoginBtn)}>
-                    <Text style={styles.loginText}>
-                        <Text style={{ marginLeft: 235 }}>LOGIN </Text>
-                    </Text>
-                    {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
-                        : console.log("done")}
-                </TouchableOpacity>
-                <Text
-                    style={{
-                        color: "gray",
-                        marginLeft: 35,
-                        fontSize: 16,
-                        paddingRight: 110,
-                        paddingTop: 20,
-                    }}
-                >
-                    Don't have an account?
-                </Text>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Sign up')}>
-                    <Text style={{ marginLeft: 206, marginTop: -20, marginBottom: 0, width: 100, height: 70, marginTop: -20 }} >Sign up here </Text></TouchableOpacity>
+                    <View style={{ flex: 1, flexDirection: 'row', marginTop:20 }}>
+                        <Text
+                            style={{
+                                color: "gray",
+                                marginLeft: 35,
+                                fontSize: 18,
+                            }}
+                        >
+                            Don't have an account?
+                        </Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Sign up')}>
+                            <Text style={{marginLeft:5, fontSize:18, textDecorationLine: 'underline'}}>Sign up here </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
                 <ScrollView style={{ width: 1000, marginTop: 0 }}>
                     <AwesomeAlert
                         show={showAlert}
@@ -306,22 +305,17 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: "#F7F7F7",
         marginTop: 0,
         marginBottom: 0,
     },
     loginBtn: {
-        width: 295,
-        backgroundColor: "#334CFF",
-        borderRadius: 0,
-        height: 50,
-        marginTop: 10,
+        backgroundColor: "#374BBE",
+        height: 60,
+        marginTop: 20,
         marginBottom: 10,
-        fontSize: 20,
-        paddingLeft: 20,
-        paddingTop: 10,
         marginLeft: 35,
-        color: "white",
+        marginRight: 35,
     },
     loginTextF: {
         color: "white",
@@ -332,8 +326,13 @@ const styles = StyleSheet.create({
         paddingTop: 6,
     },
     loginText: {
+        paddingLeft: 20,
+        fontSize: 18,
+        fontWeight: 'bold',
+        lineHeight: 60,
         color: "white",
-        paddingTop: 6,
+        letterSpacing: 2,
+        textTransform: 'uppercase'
     },
     txtInputEmail: {
         paddingRight: 180,
@@ -356,4 +355,11 @@ const styles = StyleSheet.create({
     text: {
         marginLeft: -120,
     },
+    lineStyle: {
+        width: 70,
+        height: 1,
+        marginTop: 12,
+        borderWidth: 1,
+        borderColor: 'black'
+    }
 });

@@ -46,6 +46,17 @@ export default class Day2Screen extends React.Component {
             isDone: false,
             searchText: "",
             activeIndex: 0,
+            carouselItems:[{
+                idMatch: "",
+                City: "",
+                Stade: "",
+                GameDate: "",
+                LeaguesName: "",
+                GameCode: "",
+                HomeTeam: "",
+                AwayTeam: "",
+                StadeCity: ""
+            }],
             specialGames: [
                 {
                     idMatch: "",
@@ -71,11 +82,23 @@ export default class Day2Screen extends React.Component {
                     AwayTeam: "",
                     StadeCity: ""
                 }
-            ]
+            ],
+            hotGames:[{
+                idMatch: "",
+                City: "",
+                Stade: "",
+                GameDate: "",
+                LeaguesName: "",
+                GameCode: "",
+                HomeTeam: "",
+                AwayTeam: "",
+                StadeCity: ""
+            }],
         };
 
         this.getSpecialGames();
         this.getPopularGames();
+        this.getHotGames();
     }
 
     searchGame = () => {
@@ -182,14 +205,47 @@ export default class Day2Screen extends React.Component {
             });
     }
 
+    getHotGames = () => {
+        const url = `${API_URL}/mobile/game/getSuggestedGames`;
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                var data = response.map(function (item) {
+                    return {
+                        idMatch: item.idMatch,
+                        City: item.City,
+                        Stade: item.Stade,
+                        GameDate: item.GameDate,
+                        LeagueName: item.LeagueName,
+                        GameCode: item.GameCode,
+                        HomeTeam: item.HomeTeam,
+                        AwayTeam: item.AwayTeam,
+                        StadeCity: item.StadeCity,
+                    };
+                });
+                this.setState({ hotGames: data });
+            });
+    }
+
     renderPopularGames = () => {
         const buttons = [];
         for (let game of this.state.popularGames) {
             buttons.push(
                 <TouchableOpacity>
-                    <View style={{ flex: 1, flexDirection: 'row', backgroundColor: "#F7F7F7", width: 310, height: 70, marginLeft: 140, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, }}>
-                        <Text style={{ marginLeft: 10, marginTop: 27, fontSize: 12, fontWeight: "bold" }}>{Moment(new Date()).format('DD MMM')}</Text>
-                        <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: "bold", marginTop: 25, maxWidth:60 }}>{game.HomeTeam}</Text>
+                    <View style={{ flex: 1, flexDirection: 'row', backgroundColor: "#F7F7F7", width: 350, height: 70, marginLeft: 130, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, }}>
+                        <Text style={{ marginLeft: 10, marginTop: 27, fontSize: 12, fontWeight: "bold", width:22 }}>{Moment(new Date(game.GameDate)).format('DD MMM')}</Text>
+                        <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: "bold", marginTop: 25, width:60 }}>{game.HomeTeam}</Text>
                         <View style={{marginTop:25, marginLeft:10}}>
                             <LinearGradient
                                 colors={[game.Team1Color1, game.Team1Color2]}
@@ -209,8 +265,9 @@ export default class Day2Screen extends React.Component {
                             >
                             </LinearGradient>
                         </View>
-                        <Text style={{ fontSize: 15, fontWeight: "bold", marginTop: 25, marginLeft:10, maxWidth:60 }}>{game.AwayTeam}</Text>
-                        <Image source={Arrow} style={{ marginTop: 30, marginLeft:30 }} />
+                        <Text style={{ fontSize: 15, fontWeight: "bold", marginTop: 25, marginLeft:10, width:60 }}>{game.AwayTeam}</Text>
+                        <Text style={{ fontSize: 12, marginTop: 10, marginLeft:8, width:65 }}>{game.City} from 1360$</Text>
+                        <Image source={Arrow} style={{ marginTop: 30, marginLeft:15 }} />
                     </View>
                 </TouchableOpacity>
             )
@@ -245,17 +302,17 @@ export default class Day2Screen extends React.Component {
         )
     }
 
-    // Carousal 2
-    _renderItem2({ item, index, state }) {
+    // Hot Game
+    hotGameItem({ item, index, state }) {
         return (
             <TouchableOpacity style={{ marginTop: 60, width: 250, height: 250, marginLeft: 150 }}>
                 <ScrollView style={{ backgroundColor: "#DA2828", borderRadius: 20 }}>
-                    <Text style={{ color: "white", fontWeight: "bold", marginTop: 20, marginLeft: 20, fontSize: 25 }}>Kopites trip</Text>
-                    <Text style={{ marginLeft: 20, color: "white", marginTop: 10, fontSize: 10 }}>DUBLIN -- 5 DAYS</Text>
-                    <Text style={{ marginLeft: 77, color: "white", marginTop: 20, fontSize: 20 }}>Manchester c.</Text>
-                    <Text style={{ marginLeft: 77, color: "white", marginTop: 0, fontSize: 20 }}>arsenal</Text>
-                    <Text style={{ marginLeft: 25, color: "white", marginTop: -45, fontSize: 17 }}>15 </Text>
-                    <Text style={{ marginLeft: 25, color: "white", marginTop: 0, fontSize: 17 }}>sep </Text>
+                    <Text style={{ color: "white", fontWeight: "bold", marginTop: 20, marginLeft: 20, fontSize: 25 }}>{item.LeagueName}</Text>
+                    <Text style={{ marginLeft: 20, color: "white", marginTop: 10, fontSize: 10 }}>{item.StadeCity} -- 5 DAYS</Text>
+                    <Text style={{ marginLeft: 77, color: "white", marginTop: 20, fontSize: 20 }}>{item.HomeTeam}</Text>
+                    <Text style={{ marginLeft: 77, color: "white", marginTop: 0, fontSize: 20 }}>{item.AwayTeam}</Text>
+                    <Text style={{ marginLeft: 25, color: "white", marginTop: -45, fontSize: 17 }}>12</Text>
+                    <Text style={{ marginLeft: 25, color: "white", marginTop: 0, fontSize: 17 }}>jan</Text>
                     <Text style={{ color: "white", marginLeft: 75, fontSize: 8, marginTop: 10 }}>* price based on 2 fans flyings together</Text>
                 </ScrollView>
                 <TouchableOpacity style={{ width: 120, height: 50, marginLeft: 65, marginTop: -25 }} >
@@ -347,7 +404,7 @@ export default class Day2Screen extends React.Component {
                         marginLeft: 180
                     }}
                 >
-                    SPECIAL GAME
+                    SPECIAL GAMES
                 </Text>
                 <ScrollView>
 
@@ -385,43 +442,42 @@ export default class Day2Screen extends React.Component {
                 <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, marginLeft: 220, marginBottom: 30, marginTop: -15, borderRadius: 20 }}>
                     <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
                 </TouchableOpacity>
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 50, marginLeft: 140, marginTop: 0 }}></ScrollView>
+                <ScrollView style={{ backgroundColor: "black", height: 8, width: 30, marginLeft: 140, marginTop: 10 }}></ScrollView>
                 <Text
                     style={{
-                        marginTop: -22,
+                        marginTop: -20,
                         color: "black",
                         fontSize: 20,
-                        marginLeft: 200
+                        marginLeft: 180
                     }}
                 >
                     HOT GAMES
                 </Text>
                 <ScrollView>
-
-                    {/* carousel 2 */}
-                    <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
+                    {/* Hot Games */}
+                    <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: -20, marginRight: 40 }}>
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
                             <Carousel
                                 style={{ marginLeft: 50 }}
                                 layout={"default"}
                                 ref={ref => this.carousel = ref}
-                                data={this.state.carouselItems}
+                                data={this.state.hotGames}
                                 sliderWidth={170}
                                 itemWidth={290}
                                 // autoplay={true}
-                                renderItem={this._renderItem2}
+                                renderItem={this.hotGameItem}
                                 onSnapToItem={index => this.setState({ activeIndex: index })}
                             />
                         </View>
                     </SafeAreaView>
                 </ScrollView>
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 35, marginLeft: 160, marginTop: 90 }}></ScrollView>
+                <ScrollView style={{ backgroundColor: "black", height: 8, width: 30, marginLeft: 140, marginTop: 35 }}></ScrollView>
                 <Text
                     style={{
-                        marginTop: -22,
+                        marginTop: -20,
                         color: "black",
                         fontSize: 20,
-                        marginLeft: 200
+                        marginLeft: 180
                     }}
                 >
                     POPULAR TEAMS
@@ -445,13 +501,13 @@ export default class Day2Screen extends React.Component {
                         </View>
                     </SafeAreaView>
                 </ScrollView>
-                <ScrollView style={{ backgroundColor: "black", height: 15, width: 35, marginLeft: 160, marginTop: 30 }}></ScrollView>
+                <ScrollView style={{ backgroundColor: "black", height: 8, width: 30, marginLeft: 140, marginTop: 35 }}></ScrollView>
                 <Text
                     style={{
-                        marginTop: -22,
+                        marginTop: -20,
                         color: "black",
                         fontSize: 20,
-                        marginLeft: 200
+                        marginLeft: 180
                     }}
                 >
                     COMPETETIONS
