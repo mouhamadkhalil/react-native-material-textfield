@@ -59,7 +59,7 @@ export default class UploadPassport1Screen extends React.Component {
           >
             Hannibal Lecter
           </Text>
-          <TouchableOpacity style={{ marginLeft: 300, marginTop: -15 }} onPress={this.AddFile}>
+          <TouchableOpacity style={{ marginLeft: 300, marginTop: -5 }} onPress={this.AddFile}>
             <Text style={{ fontSize: 13, marginLeft: -20, marginTop: -10 }}>
               ADD FILE
             </Text>
@@ -85,7 +85,7 @@ export default class UploadPassport1Screen extends React.Component {
           >
             William Wallace
           </Text>
-          <TouchableOpacity style={{ marginLeft: 300, marginTop: -15 }} onPress={this.AddFile}>
+          <TouchableOpacity style={{ marginLeft: 300, marginTop: -5 }} onPress={this.AddFile}>
             <Text style={{ fontSize: 13, marginLeft: -20, marginTop: -10 }}>
               ADD FILE
             </Text>
