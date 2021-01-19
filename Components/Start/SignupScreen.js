@@ -14,10 +14,9 @@ import {
     ToastAndroid
 } from "react-native";
 import Signup from "./SignupScreen";
-import LoginWithFB from "../../assets/images/LoginWithFB.png";
-import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env";
+import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 
 const sourceFile = require('../../services.js');
@@ -51,12 +50,14 @@ export default class SignUpScreen extends React.Component {
         fetch(url, {
             method: "GET",
             headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
+                // "Content-Type": sourceFile.Content_Type,
+                // "Accept": sourceFile.Accept,
+                // "ff_version": sourceFile.ff_version,
+                // "ff_language": sourceFile.ff_language,
+                // "source": sourceFile.source,
                 // "authorization" : sourceFile.authorization,
+                "Content-Type": "application/json",
+                "Accept": "application/json",
             },
         })
             .then((res) => res.json())
@@ -97,31 +98,45 @@ export default class SignUpScreen extends React.Component {
             FavouriteTeam: this.state.FavouriteTeam1,
         };
 
+        if (this.state.Name === "" || this.state.SurName === "" || this.state.Email === "" || this.state.Password === "" || this.state.ConfirmPassword === "") {
+            ToastAndroid.showWithGravity(
+                'please fill out mendatory fields !',
+                ToastAndroid.LONG,
+                ToastAndroid.CENTER
+            );
+        }
+
         fetch(url, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
+                // "Content-Type": sourceFile.Content_Type,
+                // "Accept": sourceFile.Accept,
+                // "ff_version": sourceFile.ff_version,
+                // "ff_language": sourceFile.ff_language,
+                // "source": sourceFile.source,
                 // "authorization" : sourceFile.authorization,
+                "Content-Type": "application/json",
+                "Accept": "application/json",
             },
         })
             .then((res) => res.json())
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
                 if (response.ErrorId) {
-                    alert("Something went wrong, please try again later !");
+                    ToastAndroid.showWithGravity(
+                        'Something went wrong, please try again later !',
+                        ToastAndroid.LONG,
+                        ToastAndroid.CENTER
+                    );
                     window.location.reload();
                 } else {
                     if (this.state.Password !== this.state.ConfirmPassword) {
                         alert("password don't match ");
-                        window.location.reload();
+                        // window.location.reload();
                     }
                     else {
-                        console.log(response);
+                        console.log("my test ", response);
                         let token_id = response.Token;
                         console.log("token is :", token_id);
                         this.setState({ Token: token_id });
@@ -140,6 +155,32 @@ export default class SignUpScreen extends React.Component {
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
+    async FBLogin() {
+        try {
+            await Facebook.initializeAsync({
+                appId: '431386654654341',
+            });
+            const {
+                type,
+                token,
+                expirationDate,
+                permissions,
+                declinedPermissions,
+            } = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile'],
+            });
+            if (type === 'success') {
+                // Get the user's name using Facebook's Graph API
+                const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+                Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+            } else {
+                // type === 'cancel'
+            }
+        } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
+        }
+    }
+
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -153,7 +194,7 @@ export default class SignUpScreen extends React.Component {
           </Text>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'column', marginTop: 30, alignItems: 'center' }}>
-                    <TouchableOpacity style={{ width: 350 }}>
+                    <TouchableOpacity style={{ width: 350 }} onPress={this.FBLogin.bind(this)}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold', backgroundColor: '#37568F', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
                             sign  up  with  facebook
                         </Text>
@@ -199,6 +240,8 @@ export default class SignUpScreen extends React.Component {
                     style={{ height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 35, marginRight: 35 }}
                     onChangeText={(Email) => this.setState({ Email })}
                     required
+                    autoCapitalize="none"
+                    keyboardType="email-address"
                     value={this.state.Email}
                     placeholder="hannibal@gmail.com"
                 />

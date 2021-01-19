@@ -9,7 +9,8 @@ import {
     AsyncStorage,
     TouchableOpacity,
     ActivityIndicator,
-    ToastAndroid
+    ToastAndroid,
+    TextInputComponent
 } from "react-native";
 import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
@@ -21,12 +22,23 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 
+const sourceFile = require('../../services.js');
+
 export default class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state =
         {
             showAlert: false,
+            client_id: "",
+            grant_type: "Bearer Token",
+            username: "",
+            password: "",
+            rememberMe: "",
+            scope: "",
+            Token: "",
+            isDone: false,
+            forgotPassword: ""
         };
     }
 
@@ -42,18 +54,38 @@ export default class LoginScreen extends React.Component {
         });
     };
 
-    state = {
-        client_id: "",
-        grant_type: "Bearer Token",
-        username: "",
-        password: "",
-        rememberMe: "",
-        scope: "",
-        Token: "",
-        isDone: false,
-        // isLoggedIn: false,
-        // loginChecked: false,
+    SubmitPassword = () => {
+        this.setState({
+            showAlert: false,
+        });
+
+        const url = `${API_URL}/mobile/profile/forgetpassword?email=${this.state.forgotPassword}`;
+
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                console.log(response);
+
+                if (response.ErrorId) {
+                    alert(response.Message)
+                }
+                else {
+                    console.log("email is found! ");
+                }
+            });
     };
+
 
     SubmitLoginBtn = (event) => {
         console.log("username : " + this.state.username);
@@ -61,96 +93,55 @@ export default class LoginScreen extends React.Component {
 
         const url = `${API_URL}/mobile/profile/login`;
 
-        if (this.state.username != ' ' && this.state.password != ' ') {
-            const data = {
-                username: this.state.username,
-                password: this.state.password,
-            };
-            fetch(url, {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-            })
-                .then((res) => res.json())
-                .catch((error) => console.error("Error: ", error))
-                .then((response) => {
-                    if (response.ErrorId) {
-                        ToastAndroid.showWithGravity(
-                            'Error: The user name or password is incorrect',
-                            ToastAndroid.LONG,
-                            ToastAndroid.CENTER
-                        );
-                        window.location.reload();
-                    } else {
-                        console.log(response);
-                        let token_id = response.Token;
-                        this.setState({ Token: token_id });
-                        AsyncStorage.setItem("token", this.state.Token);
-                        // this.setState({ isLoggedIn: true });
-                        // this.setState({ loginChecked: true });
-                        this.setState({ isDone: true });
-                        this.props.navigation.navigate('Home Pre');
-                        ToastAndroid.showWithGravity(
-                            'you are successfully logged in !',
-                            ToastAndroid.SHORT,
-                            ToastAndroid.CENTER
-                        );
-                    }
-                });
-        }
-        else {
+        if (this.state.username === "" || this.state.password === "") {
             ToastAndroid.showWithGravity(
-                'Please Enter Credentials',
+                'please fill out mendatory fields !',
                 ToastAndroid.LONG,
                 ToastAndroid.CENTER
             );
         }
+
+        else {
+            if (this.state.username != ' ' && this.state.password != ' ') {
+                const data = {
+                    username: this.state.username,
+                    password: this.state.password,
+                };
+                fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                })
+                    .then((res) => res.json())
+                    .catch((error) => console.error("Error: ", error))
+                    .then((response) => {
+                        if (response.ErrorId) {
+                            ToastAndroid.showWithGravity(
+                                'Error: The user name or password is incorrect',
+                                ToastAndroid.LONG,
+                                ToastAndroid.CENTER
+                            );
+                            window.location.reload();
+                        } else {
+                            console.log(response);
+                            let token_id = response.Token;
+                            this.setState({ Token: token_id });
+                            AsyncStorage.setItem("token", this.state.Token);
+                            this.setState({ isDone: true });
+                            this.props.navigation.navigate('Home Pre');
+                            ToastAndroid.showWithGravity(
+                                'you are successfully logged in !',
+                                ToastAndroid.SHORT,
+                                ToastAndroid.CENTER
+                            );
+                        }
+                    });
+            }
+        }
     };
-
-    //function to extract storage token. Any name can be given ot it. 
-
-    // async getItem(token){
-    //     console.log("the state is : ",this.state.isLoggedIn)
-    //     try{
-    //         const value = await AsyncStorage.getItem(token);
-    //         console.log("my token is : ",value);
-    //         if(value !== null){
-    //             this.setState({
-    //                 isLoggedIn: true,
-    //                 loginChecked: true
-    //             })
-    //         }
-    //         else{
-    //             this.setState({
-    //                 isLoggedIn: false,
-    //                 loginChecked: true
-    //             })
-    //         }
-    //     }
-    //     catch(error){
-    //         console.log(error)
-    //     }
-    //     console.log(this.state.isLoggedIn)
-    // }
-
-    //function to remove storage token 
-
-    // async removeItem(item){
-    //     try{
-    //         const value = await AsyncStorage.removeItem(item);
-    //         if(value == null){
-    //             this.setState({
-    //                 isLoggedIn: false
-    //             })
-    //         }
-    //     }
-    //     catch(error){
-    //         //handle errors here
-    //     }
-    // }
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
@@ -180,8 +171,19 @@ export default class LoginScreen extends React.Component {
         }
     }
 
-    render() {
+    renderCustomAlertView = () => {
+        return (
+            <>
+                <TextInput style={{ marginTop: 20, marginLeft: -60 }} placeholder="Enter your email address "
+                    autoCapitalize="none" keyboardType="email-address" value={this.state.forgotPassword}
+                    onChangeText={(forgotPassword) => this.setState({ forgotPassword })}
+                />
+                <View style={{ backgroundColor: "gray", width: 230, height: 1 }}></View>
+            </>
+        )
+    }
 
+    render() {
         const { navigation } = this.props;
         const { showAlert } = this.state;
         return (
@@ -284,6 +286,7 @@ export default class LoginScreen extends React.Component {
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
                         showCancelButton={true}
+                        customView={this.renderCustomAlertView()}
                         showConfirmButton={true}
                         cancelText="CANCEL"
                         confirmText="SUBMIT"
@@ -293,7 +296,7 @@ export default class LoginScreen extends React.Component {
                             this.hideAlert();
                         }}
                         onConfirmPressed={() => {
-                            this.hideAlert();
+                            this.SubmitPassword();
                         }}
                     />
                 </ScrollView>
