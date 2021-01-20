@@ -82,6 +82,11 @@ export default class LoginScreen extends React.Component {
                 }
                 else {
                     console.log("email is found! ");
+                    ToastAndroid.showWithGravity(
+                        'Your password request has been sent',
+                        ToastAndroid.LONG,
+                        ToastAndroid.CENTER
+                    );
                 }
             });
     };
