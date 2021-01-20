@@ -78,7 +78,7 @@ export default class LoginScreen extends React.Component {
                 console.log(response);
 
                 if (response.ErrorId) {
-                    alert(response.Message)
+                    alert(response.Message);
                 }
                 else {
                     console.log("email is found! ");
@@ -185,8 +185,8 @@ export default class LoginScreen extends React.Component {
                 />
                 <View style={{ backgroundColor: "gray", width: 230, height: 1 }}></View>
             </>
-        )
-    }
+        );
+    };
 
     render() {
         const { navigation } = this.props;
