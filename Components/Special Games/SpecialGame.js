@@ -275,7 +275,6 @@ export default class Day2Screen extends React.Component {
         return buttons;
     }
 
-
     // Special Game
     specialGameItem({ item, index, state }) {
         return (
