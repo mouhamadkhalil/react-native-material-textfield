@@ -139,7 +139,7 @@ export default class LoginScreen extends React.Component {
                             this.setState({ Token: token_id });
                             AsyncStorage.setItem("token", this.state.Token);
                             this.setState({ isDone: true });
-                            this.props.navigation.navigate('Home Pre');
+                            this.props.navigation.navigate('my bookings');
                             ToastAndroid.showWithGravity(
                                 'you are successfully logged in !',
                                 ToastAndroid.SHORT,

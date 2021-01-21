@@ -198,7 +198,7 @@ export default class SignUpScreen extends React.Component {
                     <TouchableOpacity style={{ marginRight: 35, marginLeft: 35 }}>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 30, backgroundColor: '#37568F' }}>
                             <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
-                                login  with  facebook
+                                signup  with  facebook
                                 </Text>
                             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <Ionicons
