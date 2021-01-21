@@ -279,7 +279,6 @@ export default class Day2Screen extends React.Component {
         return buttons;
     };
 
-
     // Special Game
     specialGameItem({ item, index, state }) {
         return (
@@ -388,7 +387,7 @@ export default class Day2Screen extends React.Component {
                 <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
                         <View style={{ width: 190 }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
                                 <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
                                 <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
                                 <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
