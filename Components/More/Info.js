@@ -114,7 +114,7 @@ export default class Info extends React.Component {
                     <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
                 </TouchableOpacity>
                 <View style={{ marginTop: -24, width: 190 }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+                    <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} >
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
