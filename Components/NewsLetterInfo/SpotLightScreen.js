@@ -10,6 +10,7 @@ import {
 } from "react-native";
 ActivityIndicator
 import { API_URL, API_TOKEN } from "@env";
+import Lightbox from 'react-native-lightbox-v2';
 
 const sourceFile = require('../../services.js');
 
@@ -47,12 +48,15 @@ export default class SpotLightScreen extends React.Component {
       <ScrollView style={styles.container}>
         <ScrollView style={{ width: "100%", backgroundColor: "white", height: 900 }}>
           <TouchableOpacity>
-
-            {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
-              style={{ height: 250, width: 380, marginLeft: 0, marginTop: -50 }} /> : <ActivityIndicator size="large" color="blue"
-                style={{ marginTop: 0, marginLeft: 0 }}
+            {this.state.isDone ?
+              <Lightbox >
+                <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
+                  style={{ width: 360, height: 200, marginLeft: 0 }} />
+              </Lightbox>
+              :
+              <ActivityIndicator size="small" color="blue"
+                style={{ marginTop: 80, marginLeft: 0 }}
               />}
-
           </TouchableOpacity>
           <ScrollView style={{ width: 500, height: 800, backgroundColor: "#4E30C9", marginLeft: -30 }}>
             <Text
@@ -109,40 +113,77 @@ export default class SpotLightScreen extends React.Component {
             >
               THE PRICE INCLUDE
             </Text>
-            <TouchableOpacity>
-              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
-                style={{ marginTop: 15, marginLeft: 70, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
-                  style={{ marginTop: 0, marginLeft: 0 }}
+
+
+            <TouchableOpacity style={{ width: 70, marginLeft: 70 }}>
+              {this.state.isDone ?
+                <Lightbox >
+                  <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
+                    style={{ width: 70, height: 70, marginTop: -20 }} />
+                </Lightbox>
+                :
+                <ActivityIndicator size="small" color="white"
+                  style={{ marginTop: 60, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
-            <TouchableOpacity>
-              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
-                style={{ marginLeft: 70, marginTop: 20, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
-                  style={{ marginTop: 0, marginLeft: 0 }}
+
+            <TouchableOpacity style={{ width: 70, height: 70, marginLeft: 170, marginTop: -70 }}>
+              {this.state.isDone ?
+                <Lightbox >
+                  <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
+                    style={{ width: 70, height: 70, marginLeft: 0 }} />
+                </Lightbox>
+                :
+                <ActivityIndicator size="small" color="white"
+                  style={{ marginTop: 60, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
-            <TouchableOpacity>
-              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
-                style={{ marginLeft: 180, marginTop: -160, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
-                  style={{ marginTop: 0, marginLeft: 0 }}
+
+            <TouchableOpacity style={{ width: 70, height: 70, marginLeft: 265, marginTop: -70 }}>
+              {this.state.isDone ?
+                <Lightbox >
+                  <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
+                    style={{ width: 70, height: 70 }} />
+                </Lightbox>
+                :
+                <ActivityIndicator size="small" color="white"
+                  style={{ marginTop: 60, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
-            <TouchableOpacity>
-              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
-                style={{ marginLeft: 180, marginTop: -70, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
-                  style={{ marginTop: 0, marginLeft: 0 }}
+
+            <TouchableOpacity style={{ width: 70, height: 70, marginLeft: 70, marginTop: 40 }}>
+              {this.state.isDone ?
+                <Lightbox >
+                  <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
+                    style={{ width: 70, height: 70 }} />
+                </Lightbox>
+                :
+                <ActivityIndicator size="small" color="white"
+                  style={{ marginTop: 60, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
-            <TouchableOpacity>
-              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
-                style={{ marginLeft: 290, marginTop: -160, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
-                  style={{ marginTop: 0, marginLeft: 0 }}
+
+            <TouchableOpacity style={{ width: 70, height: 70, marginLeft: 170, marginTop: -70 }}>
+              {this.state.isDone ?
+                <Lightbox >
+                  <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
+                    style={{ width: 70, height: 70 }} />
+                </Lightbox>
+                :
+                <ActivityIndicator size="small" color="white"
+                  style={{ marginTop: 60, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
-            <TouchableOpacity>
-              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
-                style={{ marginLeft: 290, marginTop: -70, width: 70, height: 70 }} /> : <ActivityIndicator size="small" color="blue"
-                  style={{ marginTop: 0, marginLeft: 0 }}
+
+            <TouchableOpacity style={{ width: 70, height: 70, marginLeft: 265, marginTop: -70 }}>
+              {this.state.isDone ?
+                <Lightbox >
+                  <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
+                    style={{ width: 70, height: 70 }} />
+                </Lightbox>
+                :
+                <ActivityIndicator size="small" color="white"
+                  style={{ marginTop: 60, marginLeft: 0 }}
                 />}
             </TouchableOpacity>
           </ScrollView>

@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
+import Lightbox from 'react-native-lightbox-v2';
 
 const sourceFile = require('../../services.js');
 
@@ -85,12 +86,15 @@ export default class HotelScreen extends React.Component {
         <ScrollView style={{ width: "50%", height: 820, backgroundColor: "#E6F5F3" }}>
           <ScrollView style={{ height: 200, backgroundColor: "white" }}>
             <TouchableOpacity>
-
-              {this.state.isDone ? <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
-                style={{ height: 200 }} /> : <ActivityIndicator size="large" color="blue"
-                  style={{ marginTop: 80, marginLeft: -20 }}
+              {this.state.isDone ?
+                <Lightbox >
+                  <Image source={this.state.Picture ? { uri: this.state.Picture } : null}
+                    style={{ width: 360, height: 200, marginLeft: 0 }} />
+                </Lightbox>
+                :
+                <ActivityIndicator size="small" color="blue"
+                  style={{ marginTop: 80, marginLeft: 0 }}
                 />}
-
             </TouchableOpacity>
           </ScrollView>
 

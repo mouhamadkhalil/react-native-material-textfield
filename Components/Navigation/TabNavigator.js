@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
-const TripTabs = () => {
+const TripTabs = ({navigation}) => {
     return (
         <Tab.Navigator initialRouteName= "book a trip" screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
@@ -58,6 +58,7 @@ const TripTabs = () => {
                 activeTintColor: 'blue',
                 inactiveTintColor: 'gray',
             }}
+            navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
             <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
@@ -67,7 +68,7 @@ const TripTabs = () => {
     );
 };
 
-const BookingsTabs = () => {
+const BookingsTabs = ({ navigation }) => {
     return (
         <Tab.Navigator initialRouteName= "my bookings" screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
@@ -120,6 +121,7 @@ const BookingsTabs = () => {
                 activeTintColor: 'blue',
                 inactiveTintColor: 'gray',
             }}
+            navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
             <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
@@ -129,9 +131,9 @@ const BookingsTabs = () => {
     );
 };
 
-const MoreTabs = () => {
+const MoreTabs = ({ navigation }) => {
     return (
-        <Tab.Navigator initialRouteName= "more" screenOptions={({ route }) => ({
+        <Tab.Navigator initialRouteName= "more"  screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
                 if (route.name === 'book a trip') {
                     return (
@@ -182,6 +184,7 @@ const MoreTabs = () => {
                 activeTintColor: 'blue',
                 inactiveTintColor: 'gray',
             }}
+            navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
             <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
@@ -191,7 +194,7 @@ const MoreTabs = () => {
     );
 };
 
-const ContactTabs = () => {
+const ContactTabs = ({ navigation }) => {
     return (
         <Tab.Navigator initialRouteName= "contact us" screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
@@ -244,6 +247,7 @@ const ContactTabs = () => {
                 activeTintColor: 'blue',
                 inactiveTintColor: 'gray',
             }}
+            navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
             <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />

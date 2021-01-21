@@ -12,43 +12,43 @@ import Help2Screen from "../Help/Help2Screen";
 
 const Stack = createStackNavigator();
 
-const StartStackNavigator = () => {
+const StartStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Signup" component={Signup} />
+            <Stack.Screen name="Login" navigationProps={navigation} component={Login} />
+            <Stack.Screen name="Signup" navigationProps={navigation} component={Signup} />
         </Stack.Navigator>
     );
 }   
 
-const TripStackNavigator = () => {
+const TripStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="book a trip" component={SpecialGames} />
+            <Stack.Screen name="book a trip" navigationProps={navigation} component={SpecialGames} />
         </Stack.Navigator>
     );
 }
 
-const MyBookingStackNavigator = () => {
+const MyBookingStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="my bookings" component={AnyDayScreen} />
+            <Stack.Screen name="my bookings" navigationProps={navigation} component={AnyDayScreen} />
         </Stack.Navigator>
     );
 }
 
-const MoreStackNavigator = () => {
+const MoreStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="more" component={InfoScreen} />
+            <Stack.Screen name="more" navigationProps={navigation} component={InfoScreen} />
         </Stack.Navigator>
     );
 }
 
-const ContactStackNavigator = () => {
+const ContactStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="contact us" component={Help2Screen} />
+            <Stack.Screen name="contact us" navigationProps={navigation} component={Help2Screen} />
         </Stack.Navigator>
     );
 }

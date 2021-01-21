@@ -9,7 +9,8 @@ import {
     AsyncStorage,
     TouchableOpacity,
     ActivityIndicator,
-    ToastAndroid
+    ToastAndroid,
+    TextInputComponent
 } from "react-native";
 import Signup from "./SignupScreen";
 import LoginWithFB from "../../assets/images/LoginWithFB.png";
@@ -20,7 +21,8 @@ import SignupScreen from "./SignupScreen";
 import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
-import { Ionicons } from '@expo/vector-icons';
+
+const sourceFile = require('../../services.js');
 
 export default class LoginScreen extends React.Component {
     constructor(props) {
@@ -28,6 +30,15 @@ export default class LoginScreen extends React.Component {
         this.state =
         {
             showAlert: false,
+            client_id: "",
+            grant_type: "Bearer Token",
+            username: "",
+            password: "",
+            rememberMe: "",
+            scope: "",
+            Token: "",
+            isDone: false,
+            forgotPassword: ""
         };
     }
 
@@ -43,18 +54,38 @@ export default class LoginScreen extends React.Component {
         });
     };
 
-    state = {
-        client_id: "",
-        grant_type: "Bearer Token",
-        username: "",
-        password: "",
-        rememberMe: "",
-        scope: "",
-        Token: "",
-        isDone: false,
-        // isLoggedIn: false,
-        // loginChecked: false,
+    SubmitPassword = () => {
+        this.setState({
+            showAlert: false,
+        });
+
+        const url = `${API_URL}/mobile/profile/forgetpassword?email=${this.state.forgotPassword}`;
+
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                console.log(response);
+
+                if (response.ErrorId) {
+                    alert(response.Message)
+                }
+                else {
+                    console.log("email is found! ");
+                }
+            });
     };
+
 
     SubmitLoginBtn = (event) => {
         console.log("username : " + this.state.username);
@@ -62,96 +93,55 @@ export default class LoginScreen extends React.Component {
 
         const url = `${API_URL}/mobile/profile/login`;
 
-        if (this.state.username != ' ' && this.state.password != ' ') {
-            const data = {
-                username: this.state.username,
-                password: this.state.password,
-            };
-            fetch(url, {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-            })
-                .then((res) => res.json())
-                .catch((error) => console.error("Error: ", error))
-                .then((response) => {
-                    if (response.ErrorId) {
-                        ToastAndroid.showWithGravity(
-                            'Error: The user name or password is incorrect',
-                            ToastAndroid.LONG,
-                            ToastAndroid.CENTER
-                        );
-                        window.location.reload();
-                    } else {
-                        console.log(response);
-                        let token_id = response.Token;
-                        this.setState({ Token: token_id });
-                        AsyncStorage.setItem("token", this.state.Token);
-                        // this.setState({ isLoggedIn: true });
-                        // this.setState({ loginChecked: true });
-                        this.setState({ isDone: true });
-                        this.props.navigation.navigate('Home Pre');
-                        ToastAndroid.showWithGravity(
-                            'you are successfully logged in !',
-                            ToastAndroid.SHORT,
-                            ToastAndroid.CENTER
-                        );
-                    }
-                });
-        }
-        else {
+        if (this.state.username === "" || this.state.password === "") {
             ToastAndroid.showWithGravity(
-                'Please Enter Credentials',
+                'please fill out mendatory fields !',
                 ToastAndroid.LONG,
                 ToastAndroid.CENTER
             );
         }
+
+        else {
+            if (this.state.username != ' ' && this.state.password != ' ') {
+                const data = {
+                    username: this.state.username,
+                    password: this.state.password,
+                };
+                fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                })
+                    .then((res) => res.json())
+                    .catch((error) => console.error("Error: ", error))
+                    .then((response) => {
+                        if (response.ErrorId) {
+                            ToastAndroid.showWithGravity(
+                                'Error: The user name or password is incorrect',
+                                ToastAndroid.LONG,
+                                ToastAndroid.CENTER
+                            );
+                            window.location.reload();
+                        } else {
+                            console.log(response);
+                            let token_id = response.Token;
+                            this.setState({ Token: token_id });
+                            AsyncStorage.setItem("token", this.state.Token);
+                            this.setState({ isDone: true });
+                            this.props.navigation.navigate('Home Pre');
+                            ToastAndroid.showWithGravity(
+                                'you are successfully logged in !',
+                                ToastAndroid.SHORT,
+                                ToastAndroid.CENTER
+                            );
+                        }
+                    });
+            }
+        }
     };
-
-    //function to extract storage token. Any name can be given ot it. 
-
-    // async getItem(token){
-    //     console.log("the state is : ",this.state.isLoggedIn)
-    //     try{
-    //         const value = await AsyncStorage.getItem(token);
-    //         console.log("my token is : ",value);
-    //         if(value !== null){
-    //             this.setState({
-    //                 isLoggedIn: true,
-    //                 loginChecked: true
-    //             })
-    //         }
-    //         else{
-    //             this.setState({
-    //                 isLoggedIn: false,
-    //                 loginChecked: true
-    //             })
-    //         }
-    //     }
-    //     catch(error){
-    //         console.log(error)
-    //     }
-    //     console.log(this.state.isLoggedIn)
-    // }
-
-    //function to remove storage token 
-
-    // async removeItem(item){
-    //     try{
-    //         const value = await AsyncStorage.removeItem(item);
-    //         if(value == null){
-    //             this.setState({
-    //                 isLoggedIn: false
-    //             })
-    //         }
-    //     }
-    //     catch(error){
-    //         //handle errors here
-    //     }
-    // }
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
@@ -181,49 +171,52 @@ export default class LoginScreen extends React.Component {
         }
     }
 
-    render() {
+    renderCustomAlertView = () => {
+        return (
+            <>
+                <TextInput style={{ marginTop: 20, marginLeft: -60 }} placeholder="Enter your email address "
+                    autoCapitalize="none" keyboardType="email-address" value={this.state.forgotPassword}
+                    onChangeText={(forgotPassword) => this.setState({ forgotPassword })}
+                />
+                <View style={{ backgroundColor: "gray", width: 230, height: 1 }}></View>
+            </>
+        )
+    }
 
+    render() {
         const { navigation } = this.props;
         const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
-                <View style={{ flex: 1, flexDirection: 'column' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
-                        <Image
-                            source={Flyfoot}
-                            style={{ marginLeft: -30, width: 60, height: 60 }}
-                        />
-                        <Text style={{ marginTop: 10, marginLeft: 10, fontSize: 25, fontWeight: "bold" }}>
-                            FLY-FOOT
+                <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center' }}>
+                    <Image
+                        source={Flyfoot}
+                        style={{ marginLeft: -30, width: 60, height: 60 }}
+                    />
+                    <Text style={{ marginTop: 10, marginLeft: 10, fontSize: 25, fontWeight: "bold" }}>
+                        FLY-FOOT
+                    </Text>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'column', marginTop: 30, alignItems: 'center' }}>
+                    <TouchableOpacity onPress={this.FBLogin.bind(this)} style={{ width: 350 }}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', backgroundColor: '#37568F', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
+                            login   with   facebook
                         </Text>
-                    </View>
-                    <TouchableOpacity onPress={this.FBLogin.bind(this)} style={{ marginRight: 35, marginLeft: 35 }}>
-                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 30, backgroundColor: '#37568F' }}>
-                            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
-                                login  with  facebook
-                            </Text>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                <Ionicons
-                                    name='logo-facebook'
-                                    size={20}
-                                    color='white'
-                                    style={{ marginRight: 20 }}
-                                />
-                            </View>
-                        </View>
                     </TouchableOpacity>
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
                         <View style={styles.lineStyle} />
                         <Text style={{ fontSize: 18, textTransform: 'uppercase', marginLeft: 15, marginRight: 15 }}>
                             login   with   email
-                            </Text>
+                        </Text>
                         <View style={styles.lineStyle} />
                     </View>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'column' }}>
                     <Text style={{ paddingTop: 30, marginLeft: 35 }}>
                         Email
                     </Text>
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderBottomWidth: 2, marginLeft: 35, marginRight: 35 }}
+                        style={{ height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 35, marginRight: 35 }}
                         onChangeText={(username) => this.setState({ username })}
                         placeholder="hannibal@gma"
                         required
@@ -252,30 +245,22 @@ export default class LoginScreen extends React.Component {
                             fontSize: 16,
                             paddingRight: 110,
                             paddingTop: 20,
-                        }}>
+                        }}
+                    >
                         <TouchableOpacity
                             onPress={() => {
                                 this.showAlert();
-                            }}>
+                            }}
+                        >
                             <Text style={{ marginLeft: 35, color: "gray", fontSize: 16, textDecorationLine: "underline" }}>Forgot password?</Text>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={styles.loginBtn} onPress={(this.SubmitLoginBtn)}>
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            <Text style={styles.loginText}>
-                                login
-                            </Text>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                <Ionicons
-                                    name='chevron-forward-outline'
-                                    size={20}
-                                    color='white'
-                                    style={{ marginRight: 20 }}
-                                />
-                            </View>
-                            {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
-                                : console.log("done")}
-                        </View>
+                        <Text style={styles.loginText}>
+                            login
+                        </Text>
+                        {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
+                            : console.log("done")}
                     </TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>
                         <Text
@@ -301,6 +286,7 @@ export default class LoginScreen extends React.Component {
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
                         showCancelButton={true}
+                        customView={this.renderCustomAlertView()}
                         showConfirmButton={true}
                         cancelText="CANCEL"
                         confirmText="SUBMIT"
@@ -310,7 +296,7 @@ export default class LoginScreen extends React.Component {
                             this.hideAlert();
                         }}
                         onConfirmPressed={() => {
-                            this.hideAlert();
+                            this.SubmitPassword();
                         }}
                     />
                 </ScrollView>
@@ -322,7 +308,7 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F7F7F7",
+        backgroundColor: "white",
         marginTop: 0,
         marginBottom: 0,
     },
@@ -373,10 +359,10 @@ const styles = StyleSheet.create({
         marginLeft: -120,
     },
     lineStyle: {
-        width: "13%",
+        width: 70,
         height: 1,
         marginTop: 12,
         borderWidth: 1,
-        borderColor: 'black',
+        borderColor: 'black'
     }
 });
