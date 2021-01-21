@@ -388,9 +388,9 @@ export default class Day2Screen extends React.Component {
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
                         <View style={{ width: 190 }}>
                             <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: 0 }} />
+                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
+                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
                             </TouchableOpacity>
                         </View>
                         <Text
@@ -398,7 +398,7 @@ export default class Day2Screen extends React.Component {
                                 color: "#374BBF",
                                 fontWeight: "bold",
                                 fontSize: 19,
-                                marginLeft: 40,
+                                marginLeft: -90,
                                 paddingTop: 5,
                                 height: 40
                             }}> {Moment(new Date()).format('dddd DD MMM')}

@@ -46,7 +46,7 @@ export default class Info extends React.Component {
     };
 
     FAQ = () => {
-        this.props.navigation.navigate('FAQ 1');
+        this.props.navigation.navigate('FAQ');
     }
 
     searchGame = () => {
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
         height: 1100,
         marginLeft: -110,
         width: 500,
-        marginTop: 30,
+        marginTop: 0,
         marginBottom: 10,
         backgroundColor: "#F5F7EC",
     },

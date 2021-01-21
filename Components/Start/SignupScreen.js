@@ -148,7 +148,7 @@ export default class SignUpScreen extends React.Component {
                             ToastAndroid.LONG,
                             ToastAndroid.CENTER
                         );
-                        this.props.navigation.navigate('Day1 Home');
+                        this.props.navigation.navigate('my bookings');
                     }
                 }
             });
@@ -195,7 +195,7 @@ export default class SignUpScreen extends React.Component {
                             FLY-FOOT
                 </Text>
                     </View>
-                    <TouchableOpacity style={{ marginRight: 35, marginLeft: 35 }}>
+                    <TouchableOpacity onPress={this.FBLogin.bind(this)} style={{ marginRight: 35, marginLeft: 35 }}>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 30, backgroundColor: '#37568F' }}>
                             <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
                                 signup  with  facebook
@@ -245,6 +245,8 @@ export default class SignUpScreen extends React.Component {
                         required
                         value={this.state.Email}
                         placeholder="hannibal@gmail.com"
+                        autoCapitalize="none"
+                        keyboardType="email-address"
                     />
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 30 }}>
                         <Text style={{ width: '38%', marginLeft: 35, color: "gray" }}>
