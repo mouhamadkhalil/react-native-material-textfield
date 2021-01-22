@@ -7,6 +7,7 @@ import SpecialGames from "../Special Games/SpecialGame";
 import TripScreen from "../TripInfo/TripScreen";
 import AnyDayScreen from "../Schedule/AnyDayScreen";
 import InfoScreen from "../More/Info";
+import Help1Screen from "../Help/Help1Screen";
 import Help2Screen from "../Help/Help2Screen";
 
 
@@ -19,7 +20,7 @@ const StartStackNavigator = ({ navigation }) => {
             <Stack.Screen name="Signup" navigationProps={navigation} component={Signup} />
         </Stack.Navigator>
     );
-}   
+}
 
 const TripStackNavigator = ({ navigation }) => {
     return (
@@ -41,6 +42,7 @@ const MoreStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="more" navigationProps={navigation} component={InfoScreen} />
+            <Stack.Screen name="FAQ" navigationProps={navigation} component={Help1Screen} />
         </Stack.Navigator>
     );
 }
