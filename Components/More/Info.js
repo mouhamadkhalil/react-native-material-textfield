@@ -1,9 +1,12 @@
-import React from "react";
+
+import React, { useState, useEffect } from 'react';
+
 import {
     StyleSheet,
     TextInput,
     Text,
     Image,
+    SafeAreaView,
     View,
     ScrollView,
     TouchableOpacity,
@@ -25,75 +28,106 @@ import Notifictaion from "../../assets/Images_Design/notification1.png";
 
 const sourceFile = require('../../services.js');
 
-export default class Info extends React.Component {
+import Autocomplete from 'react-native-autocomplete-input';
 
-    state = {
-        Picture1: "",
-        Picture2: "",
-        Picture3: "",
-        Picture4: "",
-        isDone: false,
-        searchText: "",
-        idMatch: "",
-        City: "",
-        Stade: "",
-        GameDate: "",
-        LeaguesName: "",
-        GameCode: "",
-        HomeTeam: "",
-        AwayTeam: "",
-        StadeCity: ""
+const Info = () => {
+
+    const [films, setFilms] = useState([]);
+    const [filteredFilms, setFilteredFilms] = useState([]);
+    const [selectedValue, setSelectedValue] = useState({});
+
+    useEffect(() => {
+        fetch('https://apitest.fly-foot.com/api/mobile/game/getSuggestedGames')
+            .then((res) => res.json())
+            .then((json) => {
+                const newJson = "{results :" + JSON.stringify(json) + "}";
+                setFilms(JSON.parse(newJson));
+                //const { results: films } = json;
+                // console.log("tefilmsstobj", films);
+                console.log("type", typeof newJson);
+
+
+                //setFilms(films);
+
+
+
+                /*const newJson = "{results :" + JSON.stringify(json) + "}";
+                // console.log("testobj", newJson);
+
+                const { films: setFilms } = useState(JSON.parse(newJson));
+                console.log("films :", films);
+
+                //setFilms(films);
+                //setting the data in the films state*/
+            })
+            .catch((e) => {
+                //alert(e);
+            });
+    }, []);
+
+    const findFilm = (query) => {
+        if (query) {
+            const regex = new RegExp(`${query.trim()}`, 'i');
+            // console.log("123", films[0].City);
+            setFilteredFilms(
+
+                films.filter((film) => film.City.search(regex) >= 0)
+            );
+        } else {
+            setFilteredFilms([]);
+        }
     };
 
-    FAQ = () => {
-        this.props.navigation.navigate('FAQ');
-    }
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
 
-    searchGame = () => {
-        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`
-        fetch(urlSearch, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                console.log("test", response[0].City);
 
-                this.setState({ idMatch: response[0].idMatch });
-                this.setState({ City: response[0].City });
-                this.setState({ Stade: response[0].Stade });
-                this.setState({ GameDate: response[0].GameDate });
-                this.setState({ LeaguesName: response[0].LeaguesName });
-                this.setState({ GameCode: response[0].GameCode });
-                this.setState({ HomeTeam: response[0].HomeTeam });
-                this.setState({ AwayTeam: response[0].AwayTeam });
-                this.setState({ StadeCity: response[0].StadeCity });
-
-            });
-    }
-
-    render() {
-        return (
             <ScrollView style={styles.container}>
-                <TextInput
-                    style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
+                {/* <TextInput
+                    style={{
+                        paddingLeft: 10, borderRadius: 20, marginLeft: 80, marginTop: 0,
+                        backgroundColor: "white", width: 185, height: 35
+                    }}
                     placeholder="  &nbsp;&nbsp;Search your game ... "
                     placeholderTextColor="#46D822"
+                    autoCapitalize="none" */}
+                {/* onChangeText={searchText => {
+                    this.setState({ searchText });
+                }}
+                onSubmitEditing={this.searchGame}
+                value={this.state.searchText}
+                /> */}
+
+
+                <Autocomplete
                     autoCapitalize="none"
-                    onChangeText={searchText => {
-                        this.setState({ searchText });
+                    autoCorrect={false}
+                    style={{
+                        paddingLeft: 10, borderRadius: 20, marginLeft: 0, marginTop: 0,
+                        backgroundColor: "white", width: 185, height: 35
                     }}
-                    onSubmitEditing={this.searchGame}
-                    value={this.state.searchText}
+                    containerStyle={styles.autocompleteContainer}
+                    data={filteredFilms}
+                    defaultValue={
+                        JSON.stringify(selectedValue) === '{}' ?
+                            '' :
+                            selectedValue.title
+                    }
+                    onChangeText={(text) => findFilm(text)}
+                    placeholder="&nbsp;&nbsp;Search your game ... "
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => {
+                                setSelectedValue(item);
+                                setFilteredFilms([]);
+                            }}>
+                            <Text style={styles.itemText}>
+                                {item.title}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
                 />
+
 
                 <Text
                     style={{
@@ -102,29 +136,27 @@ export default class Info extends React.Component {
                         fontWeight: "bold",
                         marginTop: 30,
                         fontSize: 19,
-                        marginLeft: 210
+                        marginLeft: 100
                     }}
                 >
                     MONDAY 12 SEPT
-        </Text>
-                <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -95 }}>
-                    <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
+                </Text>
+                <TouchableOpacity style={{ width: 40, marginLeft: 0, marginTop: -95 }}>
+                    <Image source={Search} style={{ marginTop: 0, marginLeft: 260, height: 40, width: 40 }} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
-                    <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
+                <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 0, marginTop: -30 }}>
+                    <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 310, height: 20, width: 20 }} />
                 </TouchableOpacity>
                 <View style={{ marginTop: -24, width: 190 }}>
                     <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} >
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
+                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 20, marginTop: 0 }} />
+                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 20, marginTop: -5 }} />
+                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 20, marginTop: -5 }} />
                     </TouchableOpacity>
                 </View>
 
-
-
                 <TouchableOpacity onpress={() => Linking.openURL('http://google.com')}>
-                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 70 }}>
+                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 20, marginTop: 70 }}>
                         <Image source={Flyfoot} style={{ width: 20, height: 25, marginLeft: 20, marginTop: 20 }} />
                         <Text style={{ marginLeft: 100, color: "blue", fontSize: 15, marginLeft: 60, marginTop: -25 }}
                             onPress={() => {
@@ -137,7 +169,7 @@ export default class Info extends React.Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
+                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 30, marginTop: 25 }}>
                         <Image source={Chat} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
                         <Text style={{ color: "blue", fontSize: 15, marginLeft: 60, marginTop: -25 }}
                             onPress={() => {
@@ -148,15 +180,15 @@ export default class Info extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.FAQ}>
-                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
+                <TouchableOpacity >
+                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 30, marginTop: 25 }}>
                         <Image source={Question} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
                         <Text style={{ color: "blue", fontSize: 15, marginLeft: 60, marginTop: -22 }}>FAQ</Text>
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
                     </ScrollView>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 130, marginTop: 25 }}>
+                    <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 30, marginTop: 25 }}>
                         <Image source={Setting} style={{ width: 20, height: 20, marginLeft: 20, marginTop: 20 }} />
                         <Text style={{ color: "blue", fontSize: 15, marginLeft: 60, marginTop: -22 }}
                             onPress={() => {
@@ -164,21 +196,65 @@ export default class Info extends React.Component {
                             }}>
                             Terms & conditions
                         </Text>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}><Image source={Arrow1} /></Text>
+                        <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}>
+                            <Image source={Arrow1} /></Text>
+
                     </ScrollView>
                 </TouchableOpacity>
+
+                <View style={styles.container}>
+
+                    <View style={styles.descriptionContainer}>
+                        {films ? (
+                            <>
+                                <Text style={styles.infoText}>
+                                    Selected Data
+              </Text>
+                                <Text style={styles.infoText}>
+                                    {JSON.stringify(selectedValue)}
+                                </Text>
+                            </>
+                        ) : (
+                                <Text style={styles.infoText}>
+                                    Enter The Film Title
+                                </Text>
+                            )}
+                    </View>
+                </View>
+
             </ScrollView>
-        );
-    }
-}
+        </SafeAreaView>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
-        height: 1100,
-        marginLeft: -110,
-        width: 500,
+        backgroundColor: '#F5FCFF',
+        flex: 1,
+        padding: 16,
         marginTop: 0,
-        marginBottom: 10,
-        backgroundColor: "#F5F7EC",
+    },
+    autocompleteContainer: {
+        borderRadius: 50,
+        marginTop: 20,
+        width: 188,
+        marginLeft: 70,
+        marginTop: 0,
+    },
+    descriptionContainer: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    itemText: {
+        fontSize: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
+        margin: 2,
+    },
+    infoText: {
+        textAlign: 'center',
+        fontSize: 16,
+        width: 300
     },
 });
+export default Info;
