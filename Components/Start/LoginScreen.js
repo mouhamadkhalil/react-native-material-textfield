@@ -26,9 +26,9 @@ import { Ionicons } from '@expo/vector-icons';
 const sourceFile = require('../../services.js');
 
 
-
 export default class LoginScreen extends React.Component {
     constructor(props) {
+
         super(props);
         this.state =
         {

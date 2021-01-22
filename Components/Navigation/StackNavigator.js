@@ -9,6 +9,8 @@ import AnyDayScreen from "../Schedule/AnyDayScreen";
 import InfoScreen from "../More/Info";
 import Help1Screen from "../Help/Help1Screen";
 import Help2Screen from "../Help/Help2Screen";
+import BookNowScreen from "../Special Games/BookNow";
+
 
 
 const Stack = createStackNavigator();
@@ -26,6 +28,7 @@ const TripStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="book a trip" navigationProps={navigation} component={SpecialGames} />
+            <Stack.Screen name="book now" navigationProps={navigation} component={BookNowScreen} />
         </Stack.Navigator>
     );
 }
