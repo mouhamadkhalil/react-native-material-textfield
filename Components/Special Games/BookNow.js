@@ -25,7 +25,12 @@ import Game from "../../assets/images/football.jpg";
 import Arrow1 from "../../assets/Images_Design/arrow_down.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import Lightbox from 'react-native-lightbox-v2';
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
+import Onspot from "../../assets/images/onspot.png";
+import Car1 from "../../assets/images/car1.png";
+import Stadium from "../../assets/images/stadium.png"
+import Hotel from "../../assets/images/hotel3.png"
+import Insurnace from "../../assets/images/insurnace.png"
 
 const sourceFile = require('../../services.js');
 
@@ -80,11 +85,8 @@ export default class BookNow extends React.Component {
         date: "2016-05-15"
     };
 
-
-
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
-
         fetch(url, {
             method: "GET",
             headers: {
@@ -107,7 +109,6 @@ export default class BookNow extends React.Component {
                 });
             });
     }
-
 
     searchGame = () => {
         const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
@@ -166,8 +167,6 @@ export default class BookNow extends React.Component {
             });
     };
 
-
-
     render() {
         const { selectedStartDate } = this.state;
         const startDate = selectedStartDate ? selectedStartDate.toString() : '';
@@ -184,15 +183,12 @@ export default class BookNow extends React.Component {
                     onSubmitEditing={this.searchGame}
                     value={this.state.searchText}
                 />
-
                 <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -35 }}>
                     <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
                 </TouchableOpacity>
-
                 <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
                     <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
                 </TouchableOpacity>
-
                 <ScrollView style={{ marginTop: -24, width: 190 }}>
                     <TouchableOpacity>
                         <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -2 }} />
@@ -201,7 +197,6 @@ export default class BookNow extends React.Component {
                     </TouchableOpacity>
                 </ScrollView>
                 <Image source={Game} style={{ height: 200, marginTop: 50 }} />
-
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 10, marginTop: 15 }}>MATCH</Text>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 120, marginTop: -18 }}>CITY</Text>
@@ -212,9 +207,7 @@ export default class BookNow extends React.Component {
                     <Text style={{ fontSize: 9, marginLeft: 180, fontWeight: "bold", marginTop: -12 }}>04</Text>
                     <Text style={{ fontSize: 9, marginLeft: 240, fontWeight: "bold", marginTop: -12, color: "#8CD222" }}>999$ Total *</Text>
                 </ScrollView>
-
                 <Text style={{ color: "black", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Travel details </Text>
-
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 100, marginLeft: 140, marginTop: 20 }}>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 15 }}>FANS</Text>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 170, marginTop: -16 }}>FLIGHT* </Text>
@@ -231,9 +224,7 @@ export default class BookNow extends React.Component {
                         style={{ marginLeft: 170, fontSize: 9, marginTop: -22 }}></TextInput>
                     <ScrollView style={{ backgroundColor: "black", width: 130, height: 1, marginLeft: 170, marginTop: -5 }}></ScrollView>
                 </ScrollView>
-
-
-                <ScrollView style={{ backgroundColor: "white", width: 310, height: 400, marginLeft: 140, marginTop: 50 }}>
+                <ScrollView style={{ backgroundColor: "white", width: 310, height: 430, marginLeft: 140, marginTop: 50 }}>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 15 }}>HOTEL</Text>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 170, marginTop: -17 }}>SEATING OPTIONS </Text>
                     <Text style={{ color: "blue", fontWeight: "bold", marginLeft: 30, marginTop: 10 }}>Arc La Rambla </Text>
@@ -264,13 +255,19 @@ export default class BookNow extends React.Component {
                             />}
                     </TouchableOpacity>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 35 }}>PERKS</Text>
+                    <Image source={Onspot} style={{ marginLeft: 20, marginTop: 10 }} />
+                    <Image source={Hotel} style={{ marginLeft: 70, marginTop: -42 }} />
+                    <Image source={Car1} style={{ marginLeft: 130, marginTop: -42 }} />
+                    <Image source={Stadium} style={{ marginLeft: 190, marginTop: -41 }} />
+                    <Image source={Insurnace} style={{ marginLeft: 250, marginTop: -41 }} />
+                    <Text style={{ marginLeft: 30, color: "blue", fontWeight: "bold", width: 50, fontSize: 9 }}>On Spot Service</Text>
+                    <Text style={{ marginLeft: 80, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Airport Pick up </Text>
+                    <Text style={{ marginLeft: 135, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Airport Drop off</Text>
+                    <Text style={{ marginLeft: 195, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Stadium Tour</Text>
+                    <Text style={{ marginLeft: 260, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Travel Insurance</Text>
                 </ScrollView>
-
-
-
                 <Text style={{ marginLeft: 140, color: "black", fontWeight: "bold", marginTop: 50 }}>Main Fan</Text>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 670, marginLeft: 140, marginTop: 20 }}>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>TITLE*</Text>
                     <DropDownPicker
                         items={[
@@ -291,14 +288,12 @@ export default class BookNow extends React.Component {
                         }
                     />
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>NAME*</Text>
-
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
                         style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>SURNAME*</Text>
                     <TextInput
                         multiline={true}
@@ -306,9 +301,7 @@ export default class BookNow extends React.Component {
                         style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>DATE OF BIRTH*</Text>
-
                     <DatePicker
                         style={{ width: 250, marginLeft: 30, marginTop: 20 }}
                         date={this.state.date}
@@ -332,7 +325,6 @@ export default class BookNow extends React.Component {
                         }}
                         onDateChange={(date) => { this.setState({ date: date }) }}
                     />
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>COUNTRY*</Text>
                     <TextInput
                         multiline={true}
@@ -340,7 +332,6 @@ export default class BookNow extends React.Component {
                         style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>EMAIL*</Text>
                     <TextInput
                         multiline={true}
@@ -348,44 +339,28 @@ export default class BookNow extends React.Component {
                         style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>PHONE NUMBER*</Text>
-
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
                         style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-
-
-
-
                 </ScrollView>
-
-
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 150, marginLeft: 140, marginTop: 50 }}>
-
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
                         placeholder="Additional requests? Please write them here..."
                         style={{ fontSize: 12, marginTop: -20, paddingLeft: 20 }}
                     />
-
                 </ScrollView>
-
-
                 <ScrollView style={{ backgroundColor: "white", width: 170, height: 35, marginLeft: 280, marginTop: 30 }}>
                     <Button
                         title="BOOK NOW"
                         color="#8CD222"
                     />
                 </ScrollView>
-
-
-
-
             </ScrollView>
         );
     }
@@ -400,5 +375,4 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         backgroundColor: "#F5F7EC",
     },
-
 });
