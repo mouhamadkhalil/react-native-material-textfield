@@ -28,6 +28,7 @@
     "react-native-autocomplete-input": "^4.2.0",
     "react-native-awesome-alerts": "^1.4.2",
     "react-native-carousel-cards": "^1.2.1",
+    "react-native-datepicker": "^1.7.2",
     "react-native-dotenv": "^2.4.3",
     "react-native-dropdown-picker": "^3.7.1",
     "react-native-gesture-handler": "~1.8.0",
