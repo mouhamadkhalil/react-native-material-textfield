@@ -105,38 +105,6 @@ export default class Day2Screen extends React.Component {
         this.getHotGames();
     }
 
-    searchGame = () => {
-        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
-        fetch(urlSearch, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                var data = response.map(function (item) {
-                    return {
-                        idMatch: item.idMatch,
-                        City: item.City,
-                        Stade: item.Stade,
-                        GameDate: item.GameDate,
-                        LeaguesName: item.LeaguesName,
-                        GameCode: item.GameCode,
-                        HomeTeam: item.HomeTeam,
-                        AwayTeam: item.AwayTeam,
-                        StadeCity: item.StadeCity
-                    };
-                });
-            });
-    };
-
     getSpecialGames = () => {
         const url = `${API_URL}/mobile/game/getall?pageNumber=1&pageSize=6&order=date`;
         fetch(url, {
@@ -384,47 +352,6 @@ export default class Day2Screen extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
-                        <View style={{ width: 190 }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: 0 }} />
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
-                            </TouchableOpacity>
-                        </View>
-                        <Text
-                            style={{
-                                color: "#374BBF",
-                                fontWeight: "bold",
-                                fontSize: 19,
-                                marginLeft: -90,
-                                paddingTop: 5,
-                                height: 40
-                            }}> {Moment(new Date()).format('dddd DD MMM')}
-                        </Text>
-                        <TouchableOpacity onPress={this.searchGame} style={{ marginLeft: 10, marginRight: 10, width: 40 }}>
-                            <Image source={Search} style={{ height: 40, width: 40 }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40 }}>
-                            <Image source={Notifictaion} style={{ height: 40, width: 40 }} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <TextInput
-                            style={{ display: "none", marginLeft: 120, borderRadius: 20, backgroundColor: "white", width: 190, height: 35 }}
-                            placeholder="  &nbsp;&nbsp;Search your game ... "
-                            placeholderTextColor="#46D822"
-                            autoCapitalize="none"
-                            onChangeText={searchText => {
-                                this.setState({ searchText });
-                            }}
-                            onSubmitEditing={this.searchGame}
-                            value={this.state.searchText}
-                            hid
-                        />
-                    </View>
-                </SafeAreaView>
                 <View style={styles.pageTitleBar}></View>
                 <Text style={styles.pageTitleText}>
                     SPECIAL GAMES

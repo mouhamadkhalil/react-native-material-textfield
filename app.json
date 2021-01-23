@@ -5,6 +5,10 @@
     "name": "flyfoot",
     "slug": "flyfoot",
     "version": "1.0.0",
+    "splash": {
+      "image": "./assets/images/flyfoot.png",
+      "backgroundColor": "#FFFFFF"
+    },
     "facebookAutoInitEnabled": true,
     "facebookScheme": "fb431386654654341",
     "facebookDisplayName": "Fly Foot",
