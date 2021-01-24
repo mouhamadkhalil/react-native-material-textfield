@@ -141,37 +141,37 @@ export default class specialGames extends React.Component {
         });
     }
 
-    searchGame = () => {
-        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
-        fetch(urlSearch, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                var data = response.map(function (item) {
-                    return {
-                        idMatch: item.idMatch,
-                        City: item.City,
-                        Stade: item.Stade,
-                        GameDate: item.GameDate,
-                        LeaguesName: item.LeaguesName,
-                        GameCode: item.GameCode,
-                        HomeTeam: item.HomeTeam,
-                        AwayTeam: item.AwayTeam,
-                        StadeCity: item.StadeCity
-                    };
-                });
-            });
-    };
+    // searchGame = () => {
+    //     const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
+    //     fetch(urlSearch, {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": sourceFile.Content_Type,
+    //             "Accept": sourceFile.Accept,
+    //             "ff_version": sourceFile.ff_version,
+    //             "ff_language": sourceFile.ff_language,
+    //             "source": sourceFile.source,
+    //             // "authorization" : sourceFile.authorization,
+    //         },
+    //     })
+    //         .then((res) => res.json())
+    //         .catch((error) => console.error("Error: ", error))
+    //         .then((response) => {
+    //             var data = response.map(function (item) {
+    //                 return {
+    //                     idMatch: item.idMatch,
+    //                     City: item.City,
+    //                     Stade: item.Stade,
+    //                     GameDate: item.GameDate,
+    //                     LeaguesName: item.LeaguesName,
+    //                     GameCode: item.GameCode,
+    //                     HomeTeam: item.HomeTeam,
+    //                     AwayTeam: item.AwayTeam,
+    //                     StadeCity: item.StadeCity
+    //                 };
+    //             });
+    //         });
+    // };
 
     getSpecialGames = () => {
         const url = `${API_URL}/mobile/game/getall?pageNumber=1&pageSize=6&order=date`;
@@ -425,159 +425,133 @@ export default class specialGames extends React.Component {
 
 
     getToken = async () => {
-        let token = await AsyncStorage.getItem('token')
+        let token = await AsyncStorage.getItem('token');
         console.log("my  special games token is : :===> ", token);
         return token;
-    }
+    };
 
 
     render() {
-        if (!this.state.isLoaded) {
-            return (
-                <ActivityIndicator />
-            );
-        }
-        else {
-            return (
-                <ScrollView style={styles.container}>
-                    <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>
-                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
-                            <View style={{ width: 190 }}>
-                                <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
-                                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: 0 }} />
-                                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
-                                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
-                                </TouchableOpacity>
-                            </View>
-                            <Text
-                                style={{
-                                    color: "#374BBF",
-                                    fontWeight: "bold",
-                                    fontSize: 19,
-                                    marginLeft: -90,
-                                    paddingTop: 5,
-                                    height: 40
-                                }}> {Moment(new Date()).format('dddd DD MMM')}
-                            </Text>
-                            <TouchableOpacity onPress={this.searchGame} style={{ marginLeft: 10, marginRight: 10, width: 40 }}>
-                                <Image source={Search} style={{ height: 40, width: 40 }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40 }}>
-                                <Image source={Notifictaion} style={{ height: 40, width: 40 }} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <TextInput
-                                style={{ display: "none", marginLeft: 120, borderRadius: 20, backgroundColor: "white", width: 190, height: 35 }}
-                                placeholder="  &nbsp;&nbsp;Search your game ... "
-                                placeholderTextColor="#46D822"
-                                autoCapitalize="none"
-                                onChangeText={searchText => {
-                                    this.setState({ searchText });
-                                }}
-                                onSubmitEditing={this.searchGame}
-                                value={this.state.searchText}
-                                hid
-                            />
-                        </View>
-                    </SafeAreaView>
-                    <View style={styles.pageTitleBar}></View>
-                    <TouchableOpacity onPress={this.getToken}>
-                        <Text style={styles.pageTitleText}>
-                            SPECIAL GAMES
+        return (
+            <ScrollView style={styles.container}>
+                <View style={styles.pageTitleBar}></View>
+                <Text style={styles.pageTitleText}>
+                    SPECIAL GAMES
                 </Text>
-                    </TouchableOpacity>
+                {/* carousel  */}
+                <View style={{ marginLeft: -15 }}>
+                    <Carousel
+                        style={{ marginLeft: 0 }}
+                        layout={"default"}
+                        ref={ref => this.carousel = ref}
+                        data={this.state.specialGames}
+                        sliderWidth={485}
+                        itemWidth={280}
+                        // autoplay={true}
+                        renderItem={this.specialGameItem}
+                        onSnapToItem={index => this.setState({ activeIndex: index })}
+                    />
+                </View>
+                <View style={styles.pageTitleBar}>
+                </View>
+                <Text style={styles.pageTitleText}>
+                    POPULAR GAMES
+                </Text>
+                <TouchableOpacity onPress={this.getToken}>
+                    <Text style={styles.pageTitleText}>
+                        SPECIAL GAMES
+                        </Text>
+                </TouchableOpacity>
 
-                    {/* carousel  */}
-                    <View style={{ marginLeft: -15 }}>
+                {/* carousel  */}
+                <View style={{ marginLeft: -15 }}>
+                    <Carousel
+                        style={{ marginLeft: 0 }}
+                        layout={"default"}
+                        ref={ref => this.carousel = ref}
+                        data={this.state.specialGames}
+                        sliderWidth={485}
+                        itemWidth={280}
+                        // autoplay={true}
+                        renderItem={this.specialGameItem.bind(this)}
+                        onSnapToItem={index => this.setState({ activeIndex: index })}
+                    />
+                </View>
+                <View style={styles.pageTitleBar}>
+                </View>
+                <Text style={styles.pageTitleText}>
+                    POPULAR GAMES
+                </Text>
+
+                {this.renderPopularGames()}
+
+                <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", marginLeft: -80, marginBottom: 30, marginTop: -15, borderRadius: 20 }}>
+                    <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
+                </TouchableOpacity>
+                <View>
+                    <View style={styles.pageTitleBar}></View>
+                    <Text style={styles.pageTitleText}>
+                        HOT GAMES
+                    </Text>
+                    {/* Hot Games */}
+                    <View style={{ marginLeft: -15, marginTop: -30 }}>
+                        <Carousel
+                            style={{ marginLeft: -15 }}
+                            layout={"default"}
+                            ref={ref => this.carousel = ref}
+                            data={this.state.hotGames}
+                            sliderWidth={485}
+                            itemWidth={280}
+                            // autoplay={true}
+                            renderItem={this.hotGameItem}
+                            onSnapToItem={index => this.setState({ activeIndex: index })}
+                        />
+                    </View>
+                </View>
+                <View style={{ backgroundColor: "#eee", marginTop: 30 }}>
+                    <View style={styles.pageTitleBar}></View>
+                    <Text style={styles.pageTitleText}>
+                        POPULAR TEAMS
+                    </Text>
+                    {/* Carousal 3  */}
+                    <View style={{ backgroundColor: "white", height: 200, width: "100%", marginTop: 150 }}></View>
+                    <View style={{ flex: 1, justifyContent: 'center', marginTop: -350 }}>
                         <Carousel
                             style={{ marginLeft: 0 }}
                             layout={"default"}
                             ref={ref => this.carousel = ref}
-                            data={this.state.specialGames}
+                            data={this.state.carouselItems}
                             sliderWidth={485}
-                            itemWidth={280}
-                            // autoplay={true}
-                            renderItem={this.specialGameItem.bind(this)}
+                            itemWidth={180}
+                            renderItem={this.popularTeamsItem}
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
-                    <View style={styles.pageTitleBar}>
-                    </View>
-                    <Text style={styles.pageTitleText}>
-                        POPULAR GAMES
+                </View>
+                <View style={styles.pageTitleBar}></View>
+                <Text style={styles.pageTitleText}>
+                    COMPETETIONS
                 </Text>
-
-                    {this.renderPopularGames()}
-
-                    <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", marginLeft: -80, marginBottom: 30, marginTop: -15, borderRadius: 20 }}>
-                        <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
-                    </TouchableOpacity>
-                    <View>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>
-                            HOT GAMES
-                    </Text>
-                        {/* Hot Games */}
-                        <View style={{ marginLeft: -15, marginTop: -30 }}>
+                <ScrollView>
+                    {/* carousel 4 */}
+                    <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
                             <Carousel
-                                style={{ marginLeft: -15 }}
-                                layout={"default"}
-                                ref={ref => this.carousel = ref}
-                                data={this.state.hotGames}
-                                sliderWidth={485}
-                                itemWidth={280}
-                                // autoplay={true}
-                                renderItem={this.hotGameItem}
-                                onSnapToItem={index => this.setState({ activeIndex: index })}
-                            />
-                        </View>
-                    </View>
-                    <View style={{ backgroundColor: "#eee", marginTop: 30 }}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>
-                            POPULAR TEAMS
-                    </Text>
-                        {/* Carousal 3  */}
-                        <View style={{ backgroundColor: "white", height: 200, width: "100%", marginTop: 150 }}></View>
-                        <View style={{ flex: 1, justifyContent: 'center', marginTop: -350 }}>
-                            <Carousel
-                                style={{ marginLeft: 0 }}
+                                style={{ marginLeft: 50 }}
                                 layout={"default"}
                                 ref={ref => this.carousel = ref}
                                 data={this.state.carouselItems}
-                                sliderWidth={485}
-                                itemWidth={180}
-                                renderItem={this.popularTeamsItem}
+                                sliderWidth={170}
+                                itemWidth={290}
+                                // autoplay={true}
+                                renderItem={this._renderItem4}
                                 onSnapToItem={index => this.setState({ activeIndex: index })}
                             />
                         </View>
-                    </View>
-                    <View style={styles.pageTitleBar}></View>
-                    <Text style={styles.pageTitleText}>
-                        COMPETETIONS
-                </Text>
-                    <ScrollView>
-                        {/* carousel 4 */}
-                        <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
-                                <Carousel
-                                    style={{ marginLeft: 50 }}
-                                    layout={"default"}
-                                    ref={ref => this.carousel = ref}
-                                    data={this.state.carouselItems}
-                                    sliderWidth={170}
-                                    itemWidth={290}
-                                    // autoplay={true}
-                                    renderItem={this._renderItem4}
-                                    onSnapToItem={index => this.setState({ activeIndex: index })}
-                                />
-                            </View>
-                        </SafeAreaView>
-                    </ScrollView>
-                </ScrollView >
-            );
-        }
+                    </SafeAreaView>
+                </ScrollView>
+            </ScrollView >
+        );
     }
 }
 
