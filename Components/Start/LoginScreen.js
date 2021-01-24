@@ -33,7 +33,7 @@ export default class LoginScreen extends React.Component {
         this.state =
         {
             showAlert: false,
-            client_id: "",
+            userId: "",
             grant_type: "Bearer Token",
             username: "",
             password: "",
@@ -72,7 +72,7 @@ export default class LoginScreen extends React.Component {
                 "ff_version": sourceFile.ff_version,
                 "ff_language": sourceFile.ff_language,
                 "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
+                // "Authorization": sourceFile.authorization + this.state.Token,
             },
         })
             .then((res) => res.json())
@@ -93,6 +93,7 @@ export default class LoginScreen extends React.Component {
                 }
             });
     };
+
 
 
     SubmitLoginBtn = (event) => {
@@ -120,7 +121,8 @@ export default class LoginScreen extends React.Component {
                     body: JSON.stringify(data),
                     headers: {
                         "Content-Type": "application/json",
-                        Accept: "application/json",
+                        "Accept": "application/json",
+                        // "Authorization": "Bearer " + this.state.Token,
                     },
                 })
                     .then((res) => res.json())
@@ -134,10 +136,10 @@ export default class LoginScreen extends React.Component {
                             );
                             window.location.reload();
                         } else {
-                            console.log(response);
                             let token_id = response.Token;
                             this.setState({ Token: token_id });
                             AsyncStorage.setItem("token", this.state.Token);
+                            AsyncStorage.setItem("userId", this.state.userId);
                             this.setState({ isDone: true });
                             this.props.navigation.navigate('book a trip');
                             ToastAndroid.showWithGravity(
@@ -150,6 +152,9 @@ export default class LoginScreen extends React.Component {
             }
         }
     };
+
+
+
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 

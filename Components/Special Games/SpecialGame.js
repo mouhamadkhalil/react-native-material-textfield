@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     SafeAreaView,
+    AsyncStorage,
     Button,
     Dimensions
 } from "react-native";
@@ -42,7 +43,7 @@ export default class specialGames extends React.Component {
     constructor(props) {
         super(props);
         const navigation = this.props;
-        
+
         this.state = {
             Picture1: "",
             Picture2: "",
@@ -99,11 +100,45 @@ export default class specialGames extends React.Component {
                 AwayTeam: "",
                 StadeCity: ""
             }],
+            tokenValid: false,
+            isLoaded: false
         };
 
         this.getSpecialGames();
         this.getPopularGames();
         this.getHotGames();
+    }
+
+    componentWillMount() {
+        this.checkAuth();
+    }
+
+    checkAuth() {
+        const promiseUserId = AsyncStorage.getItem('userId');
+        const promiseTokenKey = AsyncStorage.getItem('token');
+        Promise.all([promiseUserId, promiseTokenKey]).then((values) => {
+            const userId = values[0];
+            const loginToken = values[1];
+            const headers = {
+                headers: {
+                    Authorization: `Bearer ${loginToken}`,
+                    userId,
+                }
+            };
+            const body = {};
+            const url = `${API_URL}/mobile/profile/IsAthorized`;
+            return fetch(url, body, headers);
+        }).then((res) => {
+            this.setState({
+                tokenValid: true,
+                isLoaded: true
+            });
+        }).catch((error) => {
+            this.setState({
+                tokenValid: false,
+                isLoaded: true
+            });
+        });
     }
 
     searchGame = () => {
@@ -388,144 +423,161 @@ export default class specialGames extends React.Component {
         );
     }
 
-    render() {
 
-        return (
-            <ScrollView style={styles.container}>
-                <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
-                        <View style={{ width: 190 }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: 0 }} />
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
+    getToken = async () => {
+        let token = await AsyncStorage.getItem('token')
+        console.log("my  special games token is : :===> ", token);
+        return token;
+    }
+
+
+    render() {
+        if (!this.state.isLoaded) {
+            return (
+                <ActivityIndicator />
+            );
+        }
+        else {
+            return (
+                <ScrollView style={styles.container}>
+                    <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>
+                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
+                            <View style={{ width: 190 }}>
+                                <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+                                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: 0 }} />
+                                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
+                                    <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text
+                                style={{
+                                    color: "#374BBF",
+                                    fontWeight: "bold",
+                                    fontSize: 19,
+                                    marginLeft: -90,
+                                    paddingTop: 5,
+                                    height: 40
+                                }}> {Moment(new Date()).format('dddd DD MMM')}
+                            </Text>
+                            <TouchableOpacity onPress={this.searchGame} style={{ marginLeft: 10, marginRight: 10, width: 40 }}>
+                                <Image source={Search} style={{ height: 40, width: 40 }} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40 }}>
+                                <Image source={Notifictaion} style={{ height: 40, width: 40 }} />
                             </TouchableOpacity>
                         </View>
-                        <Text
-                            style={{
-                                color: "#374BBF",
-                                fontWeight: "bold",
-                                fontSize: 19,
-                                marginLeft: -90,
-                                paddingTop: 5,
-                                height: 40
-                            }}> {Moment(new Date()).format('dddd DD MMM')}
-                        </Text>
-                        <TouchableOpacity onPress={this.searchGame} style={{ marginLeft: 10, marginRight: 10, width: 40 }}>
-                            <Image source={Search} style={{ height: 40, width: 40 }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40 }}>
-                            <Image source={Notifictaion} style={{ height: 40, width: 40 }} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <TextInput
-                            style={{ display: "none", marginLeft: 120, borderRadius: 20, backgroundColor: "white", width: 190, height: 35 }}
-                            placeholder="  &nbsp;&nbsp;Search your game ... "
-                            placeholderTextColor="#46D822"
-                            autoCapitalize="none"
-                            onChangeText={searchText => {
-                                this.setState({ searchText });
-                            }}
-                            onSubmitEditing={this.searchGame}
-                            value={this.state.searchText}
-                            hid
-                        />
-                    </View>
-                </SafeAreaView>
-                <View style={styles.pageTitleBar}></View>
-                <Text style={styles.pageTitleText}>
-                    SPECIAL GAMES
-                </Text>
-                {/* carousel  */}
-                <View style={{ marginLeft: -15 }}>
-                    <Carousel
-                        style={{ marginLeft: 0 }}
-                        layout={"default"}
-                        ref={ref => this.carousel = ref}
-                        data={this.state.specialGames}
-                        sliderWidth={485}
-                        itemWidth={280}
-                        // autoplay={true}
-                        renderItem={this.specialGameItem.bind(this)}
-                        onSnapToItem={index => this.setState({ activeIndex: index })}
-                    />
-                </View>
-                <View style={styles.pageTitleBar}>
-                </View>
-                <Text style={styles.pageTitleText}>
-                    POPULAR GAMES
-                </Text>
-
-                {this.renderPopularGames()}
-
-                <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", marginLeft: -80, marginBottom: 30, marginTop: -15, borderRadius: 20 }}>
-                    <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
-                </TouchableOpacity>
-                <View>
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <TextInput
+                                style={{ display: "none", marginLeft: 120, borderRadius: 20, backgroundColor: "white", width: 190, height: 35 }}
+                                placeholder="  &nbsp;&nbsp;Search your game ... "
+                                placeholderTextColor="#46D822"
+                                autoCapitalize="none"
+                                onChangeText={searchText => {
+                                    this.setState({ searchText });
+                                }}
+                                onSubmitEditing={this.searchGame}
+                                value={this.state.searchText}
+                                hid
+                            />
+                        </View>
+                    </SafeAreaView>
                     <View style={styles.pageTitleBar}></View>
-                    <Text style={styles.pageTitleText}>
-                        HOT GAMES
-                    </Text>
-                    {/* Hot Games */}
-                    <View style={{ marginLeft: -15, marginTop: -30 }}>
-                        <Carousel
-                            style={{ marginLeft: -15 }}
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.hotGames}
-                            sliderWidth={485}
-                            itemWidth={280}
-                            // autoplay={true}
-                            renderItem={this.hotGameItem}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
-                </View>
-                <View style={{ backgroundColor: "#eee", marginTop: 30 }}>
-                    <View style={styles.pageTitleBar}></View>
-                    <Text style={styles.pageTitleText}>
-                        POPULAR TEAMS
-                    </Text>
-                    {/* Carousal 3  */}
-                    <View style={{ backgroundColor: "white", height: 200, width: "100%", marginTop: 150 }}></View>
-                    <View style={{ flex: 1, justifyContent: 'center', marginTop: -350 }}>
+                    <TouchableOpacity onPress={this.getToken}>
+                        <Text style={styles.pageTitleText}>
+                            SPECIAL GAMES
+                </Text>
+                    </TouchableOpacity>
+
+                    {/* carousel  */}
+                    <View style={{ marginLeft: -15 }}>
                         <Carousel
                             style={{ marginLeft: 0 }}
                             layout={"default"}
                             ref={ref => this.carousel = ref}
-                            data={this.state.carouselItems}
+                            data={this.state.specialGames}
                             sliderWidth={485}
-                            itemWidth={180}
-                            renderItem={this.popularTeamsItem}
+                            itemWidth={280}
+                            // autoplay={true}
+                            renderItem={this.specialGameItem.bind(this)}
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
-                </View>
-                <View style={styles.pageTitleBar}></View>
-                <Text style={styles.pageTitleText}>
-                    COMPETETIONS
+                    <View style={styles.pageTitleBar}>
+                    </View>
+                    <Text style={styles.pageTitleText}>
+                        POPULAR GAMES
                 </Text>
-                <ScrollView>
-                    {/* carousel 4 */}
-                    <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+
+                    {this.renderPopularGames()}
+
+                    <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", marginLeft: -80, marginBottom: 30, marginTop: -15, borderRadius: 20 }}>
+                        <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
+                    </TouchableOpacity>
+                    <View>
+                        <View style={styles.pageTitleBar}></View>
+                        <Text style={styles.pageTitleText}>
+                            HOT GAMES
+                    </Text>
+                        {/* Hot Games */}
+                        <View style={{ marginLeft: -15, marginTop: -30 }}>
                             <Carousel
-                                style={{ marginLeft: 50 }}
+                                style={{ marginLeft: -15 }}
                                 layout={"default"}
                                 ref={ref => this.carousel = ref}
-                                data={this.state.carouselItems}
-                                sliderWidth={170}
-                                itemWidth={290}
+                                data={this.state.hotGames}
+                                sliderWidth={485}
+                                itemWidth={280}
                                 // autoplay={true}
-                                renderItem={this._renderItem4}
+                                renderItem={this.hotGameItem}
                                 onSnapToItem={index => this.setState({ activeIndex: index })}
                             />
                         </View>
-                    </SafeAreaView>
-                </ScrollView>
-            </ScrollView >
-        );
+                    </View>
+                    <View style={{ backgroundColor: "#eee", marginTop: 30 }}>
+                        <View style={styles.pageTitleBar}></View>
+                        <Text style={styles.pageTitleText}>
+                            POPULAR TEAMS
+                    </Text>
+                        {/* Carousal 3  */}
+                        <View style={{ backgroundColor: "white", height: 200, width: "100%", marginTop: 150 }}></View>
+                        <View style={{ flex: 1, justifyContent: 'center', marginTop: -350 }}>
+                            <Carousel
+                                style={{ marginLeft: 0 }}
+                                layout={"default"}
+                                ref={ref => this.carousel = ref}
+                                data={this.state.carouselItems}
+                                sliderWidth={485}
+                                itemWidth={180}
+                                renderItem={this.popularTeamsItem}
+                                onSnapToItem={index => this.setState({ activeIndex: index })}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.pageTitleBar}></View>
+                    <Text style={styles.pageTitleText}>
+                        COMPETETIONS
+                </Text>
+                    <ScrollView>
+                        {/* carousel 4 */}
+                        <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+                                <Carousel
+                                    style={{ marginLeft: 50 }}
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.carouselItems}
+                                    sliderWidth={170}
+                                    itemWidth={290}
+                                    // autoplay={true}
+                                    renderItem={this._renderItem4}
+                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                />
+                            </View>
+                        </SafeAreaView>
+                    </ScrollView>
+                </ScrollView >
+            );
+        }
     }
 }
 

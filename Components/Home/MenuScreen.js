@@ -6,6 +6,7 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  AsyncStorage,
 } from "react-native";
 import AwesomeAlert from "react-native-awesome-alerts";
 import Attachment from "../../assets/Images_Design/attachment1.png";
@@ -43,6 +44,16 @@ export default class MenuScreen extends React.Component {
       showAlert: false,
     });
   };
+
+  Logout = () => {
+    this.setState({
+      showAlert: false,
+    });
+
+    AsyncStorage.clear();
+    this.props.navigation.navigate('Login');
+  };
+
 
   Profile = () => {
     this.props.navigation.navigate('Chat Active 1');
@@ -183,7 +194,7 @@ export default class MenuScreen extends React.Component {
 
             //remove token by calling the function removeItem.
             onConfirmPressed={() => {
-              this.hideAlert();
+              this.Logout();
             }}
           />
         </View>
