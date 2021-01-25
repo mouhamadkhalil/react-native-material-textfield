@@ -81,7 +81,6 @@ const Info = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
 
-
             <ScrollView style={styles.container}>
                 <TouchableOpacity onpress={() => Linking.openURL('http://google.com')}>
                     <ScrollView style={{ backgroundColor: "white", width: 320, height: 60, marginLeft: 20, marginTop: 70 }}>
@@ -122,7 +121,7 @@ const Info = () => {
                             onPress={() => {
                                 Linking.openURL('https://fly-foot.com/en/about/TC');
                             }}>
-                            Terms & conditions
+                            Terms &amp; conditions
                         </Text>
                         <Text style={{ fontSize: 17, fontWeight: "bold", color: "#55E620", marginLeft: 280, marginTop: -15 }}>
                             <Image source={Arrow1} /></Text>
