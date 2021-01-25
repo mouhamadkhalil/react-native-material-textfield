@@ -84,9 +84,6 @@ export default class BookNow extends React.Component {
         ],
         date: "2016-05-15"
     };
-
-
-    //test
     
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
@@ -175,7 +172,7 @@ export default class BookNow extends React.Component {
         const startDate = selectedStartDate ? selectedStartDate.toString() : '';
         return (
             <ScrollView style={styles.container}>
-                <TextInput
+                {/* <TextInput
                     style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 30, backgroundColor: "white", width: 185, height: 35 }}
                     placeholder="  &nbsp;&nbsp;Search your game ... "
                     placeholderTextColor="#46D822"
@@ -185,20 +182,8 @@ export default class BookNow extends React.Component {
                     }}
                     onSubmitEditing={this.searchGame}
                     value={this.state.searchText}
-                />
-                <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -35 }}>
-                    <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
-                    <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
-                </TouchableOpacity>
-                <ScrollView style={{ marginTop: -24, width: 190 }}>
-                    <TouchableOpacity>
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -2 }} />
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                    </TouchableOpacity>
-                </ScrollView>
+                /> */}
+                
                 <Image source={Game} style={{ height: 200, marginTop: 50 }} />
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 10, marginTop: 15 }}>MATCH</Text>
@@ -374,7 +359,7 @@ const styles = StyleSheet.create({
         height: 1100,
         marginLeft: -110,
         width: 500,
-        marginTop: 0,
+        marginTop: -50,
         marginBottom: 30,
         backgroundColor: "#F5F7EC",
     },

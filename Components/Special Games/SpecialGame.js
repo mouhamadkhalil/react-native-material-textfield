@@ -42,7 +42,7 @@ export default class specialGames extends React.Component {
     constructor(props) {
         super(props);
         const navigation = this.props;
-        
+
         this.state = {
             Picture1: "",
             Picture2: "",
@@ -392,33 +392,8 @@ export default class specialGames extends React.Component {
 
         return (
             <ScrollView style={styles.container}>
-                <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
-                        <View style={{ width: 190 }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: 0 }} />
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
-                                <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
-                            </TouchableOpacity>
-                        </View>
-                        <Text
-                            style={{
-                                color: "#374BBF",
-                                fontWeight: "bold",
-                                fontSize: 19,
-                                marginLeft: -90,
-                                paddingTop: 5,
-                                height: 40
-                            }}> {Moment(new Date()).format('dddd DD MMM')}
-                        </Text>
-                        <TouchableOpacity onPress={this.searchGame} style={{ marginLeft: 10, marginRight: 10, width: 40 }}>
-                            <Image source={Search} style={{ height: 40, width: 40 }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40 }}>
-                            <Image source={Notifictaion} style={{ height: 40, width: 40 }} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>                  
+                    {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <TextInput
                             style={{ display: "none", marginLeft: 120, borderRadius: 20, backgroundColor: "white", width: 190, height: 35 }}
                             placeholder="  &nbsp;&nbsp;Search your game ... "
@@ -431,7 +406,7 @@ export default class specialGames extends React.Component {
                             value={this.state.searchText}
                             hid
                         />
-                    </View>
+                    </View> */}
                 </SafeAreaView>
                 <View style={styles.pageTitleBar}></View>
                 <Text style={styles.pageTitleText}>
@@ -534,7 +509,7 @@ const styles = StyleSheet.create({
         height: 1100,
         marginLeft: 0,
         width: 500,
-        marginTop: 0,
+        marginTop: -60,
         marginBottom: 0,
         backgroundColor: "#FFF",
     },
