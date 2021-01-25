@@ -23,6 +23,7 @@ const StartStackNavigator = ({ navigation }) => {
         </Stack.Navigator>
     );
 }
+//comment just for testing
 
 const TripStackNavigator = ({ navigation }) => {
     return (
