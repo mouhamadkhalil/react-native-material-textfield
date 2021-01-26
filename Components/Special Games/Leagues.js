@@ -46,13 +46,6 @@ import Image13 from "../../assets/games/image13.png";
 import Image14 from "../../assets/games/image14.png";
 import Image15 from "../../assets/games/image15.png";
 
-
-
-
-
-
-
-
 const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
@@ -73,9 +66,6 @@ export default class Leagues extends React.Component {
         };
     }
 
-
-
-
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -85,81 +75,54 @@ export default class Leagues extends React.Component {
                     </Text>
                     <View style={{ height: 200, width: "100%", marginTop: 150 }}></View>
                 </View>
-
-
                 <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 145, marginTop: 50 }}>European</Text>
-
                 <TouchableOpacity style={{ width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image1} style={{ marginLeft: 30, marginTop: 50, width: 70, height: 70 }} />
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ marginLeft: 150, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image2} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ marginLeft: 260, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image3} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-
-
-
                 <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 160, marginTop: 50 }}>Spain</Text>
-
                 <TouchableOpacity style={{ width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image4} style={{ marginLeft: 30, marginTop: 50, width: 70, height: 70 }} />
                 </TouchableOpacity>
-
-
                 <TouchableOpacity style={{ marginLeft: 150, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image5} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ marginLeft: 260, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image6} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-
-
                 <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 175, marginTop: 50 }}>Uk</Text>
                 <TouchableOpacity style={{ width: 100, marginLeft: 80, marginTop: 50 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image7} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-
-
                 <TouchableOpacity style={{ marginLeft: 210, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image8} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
 
-
-
                 <TouchableOpacity style={{ width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image9} style={{ marginLeft: 30, marginTop: 50, width: 70, height: 70 }} />
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ marginLeft: 150, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image10} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ marginLeft: 260, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image11} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-
-
                 <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 140, marginTop: 50 }}>International</Text>
-
                 <TouchableOpacity style={{ width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image12} style={{ marginLeft: 30, marginTop: 50, width: 70, height: 70 }} />
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ marginLeft: 150, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image13} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ marginLeft: 270, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
                     <Image source={Image14} style={{ width: 70, height: 70 }} />
                 </TouchableOpacity>
                 <ScrollView style={{ marginBottom: 80 }}></ScrollView>
-
-
             </ScrollView >
         );
     }
