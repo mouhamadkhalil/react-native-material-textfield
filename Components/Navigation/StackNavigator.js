@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../Start/LoginScreen";
 import Signup from "../Start/SignupScreen";
 import SpecialGames from "../Special Games/SpecialGame";
+import AllGames from "../Special Games/AllGames";
 import AnyDayScreen from "../Schedule/AnyDayScreen";
 import InfoScreen from "../More/Info";
 import Help1Screen from "../Help/Help1Screen";
@@ -27,7 +28,16 @@ const TripStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
             <Stack.Screen name="book a trip" navigationProps={navigation} component={SpecialGames} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="all games" navigationProps={navigation} component={AllGames}  />
             <Stack.Screen name="book now" navigationProps={navigation} component={BookNowScreen} options={HeaderOptions({ navigation })} />
+        </Stack.Navigator>
+    );
+};
+
+const AllGamesStackNavigator = ({ navigation }) => {
+    return (
+        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
+            <Stack.Screen name="all games" navigationProps={navigation} component={AllGames} options={HeaderOptions({ navigation })} />
         </Stack.Navigator>
     );
 };
@@ -57,4 +67,4 @@ const ContactStackNavigator = ({ navigation }) => {
     );
 };
 
-export { StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator };
+export { StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator };
