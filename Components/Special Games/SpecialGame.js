@@ -399,7 +399,7 @@ export default class specialGames extends React.Component {
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}> Teams</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={{ marginLeft: 30, marginTop: 10 }}>
+                        <TouchableOpacity style={{ marginLeft: 30, marginTop: 10 }} onPress={() => this.props.navigation.navigate('leagues')}>
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leagues</Text>
                         </TouchableOpacity>
 

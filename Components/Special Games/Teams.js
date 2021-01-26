@@ -61,25 +61,41 @@ export default class Teams extends React.Component {
                 AwayTeam: "",
             }],
 
-            list:[
+            list: [
                 {
-                  id:1,
-                  title: 'Brazil',
-                  body: 'React native Accordion/Collapse component, very good to use in toggles & show/hide content'
+                    id: 1,
+                    title: 'Brazil',
+                    body: 'React native Accordion/Collapse component, very good to use in toggles & show/hide content'
                 },
                 {
-                  id:2,
-                  title: 'Denmark',
-                  body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
-                },           
+                    id: 2,
+                    title: 'Denmark',
+                    body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
+                },
                 {
                     id: 3,
-                    title: 'Italy',
+                    title: 'France',
                     body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
                 },
                 {
                     id: 4,
+                    title: 'Germany',
+                    body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
+                },
+
+                {
+                    id: 5,
+                    title: 'Italy',
+                    body: 'React native Accordion/Collapse component, very good to use in toggles & show/hide content'
+                },
+                {
+                    id: 6,
                     title: 'Spain',
+                    body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
+                },
+                {
+                    id: 7,
+                    title: 'United Kingdom',
                     body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
                 },
             ]
@@ -89,23 +105,23 @@ export default class Teams extends React.Component {
     popularTeamsItem = ({ item, index }) => {
         return (
             <TouchableOpacity style={{ marginTop: 40, width: 270, height: 250, marginLeft: 10, marginBottom: 0, shadowColor: "red", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 5.84, elevation: 5 }}>
-                <Image source={Liverppol} style={{ borderRadius: 20, }} />
+                <Image source={Liverppol} style={{ borderRadius: 20 }} />
             </TouchableOpacity>
         );
     };
 
-    _head(item){
-        return(
-            <Separator bordered style={{alignItems:'center'}}>
-              <Text style={{marginLeft:-320}}>{item.title}</Text>
+    _head(item) {
+        return (
+            <Separator bordered style={{ alignItems: 'center', marginTop: 5 }}>
+                <Text style={{ marginLeft: -320, fontWeight: "bold" }}>{item.title}</Text>
             </Separator>
         );
     }
-    
-    _body(item){
+
+    _body(item) {
         return (
-            <View style={{padding:10}}>
-              <Text style={{textAlign:'center'}}>{item.body}</Text>
+            <View style={{ padding: 10 }}>
+                <Text style={{ textAlign: 'center' }}>{item.body}</Text>
             </View>
         );
     }
@@ -115,9 +131,8 @@ export default class Teams extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={{ backgroundColor: "#eee", marginTop: 0 }}>
-                    <View style={styles.pageTitleBar}></View>
                     <Text style={styles.pageTitleText}>
-                        POPULAR TEAMS
+                        TEAMS
                     </Text>
                     <View style={{ backgroundColor: "white", height: 200, width: "100%", marginTop: 150 }}></View>
                     <View style={{ flex: 1, justifyContent: 'center', marginTop: -350 }}>
@@ -139,13 +154,15 @@ export default class Teams extends React.Component {
                 <Text style={{ fontSize: 15, marginLeft: 100, width: 290 }}> stadium experience.</Text>
 
 
-            <ScrollView style={{marginTop:30}}></ScrollView>
-            <AccordionList
-                list={this.state.list}
-                header={this._head}
-                body={this._body}
-                keyExtractor={item => `${item.id}`}
-            />
+                <ScrollView style={{ marginTop: 30 }}></ScrollView>
+                <AccordionList
+                    list={this.state.list}
+                    header={this._head}
+                    body={this._body}
+                    keyExtractor={item => `${item.id}`}
+                />
+
+                <ScrollView style={{ marginTop: 30 }}></ScrollView>
 
 
 
@@ -158,7 +175,7 @@ export default class Teams extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 1100,
+        height: 2000,
         marginLeft: 0,
         width: 500,
         marginTop: 0,
@@ -185,10 +202,11 @@ const styles = StyleSheet.create({
         marginTop: 35
     },
     pageTitleText: {
-        marginTop: -20,
+        marginTop: 40,
         color: "black",
         fontSize: 20,
-        marginLeft: 70
+        fontWeight: "bold",
+        marginLeft: 150
     },
     specialGameMeta: {
         color: "white", fontSize: 18
