@@ -1,86 +1,65 @@
 import React from "react";
 import {
     StyleSheet,
-    TextInput,
     Text,
     Image,
     ScrollView,
     View,
     TouchableOpacity,
-    ActivityIndicator,
-    Button,
-    SafeAreaView
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
-import Line1 from "../../assets/Images_Design/line1.png";
-import Line2 from "../../assets/Images_Design/line2.png";
-import Search from "../../assets/Images_Design/search1.png";
-import Notifictaion from "../../assets/Images_Design/notification1.png";
-import Card1 from "../../assets/Images_Design/card1.png";
-import Card2 from "../../assets/Images_Design/card2.png";
-import Btn1 from "../../assets/Images_Design/btn1.png";
-import Btn2 from "../../assets/Images_Design/btn2.png";
-import Arrow from "../../assets/Images_Design/arrow_right1.png";
-import Game from "../../assets/images/football.jpg";
-import Arrow1 from "../../assets/Images_Design/arrow_down.png";
+import ImgAllGames from "../../assets/images/all-games.jpg";
+import ImgArrowDown from "../../assets/Images_Design/arrow_down.png";
+import ImgFlag from "../../assets/Images_Design/flag1.png";
+import ImgShare from "../../assets/Images_Design/share.png";
+import ImgArrowRight from "../../assets/Images_Design/arrow_right2.png"
+import ImgCalendar from "../../assets/Images_Design/calendar-grey.png";
+import ImgList from "../../assets/Images_Design/list-grey-icon.png";
 import DropDownPicker from "react-native-dropdown-picker";
-import Carousel from 'react-native-snap-carousel';
+import Moment from 'moment';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const sourceFile = require('../../services.js');
 
 export default class AllGames extends React.Component {
 
-    state = {
-        Picture1: "",
-        Picture2: "",
-        Picture3: "",
-        Picture4: "",
-        isDone: false,
-        searchText: "",
-        idMatch: "",
-        City: "",
-        Stade: "",
-        GameDate1: "",
-        GameDate2: "",
-        LeaguesName: "",
-        GameCode: "",
-        HomeTeam: "",
-        AwayTeam: "",
-        StadeCity: "",
-        GameCity1: "",
-        GameCity2: "",
-        GamePrice1: "",
-        GamePrice2: "",
-        pageNumber: 1,
-        LeaguesName: "",
-        DaysLeft: "",
-        pageSize: 15,
-        idTeam: 2122,
-        orderBy: "",
-        activeIndex: 0,
-        carouselItems: [
-            {
-                title: "Item 1",
-                text: "Text 1",
-            },
-            {
-                title: "Item 2",
-                text: "Text 2",
-            },
-            {
-                title: "Item 3",
-                text: "Text 3",
-            },
-            {
-                title: "Item 4",
-                text: "Text 4",
-            },
-        ],
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            Picture1: "",
+            Picture2: "",
+            Picture3: "",
+            Picture4: "",
+            isDone: false,
+            searchText: "",
+            idMatch: "",
+            City: "",
+            Stade: "",
+            GameDate1: "",
+            GameDate2: "",
+            LeaguesName: "",
+            GameCode: "",
+            HomeTeam: "",
+            AwayTeam: "",
+            StadeCity: "",
+            GameCity1: "",
+            GameCity2: "",
+            GamePrice1: "",
+            GamePrice2: "",
+            pageNumber: 1,
+            LeaguesName: "",
+            DaysLeft: "",
+            pageSize: 15,
+            idTeam: 2122,
+            orderBy: "date",
+            allGames: []
+        };
+        this.getAllGames();
+    }
 
-    searchGame = () => {
-        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
-        fetch(urlSearch, {
+    getAllGames = () => {
+        const url = `${API_URL}/mobile/game/getall?pageNumber=1&pageSize=10&order=date`;
+        fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": sourceFile.Content_Type,
@@ -94,16 +73,25 @@ export default class AllGames extends React.Component {
             .then((res) => res.json())
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
-                console.log("test", response[0].City);
-                this.setState({ idMatch: response[0].idMatch });
-                this.setState({ City: response[0].City });
-                this.setState({ Stade: response[0].Stade });
-                this.setState({ GameDate1: response[0].GameDate });
-                this.setState({ LeaguesName: response[0].LeaguesName });
-                this.setState({ GameCode: response[0].GameCode });
-                this.setState({ HomeTeam: response[0].HomeTeam });
-                this.setState({ AwayTeam: response[0].AwayTeam });
-                this.setState({ StadeCity: response[0].StadeCity });
+                var data = response.Items.map(function (item) {
+                    var game = item.MatchBundleDetail[0].Game;
+                    return {
+                        idMatch: game.idMatch,
+                        City: game.City,
+                        Stade: game.Stade,
+                        GameDate: game.GameDate,
+                        LeagueName: game.LeagueName,
+                        GameCode: game.GameCode,
+                        HomeTeam: game.HomeTeam,
+                        AwayTeam: game.AwayTeam,
+                        StadeCity: game.StadeCity,
+                        Team1Color1: game.Team1Color1,
+                        Team1Color2: game.Team1Color2,
+                        Team2Color1: game.Team2Color1,
+                        Team2Color2: game.Team2Color2
+                    };
+                });
+                this.setState({ allGames: data });
             });
     };
 
@@ -135,204 +123,134 @@ export default class AllGames extends React.Component {
             });
     };
 
-    _renderItem1({ item, index, state }) {
-        return (
-            <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
-                <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
-                    <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>30</Text>
-                    <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 12 }}>Dec</Text>
-                    <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >4 DAYS</Text>
-                    <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                    <Text style={{ marginLeft: 55 }} >FULHAN</Text>
-                    <Text style={{ marginLeft: 55, marginTop: 20 }}>PREMIERE LEAGUE</Text>
-                    <Text style={{ marginLeft: 55, marginTop: 20 }}>LONDON</Text>
-                </ScrollView>
+    renderAllGames = () => {
+        const buttons = [];
+        for (let game of this.state.allGames) {
+            buttons.push(
+                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: "#FFFFFF", marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
+                    <View style={{ flex: 1, flexDirection: "row", height: 120 }}>
+                        <View style={{ width: '15%', alignItems: 'center', borderRightColor: "grey", borderRightWidth: 1, paddingTop: 10 }}>
+                            <Text style={{ fontSize: 24, fontWeight: "bold", textTransform: 'uppercase' }}>{Moment(new Date(game.GameDate)).format('DD')}</Text>
+                            <Text style={{ fontSize: 12, fontWeight: "bold", textTransform: 'uppercase' }}>{Moment(new Date(game.GameDate)).format('MMM')}</Text>
+                        </View>
 
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 20, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>730$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
-                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity>
-            </TouchableOpacity>
-        )
-    }
+                        <View style={{ flex: 1, flexDirection: "column", width: '80%', paddingLeft: 10, paddingTop: 10 }}>
+                            <View style={{ flex: 1, flexDirection: "row" }}>
+                                <LinearGradient
+                                    colors={[game.Team1Color1, game.Team1Color2]}
+                                    style={styles.linearGradient}
+                                    start={[0, 0]}
+                                    end={[1, 0]}
+                                    locations={[0.5, 0.5]}
+                                />
+                                <Text style={{ fontSize: 14, fontWeight: "bold", textTransform: 'uppercase', paddingLeft: 5 }}>{game.HomeTeam}</Text>
+                            </View>
+                            <View style={{ flex: 1, flexDirection: "row" }}>
+                                <LinearGradient
+                                    colors={[game.Team2Color1, game.Team2Color2]}
+                                    style={styles.linearGradient}
+                                    start={[0, 0]}
+                                    end={[1, 0]}
+                                    locations={[0.5, 0.5]}
+                                />
+                                <Text style={{ fontSize: 14, fontWeight: "bold", textTransform: 'uppercase', paddingLeft: 5 }}>{game.AwayTeam}</Text>
+                            </View>
+                            <Text style={{ fontSize: 14, textTransform: 'uppercase', marginTop: 10 }}>{game.LeagueName}</Text>
+                            <Text style={{ fontSize: 14, textTransform: 'uppercase', marginTop: 5 }}>{game.City}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'column', width: '10%', paddingTop: 10, alignItems: 'center' }}>
+                            <View >
+                                <TouchableOpacity style={{ width: 20, height: 20 }}>
+                                    <Image source={ImgFlag} style={{ width: 20, height: 20 }} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ borderTopColor: 'grey', borderTopWidth: 1, paddingTop: 10, marginTop: 10 }}>
+                                <TouchableOpacity style={{ width: 20, height: 20 }}>
+                                    <Image source={ImgShare} style={{ width: 20, height: 20 }} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', height: 50, marginTop: 10, borderTopColor: "grey", borderTopWidth: 1 }}>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '40%', height: '100%', backgroundColor: '#76ff02' }}>
+                            <Text style={{ fontSize: 14, textTransform: 'uppercase' }}>request</Text>
+                            <Image source={ImgArrowRight} style={{ marginLeft: 10 }} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            );
+        }
+        return buttons;
+    };
 
-    _renderItem2({ item, index }) {
-        return (
-            <>
-                <TouchableOpacity>
-                    <ScrollView style={{ backgroundColor: "white", marginTop: 30, width: 295, height: 250, marginLeft: 150, borderRadius: 20 }}>
-                        <Text style={{ fontSize: 30, marginTop: 60, marginLeft: 10 }}>30</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 10 }}>Dec</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >4 DAYS</Text>
-                        <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 55 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20, fontSize: 10 }}>PREMIERE LEAGUE</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>MUNICH</Text>
-                        <Text style={{ fontSize: 30, marginTop: -125, marginLeft: 170 }}>21</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 170 }}>Jan</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 170 }} >4 DAYS</Text>
-                        <Text style={{ marginLeft: 210, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 210 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 210, marginTop: 20, fontSize: 10, width: 200 }}>PREMIERE LEAGUE</Text>
-                        <Text style={{ marginLeft: 210, marginTop: 20 }}>USA</Text>
-                    </ScrollView>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 250, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>230 $<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
-                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity>
-            </>
-        )
-    }
 
     render() {
         return (
             <ScrollView style={styles.container}>
-                <TextInput
-                    style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
-                    placeholder="  &nbsp;&nbsp;Search your game ... "
-                    placeholderTextColor="#46D822"
-                    autoCapitalize="none"
-                    onChangeText={searchText => {
-                        this.setState({ searchText });
-                    }}
-                    onSubmitEditing={this.searchGame}
-                    value={this.state.searchText}
-                />
-                <Text
-                    style={{
-                        alignContent: "center",
-                        color: "#4c0099",
-                        fontWeight: "bold",
-                        marginTop: 30,
-                        fontSize: 19,
-                        marginLeft: 210
-                    }}
-                >
-                    MONDAY 12 SEPT
-                </Text>
+                <View style={{ flex: 1, flexDirection: 'column' }}>
+                    {/* banner begin*/}
+                    <View>
+                        <Image source={ImgAllGames} style={{ width: '100%' }} />
+                        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ color: 'white', fontSize: 26, fontWeight: 'bold' }} >All Games</Text>
+                        </View>
+                    </View>
+                    {/* banner end*/}
 
-                <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -95 }}>
-                    <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
-                </TouchableOpacity>
+                    {/* filter begin*/}
+                    <View style={{ flex: 1, flexDirection: 'row', backgroundColor: "white", width: '90%', height: 70, marginTop: -35, alignSelf: 'center', shadowColor: "grey", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.5, shadowRadius: 5.84, elevation: 5 }}>
+                        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', borderRightWidth: 1, borderRightColor: 'grey' }} onPress={this.FilterGame}>
+                            <Text style={{ fontSize: 20, color: '#6E6E6E', textTransform: 'uppercase' }}>filter</Text>
+                            <Image source={ImgArrowDown} style={{ width: 12, height: 12, marginLeft: 20 }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ width: '20%', height: '100%', justifyContent: 'center', alignItems: 'center', borderRightWidth: 1, borderRightColor: 'grey' }}>
+                            <Image source={ImgCalendar} style={{ width: 20, height: 20 }}></Image>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ width: '20%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={ImgList} style={{ width: 20, height: 20 }}></Image>
+                        </TouchableOpacity>
+                    </View>
+                    {/* filter end*/}
 
-                <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
-                    <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
-                </TouchableOpacity>
-
-                <View style={{ marginTop: -24, width: 190 }}>
-                    <TouchableOpacity>
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                    </TouchableOpacity>
-                </View>
-
-                <Image source={Game} style={{ height: 200, marginTop: 80 }} />
-                <Text style={{ color: "red", marginLeft: 230, marginTop: 50, fontSize: 30 }}></Text>
-
-                <ScrollView style={{ backgroundColor: "white", width: 300, height: 70, marginLeft: 145, marginTop: -120 }}>
-                    <TouchableOpacity style={{ height: 70, width: 150 }} onPress={this.FilterGame}>
-                        <Text style={{ marginLeft: 40, marginTop: 20 }}>FILTER</Text>
-                        <Image source={Arrow1} style={{ marginLeft: 100, marginTop: -13, width: 12, height: 12 }} />
-                    </TouchableOpacity>
-                </ScrollView>
-
-                <DropDownPicker
-                    items={[
-                        { label: "sort by date", value: "date" },
-                        { label: "sort by price", value: "price" },
-                    ]}
-                    defaultValue={this.state.orderBy}
-                    containerStyle={{ height: 75 }}
-                    style={{ backgroundColor: "#fafafa", width: 130, marginLeft: 315, marginTop: 30 }}
-                    itemStyle={{
-                        justifyContent: "flex-start",
-                    }}
-                    dropDownStyle={{ width: 130, marginLeft: 315 }}
-                    onChangeItem={(item) =>
-                        this.setState({
-                            orderBy: item.value,
+                    {/* filter picker begin */}
+                    <View style={{
+                        flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'flex-end', width: '90%', height: 20, marginTop: 10, ...(Platform.OS !== 'android' && {
+                            zIndex: 10
                         })
-                    }
-                />
-
-                {/* carousel 1 */}
-                <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
-                        <Carousel
-                            style={{ marginLeft: 50 }}
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.carouselItems}
-                            sliderWidth={170}
-                            itemWidth={290}
-                            // autoplay={true}
-                            renderItem={this._renderItem1}
-                            onSnapToItem={index => this.setState({ activeIndex: index })} />
+                    }}>
+                        <Text style={{ fontSize: 14, color: '#374bbf', alignSelf: 'center', textTransform: 'uppercase', marginTop: 10, marginRight: -15, zIndex: 2 }}>sort by </Text>
+                        <DropDownPicker
+                            items={[
+                                { label: "DATE", value: "date" },
+                                { label: "PRICE", value: "price" },
+                            ]}
+                            defaultValue={this.state.orderBy}
+                            containerStyle={{ height: 30 }}
+                            selectedLabelStyle={{
+                                color: '#374bbf', textDecorationLine: 'underline'
+                            }}
+                            style={{ backgroundColor: "#EEEEEE", borderWidth: 0, width: 100 }}
+                            itemStyle={{
+                                justifyContent: "flex-start",
+                            }}
+                            arrowStyle={{ color: 'red' }}
+                            dropDownStyle={{ width: 100 }}
+                            onChangeItem={(item) =>
+                                this.setState({
+                                    orderBy: item.value,
+                                })
+                            }
+                            placeholder="SORT BY "
+                        />
                     </View>
-                </SafeAreaView>
+                    {/* filter picker end */}
 
-                {/* carousal 2 */}
-                <SafeAreaView style={{ flex: 1, paddingTop: 50, marginTop: 0, marginLeft: 0, paddingRight: 34 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
-                        <Carousel
-                            style={{ marginLeft: 0 }}
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.carouselItems}
-                            sliderWidth={170}
-                            itemWidth={290}
-                            autoplay={true}
-                            renderItem={this._renderItem2}
-                            onSnapToItem={index => this.setState({ activeIndex: index })} />
+                    {/* render games begin*/}
+                    <View style={{ width: '90%', alignSelf: 'center', zIndex: 1 }}>
+                        {this.renderAllGames()}
                     </View>
-                </SafeAreaView>
-
-                {/* carousel 1 */}
-                <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
-                        <Carousel
-                            style={{ marginLeft: 50 }}
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.carouselItems}
-                            sliderWidth={170}
-                            itemWidth={290}
-                            // autoplay={true}
-                            renderItem={this._renderItem1}
-                            onSnapToItem={index => this.setState({ activeIndex: index })} />
-                    </View>
-                </SafeAreaView>
-
-
-                {/* <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
-                    <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
-                        <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate1.substring(8, 10)}</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate1.substring(5, 7)}</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >{this.state.DaysLeft} DAYS</Text>
-                        <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 55 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName} LEAGUE</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity1}</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-                {/* 
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 172, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice1}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
-                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
+                    {/* render games end*/}
+                </View>
             </ScrollView>
         );
     }
@@ -340,11 +258,16 @@ export default class AllGames extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 1100,
-        marginLeft: -110,
-        width: 500,
+        width: '100%',
         marginTop: 30,
         marginBottom: 30,
-        backgroundColor: "#F5F7EC",
+        backgroundColor: "#EEEEEE",
+    },
+    linearGradient: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        height: 20,
+        width: 20,
     },
 });
