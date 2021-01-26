@@ -9,6 +9,8 @@ import Help1Screen from "../Help/Help1Screen";
 import Help2Screen from "../Help/Help2Screen";
 import BookNowScreen from "../Special Games/BookNow";
 import HeaderOptions from "./Header";
+import TeamsScreen from "../Special Games/Teams";
+
 
 
 
@@ -28,6 +30,7 @@ const TripStackNavigator = ({ navigation }) => {
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
             <Stack.Screen name="book a trip" navigationProps={navigation} component={SpecialGames} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="book now" navigationProps={navigation} component={BookNowScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="teams" navigationProps={navigation} component={TeamsScreen} options={HeaderOptions({ navigation })} />
         </Stack.Navigator>
     );
 };
