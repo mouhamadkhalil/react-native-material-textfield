@@ -407,6 +407,12 @@ export default class specialGames extends React.Component {
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}>Deals</Text>
                         </TouchableOpacity>
 
+                        <TouchableOpacity style={{ marginLeft: 30, marginTop: 10 }} onPress={() => this.props.navigation.navigate('request')}>
+                            <Text style={{ fontSize: 17, fontWeight: "bold" }}>Request</Text>
+                        </TouchableOpacity>
+
+
+
 
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
