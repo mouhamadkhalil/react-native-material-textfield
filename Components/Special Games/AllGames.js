@@ -147,7 +147,6 @@ export default class AllGames extends React.Component {
                     <Text style={{ marginLeft: 55, marginTop: 20 }}>PREMIERE LEAGUE</Text>
                     <Text style={{ marginLeft: 55, marginTop: 20 }}>LONDON</Text>
                 </ScrollView>
-
                 <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 20, marginTop: -25 }}>
                     <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
                         <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>730$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
@@ -180,7 +179,6 @@ export default class AllGames extends React.Component {
                         <Text style={{ marginLeft: 210, marginTop: 20 }}>USA</Text>
                     </ScrollView>
                 </TouchableOpacity>
-
                 <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 250, marginTop: -25 }}>
                     <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
                         <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>230 $<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
@@ -195,7 +193,7 @@ export default class AllGames extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <TextInput
+                {/* <TextInput
                     style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
                     placeholder="  &nbsp;&nbsp;Search your game ... "
                     placeholderTextColor="#46D822"
@@ -206,45 +204,15 @@ export default class AllGames extends React.Component {
                     onSubmitEditing={this.searchGame}
                     value={this.state.searchText}
                 />
-                <Text
-                    style={{
-                        alignContent: "center",
-                        color: "#4c0099",
-                        fontWeight: "bold",
-                        marginTop: 30,
-                        fontSize: 19,
-                        marginLeft: 210
-                    }}
-                >
-                    MONDAY 12 SEPT
-                </Text>
-
-                <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -95 }}>
-                    <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
-                    <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
-                </TouchableOpacity>
-
-                <View style={{ marginTop: -24, width: 190 }}>
-                    <TouchableOpacity>
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                        <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-                    </TouchableOpacity>
-                </View>
-
-                <Image source={Game} style={{ height: 200, marginTop: 80 }} />
+                */}
+                <Image source={Game} style={{ height: 200 }} />
                 <Text style={{ color: "red", marginLeft: 230, marginTop: 50, fontSize: 30 }}></Text>
-
                 <ScrollView style={{ backgroundColor: "white", width: 300, height: 70, marginLeft: 145, marginTop: -120 }}>
                     <TouchableOpacity style={{ height: 70, width: 150 }} onPress={this.FilterGame}>
                         <Text style={{ marginLeft: 40, marginTop: 20 }}>FILTER</Text>
                         <Image source={Arrow1} style={{ marginLeft: 100, marginTop: -13, width: 12, height: 12 }} />
                     </TouchableOpacity>
                 </ScrollView>
-
                 <DropDownPicker
                     items={[
                         { label: "sort by date", value: "date" },
@@ -263,7 +231,6 @@ export default class AllGames extends React.Component {
                         })
                     }
                 />
-
                 {/* carousel 1 */}
                 <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
@@ -279,7 +246,6 @@ export default class AllGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })} />
                     </View>
                 </SafeAreaView>
-
                 {/* carousal 2 */}
                 <SafeAreaView style={{ flex: 1, paddingTop: 50, marginTop: 0, marginLeft: 0, paddingRight: 34 }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
@@ -295,7 +261,6 @@ export default class AllGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })} />
                     </View>
                 </SafeAreaView>
-
                 {/* carousel 1 */}
                 <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
@@ -311,28 +276,6 @@ export default class AllGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })} />
                     </View>
                 </SafeAreaView>
-
-
-                {/* <TouchableOpacity style={{ marginTop: 60, width: 140, height: 250, marginLeft: 150 }}>
-                    <ScrollView style={{ backgroundColor: "white", borderRadius: 20 }}>
-                        <Text style={{ fontSize: 30, marginTop: 30, marginLeft: 10 }}>{this.state.GameDate1.substring(8, 10)}</Text>
-                        <Text style={{ fontSize: 20, marginTop: -5, marginLeft: 14 }}>{this.state.GameDate1.substring(5, 7)}</Text>
-                        <Text style={{ fontSize: 12, marginTop: 20, marginLeft: 10 }} >{this.state.DaysLeft} DAYS</Text>
-                        <Text style={{ marginLeft: 55, marginTop: -85, fontSize: 13 }}>TOTTENHAM</Text>
-                        <Text style={{ marginLeft: 55 }} >FULHAN</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.LeaguesName} LEAGUE</Text>
-                        <Text style={{ marginLeft: 55, marginTop: 20 }}>{this.state.GameCity1}</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-                {/* 
-                <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50, marginLeft: 172, marginTop: -25 }}>
-                    <ScrollView style={{ backgroundColor: "#62F622", width: 100, height: 50 }}>
-                        <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold", fontSize: 15 }}>{this.state.GamePrice1}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Image source={Arrow} style={{ marginLeft: 80, marginTop: -10 }} />
-                        <Text style={{ marginTop: -5, marginLeft: 10, fontSize: 9, fontWeight: "bold" }}>BOOK NOW</Text>
-                    </ScrollView>
-                </TouchableOpacity> */}
-
             </ScrollView>
         );
     }
@@ -343,7 +286,7 @@ const styles = StyleSheet.create({
         height: 1100,
         marginLeft: -110,
         width: 500,
-        marginTop: 30,
+        marginTop: 0,
         marginBottom: 30,
         backgroundColor: "#F5F7EC",
     },

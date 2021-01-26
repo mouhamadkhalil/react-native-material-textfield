@@ -97,7 +97,7 @@ export default class Day2Screen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <TextInput
+        {/* <TextInput
           style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
           placeholder="  &nbsp;&nbsp;Search your game ... "
           placeholderTextColor="#46D822"
@@ -107,33 +107,7 @@ export default class Day2Screen extends React.Component {
           }}
           onSubmitEditing={this.searchGame}
           value={this.state.searchText}
-        />
-
-        <Text
-          style={{
-            alignContent: "center",
-            color: "#4c0099",
-            fontWeight: "bold",
-            marginTop: 30,
-            fontSize: 19,
-            marginLeft: 215
-          }}
-        >
-          MONDAY 12 SEPT
-        </Text>
-        <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -95 }}>
-          <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
-          <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
-        </TouchableOpacity>
-        <View style={{ marginTop: -24, width: 190 }}>
-          <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} >
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-          </TouchableOpacity>
-        </View>
+        /> */}
         <Text
           style={{
             marginTop: 60,
