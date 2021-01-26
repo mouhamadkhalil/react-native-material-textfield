@@ -80,7 +80,6 @@ export default class Day2Screen extends React.Component {
       .catch((error) => console.error("Error: ", error))
       .then((response) => {
         console.log("test", response[0].City);
-
         this.setState({ idMatch: response[0].idMatch });
         this.setState({ City: response[0].City });
         this.setState({ Stade: response[0].Stade });
@@ -90,14 +89,13 @@ export default class Day2Screen extends React.Component {
         this.setState({ HomeTeam: response[0].HomeTeam });
         this.setState({ AwayTeam: response[0].AwayTeam });
         this.setState({ StadeCity: response[0].StadeCity });
-
       });
   }
 
   render() {
     return (
       <ScrollView style={styles.container}>
-        <TextInput
+        {/* <TextInput
           style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
           placeholder="  &nbsp;&nbsp;Search your game ... "
           placeholderTextColor="#46D822"
@@ -107,36 +105,17 @@ export default class Day2Screen extends React.Component {
           }}
           onSubmitEditing={this.searchGame}
           value={this.state.searchText}
-        />
+        /> */}
 
-        <Text
-          style={{
-            alignContent: "center",
-            color: "#4c0099",
-            fontWeight: "bold",
-            marginTop: 30,
-            fontSize: 19,
-            marginLeft: 215
-          }}
-        >
-          MONDAY 12 SEPT
-        </Text>
         <TouchableOpacity onPress={this.searchGame} style={{ width: 40, marginLeft: 380, marginTop: -95 }}>
           <Image source={Search} style={{ marginTop: 0, marginLeft: 0, height: 40, width: 40 }} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => alert("hello Im Notification !")} style={{ width: 40, marginLeft: 430, marginTop: -30 }}>
           <Image source={Notifictaion} style={{ marginTop: 0, marginLeft: 0, height: 20, width: 20 }} />
         </TouchableOpacity>
-        <View style={{ marginTop: -24, width: 190 }}>
-          <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} >
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: 0 }} />
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 140, marginTop: -5 }} />
-          </TouchableOpacity>
-        </View>
         <Text
           style={{
-            marginTop: 60,
+            marginTop: 80,
             color: "#4c0099",
             fontSize: 70,
             marginLeft: 200
