@@ -1,7 +1,8 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StartStackNavigator } from "./StackNavigator";
-import {TripTabs,BookingsTabs, MoreTabs, ContactTabs } from "./TabNavigator";
+import {TripTabs,BookingsTabs, MoreTabs, ContactTabs, AllGamesTabs } from "./TabNavigator";
+import {AllGamesStackNavigator } from "./StackNavigator";
 
 /* for testing */
 import AllGames from '../Special Games/AllGames';
@@ -14,7 +15,7 @@ const DrawerNavigator = () => {
     <Drawer.Navigator>
       <Drawer.Screen name="login" component={StartStackNavigator} />
       <Drawer.Screen name="book a trip" component={TripTabs} />
-      <Drawer.Screen name="all games" component={AllGames} />
+      <Drawer.Screen name="all games" component={AllGamesTabs} />
       <Drawer.Screen name="my bookings" component={BookingsTabs} />
       <Drawer.Screen name="more" component={MoreTabs} />
       <Drawer.Screen name="contact us" component={ContactTabs} />
