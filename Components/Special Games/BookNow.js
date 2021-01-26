@@ -85,6 +85,9 @@ export default class BookNow extends React.Component {
         date: "2016-05-15"
     };
 
+
+    //test
+    
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
         fetch(url, {
