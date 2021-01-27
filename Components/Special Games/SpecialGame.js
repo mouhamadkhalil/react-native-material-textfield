@@ -437,7 +437,7 @@ export default class specialGames extends React.Component {
 
         return (
             <ScrollView style={styles.container}>
-                <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>
+                <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 100 }}>
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
 
                         <TouchableOpacity style={{ marginLeft: 30, marginTop: 10 }} onPress={() => this.props.navigation.navigate('teams')}>
@@ -456,8 +456,10 @@ export default class specialGames extends React.Component {
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}>Request</Text>
                         </TouchableOpacity>
 
-
-
+                        <TouchableOpacity style={{ marginTop: 40, marginLeft: -310, width: 100, height: 50 }}
+                            onPress={() => this.props.navigation.navigate('giftcard')}>
+                            <Text style={{ fontSize: 17, fontWeight: "bold" }}>Gift card</Text>
+                        </TouchableOpacity>
 
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
