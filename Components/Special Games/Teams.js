@@ -31,9 +31,11 @@ import Real from "../../assets/Images_Design/real.png";
 import Carousel from 'react-native-snap-carousel';
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
+import Brazil from "../../assets/games/brazil.png";
 
-import { AccordionList } from "accordion-collapse-react-native";
-import { Separator } from 'native-base';
+import { Separator, Thumbnail } from 'native-base';
+import { AccordionList, Collapse, CollapseHeader, CollapseBody } from "accordion-collapse-react-native";
+
 
 
 const sourceFile = require('../../services.js');
@@ -65,38 +67,38 @@ export default class Teams extends React.Component {
                 {
                     id: 1,
                     title: 'Brazil',
-                    body: 'React native Accordion/Collapse component, very good to use in toggles & show/hide content'
+                    body: 'CR FLAMENGO'
                 },
                 {
                     id: 2,
                     title: 'Denmark',
-                    body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
+                    body: 'FC Midtjylland'
                 },
                 {
                     id: 3,
                     title: 'France',
-                    body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
+                    body: 'DIJON'
                 },
                 {
                     id: 4,
                     title: 'Germany',
-                    body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
+                    body: 'BAYERN MUNICH'
                 },
 
                 {
                     id: 5,
                     title: 'Italy',
-                    body: 'React native Accordion/Collapse component, very good to use in toggles & show/hide content'
+                    body: 'AC MILAN'
                 },
                 {
                     id: 6,
                     title: 'Spain',
-                    body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
+                    body: 'ATELTECO MADRID'
                 },
                 {
                     id: 7,
                     title: 'United Kingdom',
-                    body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
+                    body: 'ARSENAL'
                 },
             ]
         };
@@ -121,7 +123,8 @@ export default class Teams extends React.Component {
     _body(item) {
         return (
             <View style={{ padding: 10 }}>
-                <Text style={{ textAlign: 'center' }}>{item.body}</Text>
+                <Text style={{ textAlign: 'center', marginLeft: -25, marginTop: 30 }}>{item.body}</Text>
+                <Image source={Brazil} style={{ marginLeft: 70, marginTop: -25 }} />
             </View>
         );
     }
