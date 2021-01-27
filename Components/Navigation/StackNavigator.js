@@ -37,7 +37,14 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="leagues" navigationProps={navigation} component={LeaguesScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="AllGames" navigationProps={navigation} component={AllGamesScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} options={HeaderOptions({ navigation })} />
+        </Stack.Navigator>
+    );
+};
 
+const AllGamesStackNavigator = ({ navigation }) => {
+    return (
+        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
+            <Stack.Screen name="all games" navigationProps={navigation} component={AllGames} options={HeaderOptions({ navigation })} />
         </Stack.Navigator>
     );
 };

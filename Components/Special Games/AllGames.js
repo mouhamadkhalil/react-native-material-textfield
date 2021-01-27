@@ -188,7 +188,7 @@ export default class AllGames extends React.Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>;
+            <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'column' }}>
                     {/* banner begin*/}
                     <View>
