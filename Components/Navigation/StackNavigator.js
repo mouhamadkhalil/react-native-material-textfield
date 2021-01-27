@@ -16,7 +16,8 @@ import RequestScreen from "../Special Games/Request";
 import GiftCardScreen from "../Special Games/GiftCard";
 import GiftCard2Screen from "../Special Games/GiftCard2";
 import TripOverViewScreen from "../Special Games/TripOverView";
-
+import CustomizeTripScreen from "../Special Games/CustomizeTrip";
+import SelectFlightScreen from "../Special Games/SelectFilght";
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,8 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="giftcard" navigationProps={navigation} component={GiftCardScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="giftcard2" navigationProps={navigation} component={GiftCard2Screen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="tripoverview" navigationProps={navigation} component={TripOverViewScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} options={HeaderOptions({ navigation })} />
 
         </Stack.Navigator>
     );

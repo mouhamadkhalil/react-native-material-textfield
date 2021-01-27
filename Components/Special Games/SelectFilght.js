@@ -111,6 +111,10 @@ export default class AnyDayHomeScreen extends React.Component {
         this.props.navigation.navigate('flight');
     }
 
+    Back = () => {
+        this.props.navigation.navigate('tripoverview');
+    }
+
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -129,71 +133,38 @@ export default class AnyDayHomeScreen extends React.Component {
                     <Text style={{ fontSize: 9, marginLeft: 250, fontWeight: "bold", marginTop: -12, color: "blavk" }}>1912$ Total *</Text>
                 </View>
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginLeft: 140, marginTop: 50 }}>
-                    Semi-Package Details
+                    Flight Options
                 </Text>
-                <View style={{ marginLeft: 140, backgroundColor: "white", width: 300, height: 550, marginTop: 30 }}>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 30 }}>TRIP DATES</Text>
-                    <Text style={{ fontSize: 12, marginTop: 10, paddingLeft: 30, color: "blue", fontWeight: "bold" }}>
-                        11.06.21 - 14.06.21
-                    </Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 30 }}>FANS</Text>
-                    <Text style={{ fontSize: 12, marginTop: 10, paddingLeft: 30, color: "blue", fontWeight: "bold" }}>
-                        02
-                    </Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 15 }}>HOTEL</Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 170, marginTop: -17 }}>SEATING OPTIONS </Text>
-                    <Text style={{ color: "blue", fontWeight: "bold", marginLeft: 30, marginTop: 10, width: 130, fontSize: 11 }}>PREMIER INN LONDON SOUTHWARK</Text>
-                    <Text style={{ color: "blue", fontWeight: "bold", marginLeft: 170, marginTop: -30 }}>Category 3 </Text>
-                    <Text style={{ color: "gray", marginLeft: 60, marginTop: 30, fontSize: 12 }}>Double x1 </Text>
-                    <Text style={{ color: "gray", marginLeft: 170, marginTop: -18, fontSize: 12 }}>Wembley, London</Text>
-                    <Text style={{ color: "gray", marginLeft: 170, marginTop: 5, fontSize: 12 }}>2 Seat </Text>
-                    <TouchableOpacity>
-                        {this.state.isDone ?
-                            <Lightbox >
-                                <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null}
-                                    style={{ width: 120, height: 120, marginLeft: 30, marginTop: 20 }} />
-                            </Lightbox>
-                            :
-                            <ActivityIndicator size="small" color="blue"
-                                style={{ marginTop: 80, marginLeft: -60 }}
-                            />}
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        {this.state.isDone ?
-                            <Lightbox >
-                                <Image source={this.state.Picture2 ? { uri: this.state.Picture2 } : null}
-                                    style={{ width: 120, height: 120, marginLeft: 170, marginTop: -120 }} />
-                            </Lightbox>
-                            :
-                            <ActivityIndicator size="small" color="blue"
-                                style={{ marginTop: 80, marginLeft: 0 }}
-                            />}
-                    </TouchableOpacity>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 35 }}>PERKS</Text>
-                    <Image source={Onspot} style={{ marginLeft: 20, marginTop: 10 }} />
-                    <Image source={Hotel} style={{ marginLeft: 70, marginTop: -42 }} />
-                    <Image source={Car1} style={{ marginLeft: 130, marginTop: -42 }} />
-                    <Image source={Stadium} style={{ marginLeft: 190, marginTop: -41 }} />
-                    <Image source={Insurnace} style={{ marginLeft: 250, marginTop: -41 }} />
-                    <Text style={{ marginLeft: 30, color: "blue", fontWeight: "bold", width: 50, fontSize: 9 }}>On Spot Service</Text>
-                    <Text style={{ marginLeft: 80, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Airport Pick up </Text>
-                    <Text style={{ marginLeft: 135, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Airport Drop off</Text>
-                    <Text style={{ marginLeft: 195, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Stadium Tour</Text>
-                    <Text style={{ marginLeft: 260, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Travel Insurance</Text>
+                <View style={{ marginLeft: 140, backgroundColor: "white", width: 300, height: 200, marginTop: 30 }}>
+                    <Text style={{ color: "gray", marginTop: 20, marginLeft: 20, fontWeight: "bold" }}>TRIP DATES</Text>
+                    <Text style={{ color: "blue", fontWeight: "bold", marginLeft: 20, marginTop: 10 }}>11.06.21 - 14.06.21</Text>
+
+                    <Text style={{ color: "gray", marginTop: 20, marginLeft: 20, fontWeight: "bold" }}>FLYING FROM</Text>
+
+
+                    <TextInput
+                        multiline={true}
+                        numberOfLines={8}
+                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                    />
+
                 </View>
-                <View style={{ marginBottom: 50 }}></View>
+                <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 160, marginTop: -50 }}></ScrollView>
+
+
+                <View style={{ marginBottom: 100 }}></View>
                 <View style={{ width: 130, marginLeft: 160, marginTop: -20 }}>
                     <Button
-                        title="CUSTOMIZE"
-                        color="blue"
-                        onPress={this.Customize}
+                        title="BACK"
+                        color="black"
+                        onPress={this.Back}
                     />
                 </View>
                 <View style={{ width: 130, marginLeft: 310, marginTop: -34 }}>
                     <Button
-                        title="SELECT FLIGHT"
-                        color="#8CD222"
-                        onPress={this.Flight}
+                        title="CONTINUE"
+                        color="gray"
+                        onPress={this.Continue}
                     />
                 </View>
                 <View style={{ marginBottom: 50 }}></View>
