@@ -438,7 +438,29 @@ export default class specialGames extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 60 }}>
-                    {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
+
+                        <TouchableOpacity style={{ marginLeft: 30, marginTop: 10 }} onPress={() => this.props.navigation.navigate('teams')}>
+                            <Text style={{ fontSize: 17, fontWeight: "bold" }}> Teams</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{ marginLeft: 30, marginTop: 10 }} onPress={() => this.props.navigation.navigate('leagues')}>
+                            <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leagues</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{ marginLeft: 30, marginTop: 10 }}>
+                            <Text style={{ fontSize: 17, fontWeight: "bold" }}>Deals</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{ marginLeft: 30, marginTop: 10 }} onPress={() => this.props.navigation.navigate('request')}>
+                            <Text style={{ fontSize: 17, fontWeight: "bold" }}>Request</Text>
+                        </TouchableOpacity>
+
+
+
+
+                    </View>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <TextInput
                             style={{ display: "none", marginLeft: 120, borderRadius: 20, backgroundColor: "white", width: 190, height: 35 }}
                             placeholder="  &nbsp;&nbsp;Search your game ... "

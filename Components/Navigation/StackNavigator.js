@@ -10,7 +10,10 @@ import Help1Screen from "../Help/Help1Screen";
 import Help2Screen from "../Help/Help2Screen";
 import BookNowScreen from "../Special Games/BookNow";
 import HeaderOptions from "./Header";
-
+import TeamsScreen from "../Special Games/Teams";
+import LeaguesScreen from "../Special Games/Leagues";
+import AllGamesScreen from "../Special Games/AllGames";
+import RequestScreen from "../Special Games/Request";
 
 
 const Stack = createStackNavigator();
@@ -30,6 +33,11 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="book a trip" navigationProps={navigation} component={SpecialGames} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="all games" navigationProps={navigation} component={AllGames}  />
             <Stack.Screen name="book now" navigationProps={navigation} component={BookNowScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="teams" navigationProps={navigation} component={TeamsScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="leagues" navigationProps={navigation} component={LeaguesScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="AllGames" navigationProps={navigation} component={AllGamesScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} options={HeaderOptions({ navigation })} />
+
         </Stack.Navigator>
     );
 };
