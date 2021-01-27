@@ -358,8 +358,10 @@ export default class specialGames extends React.Component {
                 </View>
                 <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }}>
                     <ImageBackground source={BtnBg} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 14 }}>1450$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Text style={{ fontSize: 9 }}>BOOK NOW</Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('tripoverview')}>
+                            <Text style={{ fontWeight: "bold", fontSize: 14 }}>1450$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
+                            <Text style={{ fontSize: 9 }}>BOOK NOW</Text>
+                        </TouchableOpacity>
                     </ImageBackground>
                 </TouchableOpacity>
             </TouchableOpacity>
@@ -476,7 +478,7 @@ export default class specialGames extends React.Component {
                             sliderWidth={485}
                             itemWidth={280}
                             // autoplay={true}
-                            renderItem={this.hotGameItem}
+                            renderItem={this.hotGameItem.bind(this)}
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
