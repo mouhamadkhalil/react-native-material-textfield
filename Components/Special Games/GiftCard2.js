@@ -11,7 +11,9 @@ import {
     ActivityIndicator,
     SafeAreaView,
     Button,
-    Dimensions
+    Linking,
+    Dimensions,
+    CheckBox
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
@@ -74,83 +76,85 @@ export default class Leagues extends React.Component {
 
                 <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 20, marginTop: 30 }}>THIS GIFT IS FOR</Text>
 
-                <View style={{ backgroundColor: "white", width: 310, height: 400, marginLeft: 20, marginTop: 20 }}>
+                <View style={{ backgroundColor: "white", width: 310, height: 370, marginLeft: 20, marginTop: 20 }}>
 
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>NAME*</Text>
-                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: 0 }}></View>
-
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
+                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
+
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>SURNAME*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-
-
-                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></View>
+                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>EMAIL*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></View>
+                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>PHONE NUMBER*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -50 }}></View>
+                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                 </View>
 
 
                 <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 20, marginTop: 30 }}>THIS GIFT IS FROM</Text>
 
-                <View style={{ backgroundColor: "white", width: 310, height: 400, marginLeft: 20, marginTop: 20 }}>
+                <View style={{ backgroundColor: "white", width: 310, height: 370, marginLeft: 20, marginTop: 20 }}>
 
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>NAME*</Text>
-                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: 0 }}></View>
-
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
+                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
+
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>SURNAME*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-
-
-                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></View>
+                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>EMAIL*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></View>
+                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>PHONE NUMBER*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -50 }}></View>
+                    <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                 </View>
+
+                <CheckBox
+                    style={{ marginLeft: 20, marginTop: 20 }}
+                    selected="true"
+                />
+                <Text style={{ marginLeft: 50, fontSize: 11, color: "gray", fontWeight: "bold", marginTop: -25 }}>I want to receive a confirm of delivery on my e-mail</Text>
 
                 <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 20, marginTop: 30 }}>ADD A MESSAGE</Text>
 
 
-                <ScrollView style={{ backgroundColor: "white", width: 310, height: 150, marginLeft: 20, marginTop: 50,marginBottom:30 }}>
+                <ScrollView style={{ backgroundColor: "white", width: 310, height: 150, marginLeft: 20, marginTop: 50, marginBottom: 30 }}>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
@@ -159,10 +163,16 @@ export default class Leagues extends React.Component {
                     />
                 </ScrollView>
 
-                <Text style={{marginLeft:20,marginBottom:30,marginTop:-20}}>I’ve read and accepted the
+                <Text style={{ marginLeft: 20, marginBottom: 30, marginTop: -20 }}>I’ve read and accepted the
                     <TouchableOpacity >
-                    <Text style={{color:"blue",marginTop:0}}>Terms & Conditions</Text>
-                    </TouchableOpacity> 
+                        <Text style={{ color: "blue", marginTop: 0 }}>
+                            <Text style={{ color: "blue", fontSize: 15, marginLeft: 70, marginTop: -22 }}
+                                onPress={() => {
+                                    Linking.openURL('https://fly-foot.com/en/about/TC');
+                                }}>
+                                Terms & Conditions</Text>
+                        </Text>
+                    </TouchableOpacity>
                 </Text>
 
             </ScrollView >
