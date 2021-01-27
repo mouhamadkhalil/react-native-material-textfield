@@ -21,6 +21,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const sourceFile = require('../../services.js');
 
+
+//test
 export default class AllGames extends React.Component {
 
     constructor(props) {
@@ -186,7 +188,7 @@ export default class AllGames extends React.Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container}>;
                 <View style={{ flex: 1, flexDirection: 'column' }}>
                     {/* banner begin*/}
                     <View>
@@ -251,7 +253,7 @@ export default class AllGames extends React.Component {
                     </View>
                     {/* render games end*/}
                 </View>
-            </ScrollView>
+            </ScrollView >
         );
     }
 }

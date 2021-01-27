@@ -80,6 +80,7 @@ export default class Day2Screen extends React.Component {
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
                 console.log("test", response[0].City);
+
                 this.setState({ idMatch: response[0].idMatch });
                 this.setState({ City: response[0].City });
                 this.setState({ Stade: response[0].Stade });
@@ -89,6 +90,7 @@ export default class Day2Screen extends React.Component {
                 this.setState({ HomeTeam: response[0].HomeTeam });
                 this.setState({ AwayTeam: response[0].AwayTeam });
                 this.setState({ StadeCity: response[0].StadeCity });
+
             });
     };
 
@@ -108,7 +110,7 @@ export default class Day2Screen extends React.Component {
         /> */}
                 <Text
                     style={{
-                        marginTop: 80,
+                        marginTop: 60,
                         color: "#4c0099",
                         fontSize: 70,
                         marginLeft: 200
