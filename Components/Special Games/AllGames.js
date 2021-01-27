@@ -28,6 +28,8 @@ import Carousel from 'react-native-snap-carousel';
 
 const sourceFile = require('../../services.js');
 
+
+//test
 export default class AllGames extends React.Component {
 
     state = {
