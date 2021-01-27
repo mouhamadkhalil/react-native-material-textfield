@@ -473,7 +473,7 @@ export default class specialGames extends React.Component {
                             value={this.state.searchText}
                             hid
                         />
-                    </View> */}
+                    </View>
                 </SafeAreaView>
                 <View style={styles.pageTitleBar}></View>
                 <Text style={styles.pageTitleText}>
