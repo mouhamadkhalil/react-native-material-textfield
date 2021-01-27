@@ -7,6 +7,7 @@ import {
     Button,
     ScrollView,
     View,
+    CheckBox,
     TouchableOpacity,
     ActivityIndicator
 } from "react-native";
@@ -153,7 +154,13 @@ export default class AnyDayHomeScreen extends React.Component {
 
 
                 <View style={{ marginBottom: 100 }}></View>
-                <View style={{ width: 130, marginLeft: 160, marginTop: -20 }}>
+                <CheckBox
+                    style={{ marginLeft: 135, marginTop: -40 }}
+                    selected="true"
+                />
+                <Text style={{ marginLeft: 180, marginTop: -27 }}>I don't want flights</Text>
+
+                <View style={{ width: 130, marginLeft: 160, marginTop: 20 }}>
                     <Button
                         title="BACK"
                         color="black"
@@ -168,6 +175,7 @@ export default class AnyDayHomeScreen extends React.Component {
                     />
                 </View>
                 <View style={{ marginBottom: 50 }}></View>
+
             </ScrollView>
         );
     }

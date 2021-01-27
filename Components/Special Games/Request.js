@@ -98,7 +98,9 @@ export default class Request extends React.Component {
                 text: "Text 4",
             },
         ],
-        date: "2016-05-15"
+        date: "2016-05-15",
+        fanNumber: 2
+
     };
 
     componentDidMount() {
@@ -125,6 +127,15 @@ export default class Request extends React.Component {
                 });
             });
     }
+
+    IncrementFan = () => {
+        this.setState({ fanNumber: this.state.fanNumber + 1 })
+    }
+
+    DecrementFan = () => {
+        this.setState({ fanNumber: this.state.fanNumber - 1 })
+    }
+
 
     searchGame = () => {
         const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
@@ -262,11 +273,11 @@ export default class Request extends React.Component {
                         onDateChange={(date) => { this.setState({ date: date }) }}
                     />
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>FANS</Text>
-                    <TouchableOpacity style={{ width: 20, marginLeft: 40 }}>
+                    <TouchableOpacity style={{ width: 20, marginLeft: 40 }} onPress={this.DecrementFan}>
                         <Text style={{ fontSize: 25, fontWeight: "bold", marginLeft: 0, marginTop: 11 }}>-</Text>
                     </TouchableOpacity>
-                    <Text style={{ marginLeft: 70, marginTop: -25 }}>02</Text>
-                    <TouchableOpacity style={{ marginLeft: 105, marginTop: -25, width: 20 }}>
+                    <Text style={{ marginLeft: 70, marginTop: -25 }}>{this.state.fanNumber}</Text>
+                    <TouchableOpacity style={{ marginLeft: 105, marginTop: -25, width: 20 }} onPress={this.IncrementFan} >
                         <Text style={{ fontSize: 25, fontWeight: "bold" }}>+</Text>
                     </TouchableOpacity>
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>BUDGET</Text>
