@@ -8,7 +8,7 @@ import AnyDayScreen from "../Schedule/AnyDayScreen";
 import InfoScreen from "../More/Info";
 import Help1Screen from "../Help/Help1Screen";
 import Help2Screen from "../Help/Help2Screen";
-import { StyleSheet, View, Image, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from "react-native";
 import Line2 from "../../assets/Images_Design/line2.png";
 import Moment from 'moment';
 import Search from "../../assets/Images_Design/search1.png";
@@ -16,64 +16,46 @@ import Notifictaion from "../../assets/Images_Design/bell.png";
 
 import Autocomplete from 'react-native-autocomplete-input';
 
-const getSuggestedGames = () => {
-    fetch('https://apitest.fly-foot.com/api/mobile/game/getSuggestedGames')
-        .then(res => res.json())
-        .then(json => {
-            // const newJson = "{results :" + JSON.stringify(json) + "}";
-            // setFilms(JSON.parse(newJson));
-            //const { results: films } = json;
-            // console.log("tefilmsstobj", films);
-            setMatches(json);
-            console.log(json);
-
-
-            //setFilms(films);
-
-
-
-            /*const newJson = "{results :" + JSON.stringify(json) + "}";
-            // console.log("testobj", newJson);
-
-            const { films: setFilms } = useState(JSON.parse(newJson));
-            console.log("films :", films);
-
-            //setFilms(films);
-            //setting the data in the films state*/
-        })
-        .catch(e => {
-            console.error(e);
-        });
-};
-
 
 
 
 const HeaderOptions = ({ navigation }) => {
-    const [matches, setMatches] = useState([]);
+    const [games, setGames] = useState([]);
     const [filteredFilms, setFilteredFilms] = useState([]);
     const [selectedValue, setSelectedValue] = useState({});
-    const findMatch = str => {
-        console.log("str:", str);
+
+    const findAll = str => {
+        let res = [];
         fetch(`https://fly-foot.com/api/mobile/team/search?text=${str.trim()}`)
             .then(res => res.json())
             .then(json => {
-                setMatches(json);
+                res.push(...json);
+            })
+            .then(() => {
+                fetch(`https://fly-foot.com/api/mobile/game/search?text=${str.trim()}`)
+                    .then(res => res.json())
+                    .then(json => {
+                        res.push(...json);
+                        console.log("teams and games:", res);
+                        setGames(res);
+                    });
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    };
+
+    const getSuggestedGames = () => {
+        fetch('https://apitest.fly-foot.com/api/mobile/game/getSuggestedGames')
+            .then(res => res.json())
+            .then(json => {
+                setGames(json);
                 console.log(json);
             })
             .catch(e => {
                 console.error(e);
             });
     };
-    // const findMatch = query => {
-    //     let ar = [];
-    //     if (query) {
-    //         const regex = new RegExp(query.trim(), 'i');
-    //         console.log(matches);
-    //         ar = matches.filter(match => regex.test(match.City));
-    //     }
-    //     setFilteredFilms(ar);
-    // };
 
     return (
         {
@@ -93,23 +75,25 @@ const HeaderOptions = ({ navigation }) => {
                             backgroundColor: "white", width: 185, height: 35
                         }}
                         containerStyle={styles.autocompleteContainer}
-                        data={filteredFilms}
+                        data={games}
                         defaultValue={
                             JSON.stringify(selectedValue) === '{}' ?
                                 '' :
                                 selectedValue.title
                         }
-                        onChangeText={text => findMatches(text)}
-                        placeholder="&nbsp;&nbsp;Search your gamess ... "
+                        onChangeText={text => { console.log(text); findAll(text); }}
+                        placeholder="&nbsp;&nbsp;Search your games ... "
                         renderItem={({ item }) => (
                             <TouchableOpacity
                                 onPress={() => {
                                     setSelectedValue(item);
                                     setFilteredFilms([]);
                                 }}>
-                                <Text style={styles.itemText}>
-                                    {item.title}
-                                </Text>
+                                {item.idTeam ?
+                                    <Text style={styles.itemText}>{item.TeamName}</Text>
+                                    :
+                                    <Text style={styles.itemText}>{item.TeamName}</Text>
+                                }
                             </TouchableOpacity>
                         )}
                     />
