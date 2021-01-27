@@ -13,7 +13,7 @@ import TeamsScreen from "../Special Games/Teams";
 import LeaguesScreen from "../Special Games/Leagues";
 import AllGamesScreen from "../Special Games/AllGames";
 import RequestScreen from "../Special Games/Request";
-
+import GiftCardScreen from "../Special Games/GiftCard";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +35,7 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="leagues" navigationProps={navigation} component={LeaguesScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="AllGames" navigationProps={navigation} component={AllGamesScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="giftcard" navigationProps={navigation} component={GiftCardScreen} options={HeaderOptions({ navigation })} />
 
         </Stack.Navigator>
     );
