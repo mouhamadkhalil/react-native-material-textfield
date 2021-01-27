@@ -31,6 +31,11 @@ import Real from "../../assets/Images_Design/real.png";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Card from "../../assets/games/Card.png";
+import Gift1 from "../../assets/games/gift1.png";
+import Gift2 from "../../assets/games/gift2.png";
+import Gift3 from "../../assets/games/gift3.png";
+import Gift4 from "../../assets/games/gift4.png";
+import Gift5 from "../../assets/games/gift5.png";
 
 const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -43,14 +48,14 @@ export default class Leagues extends React.Component {
         super(props);
         const navigation = this.props;
         this.state = {
-            Picture1: "",
-            Picture2: "",
-            Picture3: "",
-            Picture4: "",
-            isDone: false,
-            searchText: "",
+            Picture1: Gift1,
+            Picture2: Gift2,
+            Picture3: Gift3,
+            Picture4: Gift4,
+            Picture5: Gift5,
         };
     }
+
 
     render() {
         return (
@@ -61,18 +66,60 @@ export default class Leagues extends React.Component {
                     </Text>
                     <View style={{ height: 200, width: "100%", marginTop: 150 }}></View>
                 </View>
-
-
-                <View style={{}}>
-                    <Image source={Card} style={{width:150,height:100,marginTop:-30,marginLeft:20}}/>
-                    <Text style={{marginLeft:190,fontSize:11,fontWeight:"bold",marginTop:-40}}>Make someone’s day in a moment. Send a Fly-Foot gift card 
+                <View>
+                    <Image source={Card} style={{ width: 150, height: 100, marginTop: -30, marginLeft: 20 }} />
+                    <Text style={{ width: 155, marginLeft: 190, fontSize: 9, fontWeight: "bold", marginTop: -60 }}>Make someone’s day in a moment.
+                    Send a Fly-Foot gift card
                     to your friends and treat them to anything in their city. They’re easy to use and fun to send.</Text>
                 </View>
+                <View >
+                    <Text style={{ fontWeight: "bold", color: "gray", marginLeft: 20, marginTop: 30 }}>CHOOSE AN AMOUNT</Text>
+                    <View style={{ width: 50, marginLeft: 20, marginTop: 30 }}>
+                        <Button
+                            onPress={this.Card1}
+                            title="100 $"
+                            color="#F2C8C8"
+                        />
+                    </View>
+                    <View style={{ width: 50, marginLeft: 90, marginTop: -50 }}>
+                        <Button
+                            onPress={this.Card2}
+                            title="200 $"
+                            color="#F2C8C8"
+                        />
+                    </View>
+                    <View style={{ width: 50, marginLeft: 160, marginTop: -50 }}>
+                        <Button
+                            onPress={this.Card3}
+                            title="300 $"
+                            color="#F2C8C8"
+                        />
+                    </View>
+                    <View style={{ width: 50, marginLeft: 230, marginTop: -50 }}>
+                        <Button
+                            onPress={this.Card4}
+                            title="400 $"
+                            color="#F2C8C8"
+                        />
+                    </View>
+                    <View style={{ width: 50, marginLeft: 300, marginTop: -50 }}>
+                        <Button
+                            onPress={this.Card5}
+                            title="500 $"
+                            color="#F2C8C8"
+                        />
+                    </View>
+                    <Text style={{ fontWeight: "bold", color: "gray", marginLeft: 20, marginTop: 30 }}>PERSONALIZE YOUR GIFT</Text>
+                    <Image source={Gift1} style={{ width: 330, marginLeft: 20, marginTop: 30 }} />
+                    <View style={{ width: 150, marginLeft: 200, marginTop: 30, height: 100 }}>
 
-               
-
-               
-                <ScrollView style={{ marginBottom: 80 }}></ScrollView>
+                        <Button
+                            // onPress={any}
+                            title="PROCEED &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; >"
+                            color="#52F232"
+                        />
+                    </View>
+                </View>
             </ScrollView >
         );
     }
@@ -80,24 +127,9 @@ export default class Leagues extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 2000,
-        marginLeft: 0,
+        height: 500,
         width: 500,
-        marginTop: 0,
-        marginBottom: 0,
         backgroundColor: "#F0DADA",
-    },
-    teamCircle: {
-        width: 10,
-        height: 10,
-        borderRadius: 50,
-    },
-    linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        height: 20,
-        width: 20,
     },
     pageTitleBar: {
         backgroundColor: "black",
@@ -113,7 +145,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 130
     },
-    specialGameMeta: {
-        color: "white", fontSize: 18
-    }
+
 });
