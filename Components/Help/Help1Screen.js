@@ -216,7 +216,6 @@ export default class Help1Screen extends React.Component {
           >
             &gt;
           </Text>
-
           <Text
             style={{
               fontSize: 16,
@@ -270,6 +269,8 @@ export default class Help1Screen extends React.Component {
             marginLeft: -70,
           }}
         >
+
+
           <Text style={{ fontSize: 18, marginLeft: 120, marginTop: 450, color: "#ff00ff", fontWeight: "bold" }}>EMERGANCY CONTACTS SPAIN</Text>
 
           <TouchableOpacity onPress={() => Linking.openURL(`tel:${112}`)}>

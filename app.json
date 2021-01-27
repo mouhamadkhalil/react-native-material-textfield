@@ -6,7 +6,7 @@
     "slug": "flyfoot",
     "version": "1.0.0",
     "splash": {
-      "image": "./assets/images/flyfoot.png",
+      "image": "./assets/images/splash.png",
       "backgroundColor": "#FFFFFF"
     },
     "facebookAutoInitEnabled": true,

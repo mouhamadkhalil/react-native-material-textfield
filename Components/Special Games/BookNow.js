@@ -28,9 +28,9 @@ import Lightbox from 'react-native-lightbox-v2';
 import DatePicker from 'react-native-datepicker';
 import Onspot from "../../assets/images/onspot.png";
 import Car1 from "../../assets/images/car1.png";
-import Stadium from "../../assets/images/stadium.png"
-import Hotel from "../../assets/images/hotel3.png"
-import Insurnace from "../../assets/images/insurnace.png"
+import Stadium from "../../assets/images/stadium.png";
+import Hotel from "../../assets/images/hotel3.png";
+import Insurnace from "../../assets/images/insurnace.png";
 
 const sourceFile = require('../../services.js');
 
@@ -84,7 +84,7 @@ export default class BookNow extends React.Component {
         ],
         date: "2016-05-15"
     };
-    
+
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
         fetch(url, {
@@ -156,12 +156,12 @@ export default class BookNow extends React.Component {
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
                 console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
-                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate })
-                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate })
-                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City })
-                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City })
-                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League })
-                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence })
+                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
+                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
+                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
+                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
+                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
+                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
                 this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
                 this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
             });
@@ -182,7 +182,7 @@ export default class BookNow extends React.Component {
                     }}
                     onSubmitEditing={this.searchGame}
                     value={this.state.searchText}
-                /> */}                
+                /> */}
                 <Image source={Game} style={{ height: 200 }} />
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 10, marginTop: 15 }}>MATCH</Text>
@@ -310,7 +310,7 @@ export default class BookNow extends React.Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => { this.setState({ date: date }) }}
+                        onDateChange={(date) => { this.setState({ date: date }); }}
                     />
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>COUNTRY*</Text>
                     <TextInput
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
         height: 1100,
         marginLeft: -110,
         width: 500,
-        marginTop: 0,
+        marginTop: -50,
         marginBottom: 30,
         backgroundColor: "#F5F7EC",
     },

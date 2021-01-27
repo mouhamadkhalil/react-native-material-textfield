@@ -62,6 +62,17 @@ export default class specialGames extends React.Component {
                 AwayTeam: "",
                 StadeCity: ""
             }],
+            competitions: [{
+                idMatch: "",
+                City: "",
+                Stade: "",
+                GameDate: "",
+                LeaguesName: "",
+                GameCode: "",
+                HomeTeam: "",
+                AwayTeam: "",
+                StadeCity: ""
+            }],
             specialGames: [
                 {
                     idMatch: "",
@@ -104,6 +115,7 @@ export default class specialGames extends React.Component {
         this.getSpecialGames();
         this.getPopularGames();
         this.getHotGames();
+        this.getCompetitions();
     }
 
     searchGame = () => {
@@ -243,12 +255,45 @@ export default class specialGames extends React.Component {
             });
     };
 
+    getCompetitions = () => {
+        const url = `${API_URL}/mobile/game/GetHomePageData`;
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                var data = response.map(function (item) {
+                    return {
+                        idMatch: item.idMatch,
+                        City: item.City,
+                        Stade: item.Stade,
+                        GameDate: item.GameDate,
+                        LeagueName: item.LeagueName,
+                        GameCode: item.GameCode,
+                        HomeTeam: item.HomeTeam,
+                        AwayTeam: item.AwayTeam,
+                        StadeCity: item.StadeCity,
+                    };
+                });
+                this.setState({ competitions: data });
+            });
+    };
+
     renderPopularGames = () => {
         const buttons = [];
         for (let game of this.state.popularGames) {
             buttons.push(
                 <TouchableOpacity>
-                    <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#F7F7F7", height: 80, marginLeft: 30, marginRight: 115, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, padding: 10 }}>
+                    <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#F7F7F7", height: 80, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, padding: 10 }}>
                         <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{Moment(new Date(game.GameDate)).format('DD MMM')}</Text>
                         <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{game.HomeTeam}</Text>
                         <View style={{}}>
@@ -367,7 +412,7 @@ export default class specialGames extends React.Component {
         );
     }
 
-    // Carousal 3
+    // popular teams
     popularTeamsItem = ({ item, index }) => {
         return (
             <TouchableOpacity style={{ marginTop: 40, width: 270, height: 250, marginLeft: 10, marginBottom: 0, shadowColor: "red", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 5.84, elevation: 5 }}>
@@ -376,8 +421,8 @@ export default class specialGames extends React.Component {
         );
     };
 
-    // Carousal 4
-    _renderItem4({ item, index, state }) {
+    // competitions
+    competitionItem({ item, index, state }) {
         return (
             <TouchableOpacity style={{ marginTop: 20, width: 250, height: 250, marginLeft: 10, marginBottom: 100 }}>
                 <TouchableOpacity style={{ marginLeft: -50, width: 250, height: 250 }}>
@@ -428,7 +473,7 @@ export default class specialGames extends React.Component {
                             value={this.state.searchText}
                             hid
                         />
-                    </View>
+                    </View> */}
                 </SafeAreaView>
                 <View style={styles.pageTitleBar}></View>
                 <Text style={styles.pageTitleText}>
@@ -454,11 +499,13 @@ export default class specialGames extends React.Component {
                     POPULAR GAMES
                 </Text>
 
-                {this.renderPopularGames()}
+                <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center' }}>
+                    {this.renderPopularGames()}
+                    <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", marginBottom: 30, marginTop: -15, borderRadius: 20 }}>
+                        <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
+                    </TouchableOpacity>
+                </View>
 
-                <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", marginLeft: -80, marginBottom: 30, marginTop: -15, borderRadius: 20 }}>
-                    <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
-                </TouchableOpacity>
                 <View>
                     <View style={styles.pageTitleBar}></View>
                     <Text style={styles.pageTitleText}>
@@ -511,11 +558,11 @@ export default class specialGames extends React.Component {
                                 style={{ marginLeft: 50 }}
                                 layout={"default"}
                                 ref={ref => this.carousel = ref}
-                                data={this.state.carouselItems}
+                                data={this.state.competitions}
                                 sliderWidth={170}
                                 itemWidth={290}
                                 // autoplay={true}
-                                renderItem={this._renderItem4}
+                                renderItem={this.competitionItem}
                                 onSnapToItem={index => this.setState({ activeIndex: index })}
                             />
                         </View>
@@ -530,8 +577,8 @@ const styles = StyleSheet.create({
     container: {
         height: 1100,
         marginLeft: 0,
-        width: 500,
-        marginTop: 0,
+        width: '100%',
+        marginTop: -60,
         marginBottom: 0,
         backgroundColor: "#FFF",
     },

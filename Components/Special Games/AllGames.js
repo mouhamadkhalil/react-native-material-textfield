@@ -1,30 +1,23 @@
 import React from "react";
 import {
     StyleSheet,
-    TextInput,
     Text,
     Image,
     ScrollView,
     View,
     TouchableOpacity,
-    ActivityIndicator,
-    Button,
-    SafeAreaView
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
-import Line1 from "../../assets/Images_Design/line1.png";
-import Line2 from "../../assets/Images_Design/line2.png";
-import Search from "../../assets/Images_Design/search1.png";
-import Notifictaion from "../../assets/Images_Design/notification1.png";
-import Card1 from "../../assets/Images_Design/card1.png";
-import Card2 from "../../assets/Images_Design/card2.png";
-import Btn1 from "../../assets/Images_Design/btn1.png";
-import Btn2 from "../../assets/Images_Design/btn2.png";
-import Arrow from "../../assets/Images_Design/arrow_right1.png";
-import Game from "../../assets/images/football.jpg";
-import Arrow1 from "../../assets/Images_Design/arrow_down.png";
+import ImgAllGames from "../../assets/images/all-games.jpg";
+import ImgArrowDown from "../../assets/Images_Design/arrow_down.png";
+import ImgFlag from "../../assets/Images_Design/flag1.png";
+import ImgShare from "../../assets/Images_Design/share.png";
+import ImgArrowRight from "../../assets/Images_Design/arrow_right2.png";
+import ImgCalendar from "../../assets/Images_Design/calendar-grey.png";
+import ImgList from "../../assets/Images_Design/list-grey-icon.png";
 import DropDownPicker from "react-native-dropdown-picker";
-import Carousel from 'react-native-snap-carousel';
+import Moment from 'moment';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const sourceFile = require('../../services.js');
 
@@ -32,57 +25,43 @@ const sourceFile = require('../../services.js');
 //test
 export default class AllGames extends React.Component {
 
-    state = {
-        Picture1: "",
-        Picture2: "",
-        Picture3: "",
-        Picture4: "",
-        isDone: false,
-        searchText: "",
-        idMatch: "",
-        City: "",
-        Stade: "",
-        GameDate1: "",
-        GameDate2: "",
-        LeaguesName: "",
-        GameCode: "",
-        HomeTeam: "",
-        AwayTeam: "",
-        StadeCity: "",
-        GameCity1: "",
-        GameCity2: "",
-        GamePrice1: "",
-        GamePrice2: "",
-        pageNumber: 1,
-        LeaguesName: "",
-        DaysLeft: "",
-        pageSize: 15,
-        idTeam: 2122,
-        orderBy: "",
-        activeIndex: 0,
-        carouselItems: [
-            {
-                title: "Item 1",
-                text: "Text 1",
-            },
-            {
-                title: "Item 2",
-                text: "Text 2",
-            },
-            {
-                title: "Item 3",
-                text: "Text 3",
-            },
-            {
-                title: "Item 4",
-                text: "Text 4",
-            },
-        ],
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            Picture1: "",
+            Picture2: "",
+            Picture3: "",
+            Picture4: "",
+            isDone: false,
+            searchText: "",
+            idMatch: "",
+            City: "",
+            Stade: "",
+            GameDate1: "",
+            GameDate2: "",
+            LeaguesName: "",
+            GameCode: "",
+            HomeTeam: "",
+            AwayTeam: "",
+            StadeCity: "",
+            GameCity1: "",
+            GameCity2: "",
+            GamePrice1: "",
+            GamePrice2: "",
+            pageNumber: 1,
+            LeaguesName: "",
+            DaysLeft: "",
+            pageSize: 15,
+            idTeam: 2122,
+            orderBy: "date",
+            allGames: []
+        };
+        this.getAllGames();
+    }
 
-    searchGame = () => {
-        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
-        fetch(urlSearch, {
+    getAllGames = () => {
+        const url = `${API_URL}/mobile/game/getall?pageNumber=1&pageSize=10&order=date`;
+        fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": sourceFile.Content_Type,
@@ -96,16 +75,25 @@ export default class AllGames extends React.Component {
             .then((res) => res.json())
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
-                console.log("test", response[0].City);
-                this.setState({ idMatch: response[0].idMatch });
-                this.setState({ City: response[0].City });
-                this.setState({ Stade: response[0].Stade });
-                this.setState({ GameDate1: response[0].GameDate });
-                this.setState({ LeaguesName: response[0].LeaguesName });
-                this.setState({ GameCode: response[0].GameCode });
-                this.setState({ HomeTeam: response[0].HomeTeam });
-                this.setState({ AwayTeam: response[0].AwayTeam });
-                this.setState({ StadeCity: response[0].StadeCity });
+                var data = response.Items.map(function (item) {
+                    var game = item.MatchBundleDetail[0].Game;
+                    return {
+                        idMatch: game.idMatch,
+                        City: game.City,
+                        Stade: game.Stade,
+                        GameDate: game.GameDate,
+                        LeagueName: game.LeagueName,
+                        GameCode: game.GameCode,
+                        HomeTeam: game.HomeTeam,
+                        AwayTeam: game.AwayTeam,
+                        StadeCity: game.StadeCity,
+                        Team1Color1: game.Team1Color1,
+                        Team1Color2: game.Team1Color2,
+                        Team2Color1: game.Team2Color1,
+                        Team2Color2: game.Team2Color2
+                    };
+                });
+                this.setState({ allGames: data });
             });
     };
 
@@ -126,12 +114,12 @@ export default class AllGames extends React.Component {
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
                 console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
-                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate })
-                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate })
-                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City })
-                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City })
-                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League })
-                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence })
+                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
+                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
+                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
+                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
+                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
+                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
                 this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
                 this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
             });
@@ -157,7 +145,7 @@ export default class AllGames extends React.Component {
                     </ScrollView>
                 </TouchableOpacity>
             </TouchableOpacity>
-        )
+        );
     }
 
     _renderItem2({ item, index }) {
@@ -189,7 +177,7 @@ export default class AllGames extends React.Component {
                     </ScrollView>
                 </TouchableOpacity>
             </>
-        )
+        );
     }
 
     render() {
@@ -290,6 +278,13 @@ const styles = StyleSheet.create({
         width: 500,
         marginTop: 0,
         marginBottom: 30,
-        backgroundColor: "#F5F7EC",
+        backgroundColor: "#EEEEEE",
+    },
+    linearGradient: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        height: 20,
+        width: 20,
     },
 });
