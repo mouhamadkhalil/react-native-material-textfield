@@ -56,6 +56,10 @@ export default class Leagues extends React.Component {
         this.props.navigation.navigate('giftcard2')
     }
 
+    GiftCard = () => {
+        this.props.navigation.navigate('giftcard')
+    }
+
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -146,7 +150,7 @@ export default class Leagues extends React.Component {
                 </View>
 
                 <CheckBox
-                    style={{ marginLeft: 20, marginTop: 20 }}
+                    style={{ marginLeft: 13, marginTop: 20 }}
                     selected="true"
                 />
                 <Text style={{ marginLeft: 50, fontSize: 11, color: "gray", fontWeight: "bold", marginTop: -25 }}>I want to receive a confirm of delivery on my e-mail</Text>
@@ -162,11 +166,15 @@ export default class Leagues extends React.Component {
                         style={{ fontSize: 12, marginTop: -20, paddingLeft: 20 }}
                     />
                 </ScrollView>
-
-                <Text style={{ marginLeft: 20, marginBottom: 30, marginTop: -20 }}>I’ve read and accepted the
+                <CheckBox
+                    style={{ marginLeft: 13, marginTop: -10 }}
+                    selected="true"
+                />
+                <Text style={{ marginLeft: 50, marginBottom: 30, marginTop: -27, color: "gray", fontSize: 11 }}>I’ve
+                read and accepted the &nbsp;
                     <TouchableOpacity >
                         <Text style={{ color: "blue", marginTop: 0 }}>
-                            <Text style={{ color: "blue", fontSize: 15, marginLeft: 70, marginTop: -22 }}
+                            <Text style={{ color: "blue", fontSize: 11, marginLeft: 70, marginTop: -22 }}
                                 onPress={() => {
                                     Linking.openURL('https://fly-foot.com/en/about/TC');
                                 }}>
@@ -174,7 +182,22 @@ export default class Leagues extends React.Component {
                         </Text>
                     </TouchableOpacity>
                 </Text>
+                <View style={{ width: 80, marginLeft: 150, marginTop: 0 }}>
+                    <Button
+                        onPress={this.GiftCard}
+                        title="BACK"
+                        color="black"
+                    />
+                </View>
 
+                <View style={{ width: 80, marginLeft: 250, marginTop: -35 }}>
+                    <Button
+                        // onPress={this.Card4}
+                        title="PROCEED"
+                        color="gray"
+                    />
+                </View>
+                <View style={{ marginBottom: 40 }}></View>
             </ScrollView >
         );
     }
