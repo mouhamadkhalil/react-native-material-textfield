@@ -179,7 +179,8 @@ export default class AnyDayHomeScreen extends React.Component {
                     <Text style={{ marginLeft: 80, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Airport Pick up </Text>
                     <Text style={{ marginLeft: 135, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Airport Drop off</Text>
                     <Text style={{ marginLeft: 195, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Stadium Tour</Text>
-                    <Text style={{ marginLeft: 260, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Travel Insurance</Text>
+                    <Text style={{ marginLeft: 260, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>
+                        Travel Insurance</Text>
                 </View>
                 <View style={{ marginBottom: 50 }}></View>
                 <View style={{ width: 130, marginLeft: 160, marginTop: -20 }}>
