@@ -462,14 +462,10 @@ export default class specialGames extends React.Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={{ marginTop: 100, marginLeft: -364, width: 100, height: 50 }}
-                            onPress={() => this.props.navigation.navigate('giftcard')}>
-                            <Text style={{ fontSize: 17, fontWeight: "bold" }}>Gift card</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={{ marginTop: 100, marginLeft: 0, width: 100, height: 50 }}
                             onPress={() => this.props.navigation.navigate('my trips')}>
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}>My Trips</Text>
                         </TouchableOpacity>
+
 
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -580,6 +576,13 @@ export default class specialGames extends React.Component {
                         </View>
                     </SafeAreaView>
                 </ScrollView>
+
+                <View style={{ width: 250, marginLeft: 50, height: 70, marginBottom: 30 }}>
+                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70 }}
+                        onPress={() => this.props.navigation.navigate('giftcard')}>
+                        <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10, paddingLeft: 80, paddingTop: 15 }}> GIFT CARD</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView >
         );
     }
