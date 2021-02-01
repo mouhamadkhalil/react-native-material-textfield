@@ -7,11 +7,11 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    SafeAreaView,
     Dimensions,
     FlatList
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
+import { get } from "../../services.js"
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
 import CalendarIcon from "../../assets/Images_Design/calendar.png";
 import Card1 from "../../assets/Images_Design/card1.png";
@@ -22,7 +22,7 @@ import Carousel from 'react-native-snap-carousel';
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const sourceFile = require('../../services.js');
+//const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);
@@ -33,40 +33,21 @@ export default class specialGames extends React.Component {
         super(props);
 
         this.state = {
-            Picture1: "",
-            Picture2: "",
-            Picture3: "",
-            Picture4: "",
-            isDone: false,
-            searchText: "",
             activeIndex: 0,
-            competitions: [],
             specialGames: [],
             popularGames: [],
             hotGames: [],
-            popularTeams: []
+            popularTeams: [],
+            competitions: []
         };
 
         this.getData();
     }
 
     getData = () => {
-        const url = `${API_URL}/mobile/game/GetHomePageData`;
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-
+        get('/mobile/game/GetHomePageData')
+            .then(response => {
+                console.log(response);
                 // Special Games Data
                 var specialGames = response.SpecialGames.map(function (item) {
                     var game = item.MatchBundleDetail[0].Game;
@@ -79,7 +60,8 @@ export default class specialGames extends React.Component {
                         GameCode: game.GameCode,
                         HomeTeam: game.HomeTeam,
                         AwayTeam: game.AwayTeam,
-                        StadeCity: game.StadeCity
+                        StadeCity: game.StadeCity,
+                        PriceCaption: item.PriceCaption
                     };
                 });
                 this.setState({ specialGames: specialGames });
@@ -117,7 +99,8 @@ export default class specialGames extends React.Component {
                         GameCode: game.GameCode,
                         HomeTeam: game.HomeTeam,
                         AwayTeam: game.AwayTeam,
-                        StadeCity: game.StadeCity
+                        StadeCity: game.StadeCity,
+                        PriceCaption: item.PriceCaption
                     };
                 });
                 this.setState({ hotGames: hotGames });
@@ -161,8 +144,8 @@ export default class specialGames extends React.Component {
                             </View>
                             <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                                 <View style={{}}>
-                                    <Text style={styles.specialGameMeta}>12</Text>
-                                    <Text style={styles.specialGameMeta}>sep</Text>
+                                    <Text style={styles.specialGameMeta}>{Moment(new Date(item.GameDate)).format('DD')}</Text>
+                                    <Text style={styles.specialGameMeta}>{Moment(new Date(item.GameDate)).format('MMM')}</Text>
                                 </View>
                                 <View style={{ borderLeftWidth: 1, borderLeftColor: "#ffffff77", width: 0, height: 60, marginLeft: 15, marginRight: 15 }}></View>
                                 <View style={{ flex: 1 }}>
@@ -171,7 +154,7 @@ export default class specialGames extends React.Component {
                                 </View>
                             </View>
                             <View>
-                                <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>Early Bird Form</Text>
+                                <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>{item.PriceCaption}</Text>
                                 <Text style={{ color: "white", fontSize: 10, marginTop: 5 }}>* price based on 2 fans flyings together</Text>
                             </View>
                             <TouchableOpacity style={{
@@ -237,8 +220,8 @@ export default class specialGames extends React.Component {
                     <View style={{ borderBottomWidth: 1, borderBottomColor: "#ffffff77", width: 200, height: 0, marginTop: 5, marginBottom: 5 }}></View>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{}}>
-                            <Text style={styles.specialGameMeta}>12</Text>
-                            <Text style={styles.specialGameMeta}>jan</Text>
+                            <Text style={styles.specialGameMeta}>{Moment(new Date(item.GameDate)).format('DD')}</Text>
+                            <Text style={styles.specialGameMeta}>{Moment(new Date(item.GameDate)).format('MMM')}</Text>
                         </View>
                         <View style={{ borderLeftWidth: 1, borderLeftColor: "#ffffff77", height: 70, width: 0, marginLeft: 15, marginRight: 15 }}></View>
                         <View>
@@ -388,33 +371,32 @@ export default class specialGames extends React.Component {
                         />
                     </View>
                 </View>
-                <View style={styles.pageTitleBar}></View>
-                <Text style={styles.pageTitleText}>
-                    COMPETETIONS
-                </Text>
-                <ScrollView>
-                    {/* carousel 4 */}
-                    <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
-                            <Carousel
-                                style={{ marginLeft: 50 }}
-                                layout={"default"}
-                                ref={ref => this.carousel = ref}
-                                data={this.state.competitions}
-                                sliderWidth={170}
-                                itemWidth={290}
-                                // autoplay={true}
-                                renderItem={this.competitionItem}
-                                onSnapToItem={index => this.setState({ activeIndex: index })}
-                            />
-                        </View>
-                    </SafeAreaView>
-                </ScrollView>
 
-                <View style={{ width: 250, marginLeft: 50, height: 70, marginBottom: 30 }}>
-                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70 }}
+                {/* competitions  */}
+                <View style={{ marginTop: 20 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={styles.pageTitleBar}></View>
+                        <Text style={styles.pageTitleText}>competitions</Text>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+                        <Carousel
+                            style={{ marginLeft: 50 }}
+                            layout={"default"}
+                            ref={ref => this.carousel = ref}
+                            data={this.state.competitions}
+                            sliderWidth={170}
+                            itemWidth={290}
+                            // autoplay={true}
+                            renderItem={this.competitionItem}
+                            onSnapToItem={index => this.setState({ activeIndex: index })}
+                        />
+                    </View>
+                </View>
+
+                <View style={{ width: '70%', marginTop: 20, marginLeft: 30, height: 70, marginBottom: 30 }}>
+                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems:'center', justifyContent:'center' }}
                         onPress={() => this.props.navigation.navigate('giftcard')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10, paddingLeft: 80, paddingTop: 15 }}> GIFT CARD</Text>
+                        <Text style={{ fontSize: 17, fontWeight: "bold", textTransform:'uppercase'}}> gift card</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView >
