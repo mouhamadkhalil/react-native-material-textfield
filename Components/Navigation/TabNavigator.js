@@ -321,4 +321,6 @@ const AllGamesTabs = ({ navigation }) => {
     );
 };
 
+
+
 export {TripTabs, BookingsTabs, MoreTabs, ContactTabs, AllGamesTabs};
