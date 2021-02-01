@@ -10,6 +10,7 @@ import Help1Screen from "../Help/Help1Screen";
 import Help2Screen from "../Help/Help2Screen";
 import BookNowScreen from "../Special Games/BookNow";
 import HeaderOptions from "./Header";
+import ManageTripScreen from '../Manage Trip/ManageTripScreen'
 
 
 
@@ -67,4 +68,15 @@ const ContactStackNavigator = ({ navigation }) => {
     );
 };
 
-export { StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator };
+const ManageTripStackNavigator = ({ navigation }) => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="ManageTrip" options={{ title: 'Manage trip' }} navigationProps={navigation} component={ManageTripScreen} options={HeaderOptions({ navigation })} />
+        </Stack.Navigator>
+    );
+};
+
+
+
+
+export { StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator };
