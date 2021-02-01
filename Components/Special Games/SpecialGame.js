@@ -388,26 +388,34 @@ export default class specialGames extends React.Component {
                         />
                     </View>
                 </View>
+                <View style={styles.pageTitleBar}></View>
+                <Text style={styles.pageTitleText}>
+                    COMPETETIONS
+                </Text>
+                <ScrollView>
+                    {/* carousel 4 */}
+                    <SafeAreaView style={{ flex: 1, paddingTop: 0, marginTop: 0, marginRight: 40 }}>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+                            <Carousel
+                                style={{ marginLeft: 50 }}
+                                layout={"default"}
+                                ref={ref => this.carousel = ref}
+                                data={this.state.competitions}
+                                sliderWidth={170}
+                                itemWidth={290}
+                                // autoplay={true}
+                                renderItem={this.competitionItem}
+                                onSnapToItem={index => this.setState({ activeIndex: index })}
+                            />
+                        </View>
+                    </SafeAreaView>
+                </ScrollView>
 
-                {/* Competitions */}
-                <View style={{ marginTop: 20 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>competitions</Text>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
-                        <Carousel
-                            style={{ marginLeft: 50 }}
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.competitions}
-                            sliderWidth={170}
-                            itemWidth={290}
-                            // autoplay={true}
-                            renderItem={this.competitionItem}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
+                <View style={{ width: 250, marginLeft: 50, height: 70, marginBottom: 30 }}>
+                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70 }}
+                        onPress={() => this.props.navigation.navigate('giftcard')}>
+                        <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10, paddingLeft: 80, paddingTop: 15 }}> GIFT CARD</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView >
         );
