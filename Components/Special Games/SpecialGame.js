@@ -442,7 +442,14 @@ export default class specialGames extends React.Component {
                 <SafeAreaView style={{ backgroundColor: '#F7F7F7', height: 140 }}>
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
 
-                        <TouchableOpacity style={{ width: 100, height: 50, marginLeft: 20, marginTop: 50 }}
+                        <View style={{ width: 150, marginLeft: 30, height: 40, marginBottom: 30, marginTop: 60 }}>
+                            <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70 }}
+                                onPress={() => this.props.navigation.navigate('all games')}>
+                                <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10, paddingLeft: 25, paddingTop: 15 }}>SINGLE TRIP</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <TouchableOpacity style={{ width: 100, height: 50, marginLeft: 0, marginTop: 100 }}
                             onPress={() => this.props.navigation.navigate('teams')}>
                             <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10 }}> Teams</Text>
                         </TouchableOpacity>
@@ -456,12 +463,12 @@ export default class specialGames extends React.Component {
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}>Deals</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={{ width: 100, height: 50, marginLeft: -10, marginTop: 60 }}
+                        <TouchableOpacity style={{ width: 100, height: 50, marginLeft: -275, marginTop: 60 }}
                             onPress={() => this.props.navigation.navigate('request')}>
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}>Request</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={{ marginTop: 100, marginLeft: -364, width: 100, height: 50 }}
+                        <TouchableOpacity style={{ marginTop: 110, marginLeft: -15, width: 100, height: 50 }}
                             onPress={() => this.props.navigation.navigate('my trips')}>
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}>My Trips</Text>
                         </TouchableOpacity>
