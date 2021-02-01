@@ -28,13 +28,29 @@ import Lightbox from 'react-native-lightbox-v2';
 import DatePicker from 'react-native-datepicker';
 import Onspot from "../../assets/images/onspot.png";
 import Car1 from "../../assets/images/car1.png";
-import Stadium from "../../assets/images/stadium.png";
-import Hotel from "../../assets/images/hotel3.png";
+import Stadium from "../../assets/images/stadium.png"
+import Hotel from "../../assets/images/hotel3.png"
 import Insurnace from "../../assets/images/insurnace.png";
+import Star from "../../assets/images/star.png";
+import RadioButtonRN from 'radio-buttons-react-native';
 
 const sourceFile = require('../../services.js');
+const data = [
+    {
+        label: 'Doesnt matter, at least Iam there!'
+    },
+    {
+        label: 'I want a good view of the game'
+    },
+    {
+        label: 'I want to be close to the players'
+    },
+    {
+        label: 'Once in a lifetime! Give me the best '
+    },
+];
 
-export default class BookNow extends React.Component {
+export default class Request extends React.Component {
 
     state = {
         Picture1: "",
@@ -82,7 +98,9 @@ export default class BookNow extends React.Component {
                 text: "Text 4",
             },
         ],
-        date: "2016-05-15"
+        date: "2016-05-15",
+        fanNumber: 2
+
     };
 
     componentDidMount() {
@@ -109,6 +127,15 @@ export default class BookNow extends React.Component {
                 });
             });
     }
+
+    IncrementFan = () => {
+        this.setState({ fanNumber: this.state.fanNumber + 1 })
+    }
+
+    DecrementFan = () => {
+        this.setState({ fanNumber: this.state.fanNumber - 1 })
+    }
+
 
     searchGame = () => {
         const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
@@ -139,6 +166,7 @@ export default class BookNow extends React.Component {
             });
     };
 
+
     FilterGame = () => {
         const urlFilter = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
         fetch(urlFilter, {
@@ -156,12 +184,12 @@ export default class BookNow extends React.Component {
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
                 console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
-                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
-                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
-                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
-                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
-                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
-                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
+                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate })
+                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate })
+                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City })
+                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City })
+                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League })
+                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence })
                 this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
                 this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
             });
@@ -183,112 +211,20 @@ export default class BookNow extends React.Component {
                     onSubmitEditing={this.searchGame}
                     value={this.state.searchText}
                 /> */}
+
                 <Image source={Game} style={{ height: 200 }} />
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 10, marginTop: 15 }}>MATCH</Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 120, marginTop: -18 }}>CITY</Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 180, marginTop: -18 }}>DAYS</Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 240, marginTop: -19 }}>PRICE</Text>
-                    <Text style={{ fontSize: 9, marginLeft: 10, fontWeight: "bold", marginTop: 12 }}>FC Barcelona vs  N/A</Text>
-                    <Text style={{ fontSize: 9, marginLeft: 120, fontWeight: "bold", marginTop: -12 }}>Barcelona</Text>
-                    <Text style={{ fontSize: 9, marginLeft: 180, fontWeight: "bold", marginTop: -12 }}>04</Text>
-                    <Text style={{ fontSize: 9, marginLeft: 240, fontWeight: "bold", marginTop: -12, color: "#8CD222" }}>999$ Total *</Text>
+                    <Text style={{ fontSize: 10, marginLeft: 10, fontWeight: "bold", marginTop: 30 }}>CHELSEA VS WOLVE</Text>
+                    <Text style={{ fontSize: 10, marginLeft: 120, fontWeight: "bold", marginTop: -13 }}>Premiere league</Text>
+                    <Text style={{ fontSize: 10, marginLeft: 210, fontWeight: "bold", marginTop: -13 }}>London</Text>
+                    <Text style={{ fontSize: 10, marginLeft: 260, fontWeight: "bold", marginTop: -13 }}>27 Jan</Text>
                 </ScrollView>
                 <Text style={{ color: "black", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Travel details </Text>
-                <ScrollView style={{ backgroundColor: "white", width: 310, height: 100, marginLeft: 140, marginTop: 20 }}>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 15 }}>FANS</Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 170, marginTop: -16 }}>FLIGHT* </Text>
-                    <TouchableOpacity style={{ width: 20, marginLeft: 40 }}>
-                        <Text style={{ fontSize: 25, fontWeight: "bold", marginLeft: 0, marginTop: 11 }}>-</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ marginLeft: 100, marginTop: -31, width: 20 }}>
-                        <Text style={{ fontSize: 25, fontWeight: "bold" }}>+</Text>
-                    </TouchableOpacity>
+                <ScrollView style={{ backgroundColor: "white", width: 310, height: 500, marginLeft: 140, marginTop: 20 }}>
 
-                    <Text style={{ fontWeight: "bold", marginLeft: 70, marginTop: -28 }}>01</Text>
-                    <TextInput
-                        placeholder="Where are you departing from ?"
-                        style={{ marginLeft: 170, fontSize: 9, marginTop: -22 }}></TextInput>
-                    <ScrollView style={{ backgroundColor: "black", width: 130, height: 1, marginLeft: 170, marginTop: -5 }}></ScrollView>
-                </ScrollView>
-                <ScrollView style={{ backgroundColor: "white", width: 310, height: 430, marginLeft: 140, marginTop: 50 }}>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 15 }}>HOTEL</Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 170, marginTop: -17 }}>SEATING OPTIONS </Text>
-                    <Text style={{ color: "blue", fontWeight: "bold", marginLeft: 30, marginTop: 10 }}>Arc La Rambla </Text>
-                    <Text style={{ color: "blue", fontWeight: "bold", marginLeft: 170, marginTop: -19 }}>Category 3 </Text>
-                    <Text style={{ color: "gray", marginLeft: 60, marginTop: 30, fontSize: 12 }}>Breakfast </Text>
-                    <Text style={{ color: "gray", marginLeft: 170, marginTop: -18, fontSize: 12 }}>Camp Nou, Barcelona </Text>
-                    <Text style={{ color: "gray", marginLeft: 170, marginTop: 5, fontSize: 12 }}>1 Seat </Text>
-                    <TouchableOpacity>
-                        {this.state.isDone ?
-                            <Lightbox >
-                                <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null}
-                                    style={{ width: 120, height: 120, marginLeft: 30, marginTop: 20 }} />
-                            </Lightbox>
-                            :
-                            <ActivityIndicator size="small" color="blue"
-                                style={{ marginTop: 80, marginLeft: -60 }}
-                            />}
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        {this.state.isDone ?
-                            <Lightbox >
-                                <Image source={this.state.Picture2 ? { uri: this.state.Picture2 } : null}
-                                    style={{ width: 120, height: 120, marginLeft: 170, marginTop: -120 }} />
-                            </Lightbox>
-                            :
-                            <ActivityIndicator size="small" color="blue"
-                                style={{ marginTop: 80, marginLeft: 0 }}
-                            />}
-                    </TouchableOpacity>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 35 }}>PERKS</Text>
-                    <Image source={Onspot} style={{ marginLeft: 20, marginTop: 10 }} />
-                    <Image source={Hotel} style={{ marginLeft: 70, marginTop: -42 }} />
-                    <Image source={Car1} style={{ marginLeft: 130, marginTop: -42 }} />
-                    <Image source={Stadium} style={{ marginLeft: 190, marginTop: -41 }} />
-                    <Image source={Insurnace} style={{ marginLeft: 250, marginTop: -41 }} />
-                    <Text style={{ marginLeft: 30, color: "blue", fontWeight: "bold", width: 50, fontSize: 9 }}>On Spot Service</Text>
-                    <Text style={{ marginLeft: 80, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Airport Pick up </Text>
-                    <Text style={{ marginLeft: 135, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Airport Drop off</Text>
-                    <Text style={{ marginLeft: 195, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Stadium Tour</Text>
-                    <Text style={{ marginLeft: 260, color: "blue", fontWeight: "bold", width: 50, fontSize: 9, marginTop: -23 }}>Travel Insurance</Text>
-                </ScrollView>
-                <Text style={{ marginLeft: 140, color: "black", fontWeight: "bold", marginTop: 50 }}>Main Fan</Text>
-                <ScrollView style={{ backgroundColor: "white", width: 310, height: 670, marginLeft: 140, marginTop: 20 }}>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>TITLE*</Text>
-                    <DropDownPicker
-                        items={[
-                            { label: "Mr.", value: "Mr.", hidden: true },
-                            { label: "Ms.", value: "Ms." },
-                        ]}
-                        defaultValue={this.state.country}
-                        containerStyle={{ height: 40 }}
-                        style={{ backgroundColor: "#fafafa", width: 150, marginLeft: 30, marginTop: 10 }}
-                        itemStyle={{
-                            justifyContent: "flex-start",
-                        }}
-                        dropDownStyle={{ color: "gray", width: 150, marginLeft: 30 }}
-                        onChangeItem={(item) =>
-                            this.setState({
-                                country: item.value,
-                            })
-                        }
-                    />
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>NAME*</Text>
-                    <TextInput
-                        multiline={true}
-                        numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
-                    />
-                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>SURNAME*</Text>
-                    <TextInput
-                        multiline={true}
-                        numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
-                    />
-                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>DATE OF BIRTH*</Text>
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>TRIP DATES</Text>
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>From</Text>
+
                     <DatePicker
                         style={{ width: 250, marginLeft: 30, marginTop: 20 }}
                         date={this.state.date}
@@ -310,41 +246,143 @@ export default class BookNow extends React.Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => { this.setState({ date: date }); }}
+                        onDateChange={(date) => { this.setState({ date: date }) }}
                     />
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>COUNTRY*</Text>
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>To</Text>
+                    <DatePicker
+                        style={{ width: 250, marginLeft: 30, marginTop: 20 }}
+                        date={this.state.date}
+                        mode="date"
+                        placeholder="select date"
+                        format="YYYY-MM-DD"
+                        minDate="2016-05-01"
+                        maxDate="2050-06-01"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                            dateIcon: {
+                                position: 'absolute',
+                                left: 0,
+                                top: 0,
+                                marginLeft: 0
+                            },
+                            dateInput: {
+                                marginLeft: 36
+                            }
+                        }}
+                        onDateChange={(date) => { this.setState({ date: date }) }}
+                    />
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>FANS</Text>
+                    <TouchableOpacity style={{ width: 20, marginLeft: 40 }} onPress={this.DecrementFan}>
+                        <Text style={{ fontSize: 25, fontWeight: "bold", marginLeft: 0, marginTop: 11 }}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={{ marginLeft: 70, marginTop: -25 }}>{this.state.fanNumber}</Text>
+                    <TouchableOpacity style={{ marginLeft: 105, marginTop: -25, width: 20 }} onPress={this.IncrementFan} >
+                        <Text style={{ fontSize: 25, fontWeight: "bold" }}>+</Text>
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>BUDGET</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
+                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 20, marginTop: -49 }}></ScrollView>
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>FLIGHT</Text>
+                    <TextInput
+                        multiline={true}
+                        numberOfLines={8}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
+                    />
+                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 20, marginTop: -49 }}></ScrollView>
+                </ScrollView>
+                <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Hotel</Text>
+                <ScrollView style={{ backgroundColor: "white", width: 310, height: 140, marginLeft: 140, marginTop: 30 }}>
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: 30, marginLeft: 20 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 40 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 60 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 80 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 100 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: 20, marginLeft: 20 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 40 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 60 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 80 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: 20, marginLeft: 20 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 40 }} />
+                    <Image source={Star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 60 }} />
+                </ScrollView>
+                <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Stadium</Text>
+                <ScrollView style={{ backgroundColor: "white", width: 310, height: 263, marginLeft: 140, marginTop: 30 }}>
+                    <RadioButtonRN
+                        data={data}
+                        selectedBtn={(e) => console.log(e)}
+                        style={{ marginTop: -10 }}
+                    />
+                </ScrollView>
+                <Text style={{ marginLeft: 140, color: "black", fontWeight: "bold", marginTop: 50 }}>Your Contact Details</Text>
+                <ScrollView style={{ backgroundColor: "white", width: 310, height: 430, marginLeft: 140, marginTop: 20 }}>
+                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>TITLE*</Text>
+                    <DropDownPicker
+                        items={[
+                            { label: "Mr.", value: "Mr.", hidden: true },
+                            { label: "Ms.", value: "Ms." },
+                        ]}
+                        defaultValue={this.state.country}
+                        containerStyle={{ height: 50 }}
+                        style={{ backgroundColor: "#fafafa", width: 255, marginLeft: 30, marginTop: 10 }}
+                        itemStyle={{
+                            justifyContent: "flex-start",
+                        }}
+                        dropDownStyle={{ color: "gray", width: 150, marginLeft: 30 }}
+                        onChangeItem={(item) =>
+                            this.setState({
+                                country: item.value,
+                            })
+                        }
+                    />
+                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>NAME*</Text>
+                    <TextInput
+                        multiline={true}
+                        numberOfLines={8}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
+                    />
+                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -49 }}></ScrollView>
+
+                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>SURNAME*</Text>
+                    <TextInput
+                        multiline={true}
+                        numberOfLines={8}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
+                    />
+                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -49 }}></ScrollView>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>EMAIL*</Text>
                     <TextInput
+                        autoCapitalize="none"
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        type="emai"
+                        keyboardType="email-address"
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
+                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -49 }}></ScrollView>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>PHONE NUMBER*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
+                        style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-                </ScrollView>                               
+                    <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -49 }}></ScrollView>
+                </ScrollView>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 150, marginLeft: 140, marginTop: 50 }}>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
-                        placeholder="Additional requests? Please write them here..."
+                        placeholder="Please write the delivery address here ..."
                         style={{ fontSize: 12, marginTop: -20, paddingLeft: 20 }}
                     />
                 </ScrollView>
                 <ScrollView style={{ backgroundColor: "white", width: 170, height: 35, marginLeft: 280, marginTop: 30 }}>
                     <Button
-                        title="BOOK NOW"
+                        title="SEND REQUEST"
                         color="#8CD222"
                     />
                 </ScrollView>
@@ -358,7 +396,7 @@ const styles = StyleSheet.create({
         height: 1100,
         marginLeft: -110,
         width: 500,
-        marginTop: -50,
+        marginTop: 0,
         marginBottom: 30,
         backgroundColor: "#F5F7EC",
     },

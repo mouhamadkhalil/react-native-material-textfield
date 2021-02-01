@@ -12,7 +12,7 @@ import ImgAllGames from "../../assets/images/all-games.jpg";
 import ImgArrowDown from "../../assets/Images_Design/arrow_down.png";
 import ImgFlag from "../../assets/Images_Design/flag1.png";
 import ImgShare from "../../assets/Images_Design/share.png";
-import ImgArrowRight from "../../assets/Images_Design/arrow_right2.png"
+import ImgArrowRight from "../../assets/Images_Design/arrow_right2.png";
 import ImgCalendar from "../../assets/Images_Design/calendar-grey.png";
 import ImgList from "../../assets/Images_Design/list-grey-icon.png";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -21,6 +21,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const sourceFile = require('../../services.js');
 
+
+//test
 export default class AllGames extends React.Component {
 
     constructor(props) {
@@ -112,12 +114,12 @@ export default class AllGames extends React.Component {
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
                 console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
-                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate })
-                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate })
-                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City })
-                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City })
-                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League })
-                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence })
+                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
+                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
+                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
+                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
+                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
+                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
                 this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
                 this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
             });
@@ -251,7 +253,7 @@ export default class AllGames extends React.Component {
                     </View>
                     {/* render games end*/}
                 </View>
-            </ScrollView>
+            </ScrollView >
         );
     }
 }

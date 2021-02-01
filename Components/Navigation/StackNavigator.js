@@ -11,8 +11,15 @@ import Help2Screen from "../Help/Help2Screen";
 import BookNowScreen from "../Special Games/BookNow";
 import HeaderOptions from "./Header";
 import ManageTripScreen from '../Manage Trip/ManageTripScreen'
-
-
+import TeamsScreen from "../Special Games/Teams";
+import LeaguesScreen from "../Special Games/Leagues";
+import AllGamesScreen from "../Special Games/AllGames";
+import RequestScreen from "../Special Games/Request";
+import GiftCardScreen from "../Special Games/GiftCard";
+import GiftCard2Screen from "../Special Games/GiftCard2";
+import TripOverViewScreen from "../Special Games/TripOverView";
+import CustomizeTripScreen from "../Special Games/CustomizeTrip";
+import SelectFlightScreen from "../Special Games/SelectFilght";
 
 const Stack = createStackNavigator();
 
@@ -29,11 +36,21 @@ const TripStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
             <Stack.Screen name="book a trip" navigationProps={navigation} component={SpecialGames} options={HeaderOptions({ navigation })} />
-            <Stack.Screen name="all games" navigationProps={navigation} component={AllGames}  />
+            <Stack.Screen name="all games" navigationProps={navigation} component={AllGames} />
             <Stack.Screen name="book now" navigationProps={navigation} component={BookNowScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="teams" navigationProps={navigation} component={TeamsScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="leagues" navigationProps={navigation} component={LeaguesScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="AllGames" navigationProps={navigation} component={AllGamesScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="giftcard" navigationProps={navigation} component={GiftCardScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="giftcard2" navigationProps={navigation} component={GiftCard2Screen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="tripoverview" navigationProps={navigation} component={TripOverViewScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} options={HeaderOptions({ navigation })} />
         </Stack.Navigator>
     );
 };
+
 
 const AllGamesStackNavigator = ({ navigation }) => {
     return (
