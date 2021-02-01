@@ -57,13 +57,42 @@ export default class Leagues extends React.Component {
         super(props);
         const navigation = this.props;
         this.state = {
-            Picture1: "",
-            Picture2: "",
-            Picture3: "",
-            Picture4: "",
-            isDone: false,
-            searchText: "",
+            allLeagues: [{
+                ID: "",
+                Value: "",
+                disabled: "",
+                ExtraField: "",
+            }],
         };
+    }
+
+
+    componentDidMount() {
+        const url = `${API_URL}/mobile/leagues/all`;
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                var data = response.map(function (item) {
+                    return {
+                        ID: item.idMatch,
+                        Value: item.Value,
+                        disabled: item.disabled,
+                        ExtraField: item.ExtraField,
+                    };
+                });
+                this.setState({ allLeagues: data });
+            });
     }
 
     render() {

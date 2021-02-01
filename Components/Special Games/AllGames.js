@@ -5,6 +5,7 @@ import {
     Image,
     ScrollView,
     View,
+    ActivityIndicator,
     TouchableOpacity,
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
@@ -54,7 +55,8 @@ export default class AllGames extends React.Component {
             pageSize: 15,
             idTeam: 2122,
             orderBy: "date",
-            allGames: []
+            allGames: [],
+            isDone: false
         };
         this.getAllGames();
     }
@@ -94,6 +96,7 @@ export default class AllGames extends React.Component {
                     };
                 });
                 this.setState({ allGames: data });
+                this.setState({ isDone: true })
             });
     };
 
@@ -173,8 +176,17 @@ export default class AllGames extends React.Component {
                             </View>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', height: 50, marginTop: 10, borderTopColor: "grey", borderTopWidth: 1 }}>
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '40%', height: '100%', backgroundColor: '#76ff02' }}>
+                    <View style={{
+                        flexDirection: 'row', justifyContent: 'flex-end', height: 50,
+                        marginTop: 10, borderTopColor: "grey", borderTopWidth: 1
+                    }}>
+                        <TouchableOpacity
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center', justifyContent: 'center', width: '40%', height: '100%', backgroundColor: '#76ff02'
+                            }}
+                            onPress={() => this.props.navigation.navigate('request')}
+                        >
                             <Text style={{ fontSize: 14, textTransform: 'uppercase' }}>request</Text>
                             <Image source={ImgArrowRight} style={{ marginLeft: 10 }} />
                         </TouchableOpacity>
@@ -184,7 +196,6 @@ export default class AllGames extends React.Component {
         }
         return buttons;
     };
-
 
     render() {
         return (
@@ -248,9 +259,12 @@ export default class AllGames extends React.Component {
                     {/* filter picker end */}
 
                     {/* render games begin*/}
-                    <View style={{ width: '90%', alignSelf: 'center', zIndex: 1 }}>
-                        {this.renderAllGames()}
-                    </View>
+                    {!this.state.isDone ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginLeft: 10 }} />
+                        :
+                        <View style={{ width: '90%', alignSelf: 'center', zIndex: 1 }}>
+                            {this.renderAllGames()}
+                        </View>
+                    }
                     {/* render games end*/}
                 </View>
             </ScrollView >
