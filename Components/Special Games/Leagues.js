@@ -211,6 +211,11 @@ const styles = StyleSheet.create({
     teamsWrap: {
         flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around"
     },
+    headerBg: {
+        height: 200,
+        alignItems: "center",
+        justifyContent: "center",
+    },
     linearGradient: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -224,11 +229,6 @@ const styles = StyleSheet.create({
         width: 30,
         marginLeft: 30,
         marginTop: 35
-    },
-    headerBg: {
-        height: 200,
-        alignItems: "center",
-        justifyContent: "center",
     },
     pageTitleText: {
         color: "white",

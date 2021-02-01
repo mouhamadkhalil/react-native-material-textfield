@@ -32,6 +32,7 @@ import Carousel from 'react-native-snap-carousel';
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Brazil from "../../assets/games/brazil.png";
+import headerBg from "../../assets/images/teams-list-mobile-background.jpg";
 
 import { Separator, Thumbnail } from 'native-base';
 import { AccordionList, Collapse, CollapseHeader, CollapseBody } from "accordion-collapse-react-native";
@@ -104,27 +105,28 @@ export default class Teams extends React.Component {
         };
     }
 
-    popularTeamsItem = ({ item, index }) => {
-        return (
-            <TouchableOpacity style={{ marginTop: 40, width: 270, height: 250, marginLeft: 10, marginBottom: 0, shadowColor: "red", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 5.84, elevation: 5 }}>
-                <Image source={Liverppol} style={{ borderRadius: 20 }} />
-            </TouchableOpacity>
-        );
-    };
+    // popularTeamsItem = ({ item, index }) => {
+    //     return (
+    //         <TouchableOpacity style={{ marginTop: 40, width: 270, height: 250, marginLeft: 10, marginBottom: 0, shadowColor: "red", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 5.84, elevation: 5 }}>
+    //             <Image source={Liverppol} style={{ borderRadius: 20 }} />
+    //         </TouchableOpacity>
+    //     );
+    // };
 
     _head(item) {
+        console.log(this.state);
         return (
-            <Separator bordered style={{ alignItems: 'center', marginTop: 5 }}>
-                <Text style={{ marginLeft: -320, fontWeight: "bold" }}>{item.title}</Text>
+            <Separator bordered style={{ paddingLeft: 30, paddingRight: 30, backgroundColor: "#f7f7f7" }}>
+                <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
             </Separator>
         );
     }
 
     _body(item) {
         return (
-            <View style={{ padding: 10 }}>
-                <Text style={{ textAlign: 'center', marginLeft: -25, marginTop: 30 }}>{item.body}</Text>
-                <Image source={Brazil} style={{ marginLeft: 70, marginTop: -25 }} />
+            <View style={{ padding: 30, backgroundColor: "#eee", alignItems: "center", flexDirection: "row" }}>
+                <Image source={Brazil} style={{}} />
+                <Text style={{ textAlign: 'center' }}>{item.body}</Text>
             </View>
         );
     }
@@ -134,43 +136,22 @@ export default class Teams extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={{ backgroundColor: "#eee", marginTop: 0 }}>
-                    <Text style={styles.pageTitleText}>
-                        TEAMS
-                    </Text>
-                    <View style={{ backgroundColor: "white", height: 200, width: "100%", marginTop: 150 }}></View>
-                    <View style={{ flex: 1, justifyContent: 'center', marginTop: -350 }}>
-                        <Carousel
-                            style={{ marginLeft: 0 }}
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.carouselItems}
-                            sliderWidth={485}
-                            itemWidth={180}
-                            renderItem={this.popularTeamsItem}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
+                    <ImageBackground source={headerBg} style={styles.headerBg}>
+                        <Text style={styles.pageTitleText}>Teams</Text>
+                    </ImageBackground>
                 </View>
-                <Text style={{ fontWeight: "bold", fontSize: 23, marginLeft: 70 }}>Start booking a trip</Text>
-                <Text style={{ fontSize: 15, marginLeft: 30, width: 290 }}>Choose between a single, multi-destination</Text>
-                <Text style={{ fontSize: 15, marginLeft: 40, width: 290 }}> or group trip and gift your friends a fun</Text>
-                <Text style={{ fontSize: 15, marginLeft: 100, width: 290 }}> stadium experience.</Text>
-
-
-                <ScrollView style={{ marginTop: 30 }}></ScrollView>
+                <View style={{ textAlign: "center", alignItems: "center", marginTop: 60, marginBottom: 60 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 23, marginBottom: 20 }}>Start booking a trip</Text>
+                    <Text style={{ fontSize: 15 }}>Choose between a single, multi-destination</Text>
+                    <Text style={{ fontSize: 15 }}> or group trip and gift your friends a fun</Text>
+                    <Text style={{ fontSize: 15 }}> stadium experience.</Text>
+                </View>
                 <AccordionList
                     list={this.state.list}
                     header={this._head}
                     body={this._body}
                     keyExtractor={item => `${item.id}`}
                 />
-
-                <ScrollView style={{ marginTop: 30 }}></ScrollView>
-
-
-
-
-
             </ScrollView >
         );
     }
@@ -178,17 +159,35 @@ export default class Teams extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 2000,
-        marginLeft: 0,
-        width: 500,
-        marginTop: 0,
-        marginBottom: 0,
-        backgroundColor: "#FFF",
+        width: "100%",
+        backgroundColor: "#fafafa",
+    },
+    sectionHeading: {
+        fontWeight: "bold",
+        fontSize: 26,
+        marginTop: 50,
+        marginLeft: "auto",
+        marginRight: "auto"
+    },
+    teamImage: {
+        marginTop: 50,
+        width: 70,
+        height: 70,
+        marginLeft: 20,
+        marginRight: 20
     },
     teamCircle: {
         width: 10,
         height: 10,
         borderRadius: 50,
+    },
+    teamsWrap: {
+        flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around"
+    },
+    headerBg: {
+        height: 200,
+        alignItems: "center",
+        justifyContent: "center",
     },
     linearGradient: {
         alignItems: 'center',
@@ -205,11 +204,9 @@ const styles = StyleSheet.create({
         marginTop: 35
     },
     pageTitleText: {
-        marginTop: 40,
-        color: "black",
-        fontSize: 20,
+        color: "white",
+        fontSize: 26,
         fontWeight: "bold",
-        marginLeft: 150
     },
     specialGameMeta: {
         color: "white", fontSize: 18
