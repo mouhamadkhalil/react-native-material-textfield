@@ -45,6 +45,8 @@ import Image12 from "../../assets/games/image12.png";
 import Image13 from "../../assets/games/image13.png";
 import Image14 from "../../assets/games/image14.png";
 import Image15 from "../../assets/games/image15.png";
+import headerBg from "../../assets/images/leagues-mobile-header-background.jpg";
+import Autocomplete from "react-native-autocomplete-input";
 
 const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -69,60 +71,85 @@ export default class Leagues extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <View style={{ backgroundColor: "lightblue", marginTop: 0, height: 200 }}>
+                <ImageBackground source={headerBg} style={styles.headerBg}>
+                    <Text style={styles.pageTitleText}>
+                        LEAGUES
+                    </Text>
+                    {/* <View style={{ height: 200, width: "100%", marginTop: 150 }}></View> */}
+                </ImageBackground>
+                {/* <View style={{ backgroundColor: "lightblue", marginTop: 0, height: 200 }}>
+                    <Image source={headerBg} style={{ height: 40, width: "100%" }} />
                     <Text style={styles.pageTitleText}>
                         LEAGUES
                     </Text>
                     <View style={{ height: 200, width: "100%", marginTop: 150 }}></View>
+                </View> */}
+                <Text style={styles.sectionHeading}>European</Text>
+                <View style={styles.teamsWrap}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image1} style={styles.teamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image2} style={styles.teamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image3} style={styles.teamImage} />
+                    </TouchableOpacity>
                 </View>
-                <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 145, marginTop: 50 }}>European</Text>
-                <TouchableOpacity style={{ width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image1} style={{ marginLeft: 30, marginTop: 50, width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 150, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image2} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 260, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image3} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 160, marginTop: 50 }}>Spain</Text>
-                <TouchableOpacity style={{ width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image4} style={{ marginLeft: 30, marginTop: 50, width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 150, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image5} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 260, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image6} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 175, marginTop: 50 }}>Uk</Text>
-                <TouchableOpacity style={{ width: 100, marginLeft: 80, marginTop: 50 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image7} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 210, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image8} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{ width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image9} style={{ marginLeft: 30, marginTop: 50, width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 150, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image10} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 260, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image11} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <Text style={{ fontWeight: "bold", fontSize: 18, marginLeft: 140, marginTop: 50 }}>International</Text>
-                <TouchableOpacity style={{ width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image12} style={{ marginLeft: 30, marginTop: 50, width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 150, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image13} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginLeft: 270, marginTop: -70, width: 100 }} onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Image source={Image14} style={{ width: 70, height: 70 }} />
-                </TouchableOpacity>
-                <ScrollView style={{ marginBottom: 80 }}></ScrollView>
+                <Text style={styles.sectionHeading}>Spain</Text>
+                <View style={styles.teamsWrap}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image4} style={styles.teamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image5} style={styles.teamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image6} style={styles.teamImage} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.sectionHeading}>Uk</Text>
+                <View style={styles.teamsWrap}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image7} style={styles.teamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image8} style={styles.teamImage} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.sectionHeading}>Italy</Text>
+                <View style={styles.teamsWrap}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image9} style={styles.teamImage} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.sectionHeading}>Germany</Text>
+                <View style={styles.teamsWrap}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image10} style={styles.teamImage} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.sectionHeading}>France</Text>
+                <View style={styles.teamsWrap}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image11} style={styles.teamImage} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.sectionHeading}>International</Text>
+                <View style={{ ...styles.teamsWrap, marginBottom: 80 }}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image12} style={styles.teamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image13} style={styles.teamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image14} style={styles.teamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Image source={Image15} style={styles.teamImage} />
+                    </TouchableOpacity>
+                </View>
             </ScrollView >
         );
     }
@@ -130,17 +157,30 @@ export default class Leagues extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 2000,
-        marginLeft: 0,
-        width: 500,
-        marginTop: 0,
-        marginBottom: 0,
-        backgroundColor: "#F0DADA",
+        width: "100%",
+        backgroundColor: "#fafafa",
+    },
+    sectionHeading: {
+        fontWeight: "bold",
+        fontSize: 26,
+        marginTop: 50,
+        marginLeft: "auto",
+        marginRight: "auto"
+    },
+    teamImage: {
+        marginTop: 50,
+        width: 70,
+        height: 70,
+        marginLeft: 20,
+        marginRight: 20
     },
     teamCircle: {
         width: 10,
         height: 10,
         borderRadius: 50,
+    },
+    teamsWrap: {
+        flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around"
     },
     linearGradient: {
         alignItems: 'center',
@@ -156,12 +196,15 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginTop: 35
     },
+    headerBg: {
+        height: 200,
+        alignItems: "center",
+        justifyContent: "center",
+    },
     pageTitleText: {
-        marginTop: 80,
-        color: "black",
-        fontSize: 20,
+        color: "white",
+        fontSize: 26,
         fontWeight: "bold",
-        marginLeft: 140
     },
     specialGameMeta: {
         color: "white", fontSize: 18
