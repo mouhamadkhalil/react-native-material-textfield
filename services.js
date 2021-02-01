@@ -18,8 +18,7 @@ export function get(path) {
                 "ff_version": 10,
                 "ff_language": "en",
                 "source": "mobile",
-                "gps_location": "",
-                "authorization" : "Bearer Token",
+                "gps_location": ""
             },
         })
             .then((res) => res.json())

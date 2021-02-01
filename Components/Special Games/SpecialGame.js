@@ -34,11 +34,11 @@ export default class specialGames extends React.Component {
 
         this.state = {
             activeIndex: 0,
-            competitions: [],
             specialGames: [],
             popularGames: [],
             hotGames: [],
-            popularTeams: []
+            popularTeams: [],
+            competitions: []
         };
 
         this.getData();
@@ -47,6 +47,7 @@ export default class specialGames extends React.Component {
     getData = () => {
         get('/mobile/game/GetHomePageData')
             .then(response => {
+                console.log(response);
                 // Special Games Data
                 var specialGames = response.SpecialGames.map(function (item) {
                     var game = item.MatchBundleDetail[0].Game;
@@ -118,7 +119,7 @@ export default class specialGames extends React.Component {
                 this.setState({ popularTeams: popularTeams });
 
             });
-    }
+    };
 
     /******************* Special Game Item ************************/
     specialGameItem({ item, index, state }) {
@@ -204,7 +205,7 @@ export default class specialGames extends React.Component {
                 <Text style={{ fontSize: 12, width: 65 }}>{item.City} from 1360$</Text>
                 <Image source={Arrow} />
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity>;
 
 
     /******************* Hot Game Item ************************/
@@ -371,7 +372,7 @@ export default class specialGames extends React.Component {
                     </View>
                 </View>
 
-                {/* Competitions */}
+                {/* competitions  */}
                 <View style={{ marginTop: 20 }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={styles.pageTitleBar}></View>
@@ -390,6 +391,13 @@ export default class specialGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
+                </View>
+
+                <View style={{ width: '70%', marginTop: 20, marginLeft: 30, height: 70, marginBottom: 30 }}>
+                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems:'center', justifyContent:'center' }}
+                        onPress={() => this.props.navigation.navigate('giftcard')}>
+                        <Text style={{ fontSize: 17, fontWeight: "bold", textTransform:'uppercase'}}> gift card</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView >
         );

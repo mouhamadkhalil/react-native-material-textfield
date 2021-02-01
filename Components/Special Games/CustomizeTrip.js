@@ -7,6 +7,7 @@ import {
     Button,
     ScrollView,
     View,
+    CheckBox,
     TouchableOpacity,
     ActivityIndicator
 } from "react-native";
@@ -25,9 +26,22 @@ import Car1 from "../../assets/images/car1.png";
 import DatePicker from 'react-native-datepicker';
 import Stadium from "../../assets/images/stadium.png"
 import Hotel from "../../assets/images/hotel3.png"
-import Insurnace from "../../assets/images/insurnace.png"
+import Insurnace from "../../assets/images/insurnace.png";
+import RadioButtonRN from 'radio-buttons-react-native';
 
 const sourceFile = require('../../services.js');
+
+const data = [
+    {
+        label: 'Category 1  +442$'
+    },
+    {
+        label: 'Category 2 +222$'
+    },
+    {
+        label: 'Category 3  +0$'
+    },
+];
 
 export default class AnyDayHomeScreen extends React.Component {
 
@@ -48,7 +62,11 @@ export default class AnyDayHomeScreen extends React.Component {
         AwayTeam: "",
         StadeCity: "",
         date: "2016-05-15",
-        fanNumber: 2
+        fanNumber: 2,
+        roomNumber: 1,
+        Infant1: false,
+        Infant2: false
+
     };
 
     componentDidMount() {
@@ -70,8 +88,8 @@ export default class AnyDayHomeScreen extends React.Component {
             .then((response) => {
                 this.setState({ isDone: true });
                 console.log("test", response.GenericGames[0].MatchBundleHotels[0]);
-                this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[1] });
-                this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
+                this.setState({ Picture1: response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3 });
+                this.setState({ Picture2: response.GamesList.Items[1].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3 });
                 this.setState({ Picture3: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
                 this.setState({ Picture4: response.GenericGames[0].MatchBundleHotels[0].Images[4] });
             });
@@ -122,6 +140,27 @@ export default class AnyDayHomeScreen extends React.Component {
         this.setState({ fanNumber: this.state.fanNumber - 1 })
     }
 
+    IncrementRoom = () => {
+        this.setState({ roomNumber: this.state.roomNumber + 1 })
+    }
+
+    DecrementRoom = () => {
+        this.setState({ roomNumber: this.state.roomNumber - 1 })
+    }
+
+    Infants1 = () => {
+        this.setState({ Infant1: true })
+    }
+
+    Infants2 = () => {
+        this.setState({ Infant2: true })
+    }
+
+    DisableInfant = () => {
+        this.setState({ Infant1: false })
+        this.setState({ Infant2: false })
+
+    }
 
     render() {
         return (
@@ -143,12 +182,9 @@ export default class AnyDayHomeScreen extends React.Component {
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginLeft: 140, marginTop: 50 }}>
                     Semi-Package Details
                 </Text>
-
-                <ScrollView style={{ backgroundColor: "white", width: 310, height: 350, marginLeft: 140, marginTop: 20 }}>
-
+                <View style={{ backgroundColor: "white", width: 310, height: 350, marginLeft: 140, marginTop: 20 }}>
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>TRIP DATES</Text>
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>From</Text>
-
                     <DatePicker
                         style={{ width: 250, marginLeft: 30, marginTop: 20 }}
                         date={this.state.date}
@@ -204,13 +240,135 @@ export default class AnyDayHomeScreen extends React.Component {
                     <TouchableOpacity style={{ marginLeft: 105, marginTop: -25, width: 20 }} onPress={this.IncrementFan}>
                         <Text style={{ fontSize: 25, fontWeight: "bold", color: "blue" }}>+</Text>
                     </TouchableOpacity>
-                </ScrollView>
+                </View>
+                <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginLeft: 140, marginTop: 50 }}>
+                    Hotel
+                </Text>
+                <View style={{ backgroundColor: "white", width: 310, height: 800, marginLeft: 140, marginTop: 20 }}>
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>ROOMS</Text>
+                    <TouchableOpacity style={{ width: 20, marginLeft: 40 }} onPress={this.DecrementRoom}>
+                        <Text style={{ fontSize: 25, fontWeight: "bold", marginLeft: 0, marginTop: 11 }}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={{ marginLeft: 70, marginTop: -25 }}>{this.state.roomNumber}</Text>
+                    <TouchableOpacity style={{ marginLeft: 105, marginTop: -25, width: 20 }} onPress={this.IncrementRoom}>
+                        <Text style={{ fontSize: 25, fontWeight: "bold", color: "blue" }}>+</Text>
+                    </TouchableOpacity>
+                    <Text style={{ marginLeft: 20, color: "gray" }}>#1</Text>
+                    <View style={{ width: 80, marginLeft: 20, marginTop: 20 }}>
+                        <Button
+                            title="Single"
+                            color="#8CD222"
+                            onPress={this.DisableInfant}
+                        />
+                    </View>
+                    <View style={{ width: 80, marginLeft: 120, marginTop: -34 }}>
+                        <Button
+                            title="Double"
+                            color="#8CD222"
+                            onPress={this.DisableInfant}
+                        />
+                    </View>
+                    <View style={{ width: 80, marginLeft: 220, marginTop: -34 }}>
+                        <Button
+                            title="Triple"
+                            color="#8CD222"
+                            onPress={this.Infants1}
+                        />
+                    </View>
 
+                    {this.state.Infant1 ?
+                        <>
+                            <CheckBox
+                                selected="true"
+                                style={{ marginLeft: 15, marginTop: 20 }}
+                            />
+                            <Text style={{ marginTop: -27, marginLeft: 47 }}>Infant Bed</Text>
+                        </>
+                        :
+                        null}
 
+                    <Text style={{ marginLeft: 20, color: "gray", marginTop: 40 }}>#2</Text>
+                    <View style={{ width: 80, marginLeft: 20, marginTop: 20 }}>
+                        <Button
+                            title="Single"
+                            color="#8CD222"
+                            onPress={this.DisableInfant}
+                        />
+                    </View>
+                    <View style={{ width: 80, marginLeft: 120, marginTop: -34 }}>
+                        <Button
+                            title="Double"
+                            color="#8CD222"
+                            onPress={this.DisableInfant}
+                        />
+                    </View>
+                    <View style={{ width: 80, marginLeft: 220, marginTop: -34 }}>
+                        <Button
+                            title="Triple"
+                            color="#8CD222"
+                            onPress={this.Infants2}
+                        />
 
+                        {this.state.Infant2 ?
+                            <>
+                                <CheckBox
+                                    selected="true"
+                                    style={{ marginLeft: -205, marginTop: 20 }}
+                                />
+                                <Text style={{ marginTop: -27, marginLeft: -172 }}>Infant Bed</Text>
+                            </>
+                            :
+                            null}
+                    </View>
 
-
-
+                    <View style={{ marginLeft: 20, marginTop: 40, width: 80 }}>
+                        <Button
+                            title="BROWSE"
+                            color="#8CD222"
+                            onPress={this.Browser}
+                        />
+                    </View>
+                </View>
+                <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginLeft: 140, marginTop: 50 }}>
+                    Stadium
+                </Text>
+                <View style={{ backgroundColor: "white", width: 310, height: 500, marginLeft: 140, marginTop: 20 }}>
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>WEMBLEY</Text>
+                    <View
+                        style={{
+                            marginTop: 30,
+                            backgroundColor: "white",
+                            width: 150,
+                            height: 160,
+                            marginLeft: 140,
+                        }}
+                    >
+                        <TouchableOpacity>
+                            {this.state.isDone ?
+                                <Lightbox >
+                                    <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null}
+                                        style={{ width: 180, height: 180, marginLeft: -60 }} />
+                                </Lightbox>
+                                :
+                                <ActivityIndicator size="small" color="blue"
+                                    style={{ marginTop: 80, marginLeft: -20 }}
+                                />}
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 40, marginLeft: 20 }}>SEATING OPTIONS</Text>
+                    <RadioButtonRN
+                        data={data}
+                        selectedBtn={(e) => this.setState({ Picture1: this.state.Picture2 })}
+                        style={{ marginTop: 20 }}
+                    />
+                </View>
+                <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>PERKS</Text>
+                <TouchableOpacity>
+                    <Image source={Onspot} style={{ marginLeft: 140, marginTop: 10 }} />
+                    <Text style={{ marginLeft: 143, color: "blue", fontWeight: "bold", width: 50, fontSize: 9 }}>
+                        On Spot Service
+                    </Text>
+                </TouchableOpacity>
                 <View style={{ width: 130, marginLeft: 160, marginTop: 20 }}>
                     <Button
                         title="CANCEL"
@@ -222,7 +380,7 @@ export default class AnyDayHomeScreen extends React.Component {
                     <Button
                         title="CONTINUE"
                         color="#8CD222"
-                        onPress={this.Flight}
+                        onPress={this.Continue}
                     />
                 </View>
                 <View style={{ marginBottom: 50 }}></View>

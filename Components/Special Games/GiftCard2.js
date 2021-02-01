@@ -11,6 +11,7 @@ import {
     ActivityIndicator,
     SafeAreaView,
     Button,
+    AsyncStorage,
     Linking,
     Dimensions,
     CheckBox
@@ -47,7 +48,15 @@ export default class Leagues extends React.Component {
         super(props);
         const navigation = this.props;
         this.state = {
-            Picture: Gift1
+            Picture: Gift1,
+            NameFrom: "",
+            SurNameFrom: "",
+            EmailFrom: "",
+            PhoneNumberFrom: "",
+            NameTo: "",
+            SurNameTo: "",
+            EmailTo: "",
+            PhoneNumberTo: ""
         };
     }
 
@@ -59,6 +68,48 @@ export default class Leagues extends React.Component {
     GiftCard = () => {
         this.props.navigation.navigate('giftcard')
     }
+
+    getToken = async () => AsyncStorage.getItem('token');
+
+    CompletePayment = async () => {
+        var token = await this.getToken();
+        const url = `${API_URL}/mobile/giftcard/completePayment`;
+
+        const data = {
+            NameFrom: this.state.NameFrom,
+            SurNameFrom: this.state.SurNameFrom,
+            EmailFrom: this.state.EmailFrom,
+            PhoneNumberFrom: this.state.PhoneNumberFrom,
+            NameTo: this.state.NameTo,
+            SurNameTo: this.state.SurNameTo,
+            EmailTo: this.state.EmailTo,
+            PhoneNumberTo: this.state.PhoneNumberTo,
+        };
+
+
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+                "Authorization": 'Bearer ' + token
+
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                // this.setState({})
+
+            });
+    }
+
+
 
     render() {
         return (
@@ -86,6 +137,8 @@ export default class Leagues extends React.Component {
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
+                        onChangeText={(NameTo) => this.setState({ NameTo })}
+                        value={this.state.NameTo}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
@@ -94,20 +147,29 @@ export default class Leagues extends React.Component {
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
+                        onChangeText={(SurNameTo) => this.setState({ SurNameTo })}
+                        value={this.state.SurNameTo}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>EMAIL*</Text>
                     <TextInput
                         multiline={true}
+                        onChangeText={(EmailTo) => this.setState({ EmailTo })}
                         numberOfLines={8}
+                        value={this.state.EmailTo}
+                        type="email"
+                        autoCapitalize="none"
+                        keyboardType="email-address"
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>PHONE NUMBER*</Text>
                     <TextInput
                         multiline={true}
+                        onChangeText={(PhoneNumberTo) => this.setState({ PhoneNumberTo })}
                         numberOfLines={8}
+                        value={this.state.PhoneNumberTo}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
@@ -121,7 +183,9 @@ export default class Leagues extends React.Component {
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>NAME*</Text>
                     <TextInput
                         multiline={true}
+                        onChangeText={(NameFrom) => this.setState({ NameFrom })}
                         numberOfLines={8}
+                        value={this.state.NameFrom}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
@@ -129,21 +193,30 @@ export default class Leagues extends React.Component {
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>SURNAME*</Text>
                     <TextInput
                         multiline={true}
+                        onChangeText={(SurNameFrom) => this.setState({ SurNameFrom })}
                         numberOfLines={8}
+                        value={this.state.SurNameFrom}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>EMAIL*</Text>
                     <TextInput
                         multiline={true}
+                        onChangeText={(EmailFrom) => this.setState({ EmailFrom })}
                         numberOfLines={8}
+                        type="email"
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                        value={this.state.EmailFrom}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>PHONE NUMBER*</Text>
                     <TextInput
                         multiline={true}
+                        onChangeText={(PhoneNumberFrom) => this.setState({ PhoneNumberFrom })}
                         numberOfLines={8}
+                        value={this.state.PhoneNumberFrom}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <View style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -45 }}></View>
@@ -192,7 +265,7 @@ export default class Leagues extends React.Component {
 
                 <View style={{ width: 80, marginLeft: 250, marginTop: -35 }}>
                     <Button
-                        // onPress={this.Card4}
+                        onPress={this.CompletePayment}
                         title="PROCEED"
                         color="gray"
                     />
