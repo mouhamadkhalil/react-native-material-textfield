@@ -21,6 +21,7 @@ import TripOverViewScreen from "../Special Games/TripOverView";
 import CustomizeTripScreen from "../Special Games/CustomizeTrip";
 import SelectFlightScreen from "../Special Games/SelectFilght";
 import MyTripsScreen from "../Special Games/MyTrips";
+import MyProfileScreen from "../Profile/MyProfile";
 
 
 const Stack = createStackNavigator();
@@ -50,6 +51,7 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="my trips" navigationProps={navigation} component={MyTripsScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="my profile" navigationProps={navigation} component={MyProfileScreen} options={HeaderOptions({ navigation })} />
 
         </Stack.Navigator>
     );

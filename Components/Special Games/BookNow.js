@@ -333,7 +333,7 @@ export default class BookNow extends React.Component {
                         style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -38 }}></ScrollView>
-                </ScrollView>                               
+                </ScrollView>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 150, marginLeft: 140, marginTop: 50 }}>
                     <TextInput
                         multiline={true}
