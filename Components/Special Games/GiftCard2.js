@@ -35,7 +35,7 @@ import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Card from "../../assets/games/Card.png";
 import Gift1 from "../../assets/games/GiftCard23.png";
-
+import GiftCard from "../../assets/games/GiftCard.png";
 
 const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -114,12 +114,11 @@ export default class Leagues extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <View style={{ backgroundColor: "lightblue", marginTop: 0, height: 200 }}>
+               <ImageBackground source={GiftCard} style={styles.headerBg}>
                     <Text style={styles.pageTitleText}>
                         Gift card
                     </Text>
-                    <View style={{ height: 200, width: "100%", marginTop: 150 }}></View>
-                </View>
+                </ImageBackground>
                 <Text style={{ width: 130, marginLeft: 210, fontSize: 12, fontWeight: "bold", marginTop: 80 }}>
                     Make someone’s day in a moment.
                     Send a Fly-Foot gift card
@@ -290,11 +289,16 @@ const styles = StyleSheet.create({
         marginTop: 35
     },
     pageTitleText: {
-        marginTop: 80,
-        color: "black",
+        marginTop: 0,
+        color: "white",
         fontSize: 25,
         fontWeight: "bold",
-        marginLeft: 130
+        marginLeft: -120
+    },
+    headerBg: {
+        height: 200,
+        alignItems: "center",
+        justifyContent: "center",
     },
 
 });

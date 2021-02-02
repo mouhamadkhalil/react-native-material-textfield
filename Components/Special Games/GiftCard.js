@@ -36,6 +36,8 @@ import Gift2 from "../../assets/games/gift2.png";
 import Gift3 from "../../assets/games/gift3.png";
 import Gift4 from "../../assets/games/gift4.png";
 import Gift5 from "../../assets/games/gift5.png";
+import GiftCard from "../../assets/games/GiftCard.png";
+
 
 const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -79,12 +81,11 @@ export default class Leagues extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <View style={{ backgroundColor: "lightblue", marginTop: 0, height: 200 }}>
+                <ImageBackground source={GiftCard} style={styles.headerBg}>
                     <Text style={styles.pageTitleText}>
                         Gift card
                     </Text>
-                    <View style={{ height: 200, width: "100%", marginTop: 150 }}></View>
-                </View>
+                </ImageBackground>
                 <View>
                     <Image source={Card} style={{ width: 150, height: 100, marginTop: -30, marginLeft: 20 }} />
                     <Text style={{ width: 155, marginLeft: 190, fontSize: 9, fontWeight: "bold", marginTop: -60 }}>Make someone’s day in a moment.
@@ -158,11 +159,16 @@ const styles = StyleSheet.create({
         marginTop: 35
     },
     pageTitleText: {
-        marginTop: 80,
-        color: "black",
+        marginTop: 0,
+        color: "white",
         fontSize: 25,
         fontWeight: "bold",
-        marginLeft: 130
+        marginLeft: -120
+    },
+    headerBg: {
+        height: 200,
+        alignItems: "center",
+        justifyContent: "center",
     },
 
 });
