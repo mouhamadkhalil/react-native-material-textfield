@@ -479,6 +479,17 @@ export default class specialGames extends React.Component {
                             <Text style={{ fontSize: 17, fontWeight: "bold" }}>My Profile</Text>
                         </TouchableOpacity>
 
+                        <TouchableOpacity style={{ marginTop: 140, width: 100, height: 50 }}
+                            onPress={() => this.props.navigation.navigate('quiz')}>
+                            <Text style={{ fontSize: 17, fontWeight: "bold" }}>Quiz</Text>
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity style={{ marginTop: 140, width: 200, marginLeft: -40, height: 50 }}
+                            onPress={() => this.props.navigation.navigate('leader board')}>
+                            <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
+                        </TouchableOpacity>
+
 
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
