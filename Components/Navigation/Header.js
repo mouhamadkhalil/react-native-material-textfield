@@ -24,6 +24,10 @@ const HeaderOptions = ({ navigation }) => {
     const [filteredFilms, setFilteredFilms] = useState([]);
     const [selectedValue, setSelectedValue] = useState({});
 
+    useEffect(() => {
+        console.log('games', games);
+      }, [games]); 
+
     const findAll = str => {
         let res = [];
         fetch(`https://fly-foot.com/api/mobile/team/search?text=${str.trim()}`)
@@ -37,8 +41,8 @@ const HeaderOptions = ({ navigation }) => {
                     .then(json => {
                         res.push(...json);
                         console.log("teams and games:", res);
-                        setGames(res);
-                        setTimeout(() => console.log("games:", games), 2000);
+                        setGames(res)
+                        //setTimeout(() => console.log("games:", games), 2000);
                     });
             })
             .catch(e => {
