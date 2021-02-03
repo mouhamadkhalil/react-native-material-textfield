@@ -292,7 +292,7 @@ export default class specialGames extends React.Component {
         const buttons = [];
         for (let game of this.state.popularGames) {
             buttons.push(
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('tripoverview')}>
                     <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#F7F7F7", height: 80, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, padding: 10 }}>
                         <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{Moment(new Date(game.GameDate)).format('DD MMM')}</Text>
                         <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{game.HomeTeam}</Text>

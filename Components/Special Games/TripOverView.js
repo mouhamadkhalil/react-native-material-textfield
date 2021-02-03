@@ -7,6 +7,7 @@ import {
     Button,
     ScrollView,
     View,
+    ImageBackground,
     TouchableOpacity,
     ActivityIndicator
 } from "react-native";
@@ -24,7 +25,9 @@ import Onspot from "../../assets/images/onspot.png";
 import Car1 from "../../assets/images/car1.png";
 import Stadium from "../../assets/images/stadium.png"
 import Hotel from "../../assets/images/hotel3.png"
-import Insurnace from "../../assets/images/insurnace.png"
+import Insurnace from "../../assets/images/insurnace.png";
+import GiftCard from "../../assets/games/GiftCard.png";
+
 
 const sourceFile = require('../../services.js');
 
@@ -114,8 +117,11 @@ export default class AnyDayHomeScreen extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <Image source={Game} style={{ height: 200 }} />
-                <Text style={{ marginLeft: 140 }}>Trip Overview</Text>
+                <ImageBackground source={GiftCard} style={styles.headerBg}>
+                    <Text style={styles.pageTitleText}>
+                        Trip Overview
+                    </Text>
+                </ImageBackground>
                 <View style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 10, marginTop: 15, fontSize: 9 }}>DATE</Text>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 60, marginTop: -12, fontSize: 9 }}>MATCH</Text>
@@ -211,5 +217,17 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginBottom: 0,
         backgroundColor: "#F5F7EC",
+    },
+    pageTitleText: {
+        marginTop: -30,
+        color: "white",
+        fontSize: 25,
+        fontWeight: "bold",
+        marginLeft: 90
+    },
+    headerBg: {
+        height: 200,
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
