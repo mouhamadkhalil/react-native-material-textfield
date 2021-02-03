@@ -10,16 +10,9 @@ import {
     ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
-import Line1 from "../../assets/Images_Design/line1.png";
-import Line2 from "../../assets/Images_Design/line2.png";
-import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
-import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
-import Search from "../../assets/Images_Design/search1.png";
-import Notifictaion from "../../assets/Images_Design/notification1.png";
-import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
+import Chat from "../../assets/Images_Design/chat1.png";
 import AwesomeAlert from "react-native-awesome-alerts";
-
 import Messanger from "../../assets/images/messanger.png";
 import Feedback from "../../assets/images/feedback.png";
 import Whatsapp from "../../assets/images/whatsapp.png";

@@ -48,6 +48,12 @@ import Image15 from "../../assets/games/image15.png";
 import headerBg from "../../assets/images/leagues-mobile-header-background.jpg";
 import Autocomplete from "react-native-autocomplete-input";
 
+import Chat from "../../assets/Images_Design/chat1.png";
+import Messanger from "../../assets/images/messanger.png";
+import Feedback from "../../assets/images/feedback.png";
+import Whatsapp from "../../assets/images/whatsapp.png";
+import AwesomeAlert from "react-native-awesome-alerts";
+
 const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
@@ -65,9 +71,43 @@ export default class Leagues extends React.Component {
                 disabled: "",
                 ExtraField: "",
             }],
+            showAlert: false,
         };
     }
 
+    showAlert = () => {
+        this.setState({
+            showAlert: true,
+        });
+    };
+
+    hideAlert = () => {
+        this.setState({
+            showAlert: false,
+        });
+    };
+
+    renderCustomAlertView = () => {
+        return (
+            <>
+                <View style={{ height: 200, width: 200 }}>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
+                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
+                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
+                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                </View>
+
+            </>
+        );
+    };
 
     componentDidMount() {
         const url = `${API_URL}/mobile/leagues/all`;
@@ -98,6 +138,7 @@ export default class Leagues extends React.Component {
     }
 
     render() {
+        const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
                 <ImageBackground source={headerBg} style={styles.headerBg}>
@@ -170,6 +211,27 @@ export default class Leagues extends React.Component {
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
                         <Image source={Image15} style={styles.teamImage} />
                     </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={{ marginLeft: 250, marginTop: -80 }} onPress={() => {
+                    this.showAlert();
+                }}>
+                    <Image source={Chat} style={{ width: 100, height: 100, marginTop: 10 }} />
+                </TouchableOpacity>
+                <View>
+                    <AwesomeAlert
+                        show={showAlert}
+                        showProgress={false}
+                        title="CHAT WITH US ?"
+                        closeOnTouchOutside={true}
+                        closeOnHardwareBackPress={false}
+                        customView={this.renderCustomAlertView()}
+                        onCancelPressed={() => {
+                            this.hideAlert();
+                        }}
+                        onConfirmPressed={() => {
+                            this.SubmitPassword();
+                        }}
+                    />
                 </View>
             </ScrollView >
         );

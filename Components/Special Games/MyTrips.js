@@ -15,6 +15,12 @@ import {
 import { API_URL, API_TOKEN } from "@env";
 import Image1 from "../../assets/games/image1.png";
 
+import Chat from "../../assets/Images_Design/chat1.png";
+import Messanger from "../../assets/images/messanger.png";
+import Feedback from "../../assets/images/feedback.png";
+import Whatsapp from "../../assets/images/whatsapp.png";
+import AwesomeAlert from "react-native-awesome-alerts";
+
 const sourceFile = require('../../services.js');
 
 export default class MyTrips extends React.Component {
@@ -25,6 +31,41 @@ export default class MyTrips extends React.Component {
         PastTrips: [],
         upcomingFlag: false,
         savedFlag: false,
+        showAlert: false,
+    };
+
+    showAlert = () => {
+        this.setState({
+            showAlert: true,
+        });
+    };
+
+    hideAlert = () => {
+        this.setState({
+            showAlert: false,
+        });
+    };
+
+    renderCustomAlertView = () => {
+        return (
+            <>
+                <View style={{ height: 200, width: 200 }}>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
+                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
+                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
+                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                </View>
+
+            </>
+        );
     };
 
     getToken = async () => AsyncStorage.getItem('token');
@@ -75,6 +116,7 @@ export default class MyTrips extends React.Component {
     }
 
     render() {
+        const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
                 <View style={{ backgroundColor: "lightblue", marginTop: 0, height: 200 }}>
@@ -93,23 +135,38 @@ export default class MyTrips extends React.Component {
                         <Text style={{ color: "white", fontWeight: "bold" }}>PAST</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ marginLeft: 140 }}>
+                <View style={{ marginLeft: 150 }}>
                     {this.state.upcomingFlag ?
                         <Text style={{ marginLeft: 40, marginTop: 150, fontSize: 19, fontWeight: "bold", color: "gray" }}>No Upcoming Trips Found!</Text> :
                         null
                     }
                 </View>
-                <View style={{ marginLeft: 140 }}>
+                <View style={{ marginLeft: 165 }}>
                     {this.state.savedFlag ?
                         <Text style={{ marginLeft: 40, marginTop: 150, fontSize: 19, fontWeight: "bold", color: "gray" }}>No Saved Trips Found!</Text> :
                         null
                     }
                 </View>
-                <View style={{ marginLeft: 140 }}>
+                <View style={{ marginLeft: 165 }}>
                     {this.state.pastFlag ?
                         <Text style={{ marginLeft: 40, marginTop: 150, fontSize: 19, fontWeight: "bold", color: "gray" }}>No Past Trips Found!</Text> :
                         null
                     }
+                </View>
+                <TouchableOpacity style={{ marginLeft: 360, marginTop: 110 }} onPress={() => {
+                    this.showAlert();
+                }}>
+                    <Image source={Chat} style={{ width: 100, height: 100, marginTop: 10 }} />
+                </TouchableOpacity>
+                <View>
+                    <AwesomeAlert
+                        show={showAlert}
+                        showProgress={false}
+                        title="CHAT WITH US ?"
+                        closeOnTouchOutside={true}
+                        closeOnHardwareBackPress={false}
+                        customView={this.renderCustomAlertView()}                      
+                    />
                 </View>
             </ScrollView>
         );

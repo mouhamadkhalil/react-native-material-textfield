@@ -22,6 +22,12 @@ import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import DatePicker from 'react-native-datepicker';
 import headerBg from "../../assets/images/leagues-mobile-header-background.jpg";
 
+import Chat from "../../assets/Images_Design/chat1.png";
+import Messanger from "../../assets/images/messanger.png";
+import Feedback from "../../assets/images/feedback.png";
+import Whatsapp from "../../assets/images/whatsapp.png";
+import AwesomeAlert from "react-native-awesome-alerts";
+
 const sourceFile = require('../../services.js');
 
 export default class MyProfile extends React.Component {
@@ -47,8 +53,43 @@ export default class MyProfile extends React.Component {
                 idTeams: "",
                 v3ImageReference: ""
             }],
+            showAlert: false,
         };
     }
+
+    showAlert = () => {
+        this.setState({
+            showAlert: true,
+        });
+    };
+
+    hideAlert = () => {
+        this.setState({
+            showAlert: false,
+        });
+    };
+
+    renderCustomAlertView = () => {
+        return (
+            <>
+                <View style={{ height: 200, width: 200 }}>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
+                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
+                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
+                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                </View>
+
+            </>
+        );
+    };
 
     getToken = async () => AsyncStorage.getItem('token');
 
@@ -116,6 +157,7 @@ export default class MyProfile extends React.Component {
     }
 
     render() {
+        const { showAlert } = this.state;
         const { selectedStartDate } = this.state;
         const startDate = selectedStartDate ? selectedStartDate.toString() : '';
         return (
@@ -214,6 +256,21 @@ export default class MyProfile extends React.Component {
                             color="#8CD222"
                         />
                     </View>
+                </View>
+                <TouchableOpacity style={{ marginLeft: 260, marginTop: 0 }} onPress={() => {
+                    this.showAlert();
+                }}>
+                    <Image source={Chat} style={{ width: 100, height: 100, marginTop: 10 }} />
+                </TouchableOpacity>
+                <View>
+                    <AwesomeAlert
+                        show={showAlert}
+                        showProgress={false}
+                        title="CHAT WITH US ?"
+                        closeOnTouchOutside={true}
+                        closeOnHardwareBackPress={false}
+                        customView={this.renderCustomAlertView()}
+                    />
                 </View>
             </ScrollView >
         );
