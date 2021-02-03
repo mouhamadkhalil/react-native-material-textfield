@@ -104,15 +104,7 @@ export default class Leagues extends React.Component {
                     <Text style={styles.pageTitleText}>
                         LEAGUES
                     </Text>
-                    {/* <View style={{ height: 200, width: "100%", marginTop: 150 }}></View> */}
                 </ImageBackground>
-                {/* <View style={{ backgroundColor: "lightblue", marginTop: 0, height: 200 }}>
-                    <Image source={headerBg} style={{ height: 40, width: "100%" }} />
-                    <Text style={styles.pageTitleText}>
-                        LEAGUES
-                    </Text>
-                    <View style={{ height: 200, width: "100%", marginTop: 150 }}></View>
-                </View> */}
                 <Text style={styles.sectionHeading}>European</Text>
                 <View style={styles.teamsWrap}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
@@ -211,6 +203,11 @@ const styles = StyleSheet.create({
     teamsWrap: {
         flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around"
     },
+    headerBg: {
+        height: 200,
+        alignItems: "center",
+        justifyContent: "center",
+    },
     linearGradient: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -224,11 +221,6 @@ const styles = StyleSheet.create({
         width: 30,
         marginLeft: 30,
         marginTop: 35
-    },
-    headerBg: {
-        height: 200,
-        alignItems: "center",
-        justifyContent: "center",
     },
     pageTitleText: {
         color: "white",

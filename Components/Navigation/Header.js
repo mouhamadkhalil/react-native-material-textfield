@@ -38,6 +38,7 @@ const HeaderOptions = ({ navigation }) => {
                         res.push(...json);
                         console.log("teams and games:", res);
                         setGames(res);
+                        setTimeout(() => console.log("games:", games), 2000);
                     });
             })
             .catch(e => {
@@ -77,11 +78,9 @@ const HeaderOptions = ({ navigation }) => {
                         containerStyle={styles.autocompleteContainer}
                         data={games}
                         defaultValue={
-                            JSON.stringify(selectedValue) === '{}' ?
-                                '' :
-                                selectedValue.title
+                            JSON.stringify(selectedValue) === '{}' ? '' : selectedValue.title
                         }
-                        onChangeText={text => { console.log(text); findAll(text); }}
+                        onChangeText={text => findAll(text)}
                         placeholder="&nbsp;&nbsp;Search your games ... "
                         renderItem={({ item }) => (
                             <TouchableOpacity
@@ -89,10 +88,10 @@ const HeaderOptions = ({ navigation }) => {
                                     setSelectedValue(item);
                                     setFilteredFilms([]);
                                 }}>
-                                {item.idTeam ?
+                                {item.idTeams ?
                                     <Text style={styles.itemText}>{item.TeamName}</Text>
                                     :
-                                    <Text style={styles.itemText}>{item.TeamName}</Text>
+                                    <Text style={styles.itemText}>{ }</Text>
                                 }
                             </TouchableOpacity>
                         )}
