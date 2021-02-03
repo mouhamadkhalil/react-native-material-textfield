@@ -18,10 +18,15 @@ import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
+import AwesomeAlert from "react-native-awesome-alerts";
+
+import Messanger from "../../assets/images/messanger.png";
+import Feedback from "../../assets/images/feedback.png";
+import Whatsapp from "../../assets/images/whatsapp.png";
 
 const sourceFile = require('../../services.js');
 
-export default class Day2Screen extends React.Component {
+export default class AnyDayScreen extends React.Component {
 
     state = {
         Picture1: "",
@@ -38,7 +43,43 @@ export default class Day2Screen extends React.Component {
         GameCode: "",
         HomeTeam: "",
         AwayTeam: "",
-        StadeCity: ""
+        StadeCity: "",
+        showAlert: false,
+    };
+
+    showAlert = () => {
+        this.setState({
+            showAlert: true,
+        });
+    };
+
+    hideAlert = () => {
+        this.setState({
+            showAlert: false,
+        });
+    };
+
+
+    renderCustomAlertView = () => {
+        return (
+            <>
+                <View style={{ height: 200, width: 200 }}>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
+                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
+                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
+                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                </View>
+
+            </>
+        );
     };
 
     componentDidMount() {
@@ -95,19 +136,9 @@ export default class Day2Screen extends React.Component {
     };
 
     render() {
+        const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
-                {/* <TextInput
-          style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
-          placeholder="  &nbsp;&nbsp;Search your game ... "
-          placeholderTextColor="#46D822"
-          autoCapitalize="none"
-          onChangeText={searchText => {
-            this.setState({ searchText });
-          }}
-          onSubmitEditing={this.searchGame}
-          value={this.state.searchText}
-        /> */}
                 <Text
                     style={{
                         marginTop: 60,
@@ -298,9 +329,27 @@ export default class Day2Screen extends React.Component {
                             />}
                     </TouchableOpacity>
                 </ScrollView>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    this.showAlert();
+                }}>
                     <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
                 </TouchableOpacity>
+                <ScrollView style={{ backgroundColor: "red" }}>
+                    <AwesomeAlert
+                        show={showAlert}
+                        showProgress={false}
+                        title="CHAT WITH US ?"
+                        closeOnTouchOutside={true}
+                        closeOnHardwareBackPress={false}
+                        customView={this.renderCustomAlertView()}
+                        onCancelPressed={() => {
+                            this.hideAlert();
+                        }}
+                        onConfirmPressed={() => {
+                            this.SubmitPassword();
+                        }}
+                    />
+                </ScrollView>
             </ScrollView>
         );
     }
