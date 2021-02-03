@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     Button,
+    ImageBackground,
     SafeAreaView
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
@@ -31,6 +32,8 @@ import Car1 from "../../assets/images/car1.png";
 import Stadium from "../../assets/images/stadium.png";
 import Hotel from "../../assets/images/hotel3.png";
 import Insurnace from "../../assets/images/insurnace.png";
+import GiftCard from "../../assets/games/GiftCard.png";
+
 
 const sourceFile = require('../../services.js');
 
@@ -172,18 +175,12 @@ export default class BookNow extends React.Component {
         const startDate = selectedStartDate ? selectedStartDate.toString() : '';
         return (
             <ScrollView style={styles.container}>
-                {/* <TextInput
-                    style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 30, backgroundColor: "white", width: 185, height: 35 }}
-                    placeholder="  &nbsp;&nbsp;Search your game ... "
-                    placeholderTextColor="#46D822"
-                    autoCapitalize="none"
-                    onChangeText={searchText => {
-                        this.setState({ searchText });
-                    }}
-                    onSubmitEditing={this.searchGame}
-                    value={this.state.searchText}
-                /> */}
-                <Image source={Game} style={{ height: 200 }} />
+                <ImageBackground source={GiftCard} style={styles.headerBg}>
+                    <Text style={styles.pageTitleText}>
+                        Watch Blaugrana in Camp Nou
+                    </Text>
+                    <Text style={styles.pageText}>#FLYFOOTPROMISE</Text>
+                </ImageBackground>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 10, marginTop: 15 }}>MATCH</Text>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 120, marginTop: -18 }}>CITY</Text>
@@ -361,5 +358,23 @@ const styles = StyleSheet.create({
         marginTop: -50,
         marginBottom: 30,
         backgroundColor: "#F5F7EC",
+    },
+    pageTitleText: {
+        marginTop: 0,
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 90
+    },
+    pageText: {
+        color: "white",
+        fontSize: 15,
+        fontWeight: "bold",
+        marginLeft: 90
+    },
+    headerBg: {
+        height: 290,
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
