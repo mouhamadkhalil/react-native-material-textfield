@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Modal, TouchableHighlight, Text, Image, ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
+import React from "react";
+import {StyleSheet,Text,Image,ScrollView,View,ActivityIndicator,TouchableOpacity,FlatList} from "react-native";
 import ImgAllGames from "../../assets/images/all-games.jpg";
 import ImgArrowDown from "../../assets/Images_Design/arrow_down.png";
 import ImgFlag from "../../assets/Images_Design/flag1.png";
@@ -7,15 +7,12 @@ import ImgShare from "../../assets/Images_Design/share.png";
 import ImgArrowRight from "../../assets/Images_Design/arrow_right2.png";
 import ImgCalendar from "../../assets/Images_Design/calendar-grey.png";
 import ImgList from "../../assets/Images_Design/list-grey-icon.png";
-import ImgLogo from '../../assets/Images/fly-foot.png'
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import { get } from "../../services.js"
 
-const sourceFile = require('../../services.js');
-
-export default class AllGames extends React.Component {
+export default class Deals extends React.Component {
 
     constructor(props) {
         super(props);
@@ -42,12 +39,11 @@ export default class AllGames extends React.Component {
             pageNumber: 1,
             pageSize: 10,
             orderBy: "date",
-            modalVisible: false
         };
-        this.getAllGames();
+        this.getGamesList();
     }
 
-    getAllGames = () => {
+    getGamesList = () => {
         const path = `/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&order=${this.state.orderBy}`;
         get(path).then((response) => {
             var data = response.Items.map(function (item) {
@@ -74,36 +70,19 @@ export default class AllGames extends React.Component {
         });
     };
 
-    changeModalVisibility = (props) => {
-        this.state.setState('modalVisible',props);
-    }
-
     FilterGame = () => {
-        const urlFilter = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
-        fetch(urlFilter, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
-                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
-                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
-                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
-                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
-                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
-                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
-                this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
-                this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
-            });
+        const path = `/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
+        get(path).then((response) => {
+            console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
+            this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
+            this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
+            this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
+            this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
+            this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
+            this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
+            this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
+            this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
+        });
     };
 
     gameItem = ({ item }) =>
@@ -168,6 +147,7 @@ export default class AllGames extends React.Component {
             </View>
         </View>
 
+
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -183,10 +163,7 @@ export default class AllGames extends React.Component {
 
                     {/* filter begin*/}
                     <View style={{ flex: 1, flexDirection: 'row', backgroundColor: "white", width: '90%', height: 70, marginTop: -35, alignSelf: 'center', shadowColor: "grey", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.5, shadowRadius: 5.84, elevation: 5 }}>
-                        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', borderRightWidth: 1, borderRightColor: 'grey' }} 
-                        onPress={() => {
-                            this.setState({modalVisible: true});
-                        }}>
+                        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', borderRightWidth: 1, borderRightColor: 'grey' }} onPress={this.FilterGame}>
                             <Text style={{ fontSize: 20, color: '#6E6E6E', textTransform: 'uppercase' }}>filter</Text>
                             <Image source={ImgArrowDown} style={{ width: 12, height: 12, marginLeft: 20 }} />
                         </TouchableOpacity>
@@ -199,7 +176,7 @@ export default class AllGames extends React.Component {
                     </View>
                     {/* filter end*/}
 
-                    {/* filter picker begin */}
+                    {/* picker begin */}
                     <View style={{
                         flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'flex-end', width: '90%', height: 20, marginTop: 10, ...(Platform.OS !== 'android' && {
                             zIndex: 10
@@ -224,16 +201,16 @@ export default class AllGames extends React.Component {
                             dropDownStyle={{ width: 100 }}
                             onChangeItem={(item) => {
                                 this.setState({ orderBy: item.value }, function () {
-                                    this.getAllGames();
+                                    this.getGamesList();
                                 });
                             }
                             }
                             placeholder="SORT BY "
                         />
                     </View>
-                    {/* filter picker end */}
+                    {/* picker end */}
 
-                    {/* render games begin*/}
+                    {/* games list begin*/}
                     {!this.state.isDone ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginLeft: 10 }} />
                         :
                         <View style={{ width: '90%', alignSelf: 'center', zIndex: 1 }}>
@@ -244,31 +221,12 @@ export default class AllGames extends React.Component {
                             />
                         </View>
                     }
-                    {/* render games end*/}
-
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={this.state.modalVisible}>
-                        <View style={styles.modalView}>
-                            <View style={{flex:1, flexDirection:'row'}}>
-                                <Image source={ImgLogo} ></Image>
-                                <TouchableHighlight
-                                    style={styles.openButton}
-                                    onPress={() => {
-                                        this.setState({modalVisible: false});
-                                    }}>
-                                    <Text style={styles.textStyle}>X</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                    </Modal>
+                    {/* games list end*/}
                 </View>
             </ScrollView >
         );
     }
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -283,38 +241,5 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         height: 20,
         width: 20,
-    },
-    modalView: {
-        width:'100%',
-        height:'100%',
-        backgroundColor: '#EEEEEE',
-        flex:1,
-        flexDirection:'column',
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-    },
-    openButton: {
-        backgroundColor: '#F194FF',
-        borderRadius: 100,
-        padding: 10,
-        elevation: 2,
-        alignSelf:'flex-end'
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
     },
 });

@@ -10,7 +10,6 @@ import {
     Dimensions,
     FlatList
 } from "react-native";
-import { API_URL, API_TOKEN } from "@env";
 import { get } from "../../services.js"
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
 import CalendarIcon from "../../assets/Images_Design/calendar.png";
@@ -45,7 +44,7 @@ export default class specialGames extends React.Component {
     }
 
     getData = () => {
-        get('/mobile/game/GetHomePageData')
+        get('/mobile/game/GetHomePageDataMobile')
             .then(response => {
                 console.log(response);
                 // Special Games Data
@@ -394,9 +393,9 @@ export default class specialGames extends React.Component {
                 </View>
 
                 <View style={{ width: '70%', marginTop: 20, marginLeft: 30, height: 70, marginBottom: 30 }}>
-                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems:'center', justifyContent:'center' }}
+                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems: 'center', justifyContent: 'center' }}
                         onPress={() => this.props.navigation.navigate('giftcard')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", textTransform:'uppercase'}}> gift card</Text>
+                        <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView >

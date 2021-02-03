@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { AsyncStorage } from 'react-native';
 import Constants from 'expo-constants';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from "./Components/Navigation/DrawerNavigator";
 import * as Location from 'expo-location';
 
 const App = () => {
-    const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
@@ -21,24 +21,16 @@ const App = () => {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      await AsyncStorage.setItem('location', location);
     })();
   }, []);
 
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-  console.log(text);
-    return (
-        <NavigationContainer>
-            <DrawerNavigator  />
-        </NavigationContainer>
-    );
+  return (
+    <NavigationContainer>
+      <DrawerNavigator />
+    </NavigationContainer>
+  );
 };
 
 export default App;
