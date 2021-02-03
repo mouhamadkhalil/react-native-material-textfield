@@ -7,7 +7,7 @@ import ImgShare from "../../assets/Images_Design/share.png";
 import ImgArrowRight from "../../assets/Images_Design/arrow_right2.png";
 import ImgCalendar from "../../assets/Images_Design/calendar-grey.png";
 import ImgList from "../../assets/Images_Design/list-grey-icon.png";
-import ImgLogo from '../../assets/Images/fly-foot.png'
+import ImgLogo from "../../assets/images/fly-foot.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -251,15 +251,21 @@ export default class AllGames extends React.Component {
                         transparent={true}
                         visible={this.state.modalVisible}>
                         <View style={styles.modalView}>
-                            <View style={{flex:1, flexDirection:'row'}}>
-                                <Image source={ImgLogo} ></Image>
-                                <TouchableHighlight
-                                    style={styles.openButton}
+                            
+                            <View style={{ width:'100%', height:'10%', borderBottomWidth:1, borderBottomColor:'#eee', flex:1, flexDirection:'row' }}>
+                                <Image source={ImgLogo} style={{ width:'50%', height:'90%', alignItems:'flex-start'}}></Image>
+                                <TouchableHighlight style={styles.closeButton}
                                     onPress={() => {
                                         this.setState({modalVisible: false});
                                     }}>
                                     <Text style={styles.textStyle}>X</Text>
                                 </TouchableHighlight>
+                            </View>
+                            <View style={{width:'100%', height:'90%', backgroundColor:'#fff'}}>
+                            <View style><Text>Teams...</Text></View>
+                            <View><Text>City...</Text></View>
+                            <View><Text>Competitions...</Text></View>
+                            <View><Text>Date...</Text></View>
                             </View>
                         </View>
                     </Modal>
@@ -287,7 +293,7 @@ const styles = StyleSheet.create({
     modalView: {
         width:'100%',
         height:'100%',
-        backgroundColor: '#EEEEEE',
+        backgroundColor: '#fff',
         flex:1,
         flexDirection:'column',
         padding: 35,
@@ -301,17 +307,17 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
-    openButton: {
-        backgroundColor: '#F194FF',
-        borderRadius: 100,
-        padding: 10,
-        elevation: 2,
-        alignSelf:'flex-end'
+    closeButton: {
+        backgroundColor: '#EEE',
+        width:40,
+        borderRadius: 180,
+        alignSelf:'center'
     },
     textStyle: {
-        color: 'white',
+        color: '#000',
         fontWeight: 'bold',
         textAlign: 'center',
+        padding:10
     },
     modalText: {
         marginBottom: 15,
