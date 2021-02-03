@@ -134,6 +134,7 @@ export default class specialGames extends React.Component {
             .then((res) => res.json())
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
+                console.log(response);
                 var data = response.map(function (item) {
                     return {
                         idMatch: item.idMatch,
@@ -492,7 +493,7 @@ export default class specialGames extends React.Component {
 
 
                     </View>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <TextInput
                             style={{ display: "none", marginLeft: 120, borderRadius: 20, backgroundColor: "white", width: 190, height: 35 }}
                             placeholder="  &nbsp;&nbsp;Search your game ... "
@@ -505,7 +506,7 @@ export default class specialGames extends React.Component {
                             value={this.state.searchText}
                             hid
                         />
-                    </View>
+                    </View> */}
                 </SafeAreaView>
                 <View style={styles.pageTitleBar}></View>
                 <Text style={styles.pageTitleText}>
