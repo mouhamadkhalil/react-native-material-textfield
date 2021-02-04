@@ -10,16 +10,21 @@ import {
     Dimensions,
     FlatList
 } from "react-native";
-import { get } from "../../services.js"
+import { get } from "../../services.js";
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
 import CalendarIcon from "../../assets/Images_Design/calendar.png";
 import Card1 from "../../assets/Images_Design/card1.png";
+import AwesomeAlert from "react-native-awesome-alerts";
 import Btn2 from "../../assets/Images_Design/btn2.png";
 import BtnBg from "../../assets/Images_Design/btn-bg.png";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import Carousel from 'react-native-snap-carousel';
 import Moment from 'moment';
+import Chat from "../../assets/Images_Design/chat1.png";
 import { LinearGradient } from 'expo-linear-gradient';
+import Messanger from "../../assets/images/messanger.png";
+import Feedback from "../../assets/images/feedback.png";
+import Whatsapp from "../../assets/images/whatsapp.png";
 
 //const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -37,11 +42,47 @@ export default class specialGames extends React.Component {
             popularGames: [],
             hotGames: [],
             popularTeams: [],
-            competitions: []
+            competitions: [],
+            showAlert: false,
         };
 
         this.getData();
     }
+
+    showAlert = () => {
+        this.setState({
+            showAlert: true,
+        });
+    };
+
+    hideAlert = () => {
+        this.setState({
+            showAlert: false,
+        });
+    };
+
+
+    renderCustomAlertView = () => {
+        return (
+            <>
+                <View style={{ height: 200, width: 200 }}>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
+                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
+                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
+                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                    </TouchableOpacity>
+                </View>
+
+            </>
+        );
+    };
 
     getData = () => {
         get('/mobile/game/GetHomePageDataMobile')
@@ -124,7 +165,7 @@ export default class specialGames extends React.Component {
     specialGameItem({ item, index, state }) {
         const image = { uri: item.SliderImage };
         return (
-            <TouchableOpacity style={{ marginTop: 60, height: 320, marginRight: 30 }} >
+            <View style={{ marginTop: 60, height: 320, marginRight: 30 }} >
                 <ImageBackground source={image} style={styles.image} imageStyle={{ borderRadius: 20 }}>
                     <View style={{ borderRadius: 20, paddingTop: 40, paddingLeft: 20, paddingRight: 20 }}>
                         <View style={{ justifyContent: "space-between", height: 250 }}>
@@ -171,13 +212,13 @@ export default class specialGames extends React.Component {
                         </View>
                     </View>
                 </ImageBackground>
-            </TouchableOpacity >
+            </View>
         );
     }
 
     /******************* Popular Game Item ************************/
     popularGameItem = ({ item }) =>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('tripoverview')}>
             <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#F7F7F7", height: 80, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, padding: 10 }}>
                 <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{Moment(new Date(item.GameDate)).format('DD MMM')}</Text>
                 <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{item.HomeTeam}</Text>
@@ -230,7 +271,7 @@ export default class specialGames extends React.Component {
                         </View>
                     </View>
                 </View>
-                <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }}>
+                <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={() => this.props.navigation.navigate('tripoverview')}>
                     <ImageBackground source={BtnBg} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                         <Text style={{ fontWeight: "bold", fontSize: 14 }}>1450$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
                         <Text style={{ fontSize: 9 }}>BOOK NOW</Text>
@@ -265,9 +306,15 @@ export default class specialGames extends React.Component {
     }
 
     render() {
+        const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70 }}
+                        onPress={() => this.props.navigation.navigate('all games')}>
+                        <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10, paddingLeft: 25, paddingTop: 15 }}>SINGLE TRIP</Text>
+                    </TouchableOpacity>
+
                     <TouchableOpacity style={{ width: 100, height: 50, marginLeft: 20, marginTop: 50 }}
                         onPress={() => this.props.navigation.navigate('teams')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10 }}> Teams</Text>
@@ -290,6 +337,27 @@ export default class specialGames extends React.Component {
                     <TouchableOpacity style={{ marginTop: 100, marginLeft: -364, width: 100, height: 50 }}
                         onPress={() => this.props.navigation.navigate('giftcard')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Gift card</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ marginTop: 110, marginLeft: -15, width: 100, height: 50 }}
+                        onPress={() => this.props.navigation.navigate('my trips')}>
+                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>My Trips</Text>
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity style={{ marginTop: 140, marginLeft: -340, width: 100, height: 50 }}
+                        onPress={() => this.props.navigation.navigate('my profile')}>
+                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>My Profile</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ marginTop: 140, width: 100, height: 50 }}
+                        onPress={() => this.props.navigation.navigate('quiz')}>
+                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>Quiz</Text>
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity style={{ marginTop: 140, width: 200, marginLeft: -40, height: 50 }}
+                        onPress={() => this.props.navigation.navigate('leader board')}>
+                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -345,7 +413,7 @@ export default class specialGames extends React.Component {
                             data={this.state.hotGames}
                             sliderWidth={485}
                             itemWidth={280}
-                            renderItem={this.hotGameItem}
+                            renderItem={this.hotGameItem.bind(this)}
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
@@ -397,6 +465,16 @@ export default class specialGames extends React.Component {
                         onPress={() => this.props.navigation.navigate('giftcard')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
                     </TouchableOpacity>
+                    <View style={{ backgroundColor: "red" }}>
+                        <AwesomeAlert
+                            show={showAlert}
+                            showProgress={false}
+                            title="CHAT WITH US ?"
+                            closeOnTouchOutside={true}
+                            closeOnHardwareBackPress={false}
+                            customView={this.renderCustomAlertView()}
+                        />
+                    </View>
                 </View>
             </ScrollView >
         );
