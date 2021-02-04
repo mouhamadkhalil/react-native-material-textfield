@@ -327,13 +327,7 @@ export default class AllGames extends React.Component {
                         title="CHAT WITH US ?"
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
-                        customView={this.renderCustomAlertView()}
-                        onCancelPressed={() => {
-                            this.hideAlert();
-                        }}
-                        onConfirmPressed={() => {
-                            this.SubmitPassword();
-                        }}
+                        customView={this.renderCustomAlertView()}                       
                     />
                 </View>
             </ScrollView >
@@ -344,7 +338,7 @@ export default class AllGames extends React.Component {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        marginTop: 30,
+        marginTop: 0,
         marginBottom: 30,
     },
     linearGradient: {

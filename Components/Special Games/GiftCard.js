@@ -194,12 +194,6 @@ export default class GiftCard extends React.Component {
                             closeOnTouchOutside={true}
                             closeOnHardwareBackPress={false}
                             customView={this.renderCustomAlertView()}
-                            onCancelPressed={() => {
-                                this.hideAlert();
-                            }}
-                            onConfirmPressed={() => {
-                                this.SubmitPassword();
-                            }}
                         />
                     </View>
                 </View>

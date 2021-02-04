@@ -334,13 +334,7 @@ export default class AnyDayScreen extends React.Component {
                         title="CHAT WITH US ?"
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
-                        customView={this.renderCustomAlertView()}
-                        onCancelPressed={() => {
-                            this.hideAlert();
-                        }}
-                        onConfirmPressed={() => {
-                            this.SubmitPassword();
-                        }}
+                        customView={this.renderCustomAlertView()}                     
                     />
                 </ScrollView>
             </ScrollView>

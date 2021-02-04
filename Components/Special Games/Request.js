@@ -426,13 +426,7 @@ export default class Request extends React.Component {
                         title="CHAT WITH US ?"
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
-                        customView={this.renderCustomAlertView()}
-                        onCancelPressed={() => {
-                            this.hideAlert();
-                        }}
-                        onConfirmPressed={() => {
-                            this.SubmitPassword();
-                        }}
+                        customView={this.renderCustomAlertView()}                       
                     />
                 </View>
             </ScrollView>
