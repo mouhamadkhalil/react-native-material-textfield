@@ -10,7 +10,7 @@ import {
     Dimensions,
     FlatList
 } from "react-native";
-import { get } from "../../services.js"
+import { get } from "../../helpers/services.js"
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
 import CalendarIcon from "../../assets/Images_Design/calendar.png";
 import Card1 from "../../assets/Images_Design/card1.png";
@@ -21,7 +21,6 @@ import Carousel from 'react-native-snap-carousel';
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 
-//const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);

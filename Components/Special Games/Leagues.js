@@ -48,7 +48,7 @@ import Image15 from "../../assets/games/image15.png";
 import headerBg from "../../assets/images/leagues-mobile-header-background.jpg";
 import Autocomplete from "react-native-autocomplete-input";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);

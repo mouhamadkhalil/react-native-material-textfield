@@ -11,7 +11,7 @@ import {
 import { API_URL, API_TOKEN } from "@env";
 import Lightbox from 'react-native-lightbox-v2';
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class GameScreen extends React.Component {
 

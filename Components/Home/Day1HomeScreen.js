@@ -21,7 +21,7 @@ import Notifictaion from "../../assets/Images_Design/notification1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class Day1HomeScreen extends React.Component {
 

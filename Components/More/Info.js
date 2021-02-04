@@ -26,7 +26,7 @@ import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 import Autocomplete from 'react-native-autocomplete-input';
 

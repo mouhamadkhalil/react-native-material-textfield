@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class Help1Screen extends React.Component {
 

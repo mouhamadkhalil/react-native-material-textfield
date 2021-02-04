@@ -29,7 +29,7 @@ import Insurnace from "../../assets/images/insurnace.png";
 import GiftCard from "../../assets/games/GiftCard.png";
 
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class AnyDayHomeScreen extends React.Component {
 

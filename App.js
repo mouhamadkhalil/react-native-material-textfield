@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, I18nManager} from 'react-native';
 import Constants from 'expo-constants';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from "./Components/Navigation/DrawerNavigator";
 import * as Location from 'expo-location';
+import {setI18nConfig}  from './helpers/utils.js';
 
 const App = () => {
+  setI18nConfig();
   const [errorMsg, setErrorMsg] = useState(null);
-
   useEffect(() => {
     (async () => {
       if (Platform.OS === 'android' && !Constants.isDevice) {

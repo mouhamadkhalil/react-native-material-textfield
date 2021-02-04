@@ -21,7 +21,7 @@ import headerBg from "../../assets/images/leagues-mobile-header-background.jpg";
 import { WebView } from 'react-native-webview';
 
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class LeaderBoard extends React.Component {
 

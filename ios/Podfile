@@ -21,4 +21,6 @@ target 'flyfoot2' do
   #  post_install do |installer|
   #    flipper_post_install(installer)
   #  end
+  pod 'RNLocalize', :path => '../node_modules/react-native-localize'
+
 end

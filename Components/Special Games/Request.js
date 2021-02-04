@@ -34,7 +34,7 @@ import Insurnace from "../../assets/images/insurnace.png";
 import Star from "../../assets/images/star.png";
 import RadioButtonRN from 'radio-buttons-react-native';
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 const data = [
     {
         label: 'Doesnt matter, at least Iam there!'

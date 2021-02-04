@@ -15,7 +15,7 @@ import {
 import { API_URL, API_TOKEN } from "@env";
 import Image1 from "../../assets/games/image1.png";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class MyTrips extends React.Component {
 

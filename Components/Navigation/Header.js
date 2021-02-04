@@ -1,23 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { createStackNavigator } from "@react-navigation/stack";
-import Header from "../Navigation/Header";
-import Login from "../Start/LoginScreen";
-import Signup from "../Start/SignupScreen";
-import SpecialGames from "../Special Games/SpecialGame";
-import AnyDayScreen from "../Schedule/AnyDayScreen";
-import InfoScreen from "../More/Info";
-import Help1Screen from "../Help/Help1Screen";
-import Help2Screen from "../Help/Help2Screen";
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from "react-native";
 import Line2 from "../../assets/Images_Design/line2.png";
 import Moment from 'moment';
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/bell.png";
-
 import Autocomplete from 'react-native-autocomplete-input';
-
-
-
 
 const HeaderOptions = ({ navigation }) => {
     const [games, setGames] = useState([]);
@@ -26,7 +13,7 @@ const HeaderOptions = ({ navigation }) => {
 
     useEffect(() => {
         console.log('games', games);
-      }, [games]); 
+    }, [games]);
 
     const findAll = str => {
         let res = [];
@@ -42,7 +29,6 @@ const HeaderOptions = ({ navigation }) => {
                         res.push(...json);
                         console.log("teams and games:", res);
                         setGames(res)
-                        //setTimeout(() => console.log("games:", games), 2000);
                     });
             })
             .catch(e => {
@@ -123,9 +109,9 @@ const HeaderOptions = ({ navigation }) => {
 const DrawerButton = () => {
     return (
         <View>
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: 0 }} />
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
-            <Image source={Line2} style={{ width: 35, height: 15, marginLeft: 30, marginTop: -5 }} />
+            <Image source={Line2} style={[styles.line, { marginTop: 0 }]} />
+            <Image source={Line2} style={[styles.line, { marginTop: -5 }]} />
+            <Image source={Line2} style={[styles.line, { marginTop: -5 }]} />
         </View>
     );
 };
@@ -159,6 +145,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         width: 300
     },
+    line: {
+        width: 35,
+        height: 15,
+        marginLeft: 30
+    }
 });
 
 export default HeaderOptions;

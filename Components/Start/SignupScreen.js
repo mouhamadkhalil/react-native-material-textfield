@@ -20,7 +20,7 @@ import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import { Ionicons } from '@expo/vector-icons';
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class SignUpScreen extends React.Component {
     constructor(navigation) {

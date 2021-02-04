@@ -31,7 +31,7 @@ import Insurnace from "../../assets/images/insurnace.png";
 import RadioButtonRN from 'radio-buttons-react-native';
 import GiftCard from "../../assets/games/GiftCard.png";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 const data = [
     {

@@ -11,9 +11,10 @@ import ImgLogo from "../../assets/images/fly-foot.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get } from "../../services.js"
+import { get } from "../../helpers/services.js"
+import { translate } from "../../helpers/utils.js"
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class AllGames extends React.Component {
 
@@ -262,7 +263,7 @@ export default class AllGames extends React.Component {
                                 </TouchableHighlight>
                             </View>
                             <View style={{width:'100%', height:'90%', backgroundColor:'#fff'}}>
-                            <View style><Text>Teams...</Text></View>
+                            <View style><Text>{translate('teams')}...</Text></View>
                             <View><Text>City...</Text></View>
                             <View><Text>Competitions...</Text></View>
                             <View><Text>Date...</Text></View>

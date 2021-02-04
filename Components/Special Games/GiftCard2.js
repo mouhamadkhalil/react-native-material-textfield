@@ -37,7 +37,7 @@ import Card from "../../assets/games/Card.png";
 import Gift1 from "../../assets/games/GiftCard23.png";
 import GiftCard from "../../assets/games/GiftCard.png";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);

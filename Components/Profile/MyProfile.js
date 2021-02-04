@@ -22,7 +22,7 @@ import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import DatePicker from 'react-native-datepicker';
 import headerBg from "../../assets/images/leagues-mobile-header-background.jpg";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class MyProfile extends React.Component {
 

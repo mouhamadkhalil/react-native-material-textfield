@@ -39,7 +39,7 @@ import Gift5 from "../../assets/games/gift5.png";
 import GiftCard from "../../assets/games/GiftCard.png";
 
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);
