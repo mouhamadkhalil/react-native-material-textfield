@@ -37,11 +37,6 @@ import Gift3 from "../../assets/games/gift3.png";
 import Gift4 from "../../assets/games/gift4.png";
 import Gift5 from "../../assets/games/gift5.png";
 import GiftCard1 from "../../assets/games/GiftCard.png";
-import Chat from "../../assets/Images_Design/chat1.png";
-import Messanger from "../../assets/images/messanger.png";
-import Feedback from "../../assets/images/feedback.png";
-import Whatsapp from "../../assets/images/whatsapp.png";
-import AwesomeAlert from "react-native-awesome-alerts";
 
 const sourceFile = require('../../services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -55,8 +50,6 @@ export default class GiftCard extends React.Component {
         const navigation = this.props;
         this.state = {
             Picture: Gift1,
-            showAlert: false,
-
         };
     }
 
@@ -84,42 +77,7 @@ export default class GiftCard extends React.Component {
         this.props.navigation.navigate('giftcard2')
     }
 
-    showAlert = () => {
-        this.setState({
-            showAlert: true,
-        });
-    };
-
-    hideAlert = () => {
-        this.setState({
-            showAlert: false,
-        });
-    };
-
-    renderCustomAlertView = () => {
-        return (
-            <>
-                <View style={{ height: 200, width: 200 }}>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
-                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
-                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
-                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                </View>
-
-            </>
-        );
-    };
-
     render() {
-        const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
                 <ImageBackground source={GiftCard1} style={styles.headerBg}>
@@ -179,23 +137,7 @@ export default class GiftCard extends React.Component {
                             title="PROCEED &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; >"
                             color="#52F232"
                         />
-                    </View>
-
-                    <TouchableOpacity onPress={() => {
-                        this.showAlert();
-                    }}>
-                        <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 275, marginTop: -40 }} />
-                    </TouchableOpacity>
-                    <View style={{ backgroundColor: "red" }}>
-                        <AwesomeAlert
-                            show={showAlert}
-                            showProgress={false}
-                            title="CHAT WITH US ?"
-                            closeOnTouchOutside={true}
-                            closeOnHardwareBackPress={false}
-                            customView={this.renderCustomAlertView()}
-                        />
-                    </View>
+                    </View>                 
                 </View>
             </ScrollView >
         );

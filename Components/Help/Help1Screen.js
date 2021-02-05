@@ -11,12 +11,6 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 
-import Chat from "../../assets/Images_Design/chat1.png";
-import Messanger from "../../assets/images/messanger.png";
-import Feedback from "../../assets/images/feedback.png";
-import Whatsapp from "../../assets/images/whatsapp.png";
-import AwesomeAlert from "react-native-awesome-alerts";
-
 const sourceFile = require('../../services.js');
 
 export default class Help1Screen extends React.Component {
@@ -52,43 +46,12 @@ export default class Help1Screen extends React.Component {
     LDescription8: "",
     LDescription9: "",
     isDone: false,
-    showAlert: false,
 
   };
 
-  showAlert = () => {
-    this.setState({
-      showAlert: true,
-    });
-  };
+ 
 
-  hideAlert = () => {
-    this.setState({
-      showAlert: false,
-    });
-  };
-
-  renderCustomAlertView = () => {
-    return (
-      <>
-        <View style={{ height: 200, width: 200 }}>
-          <TouchableOpacity>
-            <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
-            <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
-            <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
-            <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-          </TouchableOpacity>
-        </View>
-      </>
-    );
-  };
-
+  
   componentDidMount() {
     const url = `${API_URL}/mobile/about/faq`;
 
@@ -155,7 +118,6 @@ export default class Help1Screen extends React.Component {
   }
 
   render() {
-    const { showAlert } = this.state;
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
@@ -346,21 +308,7 @@ export default class Help1Screen extends React.Component {
             help@fly-foot.com
           </Text>
         </ScrollView>
-        <TouchableOpacity style={{ marginLeft: 360, marginTop: 110 }} onPress={() => {
-          this.showAlert();
-        }}>
-          <Image source={Chat} style={{ width: 100, height: 100, marginTop: 10 }} />
-        </TouchableOpacity>
-        <View>
-          <AwesomeAlert
-            show={showAlert}
-            showProgress={false}
-            title="CHAT WITH US ?"
-            closeOnTouchOutside={true}
-            closeOnHardwareBackPress={false}
-            customView={this.renderCustomAlertView()}
-          />
-        </View>
+      
       </ScrollView >
     );
   }

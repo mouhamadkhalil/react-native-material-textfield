@@ -30,12 +30,6 @@ import Insurnace from "../../assets/images/insurnace.png";
 import RadioButtonRN from 'radio-buttons-react-native';
 import GiftCard from "../../assets/games/GiftCard.png";
 
-import Chat from "../../assets/Images_Design/chat1.png";
-import Messanger from "../../assets/images/messanger.png";
-import Feedback from "../../assets/images/feedback.png";
-import Whatsapp from "../../assets/images/whatsapp.png";
-import AwesomeAlert from "react-native-awesome-alerts";
-
 const sourceFile = require('../../services.js');
 
 const data = [
@@ -73,44 +67,11 @@ export default class AnyDayHomeScreen extends React.Component {
         roomNumber: 1,
         Infant1: false,
         Infant2: false,
-        showAlert: false,
-
     };
 
-    showAlert = () => {
-        this.setState({
-            showAlert: true,
-        });
-    };
+   
 
-    hideAlert = () => {
-        this.setState({
-            showAlert: false,
-        });
-    };
-
-    renderCustomAlertView = () => {
-        return (
-            <>
-                <View style={{ height: 200, width: 200 }}>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
-                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
-                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
-                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                </View>
-
-            </>
-        );
-    };
-
+   
 
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
@@ -206,8 +167,6 @@ export default class AnyDayHomeScreen extends React.Component {
     }
 
     render() {
-        const { showAlert } = this.state;
-
         return (
             <ScrollView style={styles.container}>
                 <ImageBackground source={GiftCard} style={styles.headerBg}>
@@ -432,21 +391,7 @@ export default class AnyDayHomeScreen extends React.Component {
                     />
                 </View>
                 <View style={{ marginBottom: 50 }}></View>
-                <TouchableOpacity style={{ marginLeft: 370, marginTop: -10 }} onPress={() => {
-                    this.showAlert();
-                }}>
-                    <Image source={Chat} style={{ width: 100, height: 100 }} />
-                </TouchableOpacity>
-                <View>
-                    <AwesomeAlert
-                        show={showAlert}
-                        showProgress={false}
-                        title="CHAT WITH US ?"
-                        closeOnTouchOutside={true}
-                        closeOnHardwareBackPress={false}
-                        customView={this.renderCustomAlertView()}
-                    />
-                </View>
+             
             </ScrollView>
         );
     }
