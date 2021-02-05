@@ -11,11 +11,6 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Lightbox from 'react-native-lightbox-v2';
-import Chat from "../../assets/Images_Design/chat1.png";
-import AwesomeAlert from "react-native-awesome-alerts";
-import Messanger from "../../assets/images/messanger.png";
-import Feedback from "../../assets/images/feedback.png";
-import Whatsapp from "../../assets/images/whatsapp.png";
 import DownArrow from "../../assets/Images_Design/arrow_down.png";
 import UpArrow from "../../assets/Images_Design/arrow_up.png";
 import Location from "../../assets/Images_Design/location1.png";
@@ -29,41 +24,7 @@ const sourceFile = require('../../services.js');
 export default class WhereToEat extends React.Component {
 
     state = {
-        showAlert: false,
-    };
-
-    showAlert = () => {
-        this.setState({
-            showAlert: true,
-        });
-    };
-
-    hideAlert = () => {
-        this.setState({
-            showAlert: false,
-        });
-    };
-
-    renderCustomAlertView = () => {
-        return (
-            <>
-                <View style={{ height: 200, width: 200 }}>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
-                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
-                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
-                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                </View>
-            </>
-        );
-    };
+    }; 
 
     render() {
         const { showAlert } = this.state;
@@ -100,25 +61,7 @@ export default class WhereToEat extends React.Component {
                 <Text style={{ fontWeight: "bold", color: "white", marginLeft: 150, marginTop: 250 }}>SHISHA BAR</Text>
 
                 {/* carousal  */}
-
-
-                <TouchableOpacity style={{ marginLeft: 370, marginTop: 40 }} onPress={() => {
-                    this.showAlert();
-                }}>
-                    <Image source={Chat} style={{ width: 100, height: 100, marginTop: 10 }} />
-                </TouchableOpacity>
-                <View>
-                    <AwesomeAlert
-                        show={showAlert}
-                        showProgress={false}
-                        title="CHAT WITH US ?"
-                        closeOnTouchOutside={true}
-                        closeOnHardwareBackPress={false}
-                        customView={this.renderCustomAlertView()}
-                    />
-                </View>
-
-
+              
             </ScrollView>
         );
     }
