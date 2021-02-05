@@ -2,7 +2,6 @@ import React from "react";
 import {
     StyleSheet,
     Text,
-    Image,
     ScrollView,
     View,
     ImageBackground,
@@ -13,12 +12,16 @@ import {
 import { get } from "../../helpers/services.js"
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
 import CalendarIcon from "../../assets/Images_Design/calendar.png";
-import AwesomeAlert from "react-native-awesome-alerts";
 import BtnBg from "../../assets/Images_Design/btn-bg.png";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import Carousel from 'react-native-snap-carousel';
 import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
+import Image from 'react-native-remote-svg';
+import { translate } from "../../helpers/utils.js"
+
+
+import imgSrc from '../../assets/images/ss.svg';
 
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
@@ -92,7 +95,8 @@ export default class specialGames extends React.Component {
                         Team1Color1: game.Team1Color1,
                         Team1Color2: game.Team1Color2,
                         Team2Color1: game.Team2Color1,
-                        Team2Color2: game.Team2Color2
+                        Team2Color2: game.Team2Color2,
+                        FinalPrice: item.FinalPrice
                     };
                 });
                 this.setState({ popularGames: popularGames });
@@ -227,7 +231,7 @@ export default class specialGames extends React.Component {
                     </LinearGradient>
                 </View>
                 <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{item.AwayTeam}</Text>
-                <Text style={{ fontSize: 12, width: 65 }}>{item.City} from 1360$</Text>
+                <Text style={{ fontSize: 12, width: 65 }}>{item.City} from {item.FinalPrice}$</Text>
                 <Image source={Arrow} />
             </View>
         </TouchableOpacity>;
@@ -275,13 +279,16 @@ export default class specialGames extends React.Component {
 
     /******************* Popular Team Item ************************/
     popularTeamsItem = ({ item, index }) => {
+        const image = { uri: item.Image };
         return (
-            <TouchableOpacity style={{ shadowColor: "red", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 5.84, elevation: 5 }}>
-                <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-                    <Image source={{ uri: item.Image, width: '100%', height: 180, }} style={{ borderRadius: 20, }} />
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.TeamName}</Text>
-                </View>
-            </TouchableOpacity>
+            <View style={{ backgroundColor: '#FFFFFF', width: 180, height: 200, borderRadius: 20, justifyContent: 'center', shadowColor: "#000", shadowOffset: { width: 0, height: 8, }, shadowOpacity: 0.44, shadowRadius: 10, elevation: 15 }}>
+                <TouchableOpacity >
+                    <View style={{ alignItems: 'center' }}>
+                        <Image source={image} style={{ width: 100, height: 100 }} />
+                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.TeamName}</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
         );
     };
 
@@ -357,14 +364,13 @@ export default class specialGames extends React.Component {
                 </View>
 
                 {/* Special Games  */}
-                <View style={{ marginTop: 20 }}>
+                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>special games</Text>
+                        <Text style={styles.pageTitleText}>{translate('specialGames')}</Text>
                     </View>
-                    <View style={{ marginTop: -30, marginLeft: -15 }}>
+                    <View style={{ marginTop: -30, marginStart: '-10%' }}>
                         <Carousel
-                            style={{ marginLeft: 0 }}
                             layout={"default"}
                             ref={ref => this.carousel = ref}
                             data={this.state.specialGames}
@@ -377,12 +383,12 @@ export default class specialGames extends React.Component {
                 </View>
 
                 {/* Popular Games */}
-                <View style={{ marginTop: 20 }}>
+                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}> popular games </Text>
+                        <Text style={styles.pageTitleText}>{translate('popularGames')}</Text>
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center' }}>
+                    <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center' }}>
                         <FlatList
                             data={this.state.popularGames}
                             renderItem={item => this.popularGameItem(item)}
@@ -395,10 +401,10 @@ export default class specialGames extends React.Component {
                 </View>
 
                 {/* Hot Games */}
-                <View style={{ marginTop: 20 }}>
+                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>hot games</Text>
+                        <Text style={styles.pageTitleText}>{translate('hotGames')}</Text>
                     </View>
                     <View style={{ marginLeft: -15, marginTop: -30 }}>
                         <Carousel
@@ -415,30 +421,32 @@ export default class specialGames extends React.Component {
                 </View>
 
                 {/* Popular Teams */}
-                <View style={{ marginTop: 20 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ width: '100%', marginTop: 20, backgroundColor: '#EEEEEE' }}>
+                    <View style={{width:'90%', alignSelf:'center'}}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                         <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>popular teams</Text>
+                        <Text style={styles.pageTitleText}>{translate('popularTeams')}</Text>
                     </View>
-                    <View style={{ marginLeft: -15, marginTop: 30 }}>
+                    <View style={{ marginTop: 20, marginBottom: -50 }}>
                         <Carousel
-                            style={{ marginLeft: -15 }}
                             layout={"default"}
                             ref={ref => this.carousel = ref}
                             data={this.state.popularTeams}
                             sliderWidth={485}
-                            itemWidth={180}
+                            itemWidth={200}
+                            itemHeight={300}
                             renderItem={this.popularTeamsItem}
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
+                    </View>
                 </View>
 
                 {/* competitions  */}
-                <View style={{ width: '90%', marginTop: 20 }}>
+                <View style={{ width: '90%', marginTop: 70, alignSelf: 'center' }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>competitions</Text>
+                        <Text style={styles.pageTitleText}>{translate('competitions')}</Text>
                     </View>
                     <View style={{ marginTop: -30, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start' }}>
                         <Carousel
@@ -447,14 +455,13 @@ export default class specialGames extends React.Component {
                             data={this.state.competitions}
                             sliderWidth={170}
                             itemWidth={290}
-                            // autoplay={true}
                             renderItem={this.competitionItem}
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
                 </View>
 
-                <View style={{ width: '70%', marginTop: 20, marginLeft: 30, height: 70, marginBottom: 30 }}>
+                <View style={{ width: '70%', alignSelf: 'flex-start', marginTop: 20, marginStart: '5%', height: 70, marginBottom: 30 }}>
                     <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems: 'center', justifyContent: 'center' }}
                         onPress={() => this.props.navigation.navigate('giftcard')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
@@ -487,12 +494,12 @@ const styles = StyleSheet.create({
         backgroundColor: "black",
         height: 8,
         width: 30,
-        marginLeft: 30,
     },
     pageTitleText: {
         color: "black",
         fontSize: 20,
         marginLeft: 10,
+        marginRight: 10,
         textTransform: 'uppercase'
     },
     specialGameMeta: {
@@ -503,5 +510,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#ee0000',
         resizeMode: "cover",
         justifyContent: "center"
-    },
+    }
 });

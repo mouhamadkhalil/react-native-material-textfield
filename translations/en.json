@@ -1,3 +1,8 @@
 {
+    "specialGames": "special games",
+    "popularGames": "popular games",
+    "hotGames": "hot games",
+    "popularTeams":"popular teams",
+    "competitions": "competitions",
     "teams": "Teams"
 }
