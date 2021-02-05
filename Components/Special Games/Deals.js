@@ -10,7 +10,7 @@ import ImgList from "../../assets/Images_Design/list-grey-icon.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get } from "../../services.js";
+import { get } from "../../helpers/services.js";
 import Chat from "../../helpers/chat";
 
 
@@ -68,7 +68,7 @@ export default class Deals extends React.Component {
                 };
             });
             this.setState({ allGames: data });
-            this.setState({ isDone: true })
+            this.setState({ isDone: true });
         });
     };
 
@@ -147,7 +147,7 @@ export default class Deals extends React.Component {
                     <Image source={ImgArrowRight} style={{ marginLeft: 10 }} />
                 </TouchableOpacity>
             </View>
-        </View>
+        </View>;
 
 
     render() {

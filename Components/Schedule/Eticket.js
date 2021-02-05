@@ -17,14 +17,14 @@ import UpArrow from "../../assets/Images_Design/arrow_up.png";
 import Location from "../../assets/Images_Design/location1.png";
 import Fork from "../../assets/Images_Design/fork.png";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class Eticket extends React.Component {
 
     state = {
     };
 
-  
+
 
 
     render() {
@@ -71,7 +71,7 @@ export default class Eticket extends React.Component {
                         color="gray"
                     />
                 </View>
-                
+
             </ScrollView>
         );
     }

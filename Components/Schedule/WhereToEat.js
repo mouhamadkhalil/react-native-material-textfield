@@ -19,12 +19,12 @@ import Fork from "../../assets/Images_Design/fork.png";
 
 
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class WhereToEat extends React.Component {
 
     state = {
-    }; 
+    };
 
     render() {
         const { showAlert } = this.state;
@@ -61,7 +61,7 @@ export default class WhereToEat extends React.Component {
                 <Text style={{ fontWeight: "bold", color: "white", marginLeft: 150, marginTop: 250 }}>SHISHA BAR</Text>
 
                 {/* carousal  */}
-              
+
             </ScrollView>
         );
     }

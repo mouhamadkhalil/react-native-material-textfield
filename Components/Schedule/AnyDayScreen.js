@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Lightbox from 'react-native-lightbox-v2';
+import DownArrow from "../../assets/Images_Design/arrow_down.png";
 import Chat from "../../helpers/chat";
 
 const sourceFile = require('../../helpers/services.js');

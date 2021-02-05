@@ -36,7 +36,7 @@ import Gift2 from "../../assets/games/gift2.png";
 import Gift3 from "../../assets/games/gift3.png";
 import Gift4 from "../../assets/games/gift4.png";
 import Gift5 from "../../assets/games/gift5.png";
-import GiftCard from "../../assets/games/GiftCard.png";
+// import GiftCard from "../../assets/games/GiftCard.png";
 import Chat from "../../helpers/chat";
 
 
