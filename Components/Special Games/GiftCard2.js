@@ -36,6 +36,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Card from "../../assets/games/Card.png";
 import Gift1 from "../../assets/games/GiftCard23.png";
 import GiftCard from "../../assets/games/GiftCard.png";
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -114,7 +116,7 @@ export default class Leagues extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-               <ImageBackground source={GiftCard} style={styles.headerBg}>
+                <ImageBackground source={GiftCard} style={styles.headerBg}>
                     <Text style={styles.pageTitleText}>
                         Gift card
                     </Text>
@@ -269,7 +271,7 @@ export default class Leagues extends React.Component {
                         color="gray"
                     />
                 </View>
-                <View style={{ marginBottom: 40 }}></View>
+                <Chat/>
             </ScrollView >
         );
     }

@@ -18,6 +18,8 @@ import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -161,7 +163,7 @@ export default class Post2Screen extends React.Component {
             marginLeft: 140,
           }}
         >
-         <TouchableOpacity>
+          <TouchableOpacity>
             {this.state.isDone ?
               <Lightbox >
                 <Image source={this.state.Picture1 ? { uri: this.state.Picture1 } : null}
@@ -217,9 +219,7 @@ export default class Post2Screen extends React.Component {
               />}
           </TouchableOpacity>
         </ScrollView>
-        <TouchableOpacity>
-          <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
-        </TouchableOpacity>
+        <Chat />
       </ScrollView>
     );
   }

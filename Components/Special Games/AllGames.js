@@ -12,7 +12,8 @@ import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import { get } from "../../helpers/services.js"
-import { translate } from "../../helpers/utils.js"
+import { translate } from "../../helpers/utils.js";
+import Chat from "../../helpers/chat";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -76,7 +77,7 @@ export default class AllGames extends React.Component {
     };
 
     changeModalVisibility = (props) => {
-        this.state.setState('modalVisible',props);
+        this.state.setState('modalVisible', props);
     }
 
     FilterGame = () => {
@@ -184,10 +185,10 @@ export default class AllGames extends React.Component {
 
                     {/* filter begin*/}
                     <View style={{ flex: 1, flexDirection: 'row', backgroundColor: "white", width: '90%', height: 70, marginTop: -35, alignSelf: 'center', shadowColor: "grey", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.5, shadowRadius: 5.84, elevation: 5 }}>
-                        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', borderRightWidth: 1, borderRightColor: 'grey' }} 
-                        onPress={() => {
-                            this.setState({modalVisible: true});
-                        }}>
+                        <TouchableOpacity style={{ flex: 1, flexDirection: 'row', width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', borderRightWidth: 1, borderRightColor: 'grey' }}
+                            onPress={() => {
+                                this.setState({ modalVisible: true });
+                            }}>
                             <Text style={{ fontSize: 20, color: '#6E6E6E', textTransform: 'uppercase' }}>filter</Text>
                             <Image source={ImgArrowDown} style={{ width: 12, height: 12, marginLeft: 20 }} />
                         </TouchableOpacity>
@@ -252,24 +253,25 @@ export default class AllGames extends React.Component {
                         transparent={true}
                         visible={this.state.modalVisible}>
                         <View style={styles.modalView}>
-                            
-                            <View style={{ width:'100%', height:'10%', borderBottomWidth:1, borderBottomColor:'#eee', flex:1, flexDirection:'row' }}>
-                                <Image source={ImgLogo} style={{ width:'50%', height:'90%', alignItems:'flex-start'}}></Image>
+
+                            <View style={{ width: '100%', height: '10%', borderBottomWidth: 1, borderBottomColor: '#eee', flex: 1, flexDirection: 'row' }}>
+                                <Image source={ImgLogo} style={{ width: '50%', height: '90%', alignItems: 'flex-start' }}></Image>
                                 <TouchableHighlight style={styles.closeButton}
                                     onPress={() => {
-                                        this.setState({modalVisible: false});
+                                        this.setState({ modalVisible: false });
                                     }}>
                                     <Text style={styles.textStyle}>X</Text>
                                 </TouchableHighlight>
                             </View>
-                            <View style={{width:'100%', height:'90%', backgroundColor:'#fff'}}>
-                            <View style><Text>{translate('teams')}...</Text></View>
-                            <View><Text>City...</Text></View>
-                            <View><Text>Competitions...</Text></View>
-                            <View><Text>Date...</Text></View>
+                            <View style={{ width: '100%', height: '90%', backgroundColor: '#fff' }}>
+                                <View style><Text>{translate('teams')}...</Text></View>
+                                <View><Text>City...</Text></View>
+                                <View><Text>Competitions...</Text></View>
+                                <View><Text>Date...</Text></View>
                             </View>
                         </View>
                     </Modal>
+                    <Chat />
                 </View>
             </ScrollView >
         );
@@ -292,11 +294,11 @@ const styles = StyleSheet.create({
         width: 20,
     },
     modalView: {
-        width:'100%',
-        height:'100%',
+        width: '100%',
+        height: '100%',
         backgroundColor: '#fff',
-        flex:1,
-        flexDirection:'column',
+        flex: 1,
+        flexDirection: 'column',
         padding: 35,
         alignItems: 'center',
         shadowColor: '#000',
@@ -310,15 +312,15 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         backgroundColor: '#EEE',
-        width:40,
+        width: 40,
         borderRadius: 180,
-        alignSelf:'center'
+        alignSelf: 'center'
     },
     textStyle: {
         color: '#000',
         fontWeight: 'bold',
         textAlign: 'center',
-        padding:10
+        padding: 10
     },
     modalText: {
         marginBottom: 15,

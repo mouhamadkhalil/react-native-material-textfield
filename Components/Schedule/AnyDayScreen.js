@@ -10,14 +10,8 @@ import {
     ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
-import Line1 from "../../assets/Images_Design/line1.png";
-import Line2 from "../../assets/Images_Design/line2.png";
-import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
-import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
-import Search from "../../assets/Images_Design/search1.png";
-import Notifictaion from "../../assets/Images_Design/notification1.png";
-import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
+import Chat from "../../helpers/chat";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -97,17 +91,6 @@ export default class Day2Screen extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                {/* <TextInput
-          style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
-          placeholder="  &nbsp;&nbsp;Search your game ... "
-          placeholderTextColor="#46D822"
-          autoCapitalize="none"
-          onChangeText={searchText => {
-            this.setState({ searchText });
-          }}
-          onSubmitEditing={this.searchGame}
-          value={this.state.searchText}
-        /> */}
                 <Text
                     style={{
                         marginTop: 60,
@@ -301,6 +284,7 @@ export default class Day2Screen extends React.Component {
                 <TouchableOpacity>
                     <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
                 </TouchableOpacity>
+                <Chat />
             </ScrollView>
         );
     }

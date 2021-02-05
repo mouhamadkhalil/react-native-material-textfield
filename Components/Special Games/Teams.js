@@ -33,6 +33,8 @@ import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Brazil from "../../assets/games/brazil.png";
 import headerBg from "../../assets/images/teams-list-mobile-background.jpg";
+import Chat from "../../helpers/chat";
+
 
 import { Separator, Thumbnail } from 'native-base';
 import { AccordionList, Collapse, CollapseHeader, CollapseBody } from "accordion-collapse-react-native";
@@ -152,6 +154,7 @@ export default class Teams extends React.Component {
                     body={this._body}
                     keyExtractor={item => `${item.id}`}
                 />
+                <Chat />
             </ScrollView >
         );
     }

@@ -16,7 +16,6 @@ import {
 import { API_URL, API_TOKEN } from "@env";
 import Flyfoot from "../../assets/Images_Design/flyfoot1.png";
 import Flag2 from "../../assets/Images_Design/flag2.png";
-import Chat from "../../assets/Images_Design/msg1.png";
 import Question from "../../assets/Images_Design/faq1.png";
 import Setting from "../../assets/Images_Design/setting1.png";
 import Line1 from "../../assets/Images_Design/line1.png";
@@ -25,6 +24,8 @@ import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
 import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -150,6 +151,8 @@ const Info = () => {
                 </View>
 
             </ScrollView>
+            <Chat />
+
         </SafeAreaView>
     );
 };

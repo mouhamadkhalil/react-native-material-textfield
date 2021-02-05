@@ -19,6 +19,8 @@ import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import Carousel from 'react-native-snap-carousel';
 import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
+import Chat from "../../helpers/chat";
+
 
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
@@ -460,6 +462,8 @@ export default class specialGames extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
                     </TouchableOpacity>
                 </View>
+
+                <Chat />
             </ScrollView >
         );
     }
