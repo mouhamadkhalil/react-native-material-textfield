@@ -10,7 +10,7 @@ import {
     Dimensions,
     FlatList
 } from "react-native";
-import { get } from "../../helpers/services.js"
+import { get } from "../../helpers/services.js";
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
 import CalendarIcon from "../../assets/Images_Design/calendar.png";
 import AwesomeAlert from "react-native-awesome-alerts";
@@ -22,6 +22,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Chat from "../../helpers/chat";
 
 
+
+const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);
@@ -48,7 +50,7 @@ export default class specialGames extends React.Component {
             return 0;
         let firstDate = moment(date1);
         let secondDate = moment(date2);
-        return secondDate.diff(firstDate, 'days') + 1
+        return secondDate.diff(firstDate, 'days') + 1;
     }
 
     getData = () => {
@@ -289,7 +291,7 @@ export default class specialGames extends React.Component {
 
     /******************* Competition Item ************************/
     competitionItem({ item, index, state }) {
-        const image = { uri: item.ImageReference }
+        const image = { uri: item.ImageReference };
         return (
             <View style={{ width: 250, marginTop: 60, height: 200 }}>
                 <ImageBackground source={image} style={[styles.image, { width: 250, height: 200 }]} imageStyle={{ borderRadius: 20 }}>
@@ -356,7 +358,7 @@ export default class specialGames extends React.Component {
                         onPress={() => this.props.navigation.navigate('leader board')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
                     </TouchableOpacity>
-                </View>
+                </View>;
 
                 {/* Special Games  */}
                 <View style={{ marginTop: 20 }}>
@@ -376,7 +378,7 @@ export default class specialGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
-                </View>
+                </View>;
 
                 {/* Popular Games */}
                 <View style={{ marginTop: 20 }}>
@@ -394,7 +396,7 @@ export default class specialGames extends React.Component {
                             <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View>;
 
                 {/* Hot Games */}
                 <View style={{ marginTop: 20 }}>
@@ -414,7 +416,7 @@ export default class specialGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
-                </View>
+                </View>;
 
                 {/* Popular Teams */}
                 <View style={{ marginTop: 20 }}>
@@ -434,7 +436,7 @@ export default class specialGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
-                </View>
+                </View>;
 
                 {/* competitions  */}
                 <View style={{ width: '90%', marginTop: 20 }}>
@@ -461,7 +463,7 @@ export default class specialGames extends React.Component {
                         onPress={() => this.props.navigation.navigate('giftcard')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
                     </TouchableOpacity>
-                </View>
+                </View >
 
                 <Chat />
             </ScrollView >

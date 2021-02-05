@@ -22,13 +22,11 @@ import Lightbox from 'react-native-lightbox-v2';
 import Game from "../../assets/images/football.jpg";
 import Onspot from "../../assets/images/onspot.png";
 import Car1 from "../../assets/images/car1.png";
-import Stadium from "../../assets/images/stadium.png"
-import Hotel from "../../assets/images/hotel3.png"
+import Stadium from "../../assets/images/stadium.png";
+import Hotel from "../../assets/images/hotel3.png";
 import Insurnace from "../../assets/images/insurnace.png";
 import GiftCard from "../../assets/games/GiftCard.png";
 import Chat from "../../helpers/chat";
-
-
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -49,8 +47,11 @@ export default class AnyDayHomeScreen extends React.Component {
         GameCode: "",
         HomeTeam: "",
         AwayTeam: "",
-        StadeCity: ""
+        StadeCity: "",
     };
+
+
+
 
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
@@ -109,11 +110,11 @@ export default class AnyDayHomeScreen extends React.Component {
 
     Customize = () => {
         this.props.navigation.navigate('customize');
-    }
+    };
 
     Flight = () => {
         this.props.navigation.navigate('flight');
-    }
+    };
 
     render() {
         return (

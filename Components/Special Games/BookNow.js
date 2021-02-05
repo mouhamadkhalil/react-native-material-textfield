@@ -35,8 +35,6 @@ import Insurnace from "../../assets/images/insurnace.png";
 import GiftCard from "../../assets/games/GiftCard.png";
 import Chat from "../../helpers/chat";
 
-
-
 const sourceFile = require('../../helpers/services.js');
 
 export default class BookNow extends React.Component {
@@ -89,6 +87,9 @@ export default class BookNow extends React.Component {
         ],
         date: "2016-05-15"
     };
+
+
+
 
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
@@ -347,7 +348,7 @@ export default class BookNow extends React.Component {
                         color="#8CD222"
                     />
                 </ScrollView>
-                <View style={{ marginLeft: 100,marginTop:20 }}>
+                <View style={{ marginLeft: 100, marginTop: 20 }}>
                     <Chat />
                 </View>
             </ScrollView>

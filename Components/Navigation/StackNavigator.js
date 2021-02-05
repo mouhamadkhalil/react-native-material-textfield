@@ -24,6 +24,15 @@ import MyTripsScreen from "../Special Games/MyTrips";
 import MyProfileScreen from "../Profile/MyProfile";
 import QuizScreen from "../WebView/Quiz";
 import LeaderBoardScreen from "../WebView/LeaderBoard";
+import ActivityCardScreen from "../Schedule/ActivityCard";
+import WhereToEatScreen from "../Schedule/WhereToEat";
+import RestaurantScreen from "../Schedule/Restaurant";
+import WhatToDoScreen from "../Schedule/WhatToDo";
+import MuseumScreen from "../Schedule/Museum";
+import SagradaScreen from "../Schedule/SagradaFamilia";
+import NightLifeScreen from "../Schedule/NightLife";
+import NightLife1Screen from "../Schedule/NightLife1";
+import ETicketScreen from "../Schedule/Eticket";
 
 
 const Stack = createStackNavigator();
@@ -74,6 +83,16 @@ const MyBookingStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="my bookings" navigationProps={navigation} component={AnyDayScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="activity card" navigationProps={navigation} component={ActivityCardScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="WhereToEat" navigationProps={navigation} component={WhereToEatScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="restaurant" navigationProps={navigation} component={RestaurantScreen} />
+            <Stack.Screen name="WhatToDo" navigationProps={navigation} component={WhatToDoScreen} />
+            <Stack.Screen name="museum" navigationProps={navigation} component={MuseumScreen} />
+            <Stack.Screen name="sagrada" navigationProps={navigation} component={SagradaScreen} />
+            <Stack.Screen name="nightlife" navigationProps={navigation} component={NightLifeScreen} />
+            <Stack.Screen name="nightlife1" navigationProps={navigation} component={NightLife1Screen} />
+            <Stack.Screen name="eticket" navigationProps={navigation} component={ETicketScreen} />
+
         </Stack.Navigator>
     );
 };
