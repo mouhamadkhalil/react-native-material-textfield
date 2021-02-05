@@ -26,6 +26,7 @@ export default class MyTrips extends React.Component {
         PastTrips: [],
         upcomingFlag: false,
         savedFlag: false,
+        showAlert: false,
     };
 
     getToken = async () => AsyncStorage.getItem('token');
@@ -50,30 +51,30 @@ export default class MyTrips extends React.Component {
             .then((res) => res.json())
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
-                this.setState({ UpComingTrips: response.UpComing })
-                this.setState({ PastTrips: response.Saved })
-                this.setState({ SavedTrips: response.Past })
-                this.setState({ upcomingFlag: true })
+                this.setState({ UpComingTrips: response.UpComing });
+                this.setState({ PastTrips: response.Saved });
+                this.setState({ SavedTrips: response.Past });
+                this.setState({ upcomingFlag: true });
             });
-    }
+    };
 
     UpcomingTrips = () => {
-        this.setState({ upcomingFlag: true })
-        this.setState({ savedFlag: false })
-        this.setState({ pastFlag: false })
-    }
+        this.setState({ upcomingFlag: true });
+        this.setState({ savedFlag: false });
+        this.setState({ pastFlag: false });
+    };
 
     SavedTrips = () => {
-        this.setState({ savedFlag: true })
-        this.setState({ upcomingFlag: false })
-        this.setState({ pastFlag: false })
-    }
+        this.setState({ savedFlag: true });
+        this.setState({ upcomingFlag: false });
+        this.setState({ pastFlag: false });
+    };
 
     PastTrips = () => {
-        this.setState({ pastFlag: true })
-        this.setState({ upcomingFlag: false })
-        this.setState({ savedFlag: false })
-    }
+        this.setState({ pastFlag: true });
+        this.setState({ upcomingFlag: false });
+        this.setState({ savedFlag: false });
+    };
 
     render() {
         return (
@@ -94,19 +95,19 @@ export default class MyTrips extends React.Component {
                         <Text style={{ color: "white", fontWeight: "bold" }}>PAST</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ marginLeft: 140 }}>
+                <View style={{ marginLeft: 150 }}>
                     {this.state.upcomingFlag ?
                         <Text style={{ marginLeft: 40, marginTop: 150, fontSize: 19, fontWeight: "bold", color: "gray" }}>No Upcoming Trips Found!</Text> :
                         null
                     }
                 </View>
-                <View style={{ marginLeft: 140 }}>
+                <View style={{ marginLeft: 165 }}>
                     {this.state.savedFlag ?
                         <Text style={{ marginLeft: 40, marginTop: 150, fontSize: 19, fontWeight: "bold", color: "gray" }}>No Saved Trips Found!</Text> :
                         null
                     }
                 </View>
-                <View style={{ marginLeft: 140 }}>
+                <View style={{ marginLeft: 165 }}>
                     {this.state.pastFlag ?
                         <Text style={{ marginLeft: 40, marginTop: 150, fontSize: 19, fontWeight: "bold", color: "gray" }}>No Past Trips Found!</Text> :
                         null

@@ -4,12 +4,58 @@ import {
   TextInput,
   Text,
   Image,
+  View,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 
+import Chat from "../../assets/Images_Design/chat1.png";
+import Messanger from "../../assets/images/messanger.png";
+import Feedback from "../../assets/images/feedback.png";
+import Whatsapp from "../../assets/images/whatsapp.png";
+import AwesomeAlert from "react-native-awesome-alerts";
+
+
 export default class ManageTripScreen extends React.Component {
+
+  state = {
+    showAlert: false,
+  };
+
+  showAlert = () => {
+    this.setState({
+      showAlert: true,
+    });
+  };
+
+  hideAlert = () => {
+    this.setState({
+      showAlert: false,
+    });
+  };
+
+  renderCustomAlertView = () => {
+    return (
+      <>
+        <View style={{ height: 200, width: 200 }}>
+          <TouchableOpacity>
+            <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
+            <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
+            <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
+            <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+          </TouchableOpacity>
+        </View>
+
+      </>
+    );
+  }
 
   Back = () => {
     this.props.navigation.navigate('Menu');
@@ -33,6 +79,8 @@ export default class ManageTripScreen extends React.Component {
 
 
   render() {
+    const { showAlert } = this.state;
+
     return (
       <ScrollView style={styles.container}>
         <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
@@ -155,6 +203,21 @@ export default class ManageTripScreen extends React.Component {
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
           ></ScrollView>
         </ScrollView>
+        <TouchableOpacity style={{ marginLeft: 270, marginTop: -110 }} onPress={() => {
+          this.showAlert();
+        }}>
+          <Image source={Chat} style={{ width: 100, height: 100 }} />
+        </TouchableOpacity>
+        <View>
+          <AwesomeAlert
+            show={showAlert}
+            showProgress={false}
+            title="CHAT WITH US ?"
+            closeOnTouchOutside={true}
+            closeOnHardwareBackPress={false}
+            customView={this.renderCustomAlertView()}
+          />
+        </View>
       </ScrollView>
     );
   }

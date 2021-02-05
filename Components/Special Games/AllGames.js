@@ -11,7 +11,7 @@ import ImgLogo from "../../assets/images/fly-foot.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get } from "../../helpers/services.js"
+import { get } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils.js";
 import Chat from "../../helpers/chat";
 
@@ -72,13 +72,13 @@ export default class AllGames extends React.Component {
                 };
             });
             this.setState({ allGames: data });
-            this.setState({ isDone: true })
+            this.setState({ isDone: true });
         });
     };
 
     changeModalVisibility = (props) => {
         this.state.setState('modalVisible', props);
-    }
+    };
 
     FilterGame = () => {
         const urlFilter = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
@@ -168,9 +168,10 @@ export default class AllGames extends React.Component {
                     <Image source={ImgArrowRight} style={{ marginLeft: 10 }} />
                 </TouchableOpacity>
             </View>
-        </View>
+        </View>;
 
     render() {
+
         return (
             <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -273,6 +274,8 @@ export default class AllGames extends React.Component {
                     </Modal>
                     <Chat />
                 </View>
+
+
             </ScrollView >
         );
     }
@@ -282,9 +285,8 @@ export default class AllGames extends React.Component {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        marginTop: 30,
+        marginTop: 0,
         marginBottom: 30,
-        backgroundColor: "#EEEEEE",
     },
     linearGradient: {
         alignItems: 'center',

@@ -13,6 +13,7 @@ import {
     Button,
     AsyncStorage,
     Picker,
+    ToastAndroid,
     Dimensions
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
@@ -31,7 +32,19 @@ export default class MyProfile extends React.Component {
         super(props);
         const navigation = this.props;
         this.state = {
-            date: "2020-05-15",
+            FavouriteTeam1: "",
+            FavouriteTeam2: "",
+            FavouriteTeam3: "",
+            FavouriteTeam4: "",
+            FavouriteTeam5: "",
+            FavouriteTeam6: "",
+            FavouriteTeam7: "",
+            FavouriteTeam8: "",
+            FavouriteTeam9: "",
+            FavouriteTeam10: "",
+            FavouriteTeam11: "",
+            FavouriteTeam12: "",
+            date: "2021-02-04",
             Name: "",
             Surname: "",
             Country: "",
@@ -51,6 +64,8 @@ export default class MyProfile extends React.Component {
         };
     }
 
+
+
     getToken = async () => AsyncStorage.getItem('token');
 
     componentDidMount = async () => {
@@ -61,12 +76,12 @@ export default class MyProfile extends React.Component {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
-                // "Authorization": 'Bearer ' + token
             },
         })
             .then((res) => res.json())
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
+                console.log(response);
                 var data = response.map(function (item) {
                     return {
                         ShortName: item.ShortName,
@@ -81,9 +96,44 @@ export default class MyProfile extends React.Component {
                     };
                 });
                 this.setState({ Teams: data });
-                console.log("my data", this.state.Teams)
+                this.setState({
+                    FavouriteTeam1: response[0].TeamName
+                });
+                this.setState({
+                    FavouriteTeam2: response[1].TeamName
+                });
+                this.setState({
+                    FavouriteTeam3: response[2].TeamName
+                });
+                this.setState({
+                    FavouriteTeam4: response[3].TeamName
+                });
+                this.setState({
+                    FavouriteTeam5: response[4].TeamName
+                });
+                this.setState({
+                    FavouriteTeam6: response[5].TeamName
+                });
+                this.setState({
+                    FavouriteTeam7: response[6].TeamName
+                });
+                this.setState({
+                    FavouriteTeam8: response[7].TeamName
+                });
+                this.setState({
+                    FavouriteTeam9: response[8].TeamName
+                });
+                this.setState({
+                    FavouriteTeam10: response[9].TeamName
+                });
+                this.setState({
+                    FavouriteTeam11: response[10].TeamName
+                });
+                this.setState({
+                    FavouriteTeam12: response[11].TeamName
+                });
             });
-    }
+    };
 
 
     SAVEINFO = async () => {
@@ -95,6 +145,8 @@ export default class MyProfile extends React.Component {
             Country: this.state.Country,
             Email: this.state.Email,
             PhoneNumber: this.state.PhoneNumber,
+            FavouriteTeam: this.state.FavouriteTeam1,
+
         };
 
         fetch(url, {
@@ -109,12 +161,13 @@ export default class MyProfile extends React.Component {
             .then((res) => res.json())
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
-
-
-
+                ToastAndroid.showWithGravity(
+                    'your profile has been updated !',
+                    ToastAndroid.LONG,
+                    ToastAndroid.CENTER
+                );
             });
-
-    }
+    };
 
     render() {
         const { selectedStartDate } = this.state;
@@ -149,10 +202,21 @@ export default class MyProfile extends React.Component {
 
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>TEAM*</Text>
                     <Picker
-                        selectedValue={this.state.Teams.TeamName}
-                        style={{ height: 50, marginLeft: 28, marginRight: 15, borderBottomWidth: 1, borderColor: 'gray' }}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ TeamName: itemValue })}>
-                        <Picker.Item label={this.state.Teams[0].TeamName} value={this.state.Teams[0].TeamName} />
+                        selectedValue={this.state.FavouriteTeam1}
+                        style={{ marginTop: 40, height: 20, marginLeft: 28, marginRight: 15, borderBottomWidth: 1, borderColor: 'gray' }}
+                        onValueChange={(itemValue, itemIndex) => this.setState({ FavouriteTeam1: itemValue })}>
+                        <Picker.Item label={this.state.FavouriteTeam1} value={this.state.FavouriteTeam1} />
+                        <Picker.Item label={this.state.FavouriteTeam2} value={this.state.FavouriteTeam2} />
+                        <Picker.Item label={this.state.FavouriteTeam3} value={this.state.FavouriteTeam3} />
+                        <Picker.Item label={this.state.FavouriteTeam4} value={this.state.FavouriteTeam4} />
+                        <Picker.Item label={this.state.FavouriteTeam5} value={this.state.FavouriteTeam5} />
+                        <Picker.Item label={this.state.FavouriteTeam6} value={this.state.FavouriteTeam6} />
+                        <Picker.Item label={this.state.FavouriteTeam7} value={this.state.FavouriteTeam7} />
+                        <Picker.Item label={this.state.FavouriteTeam8} value={this.state.FavouriteTeam8} />
+                        <Picker.Item label={this.state.FavouriteTeam9} value={this.state.FavouriteTeam9} />
+                        <Picker.Item label={this.state.FavouriteTeam10} value={this.state.FavouriteTeam10} />
+                        <Picker.Item label={this.state.FavouriteTeam11} value={this.state.FavouriteTeam11} />
+                        <Picker.Item label={this.state.FavouriteTeam12} value={this.state.FavouriteTeam12} />
                     </Picker>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>DATE OF BIRTH*</Text>
                     <DatePicker
@@ -161,8 +225,8 @@ export default class MyProfile extends React.Component {
                         mode="date"
                         placeholder="select date"
                         format="YYYY-MM-DD"
-                        minDate="2020-05-01"
-                        maxDate="2050-06-01"
+                        minDate="1970-05-01"
+                        maxDate="2050-05-01"
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         customStyles={{
@@ -204,6 +268,8 @@ export default class MyProfile extends React.Component {
                         multiline={true}
                         numberOfLines={8}
                         value={this.state.PhoneNumber}
+                        type="phone"
+                        keyboardType="phone-pad"
                         onChangeText={(PhoneNumber) => this.setState({ PhoneNumber })}
                         style={{ fontSize: 12, marginTop: -25, paddingLeft: 30 }}
                     />

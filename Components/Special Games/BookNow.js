@@ -90,6 +90,9 @@ export default class BookNow extends React.Component {
         date: "2016-05-15"
     };
 
+
+
+
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
         fetch(url, {
@@ -347,7 +350,7 @@ export default class BookNow extends React.Component {
                         color="#8CD222"
                     />
                 </ScrollView>
-                <View style={{ marginLeft: 100,marginTop:20 }}>
+                <View style={{ marginLeft: 100, marginTop: 20 }}>
                     <Chat />
                 </View>
             </ScrollView>

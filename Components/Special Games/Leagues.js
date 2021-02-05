@@ -71,6 +71,7 @@ export default class Leagues extends React.Component {
     }
 
 
+
     componentDidMount() {
         const url = `${API_URL}/mobile/leagues/all`;
         fetch(url, {

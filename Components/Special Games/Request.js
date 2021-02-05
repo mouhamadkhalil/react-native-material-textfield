@@ -28,8 +28,8 @@ import Lightbox from 'react-native-lightbox-v2';
 import DatePicker from 'react-native-datepicker';
 import Onspot from "../../assets/images/onspot.png";
 import Car1 from "../../assets/images/car1.png";
-import Stadium from "../../assets/images/stadium.png"
-import Hotel from "../../assets/images/hotel3.png"
+import Stadium from "../../assets/images/stadium.png";
+import Hotel from "../../assets/images/hotel3.png";
 import Insurnace from "../../assets/images/insurnace.png";
 import Star from "../../assets/images/star.png";
 import RadioButtonRN from 'radio-buttons-react-native';
@@ -101,8 +101,7 @@ export default class Request extends React.Component {
             },
         ],
         date: "2016-05-15",
-        fanNumber: 2
-
+        fanNumber: 2,
     };
 
     componentDidMount() {
@@ -131,12 +130,12 @@ export default class Request extends React.Component {
     }
 
     IncrementFan = () => {
-        this.setState({ fanNumber: this.state.fanNumber + 1 })
-    }
+        this.setState({ fanNumber: this.state.fanNumber + 1 });
+    };
 
     DecrementFan = () => {
-        this.setState({ fanNumber: this.state.fanNumber - 1 })
-    }
+        this.setState({ fanNumber: this.state.fanNumber - 1 });
+    };
 
 
     searchGame = () => {
@@ -186,12 +185,12 @@ export default class Request extends React.Component {
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
                 console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
-                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate })
-                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate })
-                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City })
-                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City })
-                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League })
-                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence })
+                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
+                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
+                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
+                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
+                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
+                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
                 this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
                 this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
             });
@@ -202,18 +201,6 @@ export default class Request extends React.Component {
         const startDate = selectedStartDate ? selectedStartDate.toString() : '';
         return (
             <ScrollView style={styles.container}>
-                {/* <TextInput
-                    style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 30, backgroundColor: "white", width: 185, height: 35 }}
-                    placeholder="  &nbsp;&nbsp;Search your game ... "
-                    placeholderTextColor="#46D822"
-                    autoCapitalize="none"
-                    onChangeText={searchText => {
-                        this.setState({ searchText });
-                    }}
-                    onSubmitEditing={this.searchGame}
-                    value={this.state.searchText}
-                /> */}
-
                 <Image source={Game} style={{ height: 200 }} />
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ fontSize: 10, marginLeft: 10, fontWeight: "bold", marginTop: 30 }}>CHELSEA VS WOLVE</Text>
@@ -248,7 +235,7 @@ export default class Request extends React.Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => { this.setState({ date: date }) }}
+                        onDateChange={(date) => { this.setState({ date: date }); }}
                     />
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>To</Text>
                     <DatePicker
@@ -272,7 +259,7 @@ export default class Request extends React.Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => { this.setState({ date: date }) }}
+                        onDateChange={(date) => { this.setState({ date: date }); }}
                     />
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>FANS</Text>
                     <TouchableOpacity style={{ width: 20, marginLeft: 40 }} onPress={this.DecrementFan}>
@@ -403,7 +390,5 @@ const styles = StyleSheet.create({
         marginLeft: -110,
         width: 500,
         marginTop: 0,
-        marginBottom: 30,
-        backgroundColor: "#F5F7EC",
     },
 });
