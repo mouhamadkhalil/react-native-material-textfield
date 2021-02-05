@@ -13,18 +13,12 @@ import {
 import { get } from "../../helpers/services.js"
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
 import CalendarIcon from "../../assets/Images_Design/calendar.png";
-import Card1 from "../../assets/Images_Design/card1.png";
 import AwesomeAlert from "react-native-awesome-alerts";
-import Btn2 from "../../assets/Images_Design/btn2.png";
 import BtnBg from "../../assets/Images_Design/btn-bg.png";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import Carousel from 'react-native-snap-carousel';
-import Moment from 'moment';
-import Chat from "../../assets/Images_Design/chat1.png";
+import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-import Messanger from "../../assets/images/messanger.png";
-import Feedback from "../../assets/images/feedback.png";
-import Whatsapp from "../../assets/images/whatsapp.png";
 
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
@@ -42,48 +36,21 @@ export default class specialGames extends React.Component {
             hotGames: [],
             popularTeams: [],
             competitions: [],
-            showAlert: false,
         };
 
         this.getData();
     }
 
-    showAlert = () => {
-        this.setState({
-            showAlert: true,
-        });
-    };
-
-    hideAlert = () => {
-        this.setState({
-            showAlert: false,
-        });
-    };
-
-
-    renderCustomAlertView = () => {
-        return (
-            <>
-                <View style={{ height: 200, width: 200 }}>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Messanger</Text>
-                        <Image source={Messanger} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Whatsapp</Text>
-                        <Image source={Whatsapp} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
-                        <Image source={Feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
-                    </TouchableOpacity>
-                </View>
-
-            </>
-        );
-    };
+    getTripDays(date1, date2) {
+        if (!date1 || !date1)
+            return 0;
+        let firstDate = moment(date1);
+        let secondDate = moment(date2);
+        return secondDate.diff(firstDate, 'days') + 1
+    }
 
     getData = () => {
+        const _this = this;
         get('/mobile/game/GetHomePageDataMobile')
             .then(response => {
                 console.log(response);
@@ -100,7 +67,11 @@ export default class specialGames extends React.Component {
                         HomeTeam: game.HomeTeam,
                         AwayTeam: game.AwayTeam,
                         StadeCity: game.StadeCity,
-                        PriceCaption: item.PriceCaption
+                        PriceCaption: item.PriceCaption,
+                        BackGroundImage: item.BackGroundImage,
+                        SharingRoomNote: item.SharingRoomNote,
+                        TripDays: _this.getTripDays(item.StartDate, item.EndDate),
+                        PricePerFan: item.PricePerFan
                     };
                 });
                 this.setState({ specialGames: specialGames });
@@ -139,7 +110,11 @@ export default class specialGames extends React.Component {
                         HomeTeam: game.HomeTeam,
                         AwayTeam: game.AwayTeam,
                         StadeCity: game.StadeCity,
-                        PriceCaption: item.PriceCaption
+                        PriceCaption: item.PriceCaption,
+                        BackGroundImage: item.BackGroundImage,
+                        SharingRoomNote: item.SharingRoomNote,
+                        TripDays: _this.getTripDays(item.StartDate, item.EndDate),
+                        PricePerFan: item.PricePerFan
                     };
                 });
                 this.setState({ hotGames: hotGames });
@@ -157,12 +132,22 @@ export default class specialGames extends React.Component {
                 });
                 this.setState({ popularTeams: popularTeams });
 
+                // Competitions Data
+                var competitions = response.MainLeagues.map(function (league) {
+                    return {
+                        LeagueId: league.LeagueId,
+                        LeagueCode: league.LeagueCode,
+                        LeagueName: league.LeagueName,
+                        ImageReference: league.ImageReference
+                    };
+                });
+                this.setState({ competitions: competitions });
             });
     };
 
     /******************* Special Game Item ************************/
     specialGameItem({ item, index, state }) {
-        const image = { uri: item.SliderImage };
+        const image = { uri: item.BackGroundImage };
         return (
             <View style={{ marginTop: 60, height: 320, marginRight: 30 }} >
                 <ImageBackground source={image} style={styles.image} imageStyle={{ borderRadius: 20 }}>
@@ -177,14 +162,14 @@ export default class specialGames extends React.Component {
                                     </View>
                                     <View style={{ flexDirection: "row", width: 95 }}>
                                         <Image source={CalendarIcon} style={{ height: 14, width: 14, marginRight: 7, flex: 0 }} />
-                                        <Text style={{ color: "white", fontSize: 11, width: 70, flex: 1 }}>5 DAYS TRIP</Text>
+                                        <Text style={{ color: "white", fontSize: 11, width: 70, flex: 1 }}>{item.TripDays} DAYS TRIP</Text>
                                     </View>
                                 </View>
                             </View>
                             <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                                 <View style={{}}>
-                                    <Text style={styles.specialGameMeta}>{Moment(new Date(item.GameDate)).format('DD')}</Text>
-                                    <Text style={styles.specialGameMeta}>{Moment(new Date(item.GameDate)).format('MMM')}</Text>
+                                    <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('DD')}</Text>
+                                    <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('MMM')}</Text>
                                 </View>
                                 <View style={{ borderLeftWidth: 1, borderLeftColor: "#ffffff77", width: 0, height: 60, marginLeft: 15, marginRight: 15 }}></View>
                                 <View style={{ flex: 1 }}>
@@ -194,18 +179,19 @@ export default class specialGames extends React.Component {
                             </View>
                             <View>
                                 <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>{item.PriceCaption}</Text>
-                                <Text style={{ color: "white", fontSize: 10, marginTop: 5 }}>* price based on 2 fans flyings together</Text>
+                                <Text style={{ color: "white", fontSize: 10, marginTop: 5 }}>{item.SharingRoomNote}</Text>
                             </View>
-                            <TouchableOpacity style={{
-                                width: 110, height: 46, marginBottom: -23, justifySelf: "center",
-                                alignSelf: "center"
-                            }}
-                            >
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('book now')} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
                                 <ImageBackground source={BtnBg} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('book now')}>
-                                        <Text style={{ fontWeight: "bold", fontSize: 14 }}>1450$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                                        <Text style={{ fontSize: 9 }}>BOOK NOW</Text>
-                                    </TouchableOpacity>
+                                    <View >
+                                        {item.PricePerFan > 0 ? (
+                                            <>
+                                                <Text style={{ fontWeight: "bold", fontSize: 14 }}>{item.PricePerFan}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
+                                                <Text style={{ fontSize: 9, textTransform: 'uppercase' }}>book now</Text>
+                                            </>) :
+                                            <Text style={{ fontWeight: "bold", fontSize: 14, textTransform: 'uppercase' }}>request</Text>
+                                        }
+                                    </View>
                                 </ImageBackground>
                             </TouchableOpacity>
                         </View>
@@ -219,7 +205,7 @@ export default class specialGames extends React.Component {
     popularGameItem = ({ item }) =>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('tripoverview')}>
             <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#F7F7F7", height: 80, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, padding: 10 }}>
-                <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{Moment(new Date(item.GameDate)).format('DD MMM')}</Text>
+                <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{moment(new Date(item.GameDate)).format('DD MMM')}</Text>
                 <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{item.HomeTeam}</Text>
                 <View>
                     <LinearGradient
@@ -250,33 +236,40 @@ export default class specialGames extends React.Component {
     /******************* Hot Game Item ************************/
     hotGameItem({ item, index, state }) {
         return (
-            <TouchableOpacity style={{ marginTop: 60, width: 280, height: 225, marginLeft: -20 }}>
+            <View style={{ marginTop: 60, width: 280, height: 225, marginLeft: -20 }}>
                 <View style={{ backgroundColor: "#DA2828", borderRadius: 20, padding: 15, height: 200 }}>
                     <View>
                         <Text style={{ color: "white", fontWeight: "bold", fontSize: 25 }}>{item.LeagueName}</Text>
-                        <Text style={{ color: "white", marginTop: 5, fontSize: 12 }}>{item.StadeCity} -- 5 DAYS</Text>
+                        <Text style={{ color: "white", marginTop: 5, fontSize: 12 }}>{item.StadeCity} -- {item.TripDays} DAYS</Text>
                     </View>
                     <View style={{ borderBottomWidth: 1, borderBottomColor: "#ffffff77", width: 200, height: 0, marginTop: 5, marginBottom: 5 }}></View>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{}}>
-                            <Text style={styles.specialGameMeta}>{Moment(new Date(item.GameDate)).format('DD')}</Text>
-                            <Text style={styles.specialGameMeta}>{Moment(new Date(item.GameDate)).format('MMM')}</Text>
+                            <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('DD')}</Text>
+                            <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('MMM')}</Text>
                         </View>
                         <View style={{ borderLeftWidth: 1, borderLeftColor: "#ffffff77", height: 70, width: 0, marginLeft: 15, marginRight: 15 }}></View>
                         <View>
                             <Text style={styles.specialGameMeta}>{item.HomeTeam}</Text>
                             <Text style={styles.specialGameMeta}>{item.AwayTeam}</Text>
-                            <Text style={{ color: "white", fontSize: 8, marginTop: 5 }}>* price based on 2 fans flyings together</Text>
+                            <Text style={{ color: "white", fontSize: 8, marginTop: 5 }}>{item.SharingRoomNote}</Text>
                         </View>
                     </View>
                 </View>
                 <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={() => this.props.navigation.navigate('tripoverview')}>
                     <ImageBackground source={BtnBg} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 14 }}>1450$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                        <Text style={{ fontSize: 9 }}>BOOK NOW</Text>
+                        <View >
+                            {item.PricePerFan > 0 ? (
+                                <>
+                                    <Text style={{ fontWeight: "bold", fontSize: 14 }}>{item.PricePerFan}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
+                                    <Text style={{ fontSize: 9, textTransform: 'uppercase' }}>book now</Text>
+                                </>) :
+                                <Text style={{ fontWeight: "bold", fontSize: 14, textTransform: 'uppercase' }}>request</Text>
+                            }
+                        </View>
                     </ImageBackground>
                 </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
         );
     }
 
@@ -294,18 +287,21 @@ export default class specialGames extends React.Component {
 
     /******************* Competition Item ************************/
     competitionItem({ item, index, state }) {
+        const image = { uri: item.ImageReference }
         return (
-            <TouchableOpacity style={{ marginTop: 20, width: 250, height: 250, marginLeft: 10, marginBottom: 100 }}>
-                <TouchableOpacity style={{ marginLeft: -50, width: 250, height: 250 }}>
-                    <Image source={Card1} style={{ marginLeft: 200, marginTop: 0 }} />
-                </TouchableOpacity>
-                <Image source={Btn2} style={{ marginLeft: 185, marginTop: -22 }} />
-            </TouchableOpacity>
+            <View style={{ width: 250, marginTop: 60, height: 200 }}>
+                <ImageBackground source={image} style={[styles.image, { width: 250, height: 200 }]} imageStyle={{ borderRadius: 20 }}>
+                    <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                        <View style={{ height: '30%', margin: '2%', borderRightWidth: 4, borderRightColor: '#76FF02', borderRadius: 50 }}></View>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#76FF02' }}>{item.LeagueName}</Text>
+                        <View style={{ height: '30%', margin: '2%', borderRightWidth: 4, borderRightColor: '#76FF02', borderRadius: 50 }}></View>
+                    </View>
+                </ImageBackground>
+            </View>
         );
     }
 
     render() {
-        const { showAlert } = this.state;
         return (
             <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -439,14 +435,13 @@ export default class specialGames extends React.Component {
                 </View>
 
                 {/* competitions  */}
-                <View style={{ marginTop: 20 }}>
+                <View style={{ width: '90%', marginTop: 20 }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <View style={styles.pageTitleBar}></View>
                         <Text style={styles.pageTitleText}>competitions</Text>
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+                    <View style={{ marginTop: -30, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start' }}>
                         <Carousel
-                            style={{ marginLeft: 50 }}
                             layout={"default"}
                             ref={ref => this.carousel = ref}
                             data={this.state.competitions}
@@ -464,16 +459,6 @@ export default class specialGames extends React.Component {
                         onPress={() => this.props.navigation.navigate('giftcard')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
                     </TouchableOpacity>
-                    <View style={{ backgroundColor: "red" }}>
-                        <AwesomeAlert
-                            show={showAlert}
-                            showProgress={false}
-                            title="CHAT WITH US ?"
-                            closeOnTouchOutside={true}
-                            closeOnHardwareBackPress={false}
-                            customView={this.renderCustomAlertView()}
-                        />
-                    </View>
                 </View>
             </ScrollView >
         );
