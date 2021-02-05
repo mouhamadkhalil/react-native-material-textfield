@@ -47,6 +47,8 @@ import Image14 from "../../assets/games/image14.png";
 import Image15 from "../../assets/games/image15.png";
 import headerBg from "../../assets/images/leagues-mobile-header-background.jpg";
 import Autocomplete from "react-native-autocomplete-input";
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -171,6 +173,7 @@ export default class Leagues extends React.Component {
                         <Image source={Image15} style={styles.teamImage} />
                     </TouchableOpacity>
                 </View>
+                <Chat />
             </ScrollView >
         );
     }

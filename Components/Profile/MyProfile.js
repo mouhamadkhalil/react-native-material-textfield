@@ -21,6 +21,7 @@ import BtnBg from "../../assets/Images_Design/btn-bg.png";
 import Arrow from "../../assets/Images_Design/arrow_right1.png";
 import DatePicker from 'react-native-datepicker';
 import headerBg from "../../assets/images/leagues-mobile-header-background.jpg";
+import Chat from "../../helpers/chat";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -215,6 +216,7 @@ export default class MyProfile extends React.Component {
                         />
                     </View>
                 </View>
+                <Chat />
             </ScrollView >
         );
     }

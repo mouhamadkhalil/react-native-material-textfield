@@ -10,6 +10,8 @@ import {
   ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -304,6 +306,7 @@ export default class Help1Screen extends React.Component {
             help@fly-foot.com
           </Text>
         </ScrollView>
+        <Chat />
       </ScrollView >
     );
   }

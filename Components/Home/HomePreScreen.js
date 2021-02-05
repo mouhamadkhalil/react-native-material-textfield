@@ -19,6 +19,7 @@ import Notifictaion from "../../assets/Images_Design/notification1.png";
 import DownArrow from "../../assets/Images_Design/down_arrow_1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
+import Chat from "../../helpers/chat";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -163,7 +164,7 @@ export default class HomePreScreen extends React.Component {
             marginLeft: 140,
           }}
         >
-       <TouchableOpacity>
+          <TouchableOpacity>
             {this.state.isDone ?
               <Lightbox >
                 <Image source={this.state.Picture3 ? { uri: this.state.Picture3 } : null}
@@ -184,7 +185,7 @@ export default class HomePreScreen extends React.Component {
             marginLeft: 300,
           }}
         >
-        <TouchableOpacity>
+          <TouchableOpacity>
             {this.state.isDone ?
               <Lightbox >
                 <Image source={this.state.Picture2 ? { uri: this.state.Picture2 } : null}
@@ -226,7 +227,7 @@ export default class HomePreScreen extends React.Component {
             marginLeft: 140,
           }}
         >
-         <TouchableOpacity>
+          <TouchableOpacity>
             {this.state.isDone ?
               <Lightbox >
                 <Image source={this.state.Picture4 ? { uri: this.state.Picture4 } : null}
@@ -268,7 +269,7 @@ export default class HomePreScreen extends React.Component {
             marginLeft: 140,
           }}
         >
-           <TouchableOpacity>
+          <TouchableOpacity>
             {this.state.isDone ?
               <Lightbox >
                 <Image source={this.state.Picture3 ? { uri: this.state.Picture3 } : null}
@@ -301,9 +302,7 @@ export default class HomePreScreen extends React.Component {
               />}
           </TouchableOpacity>
         </ScrollView>
-        <TouchableOpacity>
-          <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
-        </TouchableOpacity>
+        <Chat />
       </ScrollView>
     );
   }

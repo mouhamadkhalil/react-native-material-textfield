@@ -33,6 +33,8 @@ import Hotel from "../../assets/images/hotel3.png"
 import Insurnace from "../../assets/images/insurnace.png";
 import Star from "../../assets/images/star.png";
 import RadioButtonRN from 'radio-buttons-react-native';
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 const data = [
@@ -386,6 +388,10 @@ export default class Request extends React.Component {
                         color="#8CD222"
                     />
                 </ScrollView>
+                <View style={{ marginTop: 40, marginLeft: 100 }}>
+                    <Chat />
+
+                </View>
             </ScrollView>
         );
     }

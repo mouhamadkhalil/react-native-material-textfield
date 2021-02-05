@@ -37,6 +37,8 @@ import Gift3 from "../../assets/games/gift3.png";
 import Gift4 from "../../assets/games/gift4.png";
 import Gift5 from "../../assets/games/gift5.png";
 import GiftCard from "../../assets/games/GiftCard.png";
+import Chat from "../../helpers/chat";
+
 
 
 const sourceFile = require('../../helpers/services.js');
@@ -132,13 +134,13 @@ export default class Leagues extends React.Component {
                     <Text style={{ fontWeight: "bold", color: "gray", marginLeft: 20, marginTop: 30 }}>PERSONALIZE YOUR GIFT</Text>
                     <Image source={this.state.Picture} style={{ width: 330, marginLeft: 20, marginTop: 30 }} />
                     <View style={{ width: 150, marginLeft: 200, marginTop: 30, height: 100 }}>
-
                         <Button
                             onPress={this.Proceed}
                             title="PROCEED &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; >"
                             color="#52F232"
                         />
                     </View>
+                    <Chat />
                 </View>
             </ScrollView >
         );

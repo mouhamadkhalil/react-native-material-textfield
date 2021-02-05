@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Image1 from "../../assets/games/image1.png";
+import Chat from "../../helpers/chat";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -110,6 +111,10 @@ export default class MyTrips extends React.Component {
                         <Text style={{ marginLeft: 40, marginTop: 150, fontSize: 19, fontWeight: "bold", color: "gray" }}>No Past Trips Found!</Text> :
                         null
                     }
+                </View>
+                <View style={{ marginTop: 130, marginLeft: 80 }}>
+                    <Chat />
+
                 </View>
             </ScrollView>
         );

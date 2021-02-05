@@ -19,7 +19,6 @@ import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
 import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
-import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
 import Game from "../../assets/images/football.jpg";
 import Onspot from "../../assets/images/onspot.png";
@@ -30,6 +29,8 @@ import Hotel from "../../assets/images/hotel3.png"
 import Insurnace from "../../assets/images/insurnace.png";
 import RadioButtonRN from 'radio-buttons-react-native';
 import GiftCard from "../../assets/games/GiftCard.png";
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -388,7 +389,9 @@ export default class AnyDayHomeScreen extends React.Component {
                         onPress={this.Continue}
                     />
                 </View>
-                <View style={{ marginBottom: 50 }}></View>
+                <View style={{ marginLeft: 100, marginTop: 20 }}>
+                    <Chat />
+                </View>
             </ScrollView>
         );
     }
