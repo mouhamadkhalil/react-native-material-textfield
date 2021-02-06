@@ -16,14 +16,14 @@ import UpArrow from "../../assets/Images_Design/arrow_up.png";
 import Location from "../../assets/Images_Design/location1.png";
 import Fork from "../../assets/Images_Design/fork.png";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class Museum extends React.Component {
 
     state = {
     };
 
-   
+
 
     render() {
         return (
@@ -39,7 +39,7 @@ export default class Museum extends React.Component {
                 <Text style={{ marginLeft: 170, color: "white", marginTop: 60 }}>Carrer de la Duquessa d’Orleans, 56</Text>
                 <Text style={{ marginLeft: 170, color: "white", marginTop: 15 }}>+34 932 05 09 61</Text>
                 <Text style={{ marginLeft: 170, color: "white", marginTop: 15 }}>info@bellanapoli.com</Text>
-                <Text style={{ marginLeft: 170, color: "white", marginTop: 15 }}>www.bellanapoli.com</Text>              
+                <Text style={{ marginLeft: 170, color: "white", marginTop: 15 }}>www.bellanapoli.com</Text>
             </ScrollView>
         );
     }

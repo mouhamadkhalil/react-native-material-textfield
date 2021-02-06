@@ -35,8 +35,6 @@ import Insurnace from "../../assets/images/insurnace.png";
 import GiftCard from "../../assets/games/GiftCard.png";
 import Chat from "../../helpers/chat";
 
-
-
 const sourceFile = require('../../helpers/services.js');
 
 export default class BookNow extends React.Component {

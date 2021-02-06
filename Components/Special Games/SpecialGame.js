@@ -359,7 +359,7 @@ export default class specialGames extends React.Component {
                         onPress={() => this.props.navigation.navigate('leader board')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
                     </TouchableOpacity>
-                </View>;
+                </View>
 
                 {/* Special Games  */}
                 <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
@@ -378,7 +378,7 @@ export default class specialGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
-                </View>;
+                </View>
 
                 {/* Popular Games */}
                 <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
@@ -396,7 +396,7 @@ export default class specialGames extends React.Component {
                             <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
                         </TouchableOpacity>
                     </View>
-                </View>;
+                </View>
 
                 {/* Hot Games */}
                 <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
@@ -416,7 +416,7 @@ export default class specialGames extends React.Component {
                             onSnapToItem={index => this.setState({ activeIndex: index })}
                         />
                     </View>
-                </View>;
+                </View>
 
                 {/* Popular Teams */}
                 <View style={{ width: '100%', marginTop: 20, backgroundColor: '#EEEEEE' }}>

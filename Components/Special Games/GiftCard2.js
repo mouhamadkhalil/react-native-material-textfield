@@ -35,7 +35,7 @@ import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Card from "../../assets/games/Card.png";
 import Gift1 from "../../assets/games/GiftCard23.png";
-import GiftCard from "../../assets/games/GiftCard.png";
+import GiftCard1 from "../../assets/games/GiftCard.png";
 import Chat from "../../helpers/chat";
 
 
@@ -252,7 +252,7 @@ export default class GiftCard2 extends React.Component {
                                 onPress={() => {
                                     Linking.openURL('https://fly-foot.com/en/about/TC');
                                 }}>
-                                Terms & Conditions</Text>
+                                Terms &amp; Conditions</Text>
                         </Text>
                     </TouchableOpacity>
                 </Text>

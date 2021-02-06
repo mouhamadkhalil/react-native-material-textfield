@@ -17,14 +17,14 @@ import UpArrow from "../../assets/Images_Design/arrow_up.png";
 import Location from "../../assets/Images_Design/location1.png";
 import Fork from "../../assets/Images_Design/fork.png";
 
-const sourceFile = require('../../services.js');
+const sourceFile = require('../../helpers/services.js');
 
 export default class SagradaFamilia extends React.Component {
 
     state = {
     };
 
-  
+
 
     render() {
         return (
@@ -56,7 +56,7 @@ export default class SagradaFamilia extends React.Component {
                         title="BUY"
                         color="gray"
                     />
-                </View>             
+                </View>
             </ScrollView>
         );
     }
