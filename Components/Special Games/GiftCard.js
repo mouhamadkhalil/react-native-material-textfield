@@ -37,6 +37,8 @@ import Gift3 from "../../assets/games/gift3.png";
 import Gift4 from "../../assets/games/gift4.png";
 import Gift5 from "../../assets/games/gift5.png";
 import GiftCard from "../../assets/games/GiftCard.png";
+import Chat from "../../helpers/chat";
+
 
 
 const sourceFile = require('../../helpers/services.js');
@@ -44,44 +46,44 @@ const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);
 
-export default class Leagues extends React.Component {
+export default class GiftCard extends React.Component {
 
     constructor(props) {
         super(props);
         const navigation = this.props;
         this.state = {
-            Picture: Gift1
+            Picture: Gift1,
         };
     }
 
     Card1 = () => {
-        this.setState({ Picture: Gift1 })
-    }
+        this.setState({ Picture: Gift1 });
+    };
 
     Card2 = () => {
-        this.setState({ Picture: Gift2 })
-    }
+        this.setState({ Picture: Gift2 });
+    };
 
     Card3 = () => {
-        this.setState({ Picture: Gift3 })
-    }
+        this.setState({ Picture: Gift3 });
+    };
 
     Card4 = () => {
-        this.setState({ Picture: Gift4 })
-    }
+        this.setState({ Picture: Gift4 });
+    };
 
     Card5 = () => {
-        this.setState({ Picture: Gift5 })
-    }
+        this.setState({ Picture: Gift5 });
+    };
 
     Proceed = () => {
-        this.props.navigation.navigate('giftcard2')
-    }
+        this.props.navigation.navigate('giftcard2');
+    };
 
     render() {
         return (
             <ScrollView style={styles.container}>
-                <ImageBackground source={GiftCard} style={styles.headerBg}>
+                <ImageBackground source={GiftCard1} style={styles.headerBg}>
                     <Text style={styles.pageTitleText}>
                         Gift card
                     </Text>
@@ -132,13 +134,13 @@ export default class Leagues extends React.Component {
                     <Text style={{ fontWeight: "bold", color: "gray", marginLeft: 20, marginTop: 30 }}>PERSONALIZE YOUR GIFT</Text>
                     <Image source={this.state.Picture} style={{ width: 330, marginLeft: 20, marginTop: 30 }} />
                     <View style={{ width: 150, marginLeft: 200, marginTop: 30, height: 100 }}>
-
                         <Button
                             onPress={this.Proceed}
                             title="PROCEED &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; >"
                             color="#52F232"
                         />
                     </View>
+                    <Chat />
                 </View>
             </ScrollView >
         );

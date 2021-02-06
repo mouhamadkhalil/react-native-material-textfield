@@ -19,17 +19,18 @@ import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
 import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
-import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
 import Game from "../../assets/images/football.jpg";
 import Onspot from "../../assets/images/onspot.png";
 import Car1 from "../../assets/images/car1.png";
 import DatePicker from 'react-native-datepicker';
-import Stadium from "../../assets/images/stadium.png"
-import Hotel from "../../assets/images/hotel3.png"
+import Stadium from "../../assets/images/stadium.png";
+import Hotel from "../../assets/images/hotel3.png";
 import Insurnace from "../../assets/images/insurnace.png";
 import RadioButtonRN from 'radio-buttons-react-native';
 import GiftCard from "../../assets/games/GiftCard.png";
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -67,9 +68,12 @@ export default class AnyDayHomeScreen extends React.Component {
         fanNumber: 2,
         roomNumber: 1,
         Infant1: false,
-        Infant2: false
-
+        Infant2: false,
     };
+
+
+
+
 
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
@@ -128,41 +132,41 @@ export default class AnyDayHomeScreen extends React.Component {
 
     Cancel = () => {
         this.props.navigation.navigate('tripoverview');
-    }
+    };
 
     Flight = () => {
         this.props.navigation.navigate('flight');
-    }
+    };
 
     IncrementFan = () => {
-        this.setState({ fanNumber: this.state.fanNumber + 1 })
-    }
+        this.setState({ fanNumber: this.state.fanNumber + 1 });
+    };
 
     DecrementFan = () => {
-        this.setState({ fanNumber: this.state.fanNumber - 1 })
-    }
+        this.setState({ fanNumber: this.state.fanNumber - 1 });
+    };
 
     IncrementRoom = () => {
-        this.setState({ roomNumber: this.state.roomNumber + 1 })
-    }
+        this.setState({ roomNumber: this.state.roomNumber + 1 });
+    };
 
     DecrementRoom = () => {
-        this.setState({ roomNumber: this.state.roomNumber - 1 })
-    }
+        this.setState({ roomNumber: this.state.roomNumber - 1 });
+    };
 
     Infants1 = () => {
-        this.setState({ Infant1: true })
-    }
+        this.setState({ Infant1: true });
+    };
 
     Infants2 = () => {
-        this.setState({ Infant2: true })
-    }
+        this.setState({ Infant2: true });
+    };
 
     DisableInfant = () => {
-        this.setState({ Infant1: false })
-        this.setState({ Infant2: false })
+        this.setState({ Infant1: false });
+        this.setState({ Infant2: false });
 
-    }
+    };
 
     render() {
         return (
@@ -211,7 +215,7 @@ export default class AnyDayHomeScreen extends React.Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => { this.setState({ date: date }) }}
+                        onDateChange={(date) => { this.setState({ date: date }); }}
                     />
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>To</Text>
                     <DatePicker
@@ -235,7 +239,7 @@ export default class AnyDayHomeScreen extends React.Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => { this.setState({ date: date }) }}
+                        onDateChange={(date) => { this.setState({ date: date }); }}
                     />
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>FANS</Text>
                     <TouchableOpacity style={{ width: 20, marginLeft: 40 }} onPress={this.DecrementFan}>
@@ -388,7 +392,9 @@ export default class AnyDayHomeScreen extends React.Component {
                         onPress={this.Continue}
                     />
                 </View>
-                <View style={{ marginBottom: 50 }}></View>
+                <View style={{ marginLeft: 100, marginTop: 20 }}>
+                    <Chat />
+                </View>
             </ScrollView>
         );
     }

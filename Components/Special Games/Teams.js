@@ -33,6 +33,8 @@ import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Brazil from "../../assets/games/brazil.png";
 import headerBg from "../../assets/images/teams-list-mobile-background.jpg";
+import Chat from "../../helpers/chat";
+
 
 import { Separator, Thumbnail } from 'native-base';
 import { AccordionList, Collapse, CollapseHeader, CollapseBody } from "accordion-collapse-react-native";
@@ -64,45 +66,88 @@ export default class Teams extends React.Component {
                 AwayTeam: "",
             }],
 
-            list: [
-                {
-                    id: 1,
-                    title: 'Brazil',
-                    body: 'CR FLAMENGO'
-                },
-                {
-                    id: 2,
-                    title: 'Denmark',
-                    body: 'FC Midtjylland'
-                },
-                {
-                    id: 3,
-                    title: 'France',
-                    body: 'DIJON'
-                },
-                {
-                    id: 4,
-                    title: 'Germany',
-                    body: 'BAYERN MUNICH'
-                },
+            countriesWithTeams: [{
+                idCountry: "",
+                Name: "",
+                Teams: [{
+                    idTeams: "",
+                    TeamName: "",
+                    ShortName: "",
+                    TeamShortCutName: "",
+                    TeamTagNames: "",
+                    ShowOnRegistration: "",
+                    TeamColor1: "",
+                    TeamColor2: "",
+                    v3ImageReference: ""
+                }]
+            }]
 
-                {
-                    id: 5,
-                    title: 'Italy',
-                    body: 'AC MILAN'
-                },
-                {
-                    id: 6,
-                    title: 'Spain',
-                    body: 'ATELTECO MADRID'
-                },
-                {
-                    id: 7,
-                    title: 'United Kingdom',
-                    body: 'ARSENAL'
-                },
-            ]
+            // list: [
+            //     {
+            //         id: 1,
+            //         title: 'Brazil',
+            //         body: 'CR FLAMENGO'
+            //     },
+            //     {
+            //         id: 2,
+            //         title: 'Denmark',
+            //         body: 'FC Midtjylland'
+            //     },
+            //     {
+            //         id: 3,
+            //         title: 'France',
+            //         body: 'DIJON'
+            //     },
+            //     {
+            //         id: 4,
+            //         title: 'Germany',
+            //         body: 'BAYERN MUNICH'
+            //     },
+
+            //     {
+            //         id: 5,
+            //         title: 'Italy',
+            //         body: 'AC MILAN'
+            //     },
+            //     {
+            //         id: 6,
+            //         title: 'Spain',
+            //         body: 'ATELTECO MADRID'
+            //     },
+            //     {
+            //         id: 7,
+            //         title: 'United Kingdom',
+            //         body: 'ARSENAL'
+            //     },
+            // ]
         };
+    }
+
+    componentDidMount = () => {
+        const url = `${API_URL}/mobile/team/countriesWithTeams`;
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                var data = response.map(function (item) {
+                    return {
+                        idCountry: item.idCountry,
+                        Name: item.Name,
+                        Teams: item.Teams
+                    };
+                });
+                console.log("my data", data)
+            });
     }
 
     // popularTeamsItem = ({ item, index }) => {
@@ -152,6 +197,7 @@ export default class Teams extends React.Component {
                     body={this._body}
                     keyExtractor={item => `${item.id}`}
                 />
+                <Chat />
             </ScrollView >
         );
     }

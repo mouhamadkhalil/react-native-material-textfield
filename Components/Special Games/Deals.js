@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet,Text,Image,ScrollView,View,ActivityIndicator,TouchableOpacity,FlatList} from "react-native";
+import { StyleSheet, Text, Image, ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
 import ImgAllGames from "../../assets/images/all-games.jpg";
 import ImgArrowDown from "../../assets/Images_Design/arrow_down.png";
 import ImgFlag from "../../assets/Images_Design/flag1.png";
@@ -10,7 +10,9 @@ import ImgList from "../../assets/Images_Design/list-grey-icon.png";
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get } from "../../services.js"
+import { get } from "../../services.js";
+import Chat from "../../helpers/chat";
+
 
 export default class Deals extends React.Component {
 
@@ -223,6 +225,7 @@ export default class Deals extends React.Component {
                     }
                     {/* games list end*/}
                 </View>
+                <Chat />
             </ScrollView >
         );
     }

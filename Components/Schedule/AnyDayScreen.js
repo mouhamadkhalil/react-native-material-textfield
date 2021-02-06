@@ -10,18 +10,12 @@ import {
     ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
-import Line1 from "../../assets/Images_Design/line1.png";
-import Line2 from "../../assets/Images_Design/line2.png";
-import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
-import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
-import Search from "../../assets/Images_Design/search1.png";
-import Notifictaion from "../../assets/Images_Design/notification1.png";
-import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
+import Chat from "../../helpers/chat";
 
 const sourceFile = require('../../helpers/services.js');
 
-export default class Day2Screen extends React.Component {
+export default class AnyDayScreen extends React.Component {
 
     state = {
         Picture1: "",
@@ -38,7 +32,7 @@ export default class Day2Screen extends React.Component {
         GameCode: "",
         HomeTeam: "",
         AwayTeam: "",
-        StadeCity: ""
+        StadeCity: "",
     };
 
     componentDidMount() {
@@ -79,8 +73,6 @@ export default class Day2Screen extends React.Component {
             .then((res) => res.json())
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
-                console.log("test", response[0].City);
-
                 this.setState({ idMatch: response[0].idMatch });
                 this.setState({ City: response[0].City });
                 this.setState({ Stade: response[0].Stade });
@@ -90,24 +82,12 @@ export default class Day2Screen extends React.Component {
                 this.setState({ HomeTeam: response[0].HomeTeam });
                 this.setState({ AwayTeam: response[0].AwayTeam });
                 this.setState({ StadeCity: response[0].StadeCity });
-
             });
     };
 
     render() {
         return (
             <ScrollView style={styles.container}>
-                {/* <TextInput
-          style={{ paddingLeft: 10, borderRadius: 20, marginLeft: 190, marginTop: 45, backgroundColor: "white", width: 185, height: 35 }}
-          placeholder="  &nbsp;&nbsp;Search your game ... "
-          placeholderTextColor="#46D822"
-          autoCapitalize="none"
-          onChangeText={searchText => {
-            this.setState({ searchText });
-          }}
-          onSubmitEditing={this.searchGame}
-          value={this.state.searchText}
-        /> */}
                 <Text
                     style={{
                         marginTop: 60,
@@ -117,10 +97,15 @@ export default class Day2Screen extends React.Component {
                     }}
                 >
                     DAY 3
-        </Text>
+                </Text>
                 <Text style={{ color: "#4c0099", fontSize: 23, marginLeft: 195 }}>
                     3 planned activities
-        </Text>
+                </Text>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('activity card')}>
+                    <Image source={DownArrow} style={{ marginLeft: 290, marginTop: 20, marginBottom: 20 }} />
+                </TouchableOpacity>
+
                 <ScrollView
                     style={{
                         backgroundColor: "#e0e0e0",
@@ -301,6 +286,7 @@ export default class Day2Screen extends React.Component {
                 <TouchableOpacity>
                     <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
                 </TouchableOpacity>
+                <Chat />
             </ScrollView>
         );
     }

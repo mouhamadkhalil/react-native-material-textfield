@@ -36,13 +36,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Card from "../../assets/games/Card.png";
 import Gift1 from "../../assets/games/GiftCard23.png";
 import GiftCard from "../../assets/games/GiftCard.png";
+import Chat from "../../helpers/chat";
+
 
 const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);
 
-export default class Leagues extends React.Component {
+export default class GiftCard2 extends React.Component {
 
     constructor(props) {
         super(props);
@@ -56,18 +58,18 @@ export default class Leagues extends React.Component {
             NameTo: "",
             SurNameTo: "",
             EmailTo: "",
-            PhoneNumberTo: ""
+            PhoneNumberTo: "",
         };
     }
 
 
     Proceed = () => {
-        this.props.navigation.navigate('giftcard2')
-    }
+        this.props.navigation.navigate('giftcard2');
+    };
 
     GiftCard = () => {
-        this.props.navigation.navigate('giftcard')
-    }
+        this.props.navigation.navigate('giftcard');
+    };
 
     getToken = async () => AsyncStorage.getItem('token');
 
@@ -107,14 +109,14 @@ export default class Leagues extends React.Component {
                 // this.setState({})
 
             });
-    }
+    };
 
 
 
     render() {
         return (
             <ScrollView style={styles.container}>
-               <ImageBackground source={GiftCard} style={styles.headerBg}>
+                <ImageBackground source={GiftCard1} style={styles.headerBg}>
                     <Text style={styles.pageTitleText}>
                         Gift card
                     </Text>
@@ -269,7 +271,7 @@ export default class Leagues extends React.Component {
                         color="gray"
                     />
                 </View>
-                <View style={{ marginBottom: 40 }}></View>
+                <Chat />
             </ScrollView >
         );
     }
