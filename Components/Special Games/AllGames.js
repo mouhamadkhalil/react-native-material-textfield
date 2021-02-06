@@ -243,7 +243,7 @@ export default class AllGames extends React.Component {
                             <FlatList
                                 data={this.state.allGames}
                                 renderItem={item => this.gameItem(item)}
-                                keyExtractor={item => item.idMatch}
+                                keyExtractor={item => item.idMatch.toString()}
                             />
                         </View>
                     }

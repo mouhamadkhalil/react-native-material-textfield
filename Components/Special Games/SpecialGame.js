@@ -7,7 +7,8 @@ import {
     ImageBackground,
     TouchableOpacity,
     Dimensions,
-    FlatList
+    FlatList,
+    ActivityIndicator
 } from "react-native";
 import { get } from "../../helpers/services.js";
 import LocationIcon from "../../assets/Images_Design/location-icon.png";
@@ -31,6 +32,10 @@ export default class specialGames extends React.Component {
         super(props);
 
         this.state = {
+            loading: true,
+            pageNumber: 1,
+            pageSize: 7,
+            pageCount: 1,
             activeIndex: 0,
             specialGames: [],
             popularGames: [],
@@ -38,8 +43,12 @@ export default class specialGames extends React.Component {
             popularTeams: [],
             competitions: [],
         };
+    }
 
-        this.getData();
+    componentDidMount() {
+        try {
+            this.getData();
+        } catch { }
     }
 
     getTripDays(date1, date2) {
@@ -54,7 +63,6 @@ export default class specialGames extends React.Component {
         const _this = this;
         get('/mobile/game/GetHomePageDataMobile')
             .then(response => {
-                console.log(response);
                 // Special Games Data
                 var specialGames = response.SpecialGames.map(function (item) {
                     var game = item.MatchBundleDetail[0].Game;
@@ -143,8 +151,61 @@ export default class specialGames extends React.Component {
                         ImageReference: league.ImageReference
                     };
                 });
-                this.setState({ competitions: competitions });
+                this.setState({ competitions: competitions, loading: false, pageCount: response.GamesList.PageCount });
             });
+    };
+
+    renderPopularGamesFooter = () => {
+        return (
+            //Footer View with Load More button
+            <View >
+                {this.state.pageCount > this.state.pageNumber ? (
+                    <TouchableOpacity
+                        activeOpacity={0.9}
+                        onPress={this.loadMore}
+                        style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: -20, borderRadius: 20, zIndex: 100 }}>
+                        <Text style={{ color: "white", fontWeight: "bold", textTransform: 'uppercase' }} >{translate('loadMore')}</Text>
+                        {this.state.loading ? (
+                            <ActivityIndicator color="#fff" />
+                        ) : null}
+                    </TouchableOpacity>
+                ) : null}
+            </View>
+        );
+    };
+
+    loadMore = () => {
+        this.setState({ loading: true, pageNumber: this.state.pageNumber+1 }, () => {
+            try {
+                const _this = this;
+                get(`/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}`)
+                    .then(response => {
+                        // Popular Games Data
+                        var data = response.Items.map(function (item) {
+                            var game = item.MatchBundleDetail[0].Game;
+                            return {
+                                idMatch: game.idMatch,
+                                City: game.City,
+                                Stade: game.Stade,
+                                GameDate: game.GameDate,
+                                LeagueName: game.LeagueName,
+                                GameCode: game.GameCode,
+                                HomeTeam: game.HomeTeam,
+                                AwayTeam: game.AwayTeam,
+                                StadeCity: game.StadeCity,
+                                Team1Color1: game.Team1Color1,
+                                Team1Color2: game.Team1Color2,
+                                Team2Color1: game.Team2Color1,
+                                Team2Color2: game.Team2Color2,
+                                FinalPrice: item.FinalPrice
+                            };
+                        });
+                        var joined = this.state.popularGames.concat(data);
+                        this.setState({ popularGames: joined, loading: false });
+                    });
+            }
+            catch { }
+        });
     };
 
     /******************* Special Game Item ************************/
@@ -388,13 +449,11 @@ export default class specialGames extends React.Component {
                     </View>
                     <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center' }}>
                         <FlatList
+                            keyExtractor={(item, index) => index}
                             data={this.state.popularGames}
                             renderItem={item => this.popularGameItem(item)}
-                            keyExtractor={item => item.idMatch}
+                            ListFooterComponent={this.renderPopularGamesFooter.bind(this)}
                         />
-                        <TouchableOpacity style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", marginBottom: 30, marginTop: -15, borderRadius: 20 }}>
-                            <Text style={{ color: "white", fontWeight: "bold", marginLeft: 33, marginTop: 15 }}>LOAD MORE &nbsp;+</Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
 
