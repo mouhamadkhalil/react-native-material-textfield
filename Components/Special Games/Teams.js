@@ -34,12 +34,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Brazil from "../../assets/games/brazil.png";
 import headerBg from "../../assets/images/teams-list-mobile-background.jpg";
 import Chat from "../../helpers/chat";
-
-
 import { Separator, Thumbnail } from 'native-base';
 import { AccordionList, Collapse, CollapseHeader, CollapseBody } from "accordion-collapse-react-native";
-
-
 
 const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
@@ -51,75 +47,14 @@ export default class Teams extends React.Component {
     constructor(props) {
         super(props);
         const navigation = this.props;
-
         this.state = {
-            Picture1: "",
-            Picture2: "",
-            Picture3: "",
-            Picture4: "",
             isDone: false,
             searchText: "",
-            activeIndex: 0,
-            carouselItems: [{
-                idMatch: "",
-                City: "",
-                AwayTeam: "",
-            }],
-
-            countriesWithTeams: [{
-                idCountry: "",
-                Name: "",
-                Teams: [{
-                    idTeams: "",
-                    TeamName: "",
-                    ShortName: "",
-                    TeamShortCutName: "",
-                    TeamTagNames: "",
-                    ShowOnRegistration: "",
-                    TeamColor1: "",
-                    TeamColor2: "",
-                    v3ImageReference: ""
-                }]
+            list: [{
+                id: "",
+                title: "",
+                body: ""
             }]
-
-            // list: [
-            //     {
-            //         id: 1,
-            //         title: 'Brazil',
-            //         body: 'CR FLAMENGO'
-            //     },
-            //     {
-            //         id: 2,
-            //         title: 'Denmark',
-            //         body: 'FC Midtjylland'
-            //     },
-            //     {
-            //         id: 3,
-            //         title: 'France',
-            //         body: 'DIJON'
-            //     },
-            //     {
-            //         id: 4,
-            //         title: 'Germany',
-            //         body: 'BAYERN MUNICH'
-            //     },
-
-            //     {
-            //         id: 5,
-            //         title: 'Italy',
-            //         body: 'AC MILAN'
-            //     },
-            //     {
-            //         id: 6,
-            //         title: 'Spain',
-            //         body: 'ATELTECO MADRID'
-            //     },
-            //     {
-            //         id: 7,
-            //         title: 'United Kingdom',
-            //         body: 'ARSENAL'
-            //     },
-            // ]
         };
     }
 
@@ -141,41 +76,48 @@ export default class Teams extends React.Component {
             .then((response) => {
                 var data = response.map(function (item) {
                     return {
-                        idCountry: item.idCountry,
-                        Name: item.Name,
-                        Teams: item.Teams
+                        title: item.Name,
+                        body: item.Teams
                     };
                 });
-                console.log("my data", data)
+                this.setState({ list: data })
+                this.setState({ isDone: true })
             });
     }
 
-    // popularTeamsItem = ({ item, index }) => {
-    //     return (
-    //         <TouchableOpacity style={{ marginTop: 40, width: 270, height: 250, marginLeft: 10, marginBottom: 0, shadowColor: "red", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 5.84, elevation: 5 }}>
-    //             <Image source={Liverppol} style={{ borderRadius: 20 }} />
-    //         </TouchableOpacity>
-    //     );
-    // };
 
     _head(item) {
-        console.log(this.state);
         return (
-            <Separator bordered style={{ paddingLeft: 30, paddingRight: 30, backgroundColor: "#f7f7f7" }}>
-                <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
+            <Separator bordered style={{ paddingLeft: 30 }}>
+                <Text>{item.title}</Text>
             </Separator>
         );
     }
 
     _body(item) {
         return (
-            <View style={{ padding: 30, backgroundColor: "#eee", alignItems: "center", flexDirection: "row" }}>
-                <Image source={Brazil} style={{}} />
-                <Text style={{ textAlign: 'center' }}>{item.body}</Text>
-            </View>
+            <View style={{ padding: 10 }}>
+                {item.body.map((key) =>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                        <Text style={{ paddingLeft: 70 }}>{key.TeamName}</Text>
+                    </TouchableOpacity>
+                )}
+                {item.body.map((key) =>
+                    <View style={{paddingTop:-50}}>
+                        <LinearGradient
+                            colors={[key.TeamColor1, key.TeamColor2]}
+                            style={styles.linearGradient}
+                            start={[0, 0]}
+                            end={[1, 0]}
+                            locations={[0.5, 0.5]}
+                        >
+                        </LinearGradient>
+                    </View>
+                )
+                }
+            </View >
         );
     }
-
 
     render() {
         return (
@@ -191,12 +133,16 @@ export default class Teams extends React.Component {
                     <Text style={{ fontSize: 15 }}> or group trip and gift your friends a fun</Text>
                     <Text style={{ fontSize: 15 }}> stadium experience.</Text>
                 </View>
-                <AccordionList
-                    list={this.state.list}
-                    header={this._head}
-                    body={this._body}
-                    keyExtractor={item => `${item.id}`}
-                />
+                {this.state.isDone ?
+                    <AccordionList
+                        list={this.state.list}
+                        header={this._head}
+                        body={this._body.bind(this)}
+                        keyExtractor={item => `${item.id}`}
+                    />
+                    :
+                    <ActivityIndicator size="large" color="blue" style={{ marginTop: 22, marginLeft: 0 }} />
+                }
                 <Chat />
             </ScrollView >
         );
@@ -239,8 +185,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
-        height: 20,
-        width: 20,
+        height: 15,
+        width: 15,
+        marginLeft: 40,
+        marginTop: -15
     },
     pageTitleBar: {
         backgroundColor: "black",
