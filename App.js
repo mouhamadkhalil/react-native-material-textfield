@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { AsyncStorage, I18nManager} from 'react-native';
 import Constants from 'expo-constants';
 import { NavigationContainer } from '@react-navigation/native';
-import DrawerNavigator from "./Components/Navigation/DrawerNavigator";
+import DrawerNavigator from "./src/navigation/DrawerNavigator";
 import * as Location from 'expo-location';
-import {setI18nConfig}  from './helpers/utils.js';
+import {setI18nConfig}  from './src/helpers/utils.js';
 
 const App = () => {
   setI18nConfig();

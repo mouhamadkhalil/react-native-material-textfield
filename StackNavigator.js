@@ -76,8 +76,8 @@ import Group2Screen from "./Components/Fan Chat/Group2Screen";
 
 import InfoScreen from "./Components/More/Info";
 
-import SpecialGamesScreen from "./Components/Special Games/SpecialGame";
-import AllGamesScreen from "./Components/Special Games/AllGames";
+import SpecialGamesScreen from "./Components/SpecialGames/SpecialGame";
+import AllGamesScreen from "./Components/SpecialGames/AllGames";
 
 
 
@@ -178,7 +178,7 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Info" component={InfoScreen} />
 
             {/* Special Games */}
-            <Stack.Screen name="Special Games" component={SpecialGamesScreen} />
+            <Stack.Screen name="SpecialGames" component={SpecialGamesScreen} />
             <Stack.Screen name="All Games" component={AllGamesScreen} />
 
 
@@ -221,7 +221,7 @@ const HelpStackNavigator = () => {
 const GameDayStackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Special Games" component={SpecialGamesScreen} />
+            <Stack.Screen name="SpecialGames" component={SpecialGamesScreen} />
         </Stack.Navigator>
     );
 };

@@ -1,0 +1,234 @@
+import React from "react";
+import {
+    StyleSheet,
+    Text,
+    Image,
+    ScrollView,
+    View,
+    ImageBackground,
+    Dimensions
+} from "react-native";
+import { API_URL, API_TOKEN } from "@env";
+import Chat from "../FanChat/chat";
+import R from "res/R";
+
+import { Separator, Thumbnail } from 'native-base';
+import { AccordionList, Collapse, CollapseHeader, CollapseBody } from "accordion-collapse-react-native";
+
+const sourceFile = require('../../helpers/services.js');
+const sliderWidth = Dimensions.get('window').width;
+const itemWidth = Math.round(sliderWidth * 0.7);
+const itemWeight = Math.round(itemWidth * 3 / 4);
+
+export default class Teams extends React.Component {
+
+    constructor(props) {
+        super(props);
+        const navigation = this.props;
+
+        this.state = {
+            Picture1: "",
+            Picture2: "",
+            Picture3: "",
+            Picture4: "",
+            isDone: false,
+            searchText: "",
+            activeIndex: 0,
+            carouselItems: [{
+                idMatch: "",
+                City: "",
+                AwayTeam: "",
+            }],
+
+            countriesWithTeams: [{
+                idCountry: "",
+                Name: "",
+                Teams: [{
+                    idTeams: "",
+                    TeamName: "",
+                    ShortName: "",
+                    TeamShortCutName: "",
+                    TeamTagNames: "",
+                    ShowOnRegistration: "",
+                    TeamColor1: "",
+                    TeamColor2: "",
+                    v3ImageReference: ""
+                }]
+            }]
+
+            // list: [
+            //     {
+            //         id: 1,
+            //         title: 'Brazil',
+            //         body: 'CR FLAMENGO'
+            //     },
+            //     {
+            //         id: 2,
+            //         title: 'Denmark',
+            //         body: 'FC Midtjylland'
+            //     },
+            //     {
+            //         id: 3,
+            //         title: 'France',
+            //         body: 'DIJON'
+            //     },
+            //     {
+            //         id: 4,
+            //         title: 'Germany',
+            //         body: 'BAYERN MUNICH'
+            //     },
+
+            //     {
+            //         id: 5,
+            //         title: 'Italy',
+            //         body: 'AC MILAN'
+            //     },
+            //     {
+            //         id: 6,
+            //         title: 'Spain',
+            //         body: 'ATELTECO MADRID'
+            //     },
+            //     {
+            //         id: 7,
+            //         title: 'United Kingdom',
+            //         body: 'ARSENAL'
+            //     },
+            // ]
+        };
+    }
+
+    componentDidMount = () => {
+        const url = `${API_URL}/mobile/team/countriesWithTeams`;
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": sourceFile.Content_Type,
+                "Accept": sourceFile.Accept,
+                "ff_version": sourceFile.ff_version,
+                "ff_language": sourceFile.ff_language,
+                "source": sourceFile.source,
+                // "authorization" : sourceFile.authorization,
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Error: ", error))
+            .then((response) => {
+                var data = response.map(function (item) {
+                    return {
+                        idCountry: item.idCountry,
+                        Name: item.Name,
+                        Teams: item.Teams
+                    };
+                });
+                console.log("my data", data)
+            });
+    }
+
+    // popularTeamsItem = ({ item, index }) => {
+    //     return (
+    //         <TouchableOpacity style={{ marginTop: 40, width: 270, height: 250, marginLeft: 10, marginBottom: 0, shadowColor: "red", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 5.84, elevation: 5 }}>
+    //             <Image source={Liverppol} style={{ borderRadius: 20 }} />
+    //         </TouchableOpacity>
+    //     );
+    // };
+
+    _head(item) {
+        console.log(this.state);
+        return (
+            <Separator bordered style={{ paddingLeft: 30, paddingRight: 30, backgroundColor: "#f7f7f7" }}>
+                <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
+            </Separator>
+        );
+    }
+
+    _body(item) {
+        return (
+            <View style={{ padding: 30, backgroundColor: "#eee", alignItems: "center", flexDirection: "row" }}>
+                <Image source={R.images.button_green} style={{}} />
+                <Text style={{ textAlign: 'center' }}>{item.body}</Text>
+            </View>
+        );
+    }
+
+
+    render() {
+        return (
+            <ScrollView style={styles.container}>
+                <View style={{ backgroundColor: "#eee", marginTop: 0 }}>
+                    <ImageBackground source={R.images.teams_bg} style={styles.headerBg}>
+                        <Text style={styles.pageTitleText}>Teams</Text>
+                    </ImageBackground>
+                </View>
+                <View style={{ textAlign: "center", alignItems: "center", marginTop: 60, marginBottom: 60 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 23, marginBottom: 20 }}>Start booking a trip</Text>
+                    <Text style={{ fontSize: 15 }}>Choose between a single, multi-destination</Text>
+                    <Text style={{ fontSize: 15 }}> or group trip and gift your friends a fun</Text>
+                    <Text style={{ fontSize: 15 }}> stadium experience.</Text>
+                </View>
+                <AccordionList
+                    list={this.state.list}
+                    header={this._head}
+                    body={this._body}
+                    keyExtractor={item => `${item.id}`}
+                />
+                <Chat />
+            </ScrollView >
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        width: "100%",
+        backgroundColor: "#fafafa",
+    },
+    sectionHeading: {
+        fontWeight: "bold",
+        fontSize: 26,
+        marginTop: 50,
+        marginLeft: "auto",
+        marginRight: "auto"
+    },
+    teamImage: {
+        marginTop: 50,
+        width: 70,
+        height: 70,
+        marginLeft: 20,
+        marginRight: 20
+    },
+    teamCircle: {
+        width: 10,
+        height: 10,
+        borderRadius: 50,
+    },
+    teamsWrap: {
+        flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around"
+    },
+    headerBg: {
+        height: 200,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    linearGradient: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        height: 20,
+        width: 20,
+    },
+    pageTitleBar: {
+        backgroundColor: "black",
+        height: 8,
+        width: 30,
+        marginLeft: 30,
+        marginTop: 35
+    },
+    pageTitleText: {
+        color: "white",
+        fontSize: 26,
+        fontWeight: "bold",
+    },
+    specialGameMeta: {
+        color: "white", fontSize: 18
+    }
+});
