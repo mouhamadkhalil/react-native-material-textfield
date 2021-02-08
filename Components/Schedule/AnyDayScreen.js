@@ -284,10 +284,9 @@ export default class AnyDayScreen extends React.Component {
                             />}
                     </TouchableOpacity>
                 </ScrollView>
-                <TouchableOpacity>
-                    <Image source={Chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
-                </TouchableOpacity>
-                <Chat />
+                <View style={{ marginLeft: 100 }}>
+                    <Chat />
+                </View>
             </ScrollView>
         );
     }

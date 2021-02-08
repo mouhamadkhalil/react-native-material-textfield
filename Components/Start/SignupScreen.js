@@ -13,7 +13,6 @@ import {
     ActivityIndicator,
     ToastAndroid
 } from "react-native";
-import Signup from "./SignupScreen";
 import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env";
 import * as Facebook from 'expo-facebook';

@@ -13,8 +13,6 @@ import {
     TextInputComponent
 } from "react-native";
 import Signup from "./SignupScreen";
-import LoginWithFB from "../../assets/images/LoginWithFB.png";
-import SignInGoogle from "../../assets/images/SignInGoogle.png";
 import Flyfoot from "../../assets/images/flyfoot.png";
 import { API_URL, API_TOKEN } from "@env";
 import SignupScreen from "./SignupScreen";
@@ -365,27 +363,6 @@ const styles = StyleSheet.create({
         color: "white",
         letterSpacing: 2,
         textTransform: 'uppercase'
-    },
-    txtInputEmail: {
-        paddingRight: 180,
-        paddingBottom: -40,
-        paddingTop: 25,
-        borderColor: "gray",
-        borderWidth: 0,
-    },
-    txtInputPassword: {
-        paddingTop: -7,
-        paddingRight: 180,
-        paddingBottom: -0,
-        borderColor: "gray",
-        borderWidth: 0,
-    },
-    ForgotPassword: {
-        color: "red",
-        width: 24,
-    },
-    text: {
-        marginLeft: -120,
     },
     lineStyle: {
         width: "13%",

@@ -31,9 +31,7 @@ export default class Day1HomeScreen extends React.Component {
         Picture2: "",
         Picture3: "",
         Picture4: "",
-        isDone: false,
-        // isLoggedIn: false,
-        // loginChecked: false,
+        isDone: false,     
         searchText: "",
         idMatch: "",
         City: "",
@@ -45,31 +43,6 @@ export default class Day1HomeScreen extends React.Component {
         AwayTeam: "",
         StadeCity: ""
     };
-
-    //   async getItem(token){
-    //     console.log("the state is : ",this.state.isLoggedIn)
-    //     try{
-    //         const value = await AsyncStorage.getItem(token);
-    //         console.log("my token is : ",value);
-    //         if(value !== null){
-    //             this.setState({
-    //                 isLoggedIn: true,
-    //                 loginChecked: true
-    //             })
-    //         }
-    //         else{
-    //             this.setState({
-    //                 isLoggedIn: false,
-    //                 loginChecked: true
-    //             })
-    //         }
-    //     }
-    //     catch(error){
-    //         console.log(error)
-    //     }
-    //     console.log(this.state.isLoggedIn)
-    // }
-
 
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
@@ -94,11 +67,7 @@ export default class Day1HomeScreen extends React.Component {
                 this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
                 this.setState({ Picture3: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
                 this.setState({ Picture4: response.GenericGames[0].MatchBundleHotels[0].Images[4] });
-                // this.setState({ isLoggedIn: true });
-                // this.setState({ loginChecked: true });
             });
-
-        // this.getItem(this.state.Token);
     }
     searchGame = () => {
         const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
