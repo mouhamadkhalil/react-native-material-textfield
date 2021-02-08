@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Chat from "../FanChat/chat";
+import { get } from "../../helpers/services.js";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -48,48 +49,37 @@ export default class Help1Screen extends React.Component {
 
     };
 
-
-
-
     componentDidMount() {
-        const url = `${API_URL}/mobile/about/faq`;
+        try {
+            this.getData();
+        } catch { }
+    }
 
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                this.setState({ LName0: response[0].LName });
-                this.setState({ LName1: response[1].LName });
-                this.setState({ LName2: response[2].LName });
-                this.setState({ LName3: response[3].LName });
-                this.setState({ LName4: response[4].LName });
-                this.setState({ LName5: response[5].LName });
-                this.setState({ LName6: response[6].LName });
-                this.setState({ LName7: response[7].LName });
-                this.setState({ LName8: response[8].LName });
-                this.setState({ LName9: response[9].LName });
-                this.setState({ LDescription0: response[0].LDescription });
-                this.setState({ LDescription1: response[1].LDescription });
-                this.setState({ LDescription2: response[2].LDescription });
-                this.setState({ LDescription3: response[3].LDescription });
-                this.setState({ LDescription4: response[4].LDescription });
-                this.setState({ LDescription5: response[5].LDescription });
-                this.setState({ LDescription6: response[6].LDescription });
-                this.setState({ LDescription7: response[7].LDescription });
-                this.setState({ LDescription8: response[8].LDescription });
-                this.setState({ LDescription9: response[9].LDescription });
-                this.setState({ isDone: true });
-            });
+    getData = () => {
+        const path = `/mobile/about/faq`;
+        get(path).then((response) => {
+            this.setState({ LName0: response[0].LName });
+            this.setState({ LName1: response[1].LName });
+            this.setState({ LName2: response[2].LName });
+            this.setState({ LName3: response[3].LName });
+            this.setState({ LName4: response[4].LName });
+            this.setState({ LName5: response[5].LName });
+            this.setState({ LName6: response[6].LName });
+            this.setState({ LName7: response[7].LName });
+            this.setState({ LName8: response[8].LName });
+            this.setState({ LName9: response[9].LName });
+            this.setState({ LDescription0: response[0].LDescription });
+            this.setState({ LDescription1: response[1].LDescription });
+            this.setState({ LDescription2: response[2].LDescription });
+            this.setState({ LDescription3: response[3].LDescription });
+            this.setState({ LDescription4: response[4].LDescription });
+            this.setState({ LDescription5: response[5].LDescription });
+            this.setState({ LDescription6: response[6].LDescription });
+            this.setState({ LDescription7: response[7].LDescription });
+            this.setState({ LDescription8: response[8].LDescription });
+            this.setState({ LDescription9: response[9].LDescription });
+            this.setState({ isDone: true });
+        });
     }
 
     Answer0 = () => {

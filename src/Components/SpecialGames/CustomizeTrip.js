@@ -34,7 +34,7 @@ const data = [
     },
 ];
 
-export default class AnyDayHomeScreen extends React.Component {
+export default class CustomizeTripScreen extends React.Component {
 
     state = {
         Picture1: "",
