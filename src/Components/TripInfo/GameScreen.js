@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Lightbox from 'react-native-lightbox-v2';
+import { get } from "../../helpers/services.js";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -32,48 +33,39 @@ export default class GameScreen extends React.Component {
   };
 
   componentDidMount() {
-    const url = `${API_URL}/mobile/game/GetHomePageData`;
+    try {
+      this.getData();
+    } catch { }
+  }
 
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": sourceFile.Content_Type,
-        "Accept": sourceFile.Accept,
-        "ff_version": sourceFile.ff_version,
-        "ff_language": sourceFile.ff_language,
-        "source": sourceFile.source,
-        // "authorization" : sourceFile.authorization,
-      },
-    })
-      .then((res) => res.json())
-      .catch((error) => console.error("Error: ", error))
-      .then((response) => {
-        console.log("pic", response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3)
-        this.setState({ Game_Start: response.GamesList.Items[0].StartDate });
-        this.setState({ Arrival: response.GamesList.Items[0].EndDate });
-        this.setState({ GamePicture: response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3 });
-        this.setState({
-          Location: response.GamesList.Items[0].MatchBundleDetail[0].Game.City,
-        });
-        this.setState({
-          Team1: response.GamesList.Items[0].MatchBundleDetail[0].Game.HomeTeam,
-        });
-        this.setState({
-          Team2: response.GamesList.Items[0].MatchBundleDetail[0].Game.AwayTeam,
-        });
-        this.setState({
-          Picture:
-            response.GamesList.Items[0].MatchBundleDetail[0].GameSeats[0]
-              .StadiumMap_SVG_v3,
-        });
-        this.setState({
-          Seat_Id:
-            response.GamesList.Items[0].MatchBundleDetail[0].GameSeats[0]
-              .id_Team_Seating,
-        });
-        this.setState({ isDone: true });
-
+  getData = () => {
+    const _this = this;
+    const path = `/mobile/game/GetHomePageData`;
+    get(path).then((response) => {
+      this.setState({ Game_Start: response.GamesList.Items[0].StartDate });
+      this.setState({ Arrival: response.GamesList.Items[0].EndDate });
+      this.setState({ GamePicture: response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3 });
+      this.setState({
+        Location: response.GamesList.Items[0].MatchBundleDetail[0].Game.City,
       });
+      this.setState({
+        Team1: response.GamesList.Items[0].MatchBundleDetail[0].Game.HomeTeam,
+      });
+      this.setState({
+        Team2: response.GamesList.Items[0].MatchBundleDetail[0].Game.AwayTeam,
+      });
+      this.setState({
+        Picture:
+          response.GamesList.Items[0].MatchBundleDetail[0].GameSeats[0]
+            .StadiumMap_SVG_v3,
+      });
+      this.setState({
+        Seat_Id:
+          response.GamesList.Items[0].MatchBundleDetail[0].GameSeats[0]
+            .id_Team_Seating,
+      });
+      this.setState({ isDone: true });
+    });
   }
 
   render() {

@@ -62,7 +62,6 @@ export default class Post2Screen extends React.Component {
   }
 
   searchGame = () => {
-
     const _this = this;
     const path = `/mobile/game/search?text=${this.state.searchText}`;
     get(path).then((response) => {
