@@ -6,12 +6,16 @@ import {
     ScrollView,
     View,
     ImageBackground,
+    TouchableOpacity,
+    ActivityIndicator,
     Dimensions
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Chat from "../FanChat/chat";
 import R from "res/R";
+import { get } from "../../helpers/services.js";
 
+import { LinearGradient } from 'expo-linear-gradient';
 import { Separator, Thumbnail } from 'native-base';
 import { AccordionList, Collapse, CollapseHeader, CollapseBody } from "accordion-collapse-react-native";
 
@@ -36,21 +40,17 @@ export default class Teams extends React.Component {
         };
     }
 
-    componentDidMount = () => {
-        const url = `${API_URL}/mobile/team/countriesWithTeams`;
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
+    componentDidMount() {
+        try {
+            this.getData();
+        } catch { }
+    }
+
+
+
+    getData = () => {
+        const _this = this;
+        get(`/mobile/team/countriesWithTeams`)
             .then((response) => {
                 var data = response.map(function (item) {
                     return {

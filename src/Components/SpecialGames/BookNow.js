@@ -80,7 +80,7 @@ export default class BookNow extends React.Component {
     }
 
     getData = () => {
-        const path = `${API_URL}/mobile/game/GetHomePageData`;
+        const path = `/mobile/game/GetHomePageData`;
         get(path).then((response) => {
             this.setState({ isDone: true });
             this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
@@ -94,7 +94,7 @@ export default class BookNow extends React.Component {
 
     searchGame = () => {
         const _this = this;
-        const path = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
+        const path = `/mobile/game/search?text=${this.state.searchText}`;
         get(path).then((response) => {
             this.setState({ idMatch: response[0].idMatch });
             this.setState({ City: response[0].City });
@@ -111,7 +111,7 @@ export default class BookNow extends React.Component {
 
     FilterGame = () => {
         const _this = this;
-        const path = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
+        const path = `/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
         get(path).then((response) => {
             this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
             this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });

@@ -15,10 +15,11 @@ import { API_URL, API_TOKEN } from "@env";
 import Lightbox from 'react-native-lightbox-v2';
 import Chat from "../FanChat/chat";
 import R from "res/R";
+import { get } from "../../helpers/services.js";
 
 const sourceFile = require('../../helpers/services.js');
 
-export default class AnyDayHomeScreen extends React.Component {
+export default class TripOverViewScreen extends React.Component {
 
     state = {
         Picture1: "",
@@ -38,25 +39,17 @@ export default class AnyDayHomeScreen extends React.Component {
         StadeCity: "",
     };
 
-
-
-
     componentDidMount() {
-        const url = `${API_URL}/mobile/game/GetHomePageData`;
+        try {
+            this.getData();
+        } catch { }
+    }
 
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
+
+
+    getData = () => {
+        const _this = this;
+        get(`/mobile/game/GetHomePageData`)
             .then((response) => {
                 this.setState({ isDone: true });
                 console.log("test", response.GenericGames[0].MatchBundleHotels[0]);
@@ -68,22 +61,9 @@ export default class AnyDayHomeScreen extends React.Component {
     }
 
     searchGame = () => {
-        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
-        fetch(urlSearch, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
+        const _this = this;
+        get(`/mobile/game/search?text=${this.state.searchText}`)
             .then((response) => {
-                console.log("test", response[0].City);
                 this.setState({ idMatch: response[0].idMatch });
                 this.setState({ City: response[0].City });
                 this.setState({ Stade: response[0].Stade });
