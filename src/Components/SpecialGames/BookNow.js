@@ -16,7 +16,9 @@ import DropDownPicker from "react-native-dropdown-picker";
 import Lightbox from 'react-native-lightbox-v2';
 import DatePicker from 'react-native-datepicker';
 import Chat from "../FanChat/chat";
-import R from "res/R";
+import R from "res/R";;
+import { get } from "../../helpers/services.js";
+
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -71,89 +73,55 @@ export default class BookNow extends React.Component {
         date: "2016-05-15"
     };
 
-
-
-
     componentDidMount() {
-        const url = `${API_URL}/mobile/game/GetHomePageData`;
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                this.setState({ isDone: true });
-                this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
-                this.setState({
-                    Picture2:
-                        response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3,
-                });
+        try {
+            this.getData();
+        } catch { }
+    }
+
+    getData = () => {
+        const path = `${API_URL}/mobile/game/GetHomePageData`;
+        get(path).then((response) => {
+            this.setState({ isDone: true });
+            this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
+            this.setState({
+                Picture2:
+                    response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3,
             });
+        }
+        )
     }
 
     searchGame = () => {
-        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
-        fetch(urlSearch, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                console.log("test", response[0].City);
-                this.setState({ idMatch: response[0].idMatch });
-                this.setState({ City: response[0].City });
-                this.setState({ Stade: response[0].Stade });
-                this.setState({ GameDate1: response[0].GameDate });
-                this.setState({ LeaguesName: response[0].LeaguesName });
-                this.setState({ GameCode: response[0].GameCode });
-                this.setState({ HomeTeam: response[0].HomeTeam });
-                this.setState({ AwayTeam: response[0].AwayTeam });
-                this.setState({ StadeCity: response[0].StadeCity });
-            });
+        const _this = this;
+        const path = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
+        get(path).then((response) => {
+            this.setState({ idMatch: response[0].idMatch });
+            this.setState({ City: response[0].City });
+            this.setState({ Stade: response[0].Stade });
+            this.setState({ GameDate1: response[0].GameDate });
+            this.setState({ LeaguesName: response[0].LeaguesName });
+            this.setState({ GameCode: response[0].GameCode });
+            this.setState({ HomeTeam: response[0].HomeTeam });
+            this.setState({ AwayTeam: response[0].AwayTeam });
+            this.setState({ StadeCity: response[0].StadeCity });
+        });
     };
 
+
     FilterGame = () => {
-        const urlFilter = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
-        fetch(urlFilter, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
-                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
-                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
-                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
-                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
-                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
-                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
-                this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
-                this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
-            });
+        const _this = this;
+        const path = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
+        get(path).then((response) => {
+            this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
+            this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
+            this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
+            this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
+            this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
+            this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
+            this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
+            this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
+        });
     };
 
     render() {
