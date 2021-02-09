@@ -2,23 +2,20 @@ import React from "react";
 import {
     StyleSheet,
     Text,
-    Image,
     ScrollView,
     View,
     ImageBackground,
-    Dimensions
+    ActivityIndicator,
+    TouchableOpacity,
 } from "react-native";
+import Accordion from 'react-native-collapsible/Accordion';
+import { LinearGradient } from 'expo-linear-gradient';
+
 import { API_URL, API_TOKEN } from "@env";
 import Chat from "../FanChat/chat";
 import R from "res/R";
 
-import { Separator, Thumbnail } from 'native-base';
-import { AccordionList, Collapse, CollapseHeader, CollapseBody } from "accordion-collapse-react-native";
-
 const sourceFile = require('../../helpers/services.js');
-const sliderWidth = Dimensions.get('window').width;
-const itemWidth = Math.round(sliderWidth * 0.7);
-const itemWeight = Math.round(itemWidth * 3 / 4);
 
 export default class Teams extends React.Component {
 
@@ -26,13 +23,9 @@ export default class Teams extends React.Component {
         super(props);
         const navigation = this.props;
         this.state = {
-            isDone: false,
-            searchText: "",
-            list: [{
-                id: "",
-                title: "",
-                body: ""
-            }]
+            isLoading: false,
+            list: [],
+            activeSections: [],
         };
     }
 
@@ -54,75 +47,90 @@ export default class Teams extends React.Component {
             .then((response) => {
                 var data = response.map(function (item) {
                     return {
+                        id: item.idCountry,
                         title: item.Name,
-                        body: item.Teams
+                        content: item.Teams
                     };
                 });
-                this.setState({ list: data });
-                this.setState({ isDone: true });
+                this.setState({ list: data, isLoading: true });
             });
     };
 
-
-    _head(item) {
-        return (
-            <Separator bordered style={{ paddingLeft: 30 }}>
-                <Text>{item.title}</Text>
-            </Separator>
-        );
-    }
-
-    _body(item) {
+    _body(team) {
         return (
             <View style={{ padding: 10 }}>
-                {item.body.map((key) =>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
-                        <Text style={{ paddingLeft: 70 }}>{key.TeamName}</Text>
-                    </TouchableOpacity>
-                )}
-                {item.body.map((key) =>
-                    <View style={{ paddingTop: -50 }}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
+                    <Text style={{ paddingLeft: 70 }}>{team.TeamName}</Text>
                         <LinearGradient
-                            colors={[key.TeamColor1, key.TeamColor2]}
+                            colors={[team.TeamColor1, team.TeamColor2]}
                             style={styles.linearGradient}
                             start={[0, 0]}
                             end={[1, 0]}
                             locations={[0.5, 0.5]}
                         >
                         </LinearGradient>
-                    </View>
-                )
-                }
+                </TouchableOpacity>
             </View >
         );
     }
 
+    // this function is required
+    _renderSectionTitle = section => {
+        return (
+            null
+        );
+    };
+
+    _renderHeader = section => {
+        return (
+            <View style={{ padding:20, paddingStart: 30, backgroundColor:'#F0EFF5', borderBottomWidth: 1, borderBottomColor: 'grey' }}>
+                <Text>{section.title}</Text>
+            </View>
+        );
+    };
+
+    _renderContent = section => {
+        return (
+            <View >
+                {section.content.map(this._body.bind(this))}
+            </View>
+        );
+    };
+
+    _updateSections = activeSections => {
+        this.setState({ activeSections });
+    };
+
     render() {
         return (
-            <ScrollView style={styles.container}>
-                <View style={{ backgroundColor: "#eee", marginTop: 0 }}>
-                    <ImageBackground source={R.images.teams_bg} style={styles.headerBg}>
-                        <Text style={styles.pageTitleText}>Teams</Text>
-                    </ImageBackground>
-                </View>
-                <View style={{ textAlign: "center", alignItems: "center", marginTop: 60, marginBottom: 60 }}>
-                    <Text style={{ fontWeight: "bold", fontSize: 23, marginBottom: 20 }}>Start booking a trip</Text>
-                    <Text style={{ fontSize: 15 }}>Choose between a single, multi-destination</Text>
-                    <Text style={{ fontSize: 15 }}> or group trip and gift your friends a fun</Text>
-                    <Text style={{ fontSize: 15 }}> stadium experience.</Text>
-                </View>
-                {this.state.isDone ?
-                    <AccordionList
-                        list={this.state.list}
-                        header={this._head}
-                        body={this._body.bind(this)}
-                        keyExtractor={item => `${item.id}`}
-                    />
-                    :
-                    <ActivityIndicator size="large" color="blue" style={{ marginTop: 22, marginLeft: 0 }} />
-                }
-                <Chat />
-            </ScrollView >
+            <View>
+                <ScrollView style={styles.container}>
+                    <View style={{ backgroundColor: "#eee", marginTop: 0 }}>
+                        <ImageBackground source={R.images.teams_bg} style={styles.headerBg}>
+                            <Text style={styles.pageTitleText}>Teams</Text>
+                        </ImageBackground>
+                    </View>
+                    <View style={{ textAlign: "center", alignItems: "center", marginTop: 60, marginBottom: 60 }}>
+                        <Text style={{ fontWeight: "bold", fontSize: 23, marginBottom: 20 }}>Start booking a trip</Text>
+                        <Text style={{ fontSize: 15 }}>Choose between a single, multi-destination</Text>
+                        <Text style={{ fontSize: 15 }}> or group trip and gift your friends a fun</Text>
+                        <Text style={{ fontSize: 15 }}> stadium experience.</Text>
+                    </View>
+                    {this.state.isLoading ?
+                        <Accordion
+                            sections={this.state.list}
+                            activeSections={this.state.activeSections}
+                            renderSectionTitle={this._renderSectionTitle}
+                            renderHeader={this._renderHeader}
+                            renderContent={this._renderContent}
+                            onChange={this._updateSections}
+                        />
+                        :
+                        <ActivityIndicator size="large" color="blue" style={{ marginTop: 22, marginLeft: 0 }} />
+                    }
+                    <Chat />
+                </ScrollView >
+            </View>
         );
     }
 }

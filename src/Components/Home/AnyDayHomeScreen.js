@@ -57,7 +57,6 @@ export default class AnyDayHomeScreen extends React.Component {
             .catch((error) => console.error("Error: ", error))
             .then((response) => {
                 this.setState({ isDone: true });
-                console.log("test", response.GenericGames[0].MatchBundleHotels[0]);
                 this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[1] });
                 this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
                 this.setState({ Picture3: response.GenericGames[0].MatchBundleHotels[0].Images[3] });

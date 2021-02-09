@@ -22,57 +22,58 @@ const sourceFile = require('../../helpers/services.js');
 
 export default class BookNow extends React.Component {
 
-    state = {
-        Picture1: "",
-        Picture2: "",
-        Picture3: "",
-        Picture4: "",
-        isDone: false,
-        searchText: "",
-        idMatch: "",
-        City: "",
-        Stade: "",
-        GameDate1: "",
-        GameDate2: "",
-        LeaguesName: "",
-        GameCode: "",
-        HomeTeam: "",
-        AwayTeam: "",
-        StadeCity: "",
-        GameCity1: "",
-        GameCity2: "",
-        GamePrice1: "",
-        GamePrice2: "",
-        pageNumber: 1,
-        LeaguesName: "",
-        DaysLeft: "",
-        pageSize: 15,
-        idTeam: 2122,
-        orderBy: "",
-        activeIndex: 0,
-        carouselItems: [
-            {
-                title: "Item 1",
-                text: "Text 1",
-            },
-            {
-                title: "Item 2",
-                text: "Text 2",
-            },
-            {
-                title: "Item 3",
-                text: "Text 3",
-            },
-            {
-                title: "Item 4",
-                text: "Text 4",
-            },
-        ],
-        date: "2016-05-15"
-    };
+    constructor(props) {
+        super(props);
 
-
-
+        this.state = {
+            Picture1: "",
+            Picture2: "",
+            Picture3: "",
+            Picture4: "",
+            isDone: false,
+            searchText: "",
+            idMatch: props.route.params.idMatch,
+            City: "",
+            Stade: "",
+            GameDate1: "",
+            GameDate2: "",
+            LeaguesName: "",
+            GameCode: "",
+            HomeTeam: "",
+            AwayTeam: "",
+            StadeCity: "",
+            GameCity1: "",
+            GameCity2: "",
+            GamePrice1: "",
+            GamePrice2: "",
+            pageNumber: 1,
+            LeaguesName: "",
+            DaysLeft: "",
+            pageSize: 15,
+            idTeam: props.route.params.idTeam,
+            orderBy: "",
+            activeIndex: 0,
+            carouselItems: [
+                {
+                    title: "Item 1",
+                    text: "Text 1",
+                },
+                {
+                    title: "Item 2",
+                    text: "Text 2",
+                },
+                {
+                    title: "Item 3",
+                    text: "Text 3",
+                },
+                {
+                    title: "Item 4",
+                    text: "Text 4",
+                },
+            ],
+            date: "2016-05-15"
+        };
+    }
 
     componentDidMount() {
         const url = `${API_URL}/mobile/game/GetHomePageData`;
