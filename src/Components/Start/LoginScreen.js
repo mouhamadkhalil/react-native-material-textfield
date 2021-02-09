@@ -6,12 +6,11 @@ import {
     ScrollView,
     View,
     Image,
-    AsyncStorage,
     TouchableOpacity,
     ActivityIndicator,
     ToastAndroid,
-    TextInputComponent
 } from "react-native";
+import * as SecureStore from 'expo-secure-store';
 import R from 'res/R';
 import { API_URL, API_TOKEN } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
@@ -132,10 +131,7 @@ export default class LoginScreen extends React.Component {
                             );
                             window.location.reload();
                         } else {
-                            let token_id = response.Token;
-                            this.setState({ Token: token_id });
-                            AsyncStorage.setItem("token", this.state.Token);
-                            AsyncStorage.setItem("userId", this.state.userId);
+                            SecureStore.setItemAsync('token',response.Token);
                             this.setState({ isDone: true });
                             this.props.navigation.navigate('book a trip');
                             ToastAndroid.showWithGravity(

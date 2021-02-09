@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage, I18nManager} from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import Constants from 'expo-constants';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from "./src/navigation/DrawerNavigator";
@@ -23,7 +23,7 @@ const App = () => {
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
-      await AsyncStorage.setItem('location', location);
+      await SecureStore.setItemAsync('location', location);
     })();
   }, []);
 

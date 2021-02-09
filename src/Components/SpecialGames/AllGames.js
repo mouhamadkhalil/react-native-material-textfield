@@ -3,7 +3,7 @@ import { StyleSheet, Modal, TouchableHighlight, Text, Image, ScrollView, View, A
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get } from "../../helpers/services.js";
+import { getWithToken } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils.js";
 import Chat from "../FanChat/chat";
 import R from "res/R";
@@ -44,7 +44,7 @@ export default class AllGames extends React.Component {
 
     getAllGames = () => {
         const path = `/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&order=${this.state.orderBy}`;
-        get(path).then((response) => {
+        getWithToken(path).then((response) => {
             var data = response.Items.map(function (item) {
                 var game = item.MatchBundleDetail[0].Game;
                 return {
@@ -61,7 +61,7 @@ export default class AllGames extends React.Component {
                     Team1Color2: game.Team1Color2,
                     Team2Color1: game.Team2Color1,
                     Team2Color2: game.Team2Color2,
-                    Price: '0'
+                    Price: item.FinalPricePerFan
                 };
             });
             this.setState({ allGames: data });
@@ -133,18 +133,23 @@ export default class AllGames extends React.Component {
                     </View>
                 </View>
             </View>
-            <View style={{
-                flexDirection: 'row', justifyContent: 'flex-end', height: 50,
-                marginTop: 10, borderTopColor: "grey", borderTopWidth: 1
-            }}>
+            <View style={{ flexDirection: 'row', height: 50, marginTop: 10, borderTopColor: "grey", borderTopWidth: 1 }}>
+                <View style={{ alignSelf: 'flex-start', width: '60%' }}>
+                    {item.Price > 0 && item.Price != null ?
+                        <View style={{ flex:1, flexDirection:'row', alignItems:'center'}}>
+                            <Text style={{ paddingStart: 10, fontSize: 20, fontWeight: "bold" }}>{item.Price}$</Text>
+                            <Text>/Fan</Text>
+                        </View> 
+                        :null
+                    }
+                </View>
                 <TouchableOpacity
                     style={{
-                        flexDirection: 'row',
+                        flexDirection: 'row', alignSelf: 'flex-end',
                         alignItems: 'center', justifyContent: 'center', width: '40%', height: '100%', backgroundColor: '#76ff02'
                     }}
-                    onPress={() => this.props.navigation.navigate('request')}
-                >
-                    <Text style={{ fontSize: 14, textTransform: 'uppercase' }}>{item.Price !== '0' && item.Price !== null ? item.Price + ' $' : 'request'}</Text>
+                    onPress={() => this.props.navigation.navigate('request')}>
+                    <Text style={{ fontSize: 14, textTransform: 'uppercase' }}>{item.Price > 0 && item.Price != null ? 'book now' : 'request'}</Text>
                     <Image source={R.images.arrowRight} style={{ marginLeft: 10 }} />
                 </TouchableOpacity>
             </View>
