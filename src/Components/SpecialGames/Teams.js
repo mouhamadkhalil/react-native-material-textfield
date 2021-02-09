@@ -10,18 +10,14 @@ import {
 } from "react-native";
 import Accordion from 'react-native-collapsible/Accordion';
 import { LinearGradient } from 'expo-linear-gradient';
-
-import { API_URL, API_TOKEN } from "@env";
+import { get } from "../../helpers/services.js";
 import Chat from "../FanChat/chat";
 import R from "res/R";
-
-const sourceFile = require('../../helpers/services.js');
 
 export default class Teams extends React.Component {
 
     constructor(props) {
         super(props);
-        const navigation = this.props;
         this.state = {
             isLoading: false,
             list: [],
@@ -29,21 +25,15 @@ export default class Teams extends React.Component {
         };
     }
 
-    componentDidMount = () => {
-        const url = `${API_URL}/mobile/team/countriesWithTeams`;
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
+    componentDidMount() {
+        try {
+            this.getData();
+        } catch { }
+    }
+
+    getData = () => {
+        const _this = this;
+        get(`/mobile/team/countriesWithTeams`)
             .then((response) => {
                 var data = response.map(function (item) {
                     return {
@@ -56,48 +46,46 @@ export default class Teams extends React.Component {
             });
     };
 
-    _body(team) {
+    renderTeam(team) {
         return (
-            <View style={{ padding: 10 }}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
-                    <Text style={{ paddingLeft: 70 }}>{team.TeamName}</Text>
-                        <LinearGradient
-                            colors={[team.TeamColor1, team.TeamColor2]}
-                            style={styles.linearGradient}
-                            start={[0, 0]}
-                            end={[1, 0]}
-                            locations={[0.5, 0.5]}
-                        >
-                        </LinearGradient>
-                </TouchableOpacity>
-            </View >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames', {idTeam: team.idTeams})}>
+                <Text style={{ paddingLeft: 70 }}>{team.TeamName}</Text>
+                <LinearGradient
+                    colors={[team.TeamColor1, team.TeamColor2]}
+                    style={styles.linearGradient}
+                    start={[0, 0]}
+                    end={[1, 0]}
+                    locations={[0.5, 0.5]}
+                >
+                </LinearGradient>
+            </TouchableOpacity>
         );
     }
 
     // this function is required
-    _renderSectionTitle = section => {
+    renderSectionTitle = section => {
         return (
             null
         );
     };
 
-    _renderHeader = section => {
+    renderHeader = section => {
         return (
-            <View style={{ padding:20, paddingStart: 30, backgroundColor:'#F0EFF5', borderBottomWidth: 1, borderBottomColor: 'grey' }}>
+            <View style={{ padding: 20, paddingStart: 30, backgroundColor: '#F0EFF5', borderBottomWidth: 1, borderBottomColor: 'grey' }}>
                 <Text>{section.title}</Text>
             </View>
         );
     };
 
-    _renderContent = section => {
+    renderContent = section => {
         return (
             <View >
-                {section.content.map(this._body.bind(this))}
+                {section.content.map(this.renderTeam.bind(this))}
             </View>
         );
     };
 
-    _updateSections = activeSections => {
+    updateSections = activeSections => {
         this.setState({ activeSections });
     };
 
@@ -120,10 +108,10 @@ export default class Teams extends React.Component {
                         <Accordion
                             sections={this.state.list}
                             activeSections={this.state.activeSections}
-                            renderSectionTitle={this._renderSectionTitle}
-                            renderHeader={this._renderHeader}
-                            renderContent={this._renderContent}
-                            onChange={this._updateSections}
+                            renderSectionTitle={this.renderSectionTitle}
+                            renderHeader={this.renderHeader}
+                            renderContent={this.renderContent}
+                            onChange={this.updateSections}
                         />
                         :
                         <ActivityIndicator size="large" color="blue" style={{ marginTop: 22, marginLeft: 0 }} />
@@ -140,28 +128,6 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#fafafa",
     },
-    sectionHeading: {
-        fontWeight: "bold",
-        fontSize: 26,
-        marginTop: 50,
-        marginLeft: "auto",
-        marginRight: "auto"
-    },
-    teamImage: {
-        marginTop: 50,
-        width: 70,
-        height: 70,
-        marginLeft: 20,
-        marginRight: 20
-    },
-    teamCircle: {
-        width: 10,
-        height: 10,
-        borderRadius: 50,
-    },
-    teamsWrap: {
-        flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around"
-    },
     headerBg: {
         height: 200,
         alignItems: "center",
@@ -176,19 +142,9 @@ const styles = StyleSheet.create({
         marginLeft: 40,
         marginTop: -15
     },
-    pageTitleBar: {
-        backgroundColor: "black",
-        height: 8,
-        width: 30,
-        marginLeft: 30,
-        marginTop: 35
-    },
     pageTitleText: {
         color: "white",
         fontSize: 26,
         fontWeight: "bold",
     },
-    specialGameMeta: {
-        color: "white", fontSize: 18
-    }
 });

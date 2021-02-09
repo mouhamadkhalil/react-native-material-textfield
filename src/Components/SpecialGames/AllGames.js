@@ -74,31 +74,18 @@ export default class AllGames extends React.Component {
     };
 
     FilterGame = () => {
-        const urlFilter = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
-        fetch(urlFilter, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
-                this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
-                this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
-                this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
-                this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
-                this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
-                this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
-                this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
-                this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
-            });
+        const path = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
+        get(path).then((response) => {
+            this.setState({ allGames: data });
+            this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
+            this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
+            this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
+            this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
+            this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
+            this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
+            this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
+            this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
+        });
     };
 
     gameItem = ({ item }) =>
@@ -164,7 +151,6 @@ export default class AllGames extends React.Component {
         </View>;
 
     render() {
-
         return (
             <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -247,7 +233,6 @@ export default class AllGames extends React.Component {
                         transparent={true}
                         visible={this.state.modalVisible}>
                         <View style={styles.modalView}>
-
                             <View style={{ width: '100%', height: '10%', borderBottomWidth: 1, borderBottomColor: '#eee', flex: 1, flexDirection: 'row' }}>
                                 <Image source={R.images.logo} style={{ width: '50%', height: '90%', alignItems: 'flex-start' }}></Image>
                                 <TouchableHighlight style={styles.closeButton}
@@ -267,13 +252,10 @@ export default class AllGames extends React.Component {
                     </Modal>
                     <Chat />
                 </View>
-
-
             </ScrollView >
         );
     }
 }
-
 
 const styles = StyleSheet.create({
     container: {

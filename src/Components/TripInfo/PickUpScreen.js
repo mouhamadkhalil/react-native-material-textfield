@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
+import { get } from "../../helpers/services.js";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -25,33 +26,25 @@ export default class PickUpScreen extends React.Component {
   };
 
   componentDidMount() {
-    const url = `${API_URL}/mobile/game/GetHomePageData`;
+    try {
+      this.getData();
+    } catch { }
+  }
 
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": sourceFile.Content_Type,
-        "Accept": sourceFile.Accept,
-        "ff_version": sourceFile.ff_version,
-        "ff_language": sourceFile.ff_language,
-        "source": sourceFile.source,
-        // "authorization" : sourceFile.authorization,
-      },
-    })
-      .then((res) => res.json())
-      .catch((error) => console.error("Error: ", error))
-      .then((response) => {
-        console.log("Contact ", response.GamesList.Items[0].BundleCode);
-        this.setState({
-          Reservation_Number: response.GamesList.Items[0].BundleCode,
-        });
-        this.setState({
-          From: response.GamesList.Items[1].MatchBundleDetail[0].Game.City,
-        });
-        this.setState({
-          To: response.GamesList.Items[2].MatchBundleDetail[0].Game.City,
-        });
+  getData = () => {
+    const _this = this;
+    const path = `/mobile/game/GetHomePageData`;
+    get(path).then((response) => {
+      this.setState({
+        Reservation_Number: response.GamesList.Items[0].BundleCode,
       });
+      this.setState({
+        From: response.GamesList.Items[1].MatchBundleDetail[0].Game.City,
+      });
+      this.setState({
+        To: response.GamesList.Items[2].MatchBundleDetail[0].Game.City,
+      });
+    });
   }
 
   render() {

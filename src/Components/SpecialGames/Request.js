@@ -16,6 +16,8 @@ import DatePicker from 'react-native-datepicker';
 import RadioButtonRN from 'radio-buttons-react-native';
 import Chat from "../FanChat/chat";
 import R from "res/R";
+import { get } from "../../helpers/services.js";
+
 
 const sourceFile = require('../../helpers/services.js');
 const data = [
@@ -86,21 +88,16 @@ export default class Request extends React.Component {
     };
 
     componentDidMount() {
-        const url = `${API_URL}/mobile/game/GetHomePageData`;
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
+        try {
+            this.getData();
+        } catch { }
+    }
+
+
+    getData = () => {
+        const _this = this;
+        get('/mobile/game/GetHomePageDataMobile')
+            .then(response => {
                 this.setState({ isDone: true });
                 this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
                 this.setState({
@@ -120,22 +117,9 @@ export default class Request extends React.Component {
 
 
     searchGame = () => {
-        const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`;
-        fetch(urlSearch, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
+        const _this = this;
+        get(`/mobile/game/search?text=${this.state.searchText}`)
             .then((response) => {
-                console.log("test", response[0].City);
                 this.setState({ idMatch: response[0].idMatch });
                 this.setState({ City: response[0].City });
                 this.setState({ Stade: response[0].Stade });
@@ -150,22 +134,9 @@ export default class Request extends React.Component {
 
 
     FilterGame = () => {
-        const urlFilter = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
-        fetch(urlFilter, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
+        const _this = this;
+        get(`/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`)
             .then((response) => {
-                console.log("leaguess ===> ", response.Items[0].MatchBundleDetail[0].GameSeat.Sequence);
                 this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
                 this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
                 this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });

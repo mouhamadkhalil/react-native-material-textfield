@@ -20,7 +20,7 @@ import DownArrow from "../../assets/Images_Design/down_arrow_1.png";
 import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
 import Chat from "../FanChat/chat";
-
+import { get } from "../../helpers/services.js";
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -45,60 +45,38 @@ export default class Home24HScreen extends React.Component {
   };
 
   componentDidMount() {
-    const url = `${API_URL}/mobile/game/GetHomePageData`;
+    try {
+      this.getData();
+    } catch { }
+  }
 
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": sourceFile.Content_Type,
-        "Accept": sourceFile.Accept,
-        "ff_version": sourceFile.ff_version,
-        "ff_language": sourceFile.ff_language,
-        "source": sourceFile.source,
-        // "authorization" : sourceFile.authorization,
-      },
-    })
-      .then((res) => res.json())
-      .catch((error) => console.error("Error: ", error))
-      .then((response) => {
-        this.setState({ isDone: true });
-        console.log("test", response.GenericGames[0].MatchBundleHotels[0])
-        this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[1] });
-        this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
-        this.setState({ Picture3: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
-        this.setState({ Picture4: response.GenericGames[0].MatchBundleHotels[0].Images[4] });
-      });
+
+  getData = () => {
+    const _this = this;
+    const path = `/mobile/game/GetHomePageData`;
+    get(path).then((response) => {
+      this.setState({ isDone: true });
+      this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[1] });
+      this.setState({ Picture2: response.GenericGames[0].MatchBundleHotels[0].Images[2] });
+      this.setState({ Picture3: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
+      this.setState({ Picture4: response.GenericGames[0].MatchBundleHotels[0].Images[4] });
+    });
   }
 
   searchGame = () => {
-    const urlSearch = `${API_URL}/mobile/game/search?text=${this.state.searchText}`
-    fetch(urlSearch, {
-      method: "GET",
-      headers: {
-        "Content-Type": sourceFile.Content_Type,
-        "Accept": sourceFile.Accept,
-        "ff_version": sourceFile.ff_version,
-        "ff_language": sourceFile.ff_language,
-        "source": sourceFile.source,
-        // "authorization" : sourceFile.authorization,
-      },
-    })
-      .then((res) => res.json())
-      .catch((error) => console.error("Error: ", error))
-      .then((response) => {
-        console.log("test", response[0].City);
-
-        this.setState({ idMatch: response[0].idMatch });
-        this.setState({ City: response[0].City });
-        this.setState({ Stade: response[0].Stade });
-        this.setState({ GameDate: response[0].GameDate });
-        this.setState({ LeaguesName: response[0].LeaguesName });
-        this.setState({ GameCode: response[0].GameCode });
-        this.setState({ HomeTeam: response[0].HomeTeam });
-        this.setState({ AwayTeam: response[0].AwayTeam });
-        this.setState({ StadeCity: response[0].StadeCity });
-
-      });
+    const _this = this;
+    const path = `/mobile/game/search?text=${this.state.searchText}`;
+    get(path).then((response) => {
+      this.setState({ idMatch: response[0].idMatch });
+      this.setState({ City: response[0].City });
+      this.setState({ Stade: response[0].Stade });
+      this.setState({ GameDate: response[0].GameDate });
+      this.setState({ LeaguesName: response[0].LeaguesName });
+      this.setState({ GameCode: response[0].GameCode });
+      this.setState({ HomeTeam: response[0].HomeTeam });
+      this.setState({ AwayTeam: response[0].AwayTeam });
+      this.setState({ StadeCity: response[0].StadeCity });
+    });
   }
 
   render() {

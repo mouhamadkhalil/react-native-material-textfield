@@ -31,6 +31,8 @@ import Image14 from "../../../assets/images/games/image14.png";
 import Image15 from "../../../assets/images/games/image15.png";
 import R from "res/R";
 import Chat from "../FanChat/chat";
+import { get } from "../../helpers/services.js";
+
 
 
 const sourceFile = require('../../helpers/services.js');
@@ -53,23 +55,16 @@ export default class Leagues extends React.Component {
         };
     }
 
-
-
     componentDidMount() {
-        const url = `${API_URL}/mobile/leagues/all`;
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
+        try {
+            this.getData();
+        } catch { }
+    }
+
+
+    getData = () => {
+        const _this = this;
+        get(`/mobile/leagues/all`)
             .then((response) => {
                 var data = response.map(function (item) {
                     return {
