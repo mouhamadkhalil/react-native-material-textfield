@@ -6,9 +6,11 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
+    TouchableHighlight,
     Dimensions,
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
+    Pressable
 } from "react-native";
 import { get } from "../../helpers/services.js";
 import Carousel from 'react-native-snap-carousel';
@@ -22,6 +24,8 @@ import R from "res/R";
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);
+
+const Screen = Dimensions.get('window');
 
 export default class specialGames extends React.Component {
 
@@ -39,6 +43,7 @@ export default class specialGames extends React.Component {
             hotGames: [],
             popularTeams: [],
             competitions: [],
+            isButtonPressed: false
         };
     }
 
@@ -160,7 +165,7 @@ export default class specialGames extends React.Component {
                     <TouchableOpacity
                         activeOpacity={0.9}
                         onPress={this.loadMore}
-                        style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: -20, borderRadius: 20, zIndex: 100 }}>
+                        style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: -10, borderRadius: 20, zIndex: 100 }}>
                         <Text style={{ color: "white", fontWeight: "bold", textTransform: 'uppercase' }} >{translate('loadMore')}</Text>
                         {this.state.loading ? (
                             <ActivityIndicator color="#fff" />
@@ -231,7 +236,7 @@ export default class specialGames extends React.Component {
                                     <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('DD')}</Text>
                                     <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('MMM')}</Text>
                                 </View>
-                                <View style={{ borderLeftWidth: 1, borderLeftColor: "#ffffff77", width: 0, height: 60, marginLeft: 15, marginRight: 15 }}></View>
+                                <View style={{ borderLeftWidth: 1, borderLeftColor: "#ffffff77", width: 0, height: 60, marginStart: 15, marginEnd: 15 }}></View>
                                 <View style={{ flex: 1 }}>
                                     <Text style={styles.specialGameMeta}>{item.HomeTeam} </Text>
                                     <Text style={styles.specialGameMeta}>{item.AwayTeam}</Text>
@@ -241,7 +246,7 @@ export default class specialGames extends React.Component {
                                 <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>{item.PriceCaption}</Text>
                                 <Text style={{ color: "white", fontSize: 10, marginTop: 5 }}>{item.SharingRoomNote}</Text>
                             </View>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('book now', { idMatch: item.idMatch })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
+                            <TouchableHighlight onPress={() => this.props.navigation.navigate('book now', { idMatch: item.idMatch })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
                                 <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                                     <View >
                                         {item.PricePerFan > 0 ? (
@@ -253,7 +258,7 @@ export default class specialGames extends React.Component {
                                         }
                                     </View>
                                 </ImageBackground>
-                            </TouchableOpacity>
+                            </TouchableHighlight>
                         </View>
                     </View>
                 </ImageBackground>
@@ -263,8 +268,8 @@ export default class specialGames extends React.Component {
 
     /******************* Popular Game Item ************************/
     popularGameItem = ({ item }) =>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('tripoverview')}>
-            <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#F7F7F7", height: 80, marginTop: 30, borderRadius: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, padding: 10 }}>
+        <Pressable onPress={() => this.props.navigation.navigate('tripoverview')}>
+            <View style={styles.popularGameItem}>
                 <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{moment(new Date(item.GameDate)).format('DD MMM')}</Text>
                 <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{item.HomeTeam}</Text>
                 <View>
@@ -290,33 +295,37 @@ export default class specialGames extends React.Component {
                 <Text style={{ fontSize: 12, width: 65 }}>{item.City} from {item.FinalPrice}$</Text>
                 <Image source={R.images.arrow_right_sm} />
             </View>
-        </TouchableOpacity>;
+        </Pressable>;
 
 
     /******************* Hot Game Item ************************/
     hotGameItem({ item, index, state }) {
+        const image = { uri: item.BackGroundImage };
+        console.log("hot game image:", image, item);
         return (
             <View style={{ marginTop: 60, width: 280, height: 225, marginLeft: -20 }}>
-                <View style={{ backgroundColor: "#DA2828", borderRadius: 20, padding: 15, height: 200 }}>
-                    <View>
-                        <Text style={{ color: "white", fontWeight: "bold", fontSize: 25 }}>{item.LeagueName}</Text>
-                        <Text style={{ color: "white", marginTop: 5, fontSize: 12 }}>{item.StadeCity} -- {item.TripDays} DAYS</Text>
-                    </View>
-                    <View style={{ borderBottomWidth: 1, borderBottomColor: "#ffffff77", width: 200, height: 0, marginTop: 5, marginBottom: 5 }}></View>
-                    <View style={{ flexDirection: "row" }}>
-                        <View style={{}}>
-                            <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('DD')}</Text>
-                            <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('MMM')}</Text>
-                        </View>
-                        <View style={{ borderLeftWidth: 1, borderLeftColor: "#ffffff77", height: 70, width: 0, marginLeft: 15, marginRight: 15 }}></View>
+                <ImageBackground source={image} style={[styles.image, { width: "100%", height: "90%" }]} imageStyle={{ borderRadius: 20 }}>
+                    <View style={{ padding: 20 }}>
                         <View>
-                            <Text style={styles.specialGameMeta}>{item.HomeTeam}</Text>
-                            <Text style={styles.specialGameMeta}>{item.AwayTeam}</Text>
-                            <Text style={{ color: "white", fontSize: 8, marginTop: 5 }}>{item.SharingRoomNote}</Text>
+                            <Text style={{ color: "white", fontWeight: "bold", fontSize: 25 }}>{item.LeagueName}</Text>
+                            <Text style={{ color: "white", marginTop: 5, fontSize: 12 }}>{item.StadeCity} -- {item.TripDays} DAYS</Text>
+                        </View>
+                        <View style={{ borderBottomWidth: 1, borderBottomColor: "#ffffff77", width: "100%", height: 0, marginTop: 5, marginBottom: 5 }}></View>
+                        <View style={{ flexDirection: "row" }}>
+                            <View style={{}}>
+                                <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('DD')}</Text>
+                                <Text style={styles.specialGameMeta}>{moment(new Date(item.GameDate)).format('MMM')}</Text>
+                            </View>
+                            <View style={{ borderLeftWidth: 1, borderLeftColor: "#ffffff77", height: 70, width: 0, marginLeft: 15, marginRight: 15 }}></View>
+                            <View>
+                                <Text style={styles.specialGameMeta}>{item.HomeTeam}</Text>
+                                <Text style={styles.specialGameMeta}>{item.AwayTeam}</Text>
+                                <Text style={{ color: "white", fontSize: 8, marginTop: 5 }}>{item.SharingRoomNote}</Text>
+                            </View>
                         </View>
                     </View>
-                </View>
-                <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={() => this.props.navigation.navigate('tripoverview')}>
+                </ImageBackground>
+                <TouchableHighlight style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={() => this.props.navigation.navigate('tripoverview')}>
                     <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                         <View >
                             {item.PricePerFan > 0 ? (
@@ -328,7 +337,7 @@ export default class specialGames extends React.Component {
                             }
                         </View>
                     </ImageBackground>
-                </TouchableOpacity>
+                </TouchableHighlight>
             </View>
         );
     }
@@ -337,14 +346,10 @@ export default class specialGames extends React.Component {
     popularTeamsItem = ({ item, index }) => {
         const image = { uri: item.Image };
         return (
-            <View style={{ backgroundColor: '#FFFFFF', width: 180, height: 200, borderRadius: 20, justifyContent: 'center', shadowColor: "#000", shadowOffset: { width: 0, height: 8, }, shadowOpacity: 0.44, shadowRadius: 10, elevation: 15 }}>
-                <TouchableOpacity >
-                    <View style={{ alignItems: 'center' }}>
-                        <Image source={image} style={{ width: 100, height: 100 }} />
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.TeamName}</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <Pressable style={{ width: 180, height: 200, margin: 50, backgroundColor: "#fff", borderRadius: 20, justifyContent: "center", shadowColor: { width: 0, height: 8, }, shadowOpacity: .44, shadowRadius: 10, elevation: 15, justifyContent: "center", alignItems: "center" }}>
+                <Image source={image} style={{ width: 100, height: 100 }} />
+                <Text style={{ fontSize: 20, fontWeight: 'bold', width: "100%", textAlign: "center", marginTop: 7 }}>{item.TeamName}</Text>
+            </Pressable>
         );
     };
 
@@ -383,41 +388,44 @@ export default class specialGames extends React.Component {
                         <Text style={styles.topNavBtnText}>Deals</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ height: 50, padding: 10, backgroundColor: R.colors.greenLight, marginTop: 5, marginLeft: 10 }}
-                        onPress={() => this.props.navigation.navigate('all games')}>
-                        <Text style={styles.topNavBtnText}>SINGLE TRIP</Text>
+                    <TouchableOpacity style={{ position: "absolute", right: 0, height: this.state.isButtonPressed ? 100 : 50, width: 100, padding: 10, backgroundColor: R.colors.greenLight, marginLeft: 10, zIndex: 1 }}
+                        onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
+                        <Text style={styles.topNavBtnText}>Book Trip</Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('all games')} style={{ height: 50, width: 100, marginLeft: -10, marginRight: -10, padding: 10, backgroundColor: R.colors.green, display: this.state.isButtonPressed ? "flex" : "none", marginTop: 20 }}>
+                            <Text style={styles.topNavBtnText}>Single Trip</Text>
+                        </TouchableOpacity>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.topNavBtn}
+                    {/* <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('request')}>
                         <Text style={styles.topNavBtnText}>Request</Text>
                     </TouchableOpacity>
+
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my trips')}>
                         <Text style={styles.topNavBtnText}>My Trips</Text>
                     </TouchableOpacity>
-
 
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my profile')}>
                         <Text style={styles.topNavBtnText}>My Profile</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ marginTop: 140, width: 100, height: 50 }}
+                    <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('quiz')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Quiz</Text>
                     </TouchableOpacity>
 
 
-                    <TouchableOpacity style={{ marginTop: 140, width: 200, marginLeft: -40, height: 50 }}
+                    <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('leader board')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
                 {/* Special Games  */}
-                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.box}>
+                    <View style={styles.pageTitleWrap}>
                         <View style={styles.pageTitleBar}></View>
                         <Text style={styles.pageTitleText}>{translate('specialGames')}</Text>
                     </View>
@@ -435,12 +443,12 @@ export default class specialGames extends React.Component {
                 </View>
 
                 {/* Popular Games */}
-                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.box}>
+                    <View style={styles.pageTitleWrap}>
                         <View style={styles.pageTitleBar}></View>
                         <Text style={styles.pageTitleText}>{translate('popularGames')}</Text>
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center' }}>
+                    <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center', paddingLeft: 15, paddingRight: 15 }}>
                         <FlatList
                             keyExtractor={(item, index) => index}
                             data={this.state.popularGames}
@@ -451,8 +459,8 @@ export default class specialGames extends React.Component {
                 </View>
 
                 {/* Hot Games */}
-                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.box}>
+                    <View style={styles.pageTitleWrap}>
                         <View style={styles.pageTitleBar}></View>
                         <Text style={styles.pageTitleText}>{translate('hotGames')}</Text>
                     </View>
@@ -471,30 +479,29 @@ export default class specialGames extends React.Component {
                 </View>
 
                 {/* Popular Teams */}
-                <View style={{ width: '100%', marginTop: 20, backgroundColor: '#EEEEEE' }}>
-                    <View style={{ width: '90%', alignSelf: 'center' }}>
-                        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                            <View style={styles.pageTitleBar}></View>
-                            <Text style={styles.pageTitleText}>{translate('popularTeams')}</Text>
-                        </View>
-                        <View style={{ marginTop: 20, marginBottom: -50 }}>
-                            <Carousel
-                                layout={"default"}
-                                ref={ref => this.carousel = ref}
-                                data={this.state.popularTeams}
-                                sliderWidth={485}
-                                itemWidth={200}
-                                itemHeight={300}
-                                renderItem={this.popularTeamsItem}
-                                onSnapToItem={index => this.setState({ activeIndex: index })}
-                            />
-                        </View>
+                <View style={{ ...styles.box, backgroundColor: '#EEEEEE', height: 250 }}>
+                    <View style={styles.pageTitleWrap}>
+                        <View style={styles.pageTitleBar}></View>
+                        <Text style={styles.pageTitleText}>{translate('popularTeams')}</Text>
+                    </View>
+                    <View style={{ backgroundColor: "#fff", marginTop: 150, height: 200, marginLeft: 0, marginRight: 0 }}></View>
+                    <View style={{ marginTop: -370, marginBottom: 0, paddingBottom: 50 }}>
+                        <Carousel
+                            layout={"default"}
+                            ref={ref => this.carousel = ref}
+                            data={this.state.popularTeams}
+                            sliderWidth={Screen.width}
+                            itemWidth={200}
+                            itemHeight={200}
+                            renderItem={this.popularTeamsItem}
+                            onSnapToItem={index => this.setState({ activeIndex: index })}
+                        />
                     </View>
                 </View>
 
                 {/* competitions  */}
-                <View style={{ width: '90%', marginTop: 70, alignSelf: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                <View style={styles.box}>
+                    <View style={styles.pageTitleWrap}>
                         <View style={styles.pageTitleBar}></View>
                         <Text style={styles.pageTitleText}>{translate('competitions')}</Text>
                     </View>
@@ -503,7 +510,7 @@ export default class specialGames extends React.Component {
                             layout={"default"}
                             ref={ref => this.carousel = ref}
                             data={this.state.competitions}
-                            sliderWidth={170}
+                            sliderWidth={Screen.width}
                             itemWidth={290}
                             renderItem={this.competitionItem}
                             onSnapToItem={index => this.setState({ activeIndex: index })}
@@ -511,7 +518,8 @@ export default class specialGames extends React.Component {
                     </View>
                 </View>
 
-                <View style={{ width: '70%', alignSelf: 'flex-start', marginTop: 20, marginStart: '5%', height: 70, marginBottom: 30 }}>
+                {/* gift card */}
+                <View style={{ width: '90%', alignSelf: 'flex-start', marginTop: 20, marginStart: '5%', height: 70, marginBottom: 30 }}>
                     <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems: 'center', justifyContent: 'center' }}
                         onPress={() => this.props.navigation.navigate('giftcard')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
@@ -530,11 +538,20 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: "#FFF",
     },
+    box: { width: "100%", marginTop: 30, alignSelf: 'center' },
+    pageTitleWrap: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 30
+    },
     topNavBtn: {
         height: 50,
         padding: 10,
-        marginTop: 5,
-        marginLeft: 15
+        marginTop: 0,
+        marginStart: 10
     },
     topNavBtnText: {
         fontSize: 15,
@@ -572,5 +589,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#ee0000',
         resizeMode: "cover",
         justifyContent: "center"
+    },
+    popularGameItem: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: "#F7F7F7",
+        height: 80,
+        marginTop: 30,
+        borderRadius: 5,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        padding: 10,
+        marginEnd: 15,
+        marginStart: 15
     }
 });
