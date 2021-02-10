@@ -75,7 +75,6 @@ export async function getWithToken(path) {
 
 export async function post(path, data) {
     const token = await this.getToken();
-    console.log(token)
     const location = await this.getLocation();
     const url = `${API_URL}${path}`;
     return fetch(url, {

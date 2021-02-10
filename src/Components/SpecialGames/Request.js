@@ -214,11 +214,9 @@ export default class Request extends React.Component {
                 <View>
                     <Image source={R.images.all_games_bg} style={{ width: '100%' }} />
                     <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: 'white', fontSize: 26, fontWeight: 'bold',marginLeft:80,marginTop:-30 }} >Request Trip</Text>
+                        <Text style={{ color: 'white', fontSize: 26, fontWeight: 'bold', marginLeft: 80, marginTop: -30 }} >Request Trip</Text>
                     </View>
                 </View>
-
-
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ fontSize: 10, marginLeft: 10, fontWeight: "bold", marginTop: 30 }}>CHELSEA VS WOLVE</Text>
                     <Text style={{ fontSize: 10, marginLeft: 120, fontWeight: "bold", marginTop: -13 }}>Premiere league</Text>
@@ -227,10 +225,8 @@ export default class Request extends React.Component {
                 </ScrollView>
                 <Text style={{ color: "black", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Travel details </Text>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 500, marginLeft: 140, marginTop: 20 }}>
-
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>TRIP DATES</Text>
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>From</Text>
-
                     <DatePicker
                         style={{ width: 250, marginLeft: 30, marginTop: 20 }}
                         date={this.state.dateFrom}
@@ -309,88 +305,22 @@ export default class Request extends React.Component {
                 </ScrollView>
                 <Text style={{ color: "black", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Hotel</Text>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 300, marginLeft: 140, marginTop: 30 }}>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 20, marginTop: 20 }}>Hotel type</Text>
-
-
-
-
-
-
-
                     <RadioButtonRN
                         data={dataHotel}
                         selectedBtn={(e) => this.setState({ HotelStars: e.value })}
                         value={dataHotel.value}
                         style={{ marginTop: 20 }}
                     />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </ScrollView>
                 <Text style={{ color: "black", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Stadium</Text>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 350, marginLeft: 140, marginTop: 30 }}>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 20, marginTop: 20 }}>SEATS CATEGORY</Text>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <RadioButtonRN
                         data={data}
                         selectedBtn={(e) => this.setState({ matchCategoryCode: e.value })}
                         style={{ marginTop: 20 }}
                     />
-
-
-
-
-
-
-
-
-
-
                 </ScrollView>
                 <Text style={{ marginLeft: 140, color: "black", fontWeight: "bold", marginTop: 50 }}>Your Contact Details</Text>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 430, marginLeft: 140, marginTop: 20 }}>
@@ -413,8 +343,6 @@ export default class Request extends React.Component {
                             })
                         }
                     />
-
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>NAME*</Text>
                     <TextInput
                         multiline={true}
@@ -423,12 +351,7 @@ export default class Request extends React.Component {
                         onChangeText={(FirstName) => this.setState({ FirstName })}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
-
-
-
-
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -49 }}></ScrollView>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>SURNAME*</Text>
                     <TextInput
                         multiline={true}
@@ -481,7 +404,6 @@ export default class Request extends React.Component {
                 </ScrollView>
                 <View style={{ marginTop: 40, marginLeft: 100 }}>
                     <Chat />
-
                 </View>
             </ScrollView>
         );
