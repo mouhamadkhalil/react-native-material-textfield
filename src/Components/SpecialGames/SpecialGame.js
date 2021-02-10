@@ -15,7 +15,7 @@ import Carousel from 'react-native-snap-carousel';
 import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Image from 'react-native-remote-svg';
-import { translate } from "../../helpers/utils.js"
+import { translate } from "../../helpers/utils.js";
 import Chat from "../FanChat/chat";
 import R from "res/R";
 
@@ -172,7 +172,7 @@ export default class specialGames extends React.Component {
     };
 
     loadMore = () => {
-        this.setState({ loading: true, pageNumber: this.state.pageNumber+1 }, () => {
+        this.setState({ loading: true, pageNumber: this.state.pageNumber + 1 }, () => {
             try {
                 const _this = this;
                 get(`/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}`)
@@ -368,43 +368,39 @@ export default class specialGames extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70 }}
-                        onPress={() => this.props.navigation.navigate('all games')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10, paddingLeft: 25, paddingTop: 15 }}>SINGLE TRIP</Text>
-                    </TouchableOpacity>
 
-                    <TouchableOpacity style={{ width: 100, height: 50, marginLeft: 20, marginTop: 50 }}
+                    <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('teams')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", marginTop: 10 }}> Teams</Text>
+                        <Text style={styles.topNavBtnText}> Teams</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ width: 100, height: 50, marginLeft: -10, marginTop: 60 }}
+                    <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('leagues')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leagues</Text>
+                        <Text style={styles.topNavBtnText}>Leagues</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ width: 100, height: 50, marginLeft: -10, marginTop: 60 }}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>Deals</Text>
+                    <TouchableOpacity style={styles.topNavBtn}>
+                        <Text style={styles.topNavBtnText}>Deals</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ width: 100, height: 50, marginLeft: -10, marginTop: 60 }}
+                    <TouchableOpacity style={{ height: 50, padding: 10, backgroundColor: R.colors.greenLight, marginTop: 5, marginLeft: 10 }}
+                        onPress={() => this.props.navigation.navigate('all games')}>
+                        <Text style={styles.topNavBtnText}>SINGLE TRIP</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('request')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>Request</Text>
+                        <Text style={styles.topNavBtnText}>Request</Text>
                     </TouchableOpacity>
-
-                    <TouchableOpacity style={{ marginTop: 100, marginLeft: -364, width: 100, height: 50 }}
-                        onPress={() => this.props.navigation.navigate('giftcard')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>Gift card</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ marginTop: 110, marginLeft: -15, width: 100, height: 50 }}
+                    <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my trips')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>My Trips</Text>
+                        <Text style={styles.topNavBtnText}>My Trips</Text>
                     </TouchableOpacity>
 
 
-                    <TouchableOpacity style={{ marginTop: 140, marginLeft: -340, width: 100, height: 50 }}
+                    <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my profile')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>My Profile</Text>
+                        <Text style={styles.topNavBtnText}>My Profile</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ marginTop: 140, width: 100, height: 50 }}
@@ -533,6 +529,16 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         backgroundColor: "#FFF",
+    },
+    topNavBtn: {
+        height: 50,
+        padding: 10,
+        marginTop: 5,
+        marginLeft: 15
+    },
+    topNavBtnText: {
+        fontSize: 15,
+        fontWeight: "bold"
     },
     teamCircle: {
         width: 10,
