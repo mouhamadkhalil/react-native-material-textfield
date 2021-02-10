@@ -279,7 +279,7 @@ export default class LoginScreen extends React.Component {
                                 />
                             </View>
                             {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
-                                : console.log("done")}
+                                : null}
                         </View>
                     </TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>

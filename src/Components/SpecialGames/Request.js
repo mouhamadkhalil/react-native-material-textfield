@@ -22,16 +22,35 @@ import { get, post } from "../../helpers/services.js";
 const sourceFile = require('../../helpers/services.js');
 const data = [
     {
-        label: 'Doesnt matter, at least Iam there!'
+        label: 'Doesnt matter, at least Iam there!',
+        value: 4
     },
     {
-        label: 'I want a good view of the game'
+        label: 'I want a good view of the game',
+        value: 3
     },
     {
-        label: 'I want to be close to the players'
+        label: 'I want to be close to the players',
+        value: 2
     },
     {
-        label: 'Once in a lifetime! Give me the best '
+        label: 'Once in a lifetime! Give me the best ',
+        value: 1
+    },
+];
+
+const dataHotel = [
+    {
+        label: <Image source={R.images.fivestars} />,
+        value: 5
+    },
+    {
+        label: <Image source={R.images.fourstars} />,
+        value: 4
+    },
+    {
+        label: <Image source={R.images.threestars} />,
+        value: 3
     },
 ];
 
@@ -39,13 +58,24 @@ export default class Request extends React.Component {
 
     state = {
         isDone: false,
-        date: "2016-05-15",
-        fanNumber: 2,
+        dateFrom: "2016-05-15",
+        dateTo: "2016-05-15",
         suggestedGames: [],
         MultiDetails: [],
         OfferContacts: [],
         StartDate: "",
-        EndDate: ""
+        EndDate: "",
+        NumberOfTravelers: 2,
+        HotelStars: "",
+        matchCategoryCode: "",
+        budget: "",
+        Message: "",
+        idDepartureCity: "",
+        Title: "",
+        FirstName: "",
+        LastName: "",
+        Email: "",
+        Phone: "",
     };
 
     componentDidMount() {
@@ -59,7 +89,6 @@ export default class Request extends React.Component {
         const _this = this;
         get(`/mobile/game/GetHomePageDataMobile`)
             .then(response => {
-                // console.log("my UpComingInvoices are :", response.UpComingInvoices)
 
             });
     }
@@ -90,50 +119,60 @@ export default class Request extends React.Component {
     SendRequest = () => {
         const _this = this;
         const data = {
+            NumberOfTravelers: this.state.NumberOfTravelers,
             StartDate: this.state.StartDate,
             EndDate: this.state.EndDate,
-            NumberOfTravelers: this.state.MultiDetails.NumberOfTravelers,
-            HotelStars: this.state.MultiDetails.HotelStars,
-            matchCategoryCode: this.state.MultiDetails.matchCategoryCode,
-            AdditionalMessage: this.state.MultiDetails.AdditionalMessage,
-            idDepartureCity: this.state.MultiDetails.idDepartureCity,
-            budget: this.state.MultiDetails.budget,
-        }
+            budget: this.state.budget,
+            HotelStars: this.state.HotelStars,
+            matchCategoryCode: this.state.matchCategoryCode,
 
+            idDepartureCity: this.state.idDepartureCity,
+            Message: this.state.Message,
+
+            "offerContacts": [
+                {
+                    Title: this.state.Title,
+                    FirstName: this.state.FirstName,
+                    LastName: this.state.LastName,
+                    Phone: this.state.Phone,
+                    Email: this.state.Email,
+                }
+            ],
+        }
         post(`/mobile/game/saveBundleMulti`, data)
             .then(response => {
+                var dataContacts = response.OfferContacts.map(function (item) {
+                    return {
+                        Title: item.Title,
+                        FirstName: item.FirstName,
+                        LastName: item.LastName,
+                        Email: item.Email,
+                        Phone: item.Phone,
+                    };
+                });
+                this.setState({ OfferContacts: dataContacts });
+
                 var dataBundle = {
                     StartDate: response.StartDate,
                     EndDate: response.EndDate,
                     NumberOfTravelers: response.NumberOfTravelers,
                     HotelStars: response.HotelStars,
                     matchCategoryCode: response.matchCategoryCode,
-                    AdditionalMessage: response.AdditionalMessage,
+                    Message: response.Message,
                     idDepartureCity: response.idDepartureCity,
                     budget: response.budget,
                 };
                 this.setState({ MultiDetails: dataBundle });
-
-                // var dataContacts = response.OfferContacts.map(function (item) {
-                //     return {
-                //         Title: item.Title,
-                //         FirstName: item.FirstName,
-                //         LastName: item.LastName,
-                //         Email: item.Email,
-                //         Phone: item.Phone,
-                //     };
-                // });
-                // this.setState({ OfferContacts: dataContacts });
-                console.log("dataBundle", this.state.MultiDetails)
+                console.log("MultiDetails", this.state.MultiDetails)
             });
     }
 
     IncrementFan = () => {
-        this.setState({ fanNumber: this.state.fanNumber + 1 });
+        this.setState({ NumberOfTravelers: this.state.NumberOfTravelers + 1 });
     };
 
     DecrementFan = () => {
-        this.setState({ fanNumber: this.state.fanNumber - 1 });
+        this.setState({ NumberOfTravelers: this.state.NumberOfTravelers - 1 });
     };
 
     searchGame = () => {
@@ -168,11 +207,18 @@ export default class Request extends React.Component {
     };
 
     render() {
-        const { selectedStartDate } = this.state;
-        const startDate = selectedStartDate ? selectedStartDate.toString() : '';
+        const { selectedStartDate } = this.state.StartDate;
+        const StartDate = selectedStartDate ? selectedStartDate.toString() : '';
         return (
             <ScrollView style={styles.container}>
-                <Image source={R.images.football_bg} style={{ height: 200 }} />
+                <View>
+                    <Image source={R.images.all_games_bg} style={{ width: '100%' }} />
+                    <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: 'white', fontSize: 26, fontWeight: 'bold',marginLeft:80,marginTop:-30 }} >Request Trip</Text>
+                    </View>
+                </View>
+
+
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ fontSize: 10, marginLeft: 10, fontWeight: "bold", marginTop: 30 }}>CHELSEA VS WOLVE</Text>
                     <Text style={{ fontSize: 10, marginLeft: 120, fontWeight: "bold", marginTop: -13 }}>Premiere league</Text>
@@ -187,14 +233,14 @@ export default class Request extends React.Component {
 
                     <DatePicker
                         style={{ width: 250, marginLeft: 30, marginTop: 20 }}
-                        date={this.state.date}
+                        date={this.state.dateFrom}
                         mode="date"
                         placeholder="select date"
                         format="YYYY-MM-DD"
-                        minDate="2016-05-01"
+                        minDate="2021-05-01"
                         maxDate="2050-06-01"
-                        onDateChange={(startDate) => this.setState({ startDate })}
-                        value={this.state.startDate}
+                        onDateChange={(StartDate) => { this.setState({ StartDate: StartDate }); }}
+                        value={this.state.StartDate}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         customStyles={{
@@ -208,19 +254,18 @@ export default class Request extends React.Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => { this.setState({ date: date }); }}
                     />
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>To</Text>
                     <DatePicker
                         style={{ width: 250, marginLeft: 30, marginTop: 20 }}
-                        date={this.state.date}
+                        date={this.state.dateTo}
                         mode="date"
                         placeholder="select date"
                         format="YYYY-MM-DD"
                         minDate="2016-05-01"
                         maxDate="2050-06-01"
                         confirmBtnText="Confirm"
-                        onDateChange={(EndDate) => this.setState({ EndDate })}
+                        onDateChange={(EndDate) => this.setState({ EndDate: EndDate })}
                         value={this.state.EndDate}
                         cancelBtnText="Cancel"
                         customStyles={{
@@ -234,13 +279,12 @@ export default class Request extends React.Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={(date) => { this.setState({ date: date }); }}
                     />
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginTop: 20, marginLeft: 20 }}>FANS</Text>
                     <TouchableOpacity style={{ width: 20, marginLeft: 40 }} onPress={this.DecrementFan}>
                         <Text style={{ fontSize: 25, fontWeight: "bold", marginLeft: 0, marginTop: 11 }}>-</Text>
                     </TouchableOpacity>
-                    <Text style={{ marginLeft: 70, marginTop: -25 }}>{this.state.fanNumber}</Text>
+                    <Text style={{ marginLeft: 70, marginTop: -25 }}>{this.state.NumberOfTravelers}</Text>
                     <TouchableOpacity style={{ marginLeft: 105, marginTop: -25, width: 20 }} onPress={this.IncrementFan} >
                         <Text style={{ fontSize: 25, fontWeight: "bold" }}>+</Text>
                     </TouchableOpacity>
@@ -248,6 +292,10 @@ export default class Request extends React.Component {
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
+                        onChangeText={(budget) => this.setState({ budget })}
+                        placeholder="1000"
+                        required
+                        value={this.state.budget}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 20, marginTop: -49 }}></ScrollView>
@@ -259,28 +307,90 @@ export default class Request extends React.Component {
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 20, marginTop: -49 }}></ScrollView>
                 </ScrollView>
-                <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Hotel</Text>
-                <ScrollView style={{ backgroundColor: "white", width: 310, height: 140, marginLeft: 140, marginTop: 30 }}>
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: 30, marginLeft: 20 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 40 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 60 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 80 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 100 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: 20, marginLeft: 20 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 40 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 60 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 80 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: 20, marginLeft: 20 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 40 }} />
-                    <Image source={R.images.star} style={{ width: 15, height: 15, marginTop: -15, marginLeft: 60 }} />
+                <Text style={{ color: "black", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Hotel</Text>
+                <ScrollView style={{ backgroundColor: "white", width: 310, height: 300, marginLeft: 140, marginTop: 30 }}>
+
+                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 20, marginTop: 20 }}>Hotel type</Text>
+
+
+
+
+
+
+
+                    <RadioButtonRN
+                        data={dataHotel}
+                        selectedBtn={(e) => this.setState({ HotelStars: e.value })}
+                        value={dataHotel.value}
+                        style={{ marginTop: 20 }}
+                    />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </ScrollView>
-                <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Stadium</Text>
-                <ScrollView style={{ backgroundColor: "white", width: 310, height: 263, marginLeft: 140, marginTop: 30 }}>
+                <Text style={{ color: "black", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Stadium</Text>
+                <ScrollView style={{ backgroundColor: "white", width: 310, height: 350, marginLeft: 140, marginTop: 30 }}>
+
+                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 20, marginTop: 20 }}>SEATS CATEGORY</Text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <RadioButtonRN
                         data={data}
-                        selectedBtn={(e) => console.log(e)}
-                        style={{ marginTop: -10 }}
+                        selectedBtn={(e) => this.setState({ matchCategoryCode: e.value })}
+                        style={{ marginTop: 20 }}
                     />
+
+
+
+
+
+
+
+
+
+
                 </ScrollView>
                 <Text style={{ marginLeft: 140, color: "black", fontWeight: "bold", marginTop: 50 }}>Your Contact Details</Text>
                 <ScrollView style={{ backgroundColor: "white", width: 310, height: 430, marginLeft: 140, marginTop: 20 }}>
@@ -299,22 +409,33 @@ export default class Request extends React.Component {
                         dropDownStyle={{ color: "gray", width: 150, marginLeft: 30 }}
                         onChangeItem={(item) =>
                             this.setState({
-                                country: item.value,
+                                Title: item.value,
                             })
                         }
                     />
+
+
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>NAME*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
+                        value={this.state.FirstName}
+                        onChangeText={(FirstName) => this.setState({ FirstName })}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
+
+
+
+
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -49 }}></ScrollView>
 
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>SURNAME*</Text>
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
+                        value={this.state.LastName}
+                        onChangeText={(LastName) => this.setState({ LastName })}
+
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -49 }}></ScrollView>
@@ -323,7 +444,9 @@ export default class Request extends React.Component {
                         autoCapitalize="none"
                         multiline={true}
                         numberOfLines={8}
-                        type="emai"
+                        type="email"
+                        value={this.state.Email}
+                        onChangeText={(Email) => this.setState({ Email })}
                         keyboardType="email-address"
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
@@ -332,6 +455,9 @@ export default class Request extends React.Component {
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
+                        value={this.state.Phone}
+                        keyboardType="number-pad"
+                        onChangeText={(Phone) => this.setState({ Phone })}
                         style={{ fontSize: 12, marginTop: -30, paddingLeft: 30 }}
                     />
                     <ScrollView style={{ backgroundColor: "black", width: 250, height: 1, marginLeft: 30, marginTop: -49 }}></ScrollView>
@@ -340,6 +466,8 @@ export default class Request extends React.Component {
                     <TextInput
                         multiline={true}
                         numberOfLines={8}
+                        onChangeText={(Message) => this.setState({ Message })}
+                        value={this.state.Message}
                         placeholder="Please write the delivery address here ..."
                         style={{ fontSize: 12, marginTop: -20, paddingLeft: 20 }}
                     />
