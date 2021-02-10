@@ -31,9 +31,7 @@ export default class ManageTripScreen extends React.Component {
     this.props.navigation.navigate('Join 1');
   };
 
-
   render() {
-    const { showAlert } = this.state;
 
     return (
       <ScrollView style={styles.container}>
@@ -157,11 +155,6 @@ export default class ManageTripScreen extends React.Component {
             style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
           ></ScrollView>
         </ScrollView>
-        <TouchableOpacity style={{ marginLeft: 270, marginTop: -110 }} onPress={() => {
-          this.showAlert();
-        }}>
-          <Image source={Chat} style={{ width: 100, height: 100 }} />
-        </TouchableOpacity>
       </ScrollView>
     );
   }

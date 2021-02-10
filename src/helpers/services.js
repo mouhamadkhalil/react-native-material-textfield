@@ -1,5 +1,5 @@
+import * as SecureStore from 'expo-secure-store';
 import { API_URL, API_TOKEN } from "@env";
-import { AsyncStorage } from 'react-native';
 
 authorization = "Bearer Token";
 Content_Type = "application/json";
@@ -10,7 +10,7 @@ Accept = "application/json";
 
 getToken = async () => {
     try {
-        const value = await AsyncStorage.getItem('token');
+        const value = await SecureStore.getItemAsync('token');
         if (value !== null) {
             return value
         }
@@ -20,7 +20,7 @@ getToken = async () => {
 };
 getLocation = async () => {
     try {
-        const value = await AsyncStorage.getItem('location');
+        const value = await SecureStore.getItemAsync('location');
         if (value !== null) {
             return value
         }
@@ -63,7 +63,7 @@ export async function getWithToken(path) {
             "ff_language": "en",
             "source": "mobile",
             "gps_location": location,
-            "authorization": "Bearer" + token
+            "authorization": "Bearer " + token
         },
     })
         .then((res) => res.json())
@@ -86,7 +86,7 @@ export async function post(path, data) {
             "ff_language": "en",
             "source": "mobile",
             "gps_location": location,
-            "authorization": "Bearer" + token
+            "authorization": "Bearer " + token
         },
         body: JSON.stringify(data)
     })
