@@ -79,7 +79,6 @@ export default class LoginScreen extends React.Component {
                     alert(response.Message);
                 }
                 else {
-                    console.log("email is found! ");
                     ToastAndroid.showWithGravity(
                         'Your password request has been sent',
                         ToastAndroid.LONG,
@@ -131,7 +130,7 @@ export default class LoginScreen extends React.Component {
                             );
                             window.location.reload();
                         } else {
-                            SecureStore.setItemAsync('token',response.Token);
+                            SecureStore.setItemAsync('token', response.Token);
                             this.setState({ isDone: true });
                             this.props.navigation.navigate('book a trip');
                             ToastAndroid.showWithGravity(

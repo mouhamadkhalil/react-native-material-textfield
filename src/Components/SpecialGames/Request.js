@@ -16,7 +16,7 @@ import DatePicker from 'react-native-datepicker';
 import RadioButtonRN from 'radio-buttons-react-native';
 import Chat from "../FanChat/chat";
 import R from "res/R";
-import { get } from "../../helpers/services.js";
+import { get, post } from "../../helpers/services.js";
 
 
 const sourceFile = require('../../helpers/services.js');
@@ -38,72 +38,93 @@ const data = [
 export default class Request extends React.Component {
 
     state = {
-        Picture1: "",
-        Picture2: "",
-        Picture3: "",
-        Picture4: "",
         isDone: false,
-        searchText: "",
-        idMatch: "",
-        City: "",
-        Stade: "",
-        GameDate1: "",
-        GameDate2: "",
-        LeaguesName: "",
-        GameCode: "",
-        HomeTeam: "",
-        AwayTeam: "",
-        StadeCity: "",
-        GameCity1: "",
-        GameCity2: "",
-        GamePrice1: "",
-        GamePrice2: "",
-        pageNumber: 1,
-        LeaguesName: "",
-        DaysLeft: "",
-        pageSize: 15,
-        idTeam: 2122,
-        orderBy: "",
-        activeIndex: 0,
-        carouselItems: [
-            {
-                title: "Item 1",
-                text: "Text 1",
-            },
-            {
-                title: "Item 2",
-                text: "Text 2",
-            },
-            {
-                title: "Item 3",
-                text: "Text 3",
-            },
-            {
-                title: "Item 4",
-                text: "Text 4",
-            },
-        ],
         date: "2016-05-15",
         fanNumber: 2,
+        suggestedGames: [],
+        MultiDetails: [],
+        OfferContacts: [],
+        StartDate: "",
+        EndDate: ""
     };
 
     componentDidMount() {
         try {
-            this.getData();
+            this.GetHomePageDataMobile();
+            this.getSuggestedGames();
         } catch { }
     }
 
-
-    getData = () => {
+    GetHomePageDataMobile = () => {
         const _this = this;
-        get('/mobile/game/GetHomePageDataMobile')
+        get(`/mobile/game/GetHomePageDataMobile`)
             .then(response => {
-                this.setState({ isDone: true });
-                this.setState({ Picture1: response.GenericGames[0].MatchBundleHotels[0].Images[3] });
-                this.setState({
-                    Picture2:
-                        response.GamesList.Items[0].MatchBundleDetail[0].GameSeat.StadiumMap_IMG_v3,
+                // console.log("my UpComingInvoices are :", response.UpComingInvoices)
+
+            });
+    }
+
+    getSuggestedGames = () => {
+        const _this = this;
+        get(`/mobile/game/getSuggestedGames`)
+            .then(response => {
+                var data = response.map(function (item) {
+                    return {
+                        AdditionalMessage: item.AdditionalMessage,
+                        AwayTeam: item.AwayTeam,
+                        City: item.City,
+                        GameCode: item.GameCode,
+                        GameDate: item.GameDate,
+                        HomeTeam: item.HomeTeam,
+                        League: item.League,
+                        LeagueName: item.LeagueName,
+                        Stade: item.Stade,
+                        StadeCity: item.StadeCity,
+                        idMatch: item.idMatch
+                    };
                 });
+                this.setState({ suggestedGames: data });
+            });
+    }
+
+    SendRequest = () => {
+        const _this = this;
+        const data = {
+            StartDate: this.state.StartDate,
+            EndDate: this.state.EndDate,
+            NumberOfTravelers: this.state.MultiDetails.NumberOfTravelers,
+            HotelStars: this.state.MultiDetails.HotelStars,
+            matchCategoryCode: this.state.MultiDetails.matchCategoryCode,
+            AdditionalMessage: this.state.MultiDetails.AdditionalMessage,
+            idDepartureCity: this.state.MultiDetails.idDepartureCity,
+            budget: this.state.MultiDetails.budget,
+        }
+
+        post(`/mobile/game/saveBundleMulti`, data)
+            .then(response => {
+                var dataBundle = {
+                    StartDate: response.StartDate,
+                    EndDate: response.EndDate,
+                    NumberOfTravelers: response.NumberOfTravelers,
+                    HotelStars: response.HotelStars,
+                    matchCategoryCode: response.matchCategoryCode,
+                    AdditionalMessage: response.AdditionalMessage,
+                    idDepartureCity: response.idDepartureCity,
+                    budget: response.budget,
+                };
+                this.setState({ MultiDetails: dataBundle });
+
+                // var dataContacts = response.OfferContacts.map(function (item) {
+                //     return {
+                //         Title: item.Title,
+                //         FirstName: item.FirstName,
+                //         LastName: item.LastName,
+                //         Email: item.Email,
+                //         Phone: item.Phone,
+                //     };
+                // });
+                // this.setState({ OfferContacts: dataContacts });
+                console.log("dataBundle", this.state.MultiDetails)
             });
     }
 
@@ -114,7 +135,6 @@ export default class Request extends React.Component {
     DecrementFan = () => {
         this.setState({ fanNumber: this.state.fanNumber - 1 });
     };
-
 
     searchGame = () => {
         const _this = this;
@@ -131,7 +151,6 @@ export default class Request extends React.Component {
                 this.setState({ StadeCity: response[0].StadeCity });
             });
     };
-
 
     FilterGame = () => {
         const _this = this;
@@ -174,6 +193,8 @@ export default class Request extends React.Component {
                         format="YYYY-MM-DD"
                         minDate="2016-05-01"
                         maxDate="2050-06-01"
+                        onDateChange={(startDate) => this.setState({ startDate })}
+                        value={this.state.startDate}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         customStyles={{
@@ -199,6 +220,8 @@ export default class Request extends React.Component {
                         minDate="2016-05-01"
                         maxDate="2050-06-01"
                         confirmBtnText="Confirm"
+                        onDateChange={(EndDate) => this.setState({ EndDate })}
+                        value={this.state.EndDate}
                         cancelBtnText="Cancel"
                         customStyles={{
                             dateIcon: {
@@ -323,6 +346,7 @@ export default class Request extends React.Component {
                 </ScrollView>
                 <ScrollView style={{ backgroundColor: "white", width: 170, height: 35, marginLeft: 280, marginTop: 30 }}>
                     <Button
+                        onPress={this.SendRequest}
                         title="SEND REQUEST"
                         color="#8CD222"
                     />

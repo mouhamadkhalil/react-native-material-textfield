@@ -63,7 +63,7 @@ export async function getWithToken(path) {
             "ff_language": "en",
             "source": "mobile",
             "gps_location": location,
-            "authorization": "Bearer " + token
+            "Authorization": 'Bearer ' + token
         },
     })
         .then((res) => res.json())
@@ -86,7 +86,7 @@ export async function post(path, data) {
             "ff_language": "en",
             "source": "mobile",
             "gps_location": location,
-            "authorization": "Bearer " + token
+            "Authorization": 'Bearer ' + token
         },
         body: JSON.stringify(data)
     })

@@ -388,9 +388,9 @@ export default class specialGames extends React.Component {
                         <Text style={styles.topNavBtnText}>SINGLE TRIP</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.topNavBtn}
+                    <TouchableOpacity style={{backgroundColor:"red",marginLeft:-200,marginTop:80}}
                         onPress={() => this.props.navigation.navigate('request')}>
-                        <Text style={styles.topNavBtnText}>Request</Text>
+                        <Text style={{}}>Request</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my trips')}>
