@@ -136,11 +136,11 @@ export default class AllGames extends React.Component {
             <View style={{ flexDirection: 'row', height: 50, marginTop: 10, borderTopColor: "grey", borderTopWidth: 1 }}>
                 <View style={{ alignSelf: 'flex-start', width: '60%' }}>
                     {item.Price > 0 && item.Price != null ?
-                        <View style={{ flex:1, flexDirection:'row', alignItems:'center'}}>
+                        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{ paddingStart: 10, fontSize: 20, fontWeight: "bold" }}>{item.Price}$</Text>
                             <Text>/Fan</Text>
-                        </View> 
-                        :null
+                        </View>
+                        : null
                     }
                 </View>
                 <TouchableOpacity

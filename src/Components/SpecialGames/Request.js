@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     Button,
+    ToastAndroid,
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -139,32 +140,42 @@ export default class Request extends React.Component {
                 }
             ],
         }
-        post(`/mobile/game/saveBundleMulti`, data)
-            .then(response => {
-                var dataContacts = response.OfferContacts.map(function (item) {
-                    return {
-                        Title: item.Title,
-                        FirstName: item.FirstName,
-                        LastName: item.LastName,
-                        Email: item.Email,
-                        Phone: item.Phone,
-                    };
-                });
-                this.setState({ OfferContacts: dataContacts });
+        if (this.state.Title === "" || this.state.FirstName === "" || this.state.LastName === "" || this.state.Phone === "" || this.state.Email === "") {
+            ToastAndroid.showWithGravity(
+                'please fill out mendatory fields !',
+                ToastAndroid.LONG,
+                ToastAndroid.CENTER
+            );
+        }
+        else {
+            post(`/mobile/game/saveBundleMulti`, data)
+                .then(response => {
+                    var dataContacts = response.OfferContacts.map(function (item) {
+                        return {
+                            Title: item.Title,
+                            FirstName: item.FirstName,
+                            LastName: item.LastName,
+                            Email: item.Email,
+                            Phone: item.Phone,
+                        };
+                    });
+                    this.setState({ OfferContacts: dataContacts });
 
-                var dataBundle = {
-                    StartDate: response.StartDate,
-                    EndDate: response.EndDate,
-                    NumberOfTravelers: response.NumberOfTravelers,
-                    HotelStars: response.HotelStars,
-                    matchCategoryCode: response.matchCategoryCode,
-                    Message: response.Message,
-                    idDepartureCity: response.idDepartureCity,
-                    budget: response.budget,
-                };
-                this.setState({ MultiDetails: dataBundle });
-                console.log("MultiDetails", this.state.MultiDetails)
-            });
+                    var dataBundle = {
+                        StartDate: response.StartDate,
+                        EndDate: response.EndDate,
+                        NumberOfTravelers: response.NumberOfTravelers,
+                        HotelStars: response.HotelStars,
+                        matchCategoryCode: response.matchCategoryCode,
+                        Message: response.Message,
+                        idDepartureCity: response.idDepartureCity,
+                        budget: response.budget,
+                    };
+                    this.setState({ MultiDetails: dataBundle });
+                    console.log("MultiDetails", this.state.MultiDetails)
+                    this.props.navigation.navigate('confirmation');
+                });
+        }
     }
 
     IncrementFan = () => {
