@@ -43,7 +43,8 @@ export default class specialGames extends React.Component {
             hotGames: [],
             popularTeams: [],
             competitions: [],
-            isButtonPressed: false
+            isButtonPressed: false,
+            isDone: false
         };
     }
 
@@ -86,6 +87,7 @@ export default class specialGames extends React.Component {
                     };
                 });
                 this.setState({ specialGames: specialGames });
+                this.setState({ isDone: true });
 
                 // Popular Games Data
                 var popularGames = response.GamesList.Items.map(function (item) {
@@ -346,9 +348,9 @@ export default class specialGames extends React.Component {
     popularTeamsItem = ({ item, index }) => {
         const image = { uri: item.Image };
         return (
-            <Pressable style={{ width: 180, height: 200, margin: 50, backgroundColor: "#fff", borderRadius: 20, justifyContent: "center", shadowColor: { width: 0, height: 8, }, shadowOpacity: .44, shadowRadius: 10, elevation: 15, justifyContent: "center", alignItems: "center" }}>
-                <Image source={image} style={{ width: 100, height: 100 }} />
-                <Text style={{ fontSize: 20, fontWeight: 'bold', width: "100%", textAlign: "center", marginTop: 7 }}>{item.TeamName}</Text>
+            <Pressable style={{ width: 130, height: 180, margin: 20, backgroundColor: "#fff", borderRadius: 20, justifyContent: "center", shadowColor: { width: 0, height: 8, }, shadowOpacity: .44, shadowRadius: 10, elevation: 15, justifyContent: "center", alignItems: "center" }}>
+                <Image source={image} style={{ width: 80, height: 80 }} />
+                <Text style={{ fontSize: 16, fontWeight: 'bold', width: "80%", textAlign: "center", marginTop: 7 }}>{item.TeamName}</Text>
             </Pressable>
         );
     };
@@ -373,17 +375,14 @@ export default class specialGames extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
-
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('teams')}>
                         <Text style={styles.topNavBtnText}> Teams</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('leagues')}>
                         <Text style={styles.topNavBtnText}>Leagues</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.topNavBtn}>
                         <Text style={styles.topNavBtnText}>Deals</Text>
                     </TouchableOpacity>
@@ -405,7 +404,6 @@ export default class specialGames extends React.Component {
                         onPress={() => this.props.navigation.navigate('my trips')}>
                         <Text style={styles.topNavBtnText}>My Trips</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my profile')}>
                         <Text style={styles.topNavBtnText}>My Profile</Text>
@@ -422,111 +420,117 @@ export default class specialGames extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
                     </TouchableOpacity> */}
                 </View>
+                {!this.state.isDone ?
+                    <ActivityIndicator size="large" color="blue" style={{ marginTop: 100, marginLeft: -10 }} />
+                    :
+                    // Special Games
+                    <>
+                        {/* Special Games  */}
+                        <View style={styles.box}>
+                            <View style={styles.pageTitleWrap}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('specialGames')}</Text>
+                            </View>
+                            <View style={{ marginTop: -30, marginStart: '-10%' }}>
+                                <Carousel
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.specialGames}
+                                    sliderWidth={485}
+                                    itemWidth={350}
+                                    renderItem={this.specialGameItem.bind(this)}
+                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                />
+                            </View>
+                        </View>
 
-                {/* Special Games  */}
-                <View style={styles.box}>
-                    <View style={styles.pageTitleWrap}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('specialGames')}</Text>
-                    </View>
-                    <View style={{ marginTop: -30, marginStart: '-10%' }}>
-                        <Carousel
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.specialGames}
-                            sliderWidth={485}
-                            itemWidth={350}
-                            renderItem={this.specialGameItem.bind(this)}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
-                </View>
+                        {/* Popular Games */}
+                        <View style={styles.box}>
+                            <View style={styles.pageTitleWrap}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('popularGames')}</Text>
+                            </View>
+                            <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center', paddingLeft: 15, paddingRight: 15 }}>
+                                <FlatList
+                                    keyExtractor={(item, index) => index}
+                                    data={this.state.popularGames}
+                                    renderItem={item => this.popularGameItem(item)}
+                                    ListFooterComponent={this.renderPopularGamesFooter.bind(this)}
+                                />
+                            </View>
+                        </View>
 
-                {/* Popular Games */}
-                <View style={styles.box}>
-                    <View style={styles.pageTitleWrap}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('popularGames')}</Text>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center', paddingLeft: 15, paddingRight: 15 }}>
-                        <FlatList
-                            keyExtractor={(item, index) => index}
-                            data={this.state.popularGames}
-                            renderItem={item => this.popularGameItem(item)}
-                            ListFooterComponent={this.renderPopularGamesFooter.bind(this)}
-                        />
-                    </View>
-                </View>
+                        {/* Hot Games */}
+                        <View style={styles.box}>
+                            <View style={styles.pageTitleWrap}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('hotGames')}</Text>
+                            </View>
+                            <View style={{ marginLeft: -15, marginTop: -30 }}>
+                                <Carousel
+                                    style={{ marginLeft: -15 }}
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.hotGames}
+                                    sliderWidth={485}
+                                    itemWidth={280}
+                                    renderItem={this.hotGameItem.bind(this)}
+                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                />
+                            </View>
+                        </View>
 
-                {/* Hot Games */}
-                <View style={styles.box}>
-                    <View style={styles.pageTitleWrap}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('hotGames')}</Text>
-                    </View>
-                    <View style={{ marginLeft: -15, marginTop: -30 }}>
-                        <Carousel
-                            style={{ marginLeft: -15 }}
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.hotGames}
-                            sliderWidth={485}
-                            itemWidth={280}
-                            renderItem={this.hotGameItem.bind(this)}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
-                </View>
+                        {/* Popular Teams */}
+                        <View style={{ ...styles.box, backgroundColor: '#EEEEEE', height: 250 }}>
+                            <View style={styles.pageTitleWrap}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('popularTeams')}</Text>
+                            </View>
+                            <View style={{ backgroundColor: "#fff", marginTop: 150, height: 200, marginLeft: 0, marginRight: 0 }}></View>
+                            <View style={{ marginTop: -320, marginBottom: 0, paddingBottom: 50 }}>
+                                <Carousel
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.popularTeams}
+                                    sliderWidth={Screen.width}
+                                    itemWidth={150}
+                                    itemHeight={200}
+                                    renderItem={this.popularTeamsItem}
+                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                />
+                            </View>
+                        </View>
 
-                {/* Popular Teams */}
-                <View style={{ ...styles.box, backgroundColor: '#EEEEEE', height: 250 }}>
-                    <View style={styles.pageTitleWrap}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('popularTeams')}</Text>
-                    </View>
-                    <View style={{ backgroundColor: "#fff", marginTop: 150, height: 200, marginLeft: 0, marginRight: 0 }}></View>
-                    <View style={{ marginTop: -370, marginBottom: 0, paddingBottom: 50 }}>
-                        <Carousel
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.popularTeams}
-                            sliderWidth={Screen.width}
-                            itemWidth={200}
-                            itemHeight={200}
-                            renderItem={this.popularTeamsItem}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
-                </View>
+                        {/* competitions  */}
+                        <View style={styles.box}>
+                            <View style={styles.pageTitleWrap}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('competitions')}</Text>
+                            </View>
+                            <View style={{ marginTop: -30, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start' }}>
+                                <Carousel
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.competitions}
+                                    sliderWidth={Screen.width}
+                                    itemWidth={290}
+                                    renderItem={this.competitionItem}
+                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                />
+                            </View>
+                        </View>
 
-                {/* competitions  */}
-                <View style={styles.box}>
-                    <View style={styles.pageTitleWrap}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('competitions')}</Text>
-                    </View>
-                    <View style={{ marginTop: -30, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start' }}>
-                        <Carousel
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.competitions}
-                            sliderWidth={Screen.width}
-                            itemWidth={290}
-                            renderItem={this.competitionItem}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
-                </View>
+                        {/* gift card */}
+                        <View style={{ width: '90%', alignSelf: 'flex-start', marginTop: 20, marginStart: '5%', height: 70, marginBottom: 30 }}>
+                            <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems: 'center', justifyContent: 'center' }}
+                                onPress={() => this.props.navigation.navigate('giftcard')}>
+                                <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
+                            </TouchableOpacity>
+                        </View >
 
-                {/* gift card */}
-                <View style={{ width: '90%', alignSelf: 'flex-start', marginTop: 20, marginStart: '5%', height: 70, marginBottom: 30 }}>
-                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems: 'center', justifyContent: 'center' }}
-                        onPress={() => this.props.navigation.navigate('giftcard')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
-                    </TouchableOpacity>
-                </View >
-
-                <Chat />
+                        <Chat />
+                    </>
+                }
             </ScrollView >
         );
     }
