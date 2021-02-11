@@ -39,6 +39,7 @@ export default class specialGames extends React.Component {
             hotGames: [],
             popularTeams: [],
             competitions: [],
+            isDone: false
         };
     }
 
@@ -81,6 +82,7 @@ export default class specialGames extends React.Component {
                     };
                 });
                 this.setState({ specialGames: specialGames });
+                this.setState({ isDone: true })
 
                 // Popular Games Data
                 var popularGames = response.GamesList.Items.map(function (item) {
@@ -368,26 +370,21 @@ export default class specialGames extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
-
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('teams')}>
                         <Text style={styles.topNavBtnText}> Teams</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('leagues')}>
                         <Text style={styles.topNavBtnText}>Leagues</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.topNavBtn}>
                         <Text style={styles.topNavBtnText}>Deals</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={{ height: 50, padding: 10, backgroundColor: R.colors.greenLight, marginTop: 5, marginLeft: 10 }}
                         onPress={() => this.props.navigation.navigate('all games')}>
                         <Text style={styles.topNavBtnText}>SINGLE TRIP</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('request')}>
                         <Text style={{}}>Request</Text>
@@ -396,129 +393,123 @@ export default class specialGames extends React.Component {
                         onPress={() => this.props.navigation.navigate('my trips')}>
                         <Text style={styles.topNavBtnText}>My Trips</Text>
                     </TouchableOpacity>
-
-
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my profile')}>
                         <Text style={styles.topNavBtnText}>My Profile</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={{ marginTop: 140, width: 100, height: 50 }}
                         onPress={() => this.props.navigation.navigate('quiz')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Quiz</Text>
                     </TouchableOpacity>
-
-
                     <TouchableOpacity style={{ marginTop: 140, width: 200, marginLeft: -40, height: 50 }}
                         onPress={() => this.props.navigation.navigate('leader board')}>
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
                     </TouchableOpacity>
                 </View>
-
-                {/* Special Games  */}
-                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('specialGames')}</Text>
-                    </View>
-                    <View style={{ marginTop: -30, marginStart: '-10%' }}>
-                        <Carousel
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.specialGames}
-                            sliderWidth={485}
-                            itemWidth={350}
-                            renderItem={this.specialGameItem.bind(this)}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
-                </View>
-
-                {/* Popular Games */}
-                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('popularGames')}</Text>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center' }}>
-                        <FlatList
-                            keyExtractor={(item, index) => index}
-                            data={this.state.popularGames}
-                            renderItem={item => this.popularGameItem(item)}
-                            ListFooterComponent={this.renderPopularGamesFooter.bind(this)}
-                        />
-                    </View>
-                </View>
-
-                {/* Hot Games */}
-                <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('hotGames')}</Text>
-                    </View>
-                    <View style={{ marginLeft: -15, marginTop: -30 }}>
-                        <Carousel
-                            style={{ marginLeft: -15 }}
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.hotGames}
-                            sliderWidth={485}
-                            itemWidth={280}
-                            renderItem={this.hotGameItem.bind(this)}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
-                </View>
-
-                {/* Popular Teams */}
-                <View style={{ width: '100%', marginTop: 20, backgroundColor: '#EEEEEE' }}>
-                    <View style={{ width: '90%', alignSelf: 'center' }}>
-                        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                            <View style={styles.pageTitleBar}></View>
-                            <Text style={styles.pageTitleText}>{translate('popularTeams')}</Text>
+                {!this.state.isDone ?
+                    <ActivityIndicator size="large" color="blue" style={{ marginTop: 100, marginLeft: -10 }} />
+                    :
+                    // Special Games
+                    <>
+                        <View style={{ width: '90%', marginTop: -100, alignSelf: 'center' }}>
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('specialGames')}</Text>
+                            </View>
+                            <View style={{ marginTop: -30, marginStart: '-10%' }}>
+                                <Carousel
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.specialGames}
+                                    sliderWidth={485}
+                                    itemWidth={350}
+                                    renderItem={this.specialGameItem.bind(this)}
+                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                />
+                            </View>
                         </View>
-                        <View style={{ marginTop: 20, marginBottom: -50 }}>
-                            <Carousel
-                                layout={"default"}
-                                ref={ref => this.carousel = ref}
-                                data={this.state.popularTeams}
-                                sliderWidth={485}
-                                itemWidth={200}
-                                itemHeight={300}
-                                renderItem={this.popularTeamsItem}
-                                onSnapToItem={index => this.setState({ activeIndex: index })}
-                            />
+                        {/* Popular Games */}
+                        <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('popularGames')}</Text>
+                            </View>
+                            <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center' }}>
+                                <FlatList
+                                    keyExtractor={(item, index) => index}
+                                    data={this.state.popularGames}
+                                    renderItem={item => this.popularGameItem(item)}
+                                    ListFooterComponent={this.renderPopularGamesFooter.bind(this)}
+                                />
+                            </View>
                         </View>
-                    </View>
-                </View>
-
-                {/* competitions  */}
-                <View style={{ width: '90%', marginTop: 70, alignSelf: 'center' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={styles.pageTitleBar}></View>
-                        <Text style={styles.pageTitleText}>{translate('competitions')}</Text>
-                    </View>
-                    <View style={{ marginTop: -30, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start' }}>
-                        <Carousel
-                            layout={"default"}
-                            ref={ref => this.carousel = ref}
-                            data={this.state.competitions}
-                            sliderWidth={170}
-                            itemWidth={290}
-                            renderItem={this.competitionItem}
-                            onSnapToItem={index => this.setState({ activeIndex: index })}
-                        />
-                    </View>
-                </View>
-
-                <View style={{ width: '70%', alignSelf: 'flex-start', marginTop: 20, marginStart: '5%', height: 70, marginBottom: 30 }}>
-                    <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems: 'center', justifyContent: 'center' }}
-                        onPress={() => this.props.navigation.navigate('giftcard')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
-                    </TouchableOpacity>
-                </View >
-
-                <Chat />
+                        {/* Hot Games */}
+                        <View style={{ width: '90%', marginTop: 20, alignSelf: 'center' }}>
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('hotGames')}</Text>
+                            </View>
+                            <View style={{ marginLeft: -15, marginTop: -30 }}>
+                                <Carousel
+                                    style={{ marginLeft: -15 }}
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.hotGames}
+                                    sliderWidth={485}
+                                    itemWidth={280}
+                                    renderItem={this.hotGameItem.bind(this)}
+                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                />
+                            </View>
+                        </View>
+                        {/* Popular Teams */}
+                        <View style={{ width: '100%', marginTop: 20, backgroundColor: '#EEEEEE' }}>
+                            <View style={{ width: '90%', alignSelf: 'center' }}>
+                                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+                                    <View style={styles.pageTitleBar}></View>
+                                    <Text style={styles.pageTitleText}>{translate('popularTeams')}</Text>
+                                </View>
+                                <View style={{ marginTop: 20, marginBottom: -50 }}>
+                                    <Carousel
+                                        layout={"default"}
+                                        ref={ref => this.carousel = ref}
+                                        data={this.state.popularTeams}
+                                        sliderWidth={485}
+                                        itemWidth={200}
+                                        itemHeight={300}
+                                        renderItem={this.popularTeamsItem}
+                                        onSnapToItem={index => this.setState({ activeIndex: index })}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                        {/* competitions  */}
+                        <View style={{ width: '90%', marginTop: 70, alignSelf: 'center' }}>
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={styles.pageTitleBar}></View>
+                                <Text style={styles.pageTitleText}>{translate('competitions')}</Text>
+                            </View>
+                            <View style={{ marginTop: -30, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start' }}>
+                                <Carousel
+                                    layout={"default"}
+                                    ref={ref => this.carousel = ref}
+                                    data={this.state.competitions}
+                                    sliderWidth={170}
+                                    itemWidth={290}
+                                    renderItem={this.competitionItem}
+                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                />
+                            </View>
+                        </View>
+                        <View style={{ width: '70%', alignSelf: 'flex-start', marginTop: 20, marginStart: '5%', height: 70, marginBottom: 30 }}>
+                            <TouchableOpacity style={{ backgroundColor: "#52F232", marginBottom: 10, height: 70, alignItems: 'center', justifyContent: 'center' }}
+                                onPress={() => this.props.navigation.navigate('giftcard')}>
+                                <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
+                            </TouchableOpacity>
+                        </View >
+                        <Chat />
+                    </>
+                }
             </ScrollView >
         );
     }
