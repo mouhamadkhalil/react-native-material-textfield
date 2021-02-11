@@ -18,13 +18,14 @@ import { API_URL, API_TOKEN } from "@env";
 import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import { Ionicons } from '@expo/vector-icons';
+import { get, post } from "../../helpers/services.js";
+import { CheckBox } from 'react-native-elements';
 
 const sourceFile = require('../../helpers/services.js');
 
 export default class SignUpScreen extends React.Component {
     constructor(navigation) {
         super(navigation);
-        console.log(navigation);
     }
 
     state = {
@@ -41,54 +42,37 @@ export default class SignUpScreen extends React.Component {
         FavouriteTeam2: "",
         FavouriteTeam3: "",
         FavouriteTeam4: "",
-        isDone: false
+        FavouriteTeam5: "",
+        FavouriteTeam6: "",
+        FavouriteTeam7: "",
+        FavouriteTeam8: "",
+        isDone: false,
+        checked: false
     };
 
     componentDidMount() {
-        const url = `${API_URL}/mobile/team/all`;
+        try {
+            this.GetAllTeams();
+        } catch { }
+    }
 
-        fetch(url, {
-            method: "GET",
-            headers: {
-                // "Content-Type": sourceFile.Content_Type,
-                // "Accept": sourceFile.Accept,
-                // "ff_version": sourceFile.ff_version,
-                // "ff_language": sourceFile.ff_language,
-                // "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                this.setState({
-                    FavouriteTeam1: response[0].TeamName
-                });
-                this.setState({
-                    FavouriteTeam2: response[1].TeamName
-                });
-                this.setState({
-                    FavouriteTeam3: response[2].TeamName
-                });
-                this.setState({
-                    FavouriteTeam4: response[3].TeamName
-                });
-                console.log("FavouriteTeam", this.state.FavouriteTeam4);
+    GetAllTeams = () => {
+        const _this = this;
+        get(`/mobile/team/all`)
+            .then(response => {
+                this.setState({ FavouriteTeam1: response[0].TeamName });
+                this.setState({ FavouriteTeam2: response[1].TeamName });
+                this.setState({ FavouriteTeam3: response[2].TeamName });
+                this.setState({ FavouriteTeam4: response[3].TeamName });
+                this.setState({ FavouriteTeam5: response[4].TeamName });
+                this.setState({ FavouriteTeam6: response[5].TeamName });
+                this.setState({ FavouriteTeam7: response[6].TeamName });
+                this.setState({ FavouriteTeam8: response[7].TeamName });
             });
     }
 
-    SubmitLoginBtn = (event) => {
-        console.log("Name : " + this.state.Name);
-        console.log("SurName : " + this.state.SurName);
-        console.log("Email : " + this.state.Email);
-        console.log("Password : " + this.state.Password);
-        console.log("ConfirmPassword : " + this.state.ConfirmPassword);
-        console.log("FavouriteTeam : " + this.state.FavouriteTeam1);
-
-        const url = `${API_URL}/mobile/profile/Create`;
-
+    SubmitRegisterBtn = (event) => {
+        const _this = this;
         const data = {
             Name: this.state.Name,
             SurName: this.state.SurName,
@@ -97,7 +81,7 @@ export default class SignUpScreen extends React.Component {
             ConfirmPassword: this.state.ConfirmPassword,
             FavouriteTeam: this.state.FavouriteTeam1,
         };
-
+        console.log(this.state.FavouriteTeam1)
         if (this.state.Name === "" || this.state.SurName === "" || this.state.Email === "" || this.state.Password === "" || this.state.ConfirmPassword === "") {
             ToastAndroid.showWithGravity(
                 'please fill out mendatory fields !',
@@ -105,55 +89,46 @@ export default class SignUpScreen extends React.Component {
                 ToastAndroid.CENTER
             );
         }
+        else {
+            if (this.state.Password !== this.state.ConfirmPassword) {
+                ToastAndroid.showWithGravity(
+                    `password don't match, please try again later !`,
+                    ToastAndroid.LONG,
+                    ToastAndroid.CENTER
+                );
+            }
+            else {
+                post(`/mobile/profile/Create`, data)
+                    .then(response => {
+                        console.log("hello its my response", response)
+                        if (response.ErrorId) {
+                            ToastAndroid.showWithGravity(
+                                'Something went wrong, please try again later !',
+                                ToastAndroid.LONG,
+                                ToastAndroid.CENTER
+                            );
+                            window.location.reload();
+                        }
+                        else {
+                            let token_id = response.Token;
+                            this.setState({ Token: token_id });
+                            console.log(token_id)
 
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                // "Content-Type": sourceFile.Content_Type,
-                // "Accept": sourceFile.Accept,
-                // "ff_version": sourceFile.ff_version,
-                // "ff_language": sourceFile.ff_language,
-                // "source": sourceFile.source,
-                // "authorization" : sourceFile.authorization,
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                if (response.ErrorId) {
-                    ToastAndroid.showWithGravity(
-                        'Something went wrong, please try again later !',
-                        ToastAndroid.LONG,
-                        ToastAndroid.CENTER
-                    );
-                    window.location.reload();
-                } else {
-                    if (this.state.Password !== this.state.ConfirmPassword) {
-                        alert("password don't match ");
-                        // window.location.reload();
-                    }
-                    else {
-                        console.log("my test ", response);
-                        let token_id = response.Token;
-                        console.log("token is :", token_id);
-                        this.setState({ Token: token_id });
-                        this.setState({ isDone: true });
-                        AsyncStorage.setItem("token", this.state.Token);
-                        ToastAndroid.showWithGravity(
-                            'you have successfully registered !',
-                            ToastAndroid.LONG,
-                            ToastAndroid.CENTER
-                        );
-                        this.props.navigation.navigate('my bookings');
-                    }
-                }
-            });
-    };
+                            this.setState({ isDone: true });
+                            AsyncStorage.setItem("token", this.state.Token);
+                            ToastAndroid.showWithGravity(
+                                'you have successfully registered !',
+                                ToastAndroid.LONG,
+                                ToastAndroid.CENTER
+                            );
+                            this.props.navigation.navigate('book a trip');
+                        }
+                    })
+            }
+        }
+    }
 
-    SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
+    SubmitRegisterBtn = this.SubmitRegisterBtn.bind(this);
 
     async FBLogin() {
         try {
@@ -212,10 +187,10 @@ export default class SignUpScreen extends React.Component {
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 30 }}>
                         <Text style={{ width: '38%', marginLeft: 35, color: "gray" }}>
                             Name
-              </Text>
+                        </Text>
                         <Text style={{ marginLeft: 20, color: "gray" }}>
                             Surname
-              </Text>
+                        </Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <TextInput
@@ -237,7 +212,7 @@ export default class SignUpScreen extends React.Component {
                     </View>
                     <Text style={{ marginTop: 30, marginLeft: 35, color: "gray" }}>
                         Email
-              </Text>
+                    </Text>
                     <TextInput
                         style={{ height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 35, marginRight: 35 }}
                         onChangeText={(Email) => this.setState({ Email })}
@@ -248,24 +223,19 @@ export default class SignUpScreen extends React.Component {
                         keyboardType="email-address"
                     />
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 30 }}>
-                        <Text style={{ width: '38%', marginLeft: 35, color: "gray" }}>
-                            Password
-              </Text>
-                        <Text style={{ marginLeft: 20, color: "gray" }}>
-                            Reapeat password
-              </Text>
+
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
-                        <TextInput
-                            style={{ width: '38%', height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 35 }}
+                        <PasswordInputText
+                            style={{ width: '38%', marginLeft: 30 }}
                             onChangeText={(Password) => this.setState({ Password })}
                             placeholder="Hann"
                             required
                             value={this.state.Password}
                             secureTextEntry={true}
                         />
-                        <TextInput
-                            style={{ width: '38%', height: 40, borderColor: 'gray', borderBottomWidth: 1, marginLeft: 20 }}
+                        <PasswordInputText
+                            style={{ width: '38%', marginLeft: 30 }}
                             onChangeText={(ConfirmPassword) => this.setState({ ConfirmPassword })}
                             placeholder="Hann"
                             required
@@ -273,10 +243,9 @@ export default class SignUpScreen extends React.Component {
                             secureTextEntry={true}
                         />
                     </View>
-
                     <Text style={{ paddingTop: 30, marginLeft: 35, width: 300, color: "gray" }}>
                         Favourite Team
-            </Text>
+                    </Text>
                     <Picker
                         selectedValue={this.state.FavouriteTeam1}
                         style={{ height: 50, marginLeft: 28, marginRight: 15, borderBottomWidth: 1, borderColor: 'gray' }}
@@ -285,13 +254,16 @@ export default class SignUpScreen extends React.Component {
                         <Picker.Item label={this.state.FavouriteTeam2} value={this.state.FavouriteTeam2} />
                         <Picker.Item label={this.state.FavouriteTeam3} value={this.state.FavouriteTeam3} />
                         <Picker.Item label={this.state.FavouriteTeam4} value={this.state.FavouriteTeam4} />
+                        <Picker.Item label={this.state.FavouriteTeam5} value={this.state.FavouriteTeam5} />
+                        <Picker.Item label={this.state.FavouriteTeam6} value={this.state.FavouriteTeam6} />
+                        <Picker.Item label={this.state.FavouriteTeam7} value={this.state.FavouriteTeam7} />
+                        <Picker.Item label={this.state.FavouriteTeam8} value={this.state.FavouriteTeam8} />
                     </Picker>
-
-                    <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitLoginBtn}>
+                    <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitRegisterBtn}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <Text style={styles.loginText}>
                                 register
-                  </Text>
+                            </Text>
                             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <Ionicons
                                     name='chevron-forward-outline'
@@ -302,23 +274,28 @@ export default class SignUpScreen extends React.Component {
                             </View>
                         </View>
                     </TouchableOpacity>
-
                     {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 0 }} />
-                        : console.log("done")}
-
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, }}>
+                        : null}
+                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, marginLeft: 20 }}>
+                        <CheckBox
+                            title='By Signing up, i agree with'
+                            checked={this.state.checked}
+                            onPress={() => this.setState({
+                                checked: !this.state.checked
+                            })}
+                        />
                         <Text style={{
                             color: "gray",
                             marginLeft: 35,
                             fontSize: 16,
                         }}>
-                            By Signing up, i agree with
+
                         </Text>
                         <TouchableOpacity onPress={() => { Linking.openURL('https://fly-foot.com/en/about/TC'); }}>
-                            <Text style={{ marginTop: 2, marginLeft: 2, textDecorationLine: 'underline', }}>FFT Terms.</Text>
+                            <Text style={{ fontSize: 12, marginTop: 19, marginLeft: -40, textDecorationLine: 'underline', }}>FFT Terms.</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, }}>
+                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>
                         <Text
                             style={{
                                 color: "gray",

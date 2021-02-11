@@ -398,7 +398,7 @@ export default class specialGames extends React.Component {
 
                     {/* <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('request')}>
-                        <Text style={styles.topNavBtnText}>Request</Text>
+                        <Text style={{}}>Request</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.topNavBtn}

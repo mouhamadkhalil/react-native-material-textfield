@@ -33,6 +33,8 @@ import NightLifeScreen from "components/Schedule/NightLife";
 import NightLife1Screen from "components/Schedule/NightLife1";
 import ETicketScreen from "components/Schedule/Eticket";
 import HeaderOptions from "./Header";
+import MultitripConfirmationScreen from "components/SpecialGames/MultitripConfirmation";
+
 
 const Stack = createStackNavigator();
 
@@ -64,6 +66,7 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="my profile" navigationProps={navigation} component={MyProfileScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="quiz" navigationProps={navigation} component={QuizScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="leader board" navigationProps={navigation} component={LeaderBoardScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="confirmation" navigationProps={navigation} component={MultitripConfirmationScreen} options={HeaderOptions({ navigation })} />
 
         </Stack.Navigator>
     );
