@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import Autocomplete from 'react-native-autocomplete-input';
 import Moment from 'moment';
@@ -7,8 +7,8 @@ import R from "res/R";
 
 const HeaderOptions = ({ navigation }) => {
     const [games, setGames] = useState([]);
-    const [filteredFilms, setFilteredFilms] = useState([]);
-    const [selectedValue, setSelectedValue] = useState({});
+    // const [filteredFilms, setFilteredFilms] = useState([]);
+    // const [selectedValue, setSelectedValue] = useState({});
 
     useEffect(() => {
         console.log('games', games);
@@ -74,17 +74,17 @@ const HeaderOptions = ({ navigation }) => {
                                 inputContainerStyle={styles.inputContainer}
                                 listContainerStyle={styles.listContainer}
                                 data={games}
-                                defaultValue={
-                                    JSON.stringify(selectedValue) === '{}' ? '' : selectedValue.title
-                                }
+                                // defaultValue={
+                                //     JSON.stringify(selectedValue) === '{}' ? '' : selectedValue.title
+                                // }
                                 onChangeText={text => findAll(text)}
                                 placeholder="&nbsp;&nbsp;Search your games ... "
-                                onBlur={() => setGames([])}
+                                onBlur={() => setTimeout(() => setGames([]), 2000)}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity
+                                    <Pressable
                                         onPress={() => {
-                                            setSelectedValue(item);
-                                            setFilteredFilms([]);
+                                            // setSelectedValue(item);
+                                            this.props.navigation.navigate('book now', { idMatch: 123 });
                                         }}>
                                         {item.idTeams ?
                                             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 2, padding: 7, backgroundColor: "#f7f7f7" }}>
@@ -116,7 +116,7 @@ const HeaderOptions = ({ navigation }) => {
                                                 <Text style={styles.itemText}>{item.HomeTeam.toUpperCase()} VS {item.AwayTeam.toUpperCase()}</Text>
                                             </View>
                                         }
-                                    </TouchableOpacity>
+                                    </Pressable>
                                 )}
 
                             />
