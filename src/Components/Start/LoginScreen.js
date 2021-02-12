@@ -17,6 +17,8 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import { Ionicons } from '@expo/vector-icons';
+import { post } from "../../helpers/services.js";
+import { CheckBox } from 'react-native-elements';
 
 const sourceFile = require('../../helpers/services.js');
 
@@ -36,7 +38,8 @@ export default class LoginScreen extends React.Component {
             scope: "",
             Token: "",
             isDone: false,
-            forgotPassword: ""
+            forgotPassword: "",
+            checked: false
         };
     }
 
@@ -79,7 +82,6 @@ export default class LoginScreen extends React.Component {
                     alert(response.Message);
                 }
                 else {
-                    console.log("email is found! ");
                     ToastAndroid.showWithGravity(
                         'Your password request has been sent',
                         ToastAndroid.LONG,
@@ -90,13 +92,12 @@ export default class LoginScreen extends React.Component {
     };
 
 
-
     SubmitLoginBtn = (event) => {
-        console.log("username : " + this.state.username);
-        console.log("password : " + this.state.password);
-
-        const url = `${API_URL}/mobile/profile/login`;
-
+        const _this = this;
+        const data = {
+            username: this.state.username,
+            password: this.state.password,
+        };
         if (this.state.username === "" || this.state.password === "") {
             ToastAndroid.showWithGravity(
                 'please fill out mendatory fields !',
@@ -104,25 +105,10 @@ export default class LoginScreen extends React.Component {
                 ToastAndroid.CENTER
             );
         }
-
         else {
             if (this.state.username != ' ' && this.state.password != ' ') {
-                const data = {
-                    username: this.state.username,
-                    password: this.state.password,
-                };
-                fetch(url, {
-                    method: "POST",
-                    body: JSON.stringify(data),
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        // "Authorization": "Bearer " + this.state.Token,
-                    },
-                })
-                    .then((res) => res.json())
-                    .catch((error) => console.error("Error: ", error))
-                    .then((response) => {
+                post(`/mobile/profile/login`, data)
+                    .then(response => {
                         if (response.ErrorId) {
                             ToastAndroid.showWithGravity(
                                 'Error: The user name or password is incorrect',
@@ -131,7 +117,7 @@ export default class LoginScreen extends React.Component {
                             );
                             window.location.reload();
                         } else {
-                            SecureStore.setItemAsync('token',response.Token);
+                            SecureStore.setItemAsync('token', response.Token);
                             this.setState({ isDone: true });
                             this.props.navigation.navigate('book a trip');
                             ToastAndroid.showWithGravity(
@@ -144,9 +130,6 @@ export default class LoginScreen extends React.Component {
             }
         }
     };
-
-
-
 
     SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
@@ -265,6 +248,18 @@ export default class LoginScreen extends React.Component {
                             }}>
                             <Text style={{ marginLeft: 35, color: "gray", fontSize: 16, textDecorationLine: "underline" }}>Forgot password?</Text>
                         </TouchableOpacity>
+
+                        <View style={{ marginLeft: 25, marginTop: 20 }}>
+
+                            <CheckBox
+                                title='remember me'
+                                checked={this.state.checked}
+                                onPress={() => this.setState({
+                                    checked: !this.state.checked
+                                })}
+                            />
+                        </View>
+
                     </View>
                     <TouchableOpacity style={styles.loginBtn} onPress={(this.SubmitLoginBtn)}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -280,7 +275,7 @@ export default class LoginScreen extends React.Component {
                                 />
                             </View>
                             {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
-                                : console.log("done")}
+                                : null}
                         </View>
                     </TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>

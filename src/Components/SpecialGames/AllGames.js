@@ -6,17 +6,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { get, servicesUrl } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils.js";
 import DatepickerRange from 'react-native-range-datepicker';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import { Caendar, CalendarList, Agenda } from 'react-native-calendars';
-
-import { Calendar, DatePicker } from 'react-modern-calendar-datepicker';
-
-
-import NativeDates from 'native-dates';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chat from "../FanChat/chat";
 import moment from 'moment';
-import momentjj from 'moment-hijri'
 import R from "res/R";
 
 export default class AllGames extends React.Component {
@@ -60,11 +52,11 @@ export default class AllGames extends React.Component {
         const pageNumber = this.state.pageNumber > 0 ? this.state.pageNumber : 1;
         const pageSize = this.state.pageSize > 0 ? this.state.pageSize : 10;
         const orderBy = this.state.orderBy !== '' ? this.state.orderBy : 'date';
-        const fromDate = this.state.fromDate? '&date1='+this.state.fromDate.format('yyyy-MM-DD') : '';
-        const toDate = this.state.toDate? '&date2=' +this.state.toDate.format('yyyy-MM-DD') : '';
-        const idTeam = this.state.idTeam?'&idTeam='+this.state.idTeam : '';
-        const idCity = this.state.idCity?'&idCity='+this.state.idCity : '';
-        const idLeague = this.state.idLeague?'&idLeague='+this.state.idLeague : '';
+        const fromDate = this.state.fromDate ? '&date1=' + this.state.fromDate.format('yyyy-MM-DD') : '';
+        const toDate = this.state.toDate ? '&date2=' + this.state.toDate.format('yyyy-MM-DD') : '';
+        const idTeam = this.state.idTeam ? '&idTeam=' + this.state.idTeam : '';
+        const idCity = this.state.idCity ? '&idCity=' + this.state.idCity : '';
+        const idLeague = this.state.idLeague ? '&idLeague=' + this.state.idLeague : '';
         const path = `/mobile/game/getall?pageNumber=${pageNumber}&pageSize=${pageSize}&order=${orderBy}${fromDate}${toDate}${idTeam}${idCity}${idLeague}`;
         get(path).then((response) => {
             var data = response.Items.map(function (item) {
@@ -87,7 +79,7 @@ export default class AllGames extends React.Component {
                 };
             });
             var joined = this.state.allGames.concat(data);
-            this.setState({ allGames: joined,pageCount: response.PageCount, isLoading:false, isLoadingMore:false });
+            this.setState({ allGames: joined, pageCount: response.PageCount, isLoading: false, isLoadingMore: false });
         });
     };
 
@@ -130,7 +122,7 @@ export default class AllGames extends React.Component {
     };
 
     applyFilter = () => {
-        this.setState({ isLoading: true, pageNumber: 1, allGames:[], modalVisible:false }, () => {
+        this.setState({ isLoading: true, pageNumber: 1, allGames: [], modalVisible: false }, () => {
             this.getAllGames();
         });
     }
@@ -464,7 +456,7 @@ export default class AllGames extends React.Component {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                                <TouchableOpacity onPress={this.applyFilter} style={{ width: '50%', marginTop: 20, padding: 20, backgroundColor: R.colors.green, alignSelf: 'center' }}>
+                                <TouchableOpacity onPress={this.applyFilter} style={{ width: '50%', marginTop: 20, padding: 20, backgroundColor: R.colors.greenLight, alignSelf: 'center' }}>
                                     <Text style={{ fontSize: 15, textTransform: 'uppercase', alignSelf: 'center' }}>
                                         {translate('applyFilters')}
                                     </Text>
@@ -476,34 +468,6 @@ export default class AllGames extends React.Component {
                                     width: '100%',
                                     height: '100%', position: 'absolute'
                                 }}>
-                                    {/*
-                                    <CalendarList
-                                        minDate={'2021-02-12'}
-                                        onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
-                                        pastScrollRange={0}
-                                        futureScrollRange={12}
-                                        scrollEnabled={true}
-                                        showScrollIndicator={false}
-                                        markingType={'period'}
-                                        onDayPress={(day) => {
-                                            if (this.state.fromDate == null) { this.setState({ fromDate: day.dateString }) }
-
-                                            else { this.setState({ toDate: day.dateString }) }
-                                        }}
-                                        markedDates={{
-                                            [this.state.fromDate]: { selected: true, startingDay: true, color: 'green', textColor: 'gray' },
-                                            [this.state.toDate]: { selected: true, endingDay: true, color: 'green', textColor: 'gray' },
-                                        }}
-                                    />
-                                    
-                                    <NativeDates
-                                        rangeSelect={true}
-                                        type={'hijri'}
-                                        monthsCount={10}
-                                        moment={momentjj}
-                                        onSelectionChange={(value) => { console.log(value) }}
-                                    />
-                                    */}
                                     <DatepickerRange
                                         startDate={moment().format("DDMMyyyy")}
                                         untilDate={moment().add(1, 'year').format("DDMMyyyy")}

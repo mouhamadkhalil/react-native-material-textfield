@@ -31,6 +31,9 @@ const images = {
     /* images */
     gift_card: require('../../../assets/images/img/gift-card.png'),
     star: require('../../../assets/images/img/star.png'),
+    fivestars: require('../../../assets/images/img/fivestars.png'),
+    fourstars: require('../../../assets/images/img/fourstars.png'),   
+    threestars: require('../../../assets/images/img/threestars.png'),
 
     /* backgrounds */
     all_games_bg: require('../../../assets/images/bg/all-games.jpg'),

@@ -32,7 +32,7 @@ export default class Teams extends React.Component {
     }
 
     getData = () => {
-        const _this = this;
+
         get(servicesUrl.getCountriesWithTeams)
             .then((response) => {
                 var data = response.map(function (item) {
@@ -48,8 +48,7 @@ export default class Teams extends React.Component {
 
     renderTeam(team) {
         return (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames', {idTeam: team.idTeams})}>
-                <Text style={{ paddingLeft: 70 }}>{team.TeamName}</Text>
+            <TouchableOpacity style={{ marginTop: 10, marginBottom: 10, flexDirection: "row" }} onPress={() => this.props.navigation.navigate('AllGames', { idTeam: team.idTeams })}>
                 <LinearGradient
                     colors={[team.TeamColor1, team.TeamColor2]}
                     style={styles.linearGradient}
@@ -58,6 +57,7 @@ export default class Teams extends React.Component {
                     locations={[0.5, 0.5]}
                 >
                 </LinearGradient>
+                <Text style={{ marginStart: 10 }}>{team.TeamName}</Text>
             </TouchableOpacity>
         );
     }
@@ -71,7 +71,8 @@ export default class Teams extends React.Component {
 
     renderHeader = section => {
         return (
-            <View style={{ padding: 20, paddingStart: 30, backgroundColor: '#F0EFF5', borderBottomWidth: 1, borderBottomColor: 'grey' }}>
+
+            <View style={{ padding: 20, backgroundColor: '#f7f7f7', borderBottomWidth: 2, borderBottomColor: '#fff' }}>
                 <Text>{section.title}</Text>
             </View>
         );
@@ -79,7 +80,8 @@ export default class Teams extends React.Component {
 
     renderContent = section => {
         return (
-            <View >
+
+            <View style={{ backgroundColor: "#f7f7f7", paddingStart: 20, paddingEnd: 20 }}>
                 {section.content.map(this.renderTeam.bind(this))}
             </View>
         );
@@ -126,7 +128,7 @@ export default class Teams extends React.Component {
 const styles = StyleSheet.create({
     container: {
         width: "100%",
-        backgroundColor: "#fafafa",
+        backgroundColor: "#fff",
     },
     headerBg: {
         height: 200,
@@ -137,10 +139,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
-        height: 15,
-        width: 15,
-        marginLeft: 40,
-        marginTop: -15
+        height: 25,
+        width: 25,
+        marginStart: 0,
+        marginTop: 0
     },
     pageTitleText: {
         color: "white",

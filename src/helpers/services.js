@@ -67,7 +67,7 @@ export async function getWithToken(path) {
             "ff_language": "en",
             "source": "mobile",
             "gps_location": location,
-            "authorization": "Bearer " + token
+            "Authorization": 'Bearer ' + token
         },
     })
         .then((res) => res.json())
