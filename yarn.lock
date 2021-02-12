@@ -7762,13 +7762,6 @@ react-native-material-textfield@vishaljadav24/react-native-material-textfield:
   dependencies:
     prop-types "^15.5.9"
 
-react-native-reanimated@~1.13.0:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.13.2.tgz#1ae5457b24b4913d173a5a064bb28eae7783d293"
-  integrity sha512-O+WhgxSjOIzcVdAAvx+h2DY331Ek1knKlaq+jsNLpC1fhRy9XTdOObovgob/aF2ve9uJfPEawCx8381g/tUJZQ==
-  dependencies:
-    fbjs "^1.0.0"
-
 react-native-remote-svg@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/react-native-remote-svg/-/react-native-remote-svg-2.0.6.tgz#5f8bc7cefc18f4d37cf02f8158d6b2a9f534891d"

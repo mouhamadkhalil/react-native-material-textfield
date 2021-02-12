@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Accordion from 'react-native-collapsible/Accordion';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get } from "../../helpers/services.js";
+import { get, servicesUrl } from "../../helpers/services.js";
 import Chat from "../FanChat/chat";
 import R from "res/R";
 
@@ -33,7 +33,7 @@ export default class Teams extends React.Component {
 
     getData = () => {
         const _this = this;
-        get(`/mobile/team/countriesWithTeams`)
+        get(servicesUrl.getCountriesWithTeams)
             .then((response) => {
                 var data = response.map(function (item) {
                     return {

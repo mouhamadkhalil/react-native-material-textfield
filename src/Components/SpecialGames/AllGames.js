@@ -1,50 +1,72 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, TouchableHighlight, Text, Image, ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, Modal, TouchableHighlight, Text, Image, Button, ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getWithToken } from "../../helpers/services.js";
+import { get, servicesUrl } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils.js";
-import Chat from "../FanChat/chat";
-import R from "res/R";
+import DatepickerRange from 'react-native-range-datepicker';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { Caendar, CalendarList, Agenda } from 'react-native-calendars';
 
-const sourceFile = require('../../helpers/services.js');
+import { Calendar, DatePicker } from 'react-modern-calendar-datepicker';
+
+
+import NativeDates from 'native-dates';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Chat from "../FanChat/chat";
+import moment from 'moment';
+import momentjj from 'moment-hijri'
+import R from "res/R";
 
 export default class AllGames extends React.Component {
 
     constructor(props) {
         super(props);
+        moment.locale('ar');
         this.state = {
-            idMatch: "",
-            City: "",
-            Stade: "",
-            GameDate1: "",
-            GameDate2: "",
-            LeaguesName: "",
-            GameCode: "",
-            HomeTeam: "",
-            AwayTeam: "",
-            StadeCity: "",
-            GameCity1: "",
-            GameCity2: "",
-            GamePrice1: "",
-            GamePrice2: "",
-            LeaguesName: "",
-            DaysLeft: "",
-            idTeam: 2122,
+            idMatch: props?.route?.params?.idMatch,
+            idTeam: props?.route?.params?.idTeam,
+            idCity: props?.route?.params?.idCity,
+            idLeague: props?.route?.params?.idLeague,
+            teams: [],
+            cities: [],
+            competitions: [],
             allGames: [],
-            isDone: false,
+            isLoading: false,
+            isLoadingMore: false,
+            pageCount: 1,
             pageNumber: 1,
             pageSize: 10,
             orderBy: "date",
-            modalVisible: false
+            fromDate: null,
+            toDate: null,
+            modalVisible: false,
+            ddlTeams: null,
+            ddlCities: null,
+            ddlLeagues: null,
+            showDatePicker: false,
         };
-        this.getAllGames();
+    }
+
+    componentDidMount() {
+        try {
+            this.getAllGames();
+            this.getFilterData();
+        } catch { }
     }
 
     getAllGames = () => {
-        const path = `/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&order=${this.state.orderBy}`;
-        getWithToken(path).then((response) => {
+        const pageNumber = this.state.pageNumber > 0 ? this.state.pageNumber : 1;
+        const pageSize = this.state.pageSize > 0 ? this.state.pageSize : 10;
+        const orderBy = this.state.orderBy !== '' ? this.state.orderBy : 'date';
+        const fromDate = this.state.fromDate? '&date1='+this.state.fromDate.format('yyyy-MM-DD') : '';
+        const toDate = this.state.toDate? '&date2=' +this.state.toDate.format('yyyy-MM-DD') : '';
+        const idTeam = this.state.idTeam?'&idTeam='+this.state.idTeam : '';
+        const idCity = this.state.idCity?'&idCity='+this.state.idCity : '';
+        const idLeague = this.state.idLeague?'&idLeague='+this.state.idLeague : '';
+        const path = `/mobile/game/getall?pageNumber=${pageNumber}&pageSize=${pageSize}&order=${orderBy}${fromDate}${toDate}${idTeam}${idCity}${idLeague}`;
+        get(path).then((response) => {
             var data = response.Items.map(function (item) {
                 var game = item.MatchBundleDetail[0].Game;
                 return {
@@ -64,28 +86,76 @@ export default class AllGames extends React.Component {
                     Price: item.FinalPricePerFan
                 };
             });
-            this.setState({ allGames: data });
-            this.setState({ isDone: true });
+            var joined = this.state.allGames.concat(data);
+            this.setState({ allGames: joined,pageCount: response.PageCount, isLoading:false, isLoadingMore:false });
         });
     };
+
+    getFilterData = () => {
+        get(servicesUrl.getAllTeams).then((response) => {
+            var teams = response.map(function (team) {
+                return {
+                    value: team.idTeams,
+                    label: team.TeamName,
+                };
+            });
+            this.setState({ teams: teams });
+        });
+
+        get(servicesUrl.getAllCities).then((response) => {
+            var cities = response.map(function (city) {
+                return {
+                    value: city.ID,
+                    label: city.Value,
+                };
+            });
+            this.setState({ cities: cities });
+        });
+
+        get(servicesUrl.getAllLeagues).then((response) => {
+            var competitions = response.map(function (comp) {
+                return {
+                    value: comp.ID,
+                    label: comp.Value,
+                };
+            });
+            this.setState({ competitions: competitions });
+        });
+    }
+
+    loadMore = () => {
+        this.setState({ isLoadingMore: true, pageNumber: this.state.pageNumber + 1 }, () => {
+            this.getAllGames();
+        });
+    };
+
+    applyFilter = () => {
+        this.setState({ isLoading: true, pageNumber: 1, allGames:[], modalVisible:false }, () => {
+            this.getAllGames();
+        });
+    }
 
     changeModalVisibility = (props) => {
         this.state.setState('modalVisible', props);
     };
 
-    FilterGame = () => {
-        const path = `${API_URL}/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&idTeam=${this.state.idTeam}&order=${this.state.orderBy}`;
-        get(path).then((response) => {
-            this.setState({ allGames: data });
-            this.setState({ GameDate1: response.Items[0].MatchBundleDetail[0].Game.GameDate });
-            this.setState({ GameDate2: response.Items[1].MatchBundleDetail[0].Game.GameDate });
-            this.setState({ GameCity1: response.Items[0].MatchBundleDetail[0].Game.City });
-            this.setState({ GameCity2: response.Items[1].MatchBundleDetail[0].Game.City });
-            this.setState({ LeaguesName: response.Items[0].MatchBundleDetail[0].Game.League });
-            this.setState({ DaysLeft: response.Items[0].MatchBundleDetail[0].GameSeat.Sequence });
-            this.setState({ GamePrice1: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCostPerFan });
-            this.setState({ GamePrice2: response.Items[0].MatchBundleDetail[0].GameSeats[0].ExtraCost });
-        });
+    renderFooter = () => {
+        return (
+            //Footer View with Load More button
+            <View >
+                {this.state.pageCount > this.state.pageNumber ? (
+                    <TouchableOpacity
+                        activeOpacity={0.9}
+                        onPress={this.loadMore}
+                        style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: 20, borderRadius: 20, zIndex: 100 }}>
+                        <Text style={{ color: "white", fontWeight: "bold", textTransform: 'uppercase' }} >{translate('loadMore')}</Text>
+                        {this.state.isLoadingMore ? (
+                            <ActivityIndicator color="#fff" />
+                        ) : null}
+                    </TouchableOpacity>
+                ) : null}
+            </View>
+        );
     };
 
     gameItem = ({ item }) =>
@@ -136,11 +206,11 @@ export default class AllGames extends React.Component {
             <View style={{ flexDirection: 'row', height: 50, marginTop: 10, borderTopColor: "grey", borderTopWidth: 1 }}>
                 <View style={{ alignSelf: 'flex-start', width: '60%' }}>
                     {item.Price > 0 && item.Price != null ?
-                        <View style={{ flex:1, flexDirection:'row', alignItems:'center'}}>
+                        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{ paddingStart: 10, fontSize: 20, fontWeight: "bold" }}>{item.Price}$</Text>
                             <Text>/Fan</Text>
-                        </View> 
-                        :null
+                        </View>
+                        : null
                     }
                 </View>
                 <TouchableOpacity
@@ -195,18 +265,14 @@ export default class AllGames extends React.Component {
                         <Text style={{ fontSize: 14, color: '#374bbf', alignSelf: 'center', textTransform: 'uppercase', marginTop: 10, marginRight: -15, zIndex: 2 }}>sort by </Text>
                         <DropDownPicker
                             items={[
-                                { label: "DATE", value: "date" },
+                                { label: translate("date"), value: "date" },
                                 { label: "PRICE", value: "price" },
                             ]}
                             defaultValue={this.state.orderBy}
                             containerStyle={{ height: 30 }}
-                            selectedLabelStyle={{
-                                color: '#374bbf', textDecorationLine: 'underline'
-                            }}
+                            selectedLabelStyle={{ color: '#374bbf', textDecorationLine: 'underline' }}
                             style={{ backgroundColor: "#EEEEEE", borderWidth: 0, width: 100 }}
-                            itemStyle={{
-                                justifyContent: "flex-start",
-                            }}
+                            itemStyle={{ justifyContent: "flex-start", textTransform: 'uppercase' }}
                             arrowStyle={{ color: 'red' }}
                             dropDownStyle={{ width: 100 }}
                             onChangeItem={(item) => {
@@ -215,46 +281,245 @@ export default class AllGames extends React.Component {
                                 });
                             }
                             }
-                            placeholder="SORT BY "
+                            placeholder={translate('sortBy') + ' '}
+                            placeholderStyle={{ textTransform: 'uppercase' }}
                         />
                     </View>
                     {/* filter picker end */}
 
                     {/* render games begin*/}
-                    {!this.state.isDone ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginLeft: 10 }} />
+                    {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginLeft: 10 }} />
                         :
                         <View style={{ width: '90%', alignSelf: 'center', zIndex: 1 }}>
                             <FlatList
                                 data={this.state.allGames}
                                 renderItem={item => this.gameItem(item)}
                                 keyExtractor={item => item.idMatch.toString()}
+                                ListFooterComponent={this.renderFooter.bind(this)}
                             />
                         </View>
                     }
                     {/* render games end*/}
 
+                    {/* Filter modal begin*/}
                     <Modal
                         animationType="slide"
                         transparent={true}
                         visible={this.state.modalVisible}>
                         <View style={styles.modalView}>
-                            <View style={{ width: '100%', height: '10%', borderBottomWidth: 1, borderBottomColor: '#eee', flex: 1, flexDirection: 'row' }}>
-                                <Image source={R.images.logo} style={{ width: '50%', height: '90%', alignItems: 'flex-start' }}></Image>
-                                <TouchableHighlight style={styles.closeButton}
-                                    onPress={() => {
-                                        this.setState({ modalVisible: false });
-                                    }}>
-                                    <Text style={styles.textStyle}>X</Text>
-                                </TouchableHighlight>
+                            <View style={{ flex: 1, flexDirection: 'row', width: '100%', height: '10%', backgroundColor: '#eee', borderBottomColor: '#eee', borderBottomWidth: 1 }}>
+                                <View style={{ width: '80%', height: '100%', padding: 10 }}>
+                                    <Image source={R.images.flyfoot_grey}></Image>
+                                </View>
+                                <View style={{ width: '20%', height: '100%', backgroundColor: '#000', alignContent: 'center', justifyContent: 'center' }}>
+                                    <TouchableHighlight
+                                        onPress={() => {
+                                            this.setState({ modalVisible: false });
+                                        }}>
+                                        <Icon name='close-outline' style={styles.textStyle} />
+                                    </TouchableHighlight>
+                                </View>
                             </View>
                             <View style={{ width: '100%', height: '90%', backgroundColor: '#fff' }}>
-                                <View style><Text>{translate('teams')}...</Text></View>
-                                <View><Text>City...</Text></View>
-                                <View><Text>Competitions...</Text></View>
-                                <View><Text>Date...</Text></View>
+                                <View style={{ height: 200 }}>
+                                    {/* Teams drop down list */}
+                                    <View style={{ flex: 1, flexDirection: 'row', height: 50 }}>
+                                        <DropDownPicker
+                                            items={this.state.teams}
+                                            defaultValue={this.state.idTeam}
+                                            controller={instance => this.state.ddlTeams = instance}
+                                            containerStyle={{ width: '90%', height: 50 }}
+                                            style={{
+                                                borderWidth: 0, width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0,
+                                                borderBottomLeftRadius: 0, borderBottomRightRadius: 0
+                                            }}
+                                            itemStyle={{ justifyContent: "flex-start", }}
+                                            showArrow={false}
+                                            dropDownStyle={{ width: '110%' }}
+                                            labelStyle={{ fontSize: 14, textAlign: 'left', }}
+                                            selectedLabelStyle={{ color: '#3333ff', fontWeight: 'bold', }}
+                                            activeLabelStyle={{ color: '#3333ff' }}
+                                            onOpen={() => {
+                                                this.state.ddlCities.close();
+                                                this.state.ddlLeagues.close();
+                                            }}
+                                            onChangeItem={(item) => { this.setState({ idTeam: item.value }) }}
+                                            placeholder={translate('team') + '...'}
+                                            placeholderStyle={{ color: 'black', textTransform: 'uppercase' }}
+                                            searchable={true}
+                                            searchablePlaceholder={translate('searchTeam')}
+                                            searchablePlaceholderTextColor="gray"
+                                            searchableError={() => <Text>{translate('msgNotFound')}</Text>}
+                                        />
+                                        <TouchableOpacity style={{ width: '10%', justifyContent: 'center' }}
+                                            onPress={() => {
+                                                this.setState({ idTeam: 0 })
+                                                this.state.ddlTeams.reset();
+                                                this.state.ddlTeams.close();
+                                                this.state.ddlCities.close();
+                                                this.state.ddlLeagues.close();
+                                            }}>
+                                            <Icon name='close-outline' style={{ fontSize: 20 }} />
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    {/* Cities drop down list */}
+                                    <View style={{ flex: 1, flexDirection: 'row', height: 50 }}>
+                                        <DropDownPicker
+                                            items={this.state.cities}
+                                            defaultValue={this.state.idCity}
+                                            controller={instance => this.state.ddlCities = instance}
+                                            containerStyle={{ width: '90%', height: 50 }}
+                                            style={{
+                                                borderWidth: 0, width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0,
+                                                borderBottomLeftRadius: 0, borderBottomRightRadius: 0
+                                            }}
+                                            itemStyle={{ justifyContent: "flex-start", }}
+                                            showArrow={false}
+                                            dropDownStyle={{ width: '110%' }}
+                                            labelStyle={{ fontSize: 14, textAlign: 'left', }}
+                                            selectedLabelStyle={{ color: '#3333ff', fontWeight: 'bold', }}
+                                            activeLabelStyle={{ color: '#3333ff' }}
+                                            onOpen={() => {
+                                                this.state.ddlTeams.close();
+                                                this.state.ddlLeagues.close();
+                                            }}
+                                            onChangeItem={(item) => { this.setState({ idCity: item.value }) }}
+                                            placeholder={translate('city') + '...'}
+                                            placeholderStyle={{ color: 'black', textTransform: 'uppercase' }}
+                                            searchable={true}
+                                            searchablePlaceholder={translate('searchCity')}
+                                            searchablePlaceholderTextColor="gray"
+                                            searchableError={() => <Text>{translate('msgNotFound')}</Text>}
+                                        />
+                                        <TouchableOpacity style={{ width: '10%', justifyContent: 'center' }}
+                                            onPress={() => {
+                                                this.setState({ idCity: 0 })
+                                                this.state.ddlCities.reset();
+                                                this.state.ddlTeams.close();
+                                                this.state.ddlCities.close();
+                                                this.state.ddlLeagues.close();
+                                            }}>
+                                            <Icon name='close-outline' style={{ fontSize: 20 }} />
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    {/* Competitions drop down list */}
+                                    <View style={{ flex: 1, flexDirection: 'row', height: 50 }}>
+                                        <DropDownPicker
+                                            items={this.state.competitions}
+                                            defaultValue={this.state.idLeague}
+                                            controller={instance => this.state.ddlLeagues = instance}
+                                            containerStyle={{ width: '90%', height: 50 }}
+                                            style={{
+                                                borderWidth: 0, width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0,
+                                                borderBottomLeftRadius: 0, borderBottomRightRadius: 0
+                                            }}
+                                            itemStyle={{ justifyContent: "flex-start", }}
+                                            showArrow={false}
+                                            dropDownStyle={{ width: '110%' }}
+                                            labelStyle={{ fontSize: 14, textAlign: 'left', }}
+                                            selectedLabelStyle={{ color: '#3333ff', fontWeight: 'bold', }}
+                                            activeLabelStyle={{ color: '#3333ff' }}
+                                            onOpen={() => {
+                                                this.state.ddlTeams.close();
+                                                this.state.ddlCities.close();
+                                            }}
+                                            onChangeItem={(item) => { this.setState({ idLeague: item.value }) }}
+                                            placeholder={translate('competitions') + '...'}
+                                            placeholderStyle={{ color: 'black', textTransform: 'uppercase' }}
+                                            searchable={true}
+                                            searchablePlaceholder={translate('searchCompetition')}
+                                            searchablePlaceholderTextColor="gray"
+                                            searchableError={() => <Text>{translate('msgNotFound')}</Text>}
+                                        />
+                                        <TouchableOpacity style={{ width: '10%', justifyContent: 'center' }}
+                                            onPress={() => {
+                                                this.setState({ idLeague: 0 })
+                                                this.state.ddlLeagues.reset();
+                                                this.state.ddlTeams.close();
+                                                this.state.ddlCities.close();
+                                                this.state.ddlLeagues.close();
+                                            }}>
+                                            <Icon name='close-outline' style={{ fontSize: 20 }} />
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    {/* Date pickers */}
+                                    <View style={{ flex: 1, flexDirection: 'row', height: 50 }}>
+                                        <TouchableOpacity
+                                            onPress={() => { this.setState({ showDatePicker: true }) }}
+                                            style={{ width: '90%' }}>
+                                            <View style={{ flexDirection: 'row', padding: 18 }}>
+                                                <Text
+                                                    style={{ fontSize: 14, textTransform: 'uppercase' }}>
+                                                    {translate('date')}
+                                                </Text>
+                                                <Text style={{ paddingStart: 15 }}>
+                                                    {this.state.fromDate?.format('DD/MM/yyyy')} - {this.state.toDate?.format('DD/MM/yyyy')}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={{ width: '10%', justifyContent: 'center' }}>
+                                            <Icon name='close-outline' style={{ fontSize: 20 }} />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                                <TouchableOpacity onPress={this.applyFilter} style={{ width: '50%', marginTop: 20, padding: 20, backgroundColor: R.colors.green, alignSelf: 'center' }}>
+                                    <Text style={{ fontSize: 15, textTransform: 'uppercase', alignSelf: 'center' }}>
+                                        {translate('applyFilters')}
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
+                            {this.state.showDatePicker ?
+                                <View style={{
+                                    flex: 1,
+                                    width: '100%',
+                                    height: '100%', position: 'absolute'
+                                }}>
+                                    {/*
+                                    <CalendarList
+                                        minDate={'2021-02-12'}
+                                        onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
+                                        pastScrollRange={0}
+                                        futureScrollRange={12}
+                                        scrollEnabled={true}
+                                        showScrollIndicator={false}
+                                        markingType={'period'}
+                                        onDayPress={(day) => {
+                                            if (this.state.fromDate == null) { this.setState({ fromDate: day.dateString }) }
+
+                                            else { this.setState({ toDate: day.dateString }) }
+                                        }}
+                                        markedDates={{
+                                            [this.state.fromDate]: { selected: true, startingDay: true, color: 'green', textColor: 'gray' },
+                                            [this.state.toDate]: { selected: true, endingDay: true, color: 'green', textColor: 'gray' },
+                                        }}
+                                    />
+                                    
+                                    <NativeDates
+                                        rangeSelect={true}
+                                        type={'hijri'}
+                                        monthsCount={10}
+                                        moment={momentjj}
+                                        onSelectionChange={(value) => { console.log(value) }}
+                                    />
+                                    */}
+                                    <DatepickerRange
+                                        startDate={moment().format("DDMMyyyy")}
+                                        untilDate={moment().add(1, 'year').format("DDMMyyyy")}
+                                        placeHolderStart='Start Date'
+                                        placeHolderUntil='Until Date'
+                                        selectedBackgroundColor={R.colors.blue}
+                                        buttonColor={R.colors.blue}
+                                        onClose={() => this.setState({ showDatePicker: false })}
+                                        onConfirm={(fromDate, toDate) => this.setState({ fromDate, toDate, showDatePicker: false })}
+                                    />
+                                </View>
+                                : null}
                         </View>
                     </Modal>
+                    {/* Filter modal end*/}
+
                     <Chat />
                 </View>
             </ScrollView >
@@ -281,28 +546,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1,
         flexDirection: 'column',
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
     },
     closeButton: {
-        backgroundColor: '#EEE',
-        width: 40,
-        borderRadius: 180,
-        alignSelf: 'center'
+        backgroundColor: '#000',
+        alignSelf: 'flex-end',
+        color: '#fff'
     },
     textStyle: {
-        color: '#000',
+        color: '#fff',
+        fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        padding: 10
     },
     modalText: {
         marginBottom: 15,
