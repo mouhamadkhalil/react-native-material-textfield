@@ -15,7 +15,6 @@ export default class AllGames extends React.Component {
 
     constructor(props) {
         super(props);
-        moment.locale('ar');
         this.state = {
             idMatch: props?.route?.params?.idMatch,
             idTeam: props?.route?.params?.idTeam,
