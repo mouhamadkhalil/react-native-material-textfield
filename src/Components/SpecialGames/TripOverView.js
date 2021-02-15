@@ -138,13 +138,37 @@ export default class TripOverViewScreen extends React.Component {
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 10, marginTop: 15, fontSize: 9 }}>DATE</Text>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 60, marginTop: -12, fontSize: 9 }}>MATCH</Text>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 150, marginTop: -12, fontSize: 9 }}>CITY</Text>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 210, marginTop: -12, fontSize: 9 }}>DAYS</Text>
+                    <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 180, marginTop: -12, fontSize: 9 }}>DAYS</Text>
                     <Text style={{ color: "#8CD222", fontWeight: "bold", marginLeft: 250, marginTop: -12, fontSize: 9 }}>{this.state.pricePerFan}$/fan</Text>
                     <Text style={{ fontSize: 9, marginLeft: 10, fontWeight: "bold", marginTop: 18, color: "blue" }}>{this.state.GameDate}</Text>
                     <Text style={{ fontSize: 9, marginLeft: 60, fontWeight: "bold", marginTop: -12, color: "blue" }}>{this.state.HomeTeam} vs {this.state.AwayTeam}</Text>
                     <Text style={{ fontSize: 9, marginLeft: 150, fontWeight: "bold", marginTop: -12, color: "blue" }}>{this.state.StadeCity}</Text>
-                    <Text style={{ fontSize: 9, marginLeft: 210, fontWeight: "bold", marginTop: -12, color: "blue" }}>{this.state.tripDays}</Text>
-                    <Text style={{ fontSize: 9, marginLeft: 250, fontWeight: "bold", marginTop: -12, color: "blavk" }}>{this.state.pricePerFan * this.state.NumberOfFans + 2 * this.state.ExtraFeesPerFan}$ Total *</Text>
+                    <Text style={{ fontSize: 9, marginLeft: 195, fontWeight: "bold", marginTop: -12, color: "blue" }}>{this.state.tripDays}</Text>
+                   
+                    <TouchableOpacity style={{ position: "absolute", right: 0, height: this.state.isButtonPressed ? 140 : 80, width: 100, padding: 10, backgroundColor: R.colors.greenLight, marginLeft: 10, zIndex: 1 }}
+                        onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
+                        <Text style={{fontSize:9}}>{this.state.pricePerFan}$ / fan</Text>
+                        <Image source={R.images.arrow_down} style={{ height: 14, width: 12, marginLeft: 65, marginTop: -12 }} />
+
+                        <Text style={{fontSize:9}}>{this.state.pricePerFan * this.state.NumberOfFans + 2 * this.state.ExtraFeesPerFan}$ Total *</Text>
+
+                      
+                        <TouchableOpacity onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })} style={{ height: 50, width: 100, marginLeft: -10, marginRight: -10, padding: 10, backgroundColor: R.colors.green, display: this.state.isButtonPressed ? "flex" : "none", marginTop: 20 }}>
+                            <Text style={{fontSize:7,color:"gray",fontWeight:"bold"}}>Base Price <Text style={{fontWeight:"bold", color:"gray",marginLeft:30}}>{this.state.pricePerFan}$ </Text></Text>
+                            <Text style={{fontSize:7,color:"blue"}}>+ ON-SPOT SERVICE <Text style={{fontWeight:"bold", color:"blue",marginLeft:30}}>{this.state.ExtraFeesPerFan}$ </Text> </Text>
+                            <Text style={{fontSize:7}}>Total/Fan <Text style={{fontWeight:"bold", color:"blue",marginLeft:30}}>{this.state.ExtraFeesPerFan + this.state.pricePerFan}$ </Text></Text>
+                            <Text style={{fontSize:7}}>Total <Text style={{fontWeight:"bold", color:"blue",marginLeft:30}}>{this.state.pricePerFan * this.state.NumberOfFans + 2 * this.state.ExtraFeesPerFan}$ </Text></Text>
+                            <Text style={{fontSize:7}}>*Price for 2 fans traveling together </Text>
+
+
+
+
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                   
+                   
+                   
+                    <Text style={{ fontSize: 9, marginLeft: 250, fontWeight: "bold", marginTop: -12, color: "blavk" }}></Text>
                 </View>
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginLeft: 140, marginTop: 50 }}>
                     Semi-Package Details
