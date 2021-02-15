@@ -16,5 +16,12 @@
     "searchTeam": "Search for a team",
     "searchCity" : "Search for a city",
     "searchCompetition": "Search for a competition",
-    "applyFilters": "Apply filters"
+    "applyFilters": "Apply filters",
+    "selectFlight": "Select your flight",
+    "flightOptions": "Flight Options",
+    
+    "chatWithUs": "chat with us?",
+    "messenger": "Messenger",
+    "whatsapp": "Whatsapp",
+    "feedback": "Feedback"
 }

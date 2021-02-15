@@ -4,11 +4,11 @@ import {
     Text,
     View,
     Image,
-    ScrollView,
     TouchableOpacity
 } from "react-native";
 import AwesomeAlert from "react-native-awesome-alerts";
 import R from "res/R";
+import { translate } from "../../helpers/utils";
 
 export default class chat extends React.Component {
 
@@ -33,16 +33,16 @@ export default class chat extends React.Component {
             <>
                 <View style={{ height: 200, width: 200 }}>
                     <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginStart: 80 }}>Messanger</Text>
+                        <Text style={{ marginTop: 20, marginStart: 80 }}>{translate('messenger')}</Text>
                         <Image source={R.images.messenger} style={{ width: 40, height: 40, marginStart: 30, marginTop: -20 }} />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginStart: 80 }}>Whatsapp</Text>
+                        <Text style={{ marginTop: 20, marginStart: 80 }}>{translate('whatsapp')}</Text>
                         <Image source={R.images.whatsapp} style={{ width: 40, height: 40, marginStart: 30, marginTop: -20 }} />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Text style={{ marginTop: 20, marginLeft: 80 }}>Feedback</Text>
-                        <Image source={R.images.feedback} style={{ width: 40, height: 40, marginLeft: 30, marginTop: -20 }} />
+                        <Text style={{ marginTop: 20, marginStart: 80 }}>{translate('feedback')}</Text>
+                        <Image source={R.images.feedback} style={{ width: 40, height: 40, marginStart: 30, marginTop: -20 }} />
                     </TouchableOpacity>
                 </View>
 
@@ -55,18 +55,19 @@ export default class chat extends React.Component {
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => this.showAlert()}>
-                    <Image source={R.images.chat} style={{ width: 100, height: 100, marginLeft: 380 }} />
+                    <Image source={R.images.chat} style={{ width: '100%', height: '100%'}} />
                 </TouchableOpacity>
-                <ScrollView style={{ backgroundColor: "red" }}>
+                <View >
                     <AwesomeAlert
                         show={showAlert}
                         showProgress={false}
-                        title="CHAT WITH US ?"
+                        title={translate('chatWithUs')}
+                        titleStyle={{textTransform:'uppercase'}}
                         closeOnTouchOutside={true}
                         closeOnHardwareBackPress={false}
                         customView={this.renderCustomAlertView()}
                     />
-                </ScrollView>
+                </View>
             </View>
         );
     }
@@ -74,8 +75,10 @@ export default class chat extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        position: "absolute",
-        right: 0,
+        position: 'absolute',
+        alignSelf:'flex-end',
+        width: 100,
+        height: 100,
         bottom: 30
     },
 });
