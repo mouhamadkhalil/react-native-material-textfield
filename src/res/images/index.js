@@ -23,6 +23,8 @@ const images = {
     search: require('../../../assets/images/icons/search1.png'),
     bell: require('../../../assets/images/icons/bell.png'),
     teams: require('../../../assets/images/icons/teams.png'),
+
+    /* chat */
     chat: require('../../../assets/images/icons/chat1.png'),
     feedback: require('../../../assets/images/icons/feedback.png'),
     messenger: require('../../../assets/images/icons/messenger.png'),
@@ -37,6 +39,7 @@ const images = {
 
     /* backgrounds */
     all_games_bg: require('../../../assets/images/bg/all-games.jpg'),
+    trip_bg: require('../../../assets/images/bg/trip.jpg'),
     teams_bg: require('../../../assets/images/bg/teams.jpg'),
     leagues_bg: require('../../../assets/images/bg/teams.jpg'),
     football_bg: require('../../../assets/images/bg/football.jpg'),

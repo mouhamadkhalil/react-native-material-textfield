@@ -35,6 +35,7 @@
     "react-native": "~0.63.4",
     "react-native-autocomplete-input": "^4.2.0",
     "react-native-awesome-alerts": "^1.4.2",
+    "react-native-bouncy-checkbox": "^1.0.8",
     "react-native-carousel-cards": "^1.2.1",
     "react-native-collapsible": "^1.5.3",
     "react-native-datepicker": "^1.7.2",
