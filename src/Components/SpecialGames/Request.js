@@ -74,16 +74,12 @@ export default class Request extends React.Component {
             budget: "",
             Message: "",
             idDepartureCity: "",
-
             OfferContacts: [],
             Title: "",
             FirstName: "",
             LastName: "",
             Email: "",
             Phone: "",
-
-
-
             hotGameSelection: [],
         };
     }
@@ -224,7 +220,6 @@ export default class Request extends React.Component {
                     <Text style={{ fontSize: 10, marginLeft: 260, fontWeight: "bold", marginTop: -13 }}>{moment(new Date(this.state.GameDate)).format('DD-MM')}</Text>
                 </ScrollView>
                 <Text style={{ color: "black", fontWeight: "bold", marginLeft: 140, marginTop: 50 }}>Travel details </Text>
-
                 {!this.state.isDone ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginLeft: 120 }} />
                     :
                     <>
