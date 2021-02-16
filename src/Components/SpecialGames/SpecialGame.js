@@ -331,21 +331,21 @@ export default class specialGames extends React.Component {
                     </View>
                 </ImageBackground>
 <<<<<<< HEAD
-                <TouchableHighlight style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={() => this.props.navigation.navigate('tripoverview')}>
+        <TouchableHighlight style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={() => this.props.navigation.navigate('tripoverview')}>
 =======
                 <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { idMatch: item.idMatch }) : () => this.props.navigation.navigate('request', { idMatch: item.idMatch })}>
 >>>>>>> origin/Request
-                    <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
-                        <View >
-                            {item.PricePerFan > 0 ? (
-                                <>
-                                    <Text style={{ fontWeight: "bold", fontSize: 14 }}>{item.PricePerFan}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
-                                    <Text style={{ fontSize: 9, textTransform: 'uppercase' }}>book now</Text>
-                                </>) :
-                                <Text style={{ fontWeight: "bold", fontSize: 14, textTransform: 'uppercase' }}>request</Text>
-                            }
-                        </View>
-                    </ImageBackground>
+                <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
+                    <View >
+                        {item.PricePerFan > 0 ? (
+                            <>
+                                <Text style={{ fontWeight: "bold", fontSize: 14 }}>{item.PricePerFan}$<Text style={{ fontSize: 11, marginTop: -3 }}>/Fan</Text></Text>
+                                <Text style={{ fontSize: 9, textTransform: 'uppercase' }}>book now</Text>
+                            </>) :
+                            <Text style={{ fontWeight: "bold", fontSize: 14, textTransform: 'uppercase' }}>request</Text>
+                        }
+                    </View>
+                </ImageBackground>
                 </TouchableHighlight>
             </View>
         );
@@ -402,15 +402,7 @@ export default class specialGames extends React.Component {
                         </TouchableOpacity>
                     </TouchableOpacity>
 
-<<<<<<< HEAD
-                    {/* <TouchableOpacity style={styles.topNavBtn}
-                        onPress={() => this.props.navigation.navigate('request')}>
-                        <Text style={{}}>Request</Text>
-                    </TouchableOpacity>
-
-=======
                     {/* 
->>>>>>> origin/Request
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my trips')}>
                         <Text style={styles.topNavBtnText}>My Trips</Text>
