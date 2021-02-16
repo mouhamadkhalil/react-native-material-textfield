@@ -5,5 +5,23 @@
     "popularTeams":"popular teams",
     "competitions": "competitions",
     "loadMore": "Load more",
-    "teams": "Teams"
+    "team": "Team",
+    "teams": "Teams",
+    "city": "City",
+    "cities": "Cities",
+    "date": "Date",
+    "price": "Price",
+    "msgNotFound": "Not found!",
+    "sortBy": "sort by",
+    "searchTeam": "Search for a team",
+    "searchCity" : "Search for a city",
+    "searchCompetition": "Search for a competition",
+    "applyFilters": "Apply filters",
+    "selectFlight": "Select your flight",
+    "flightOptions": "Flight Options",
+    
+    "chatWithUs": "chat with us?",
+    "messenger": "Messenger",
+    "whatsapp": "Whatsapp",
+    "feedback": "Feedback"
 }

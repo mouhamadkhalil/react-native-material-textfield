@@ -43,6 +43,7 @@ const images = {
 
     /* brand */
     flyfoot: require('../../../assets/images/flyfoot.png'),
+    flyfoot_grey: require('../../../assets/images/fly-foot2.png'),
     logo: require('../../../assets/images/fly-foot.png')
 }
 

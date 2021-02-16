@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Accordion from 'react-native-collapsible/Accordion';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get } from "../../helpers/services.js";
+import { get, servicesUrl } from "../../helpers/services.js";
 import Chat from "../FanChat/chat";
 import R from "res/R";
 
@@ -32,7 +32,8 @@ export default class Teams extends React.Component {
     }
 
     getData = () => {
-        get(`/mobile/team/countriesWithTeams`)
+
+        get(servicesUrl.getCountriesWithTeams)
             .then((response) => {
                 var data = response.map(function (item) {
                     return {
@@ -70,6 +71,7 @@ export default class Teams extends React.Component {
 
     renderHeader = section => {
         return (
+
             <View style={{ padding: 20, backgroundColor: '#f7f7f7', borderBottomWidth: 2, borderBottomColor: '#fff' }}>
                 <Text>{section.title}</Text>
             </View>
@@ -78,6 +80,7 @@ export default class Teams extends React.Component {
 
     renderContent = section => {
         return (
+
             <View style={{ backgroundColor: "#f7f7f7", paddingStart: 20, paddingEnd: 20 }}>
                 {section.content.map(this.renderTeam.bind(this))}
             </View>

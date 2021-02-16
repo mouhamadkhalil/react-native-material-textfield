@@ -1,12 +1,16 @@
 import * as SecureStore from 'expo-secure-store';
 import { API_URL, API_TOKEN } from "@env";
 
-authorization = "Bearer Token";
-Content_Type = "application/json";
-ff_language = "en";
-ff_version = 10;
-source = "mobile";
-Accept = "application/json";
+export const servicesUrl = {
+    /* GET */
+    getAllTeams: '/mobile/team/all',
+    getAllCities: '/mobile/city/destinationCity',
+    getAllLeagues: '/mobile/leagues/all',
+    getCountriesWithTeams: '/mobile/team/countriesWithTeams',
+    getSearchTeam: '/mobile/team/search?text=',
+
+    /* POST */
+}
 
 getToken = async () => {
     try {
@@ -30,7 +34,7 @@ getLocation = async () => {
 };
 
 export async function get(path) {
-    const location = await this.getLocation();
+    const location = await getLocation();
     const url = `${API_URL}${path}`;
     return fetch(url, {
         method: "GET",
@@ -51,8 +55,8 @@ export async function get(path) {
 }
 
 export async function getWithToken(path) {
-    const token = await this.getToken();
-    const location = await this.getLocation();
+    const token = await getToken();
+    const location = await getLocation();
     const url = `${API_URL}${path}`;
     return fetch(url, {
         method: "GET",
@@ -74,8 +78,8 @@ export async function getWithToken(path) {
 }
 
 export async function post(path, data) {
-    const token = await this.getToken();
-    const location = await this.getLocation();
+    const token = await getToken();
+    const location = await getLocation();
     const url = `${API_URL}${path}`;
     return fetch(url, {
         method: "POST",

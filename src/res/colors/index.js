@@ -3,7 +3,8 @@ const colors = {
     text: '#0C222B',
     button: '#036675',
     green: '#37CD0A',
-    greenLight: "#76FF02"
+    greenLight: "#76FF02",
+    blue: '#284CBE'
 };
 
 export default colors;
