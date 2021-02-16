@@ -303,7 +303,10 @@ export default class specialGames extends React.Component {
     /******************* Hot Game Item ************************/
     hotGameItem({ item, index, state }) {
         const image = { uri: item.BackGroundImage };
+<<<<<<< HEAD
         console.log("hot game image:", image, item);
+=======
+>>>>>>> origin/Request
         return (
             <View style={{ marginTop: 60, width: 280, height: 225, marginLeft: -20 }}>
                 <ImageBackground source={image} style={[styles.image, { width: "100%", height: "90%" }]} imageStyle={{ borderRadius: 20 }}>
@@ -327,7 +330,11 @@ export default class specialGames extends React.Component {
                         </View>
                     </View>
                 </ImageBackground>
+<<<<<<< HEAD
                 <TouchableHighlight style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={() => this.props.navigation.navigate('tripoverview')}>
+=======
+                <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { idMatch: item.idMatch }) : () => this.props.navigation.navigate('request', { idMatch: item.idMatch })}>
+>>>>>>> origin/Request
                     <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                         <View >
                             {item.PricePerFan > 0 ? (
@@ -395,11 +402,15 @@ export default class specialGames extends React.Component {
                         </TouchableOpacity>
                     </TouchableOpacity>
 
+<<<<<<< HEAD
                     {/* <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('request')}>
                         <Text style={{}}>Request</Text>
                     </TouchableOpacity>
 
+=======
+                    {/* 
+>>>>>>> origin/Request
                     <TouchableOpacity style={styles.topNavBtn}
                         onPress={() => this.props.navigation.navigate('my trips')}>
                         <Text style={styles.topNavBtnText}>My Trips</Text>
