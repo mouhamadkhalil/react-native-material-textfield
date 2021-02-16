@@ -33,9 +33,6 @@ import R from "res/R";
 import Chat from "../FanChat/chat";
 import { get } from "../../helpers/services.js";
 
-
-
-const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);

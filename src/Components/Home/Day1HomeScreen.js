@@ -20,8 +20,6 @@ import Lightbox from 'react-native-lightbox-v2';
 import Chat from "../FanChat/chat";
 import { get } from "../../helpers/services.js";
 
-const sourceFile = require('../../helpers/services.js');
-
 export default class Day1HomeScreen extends React.Component {
 
     state = {

@@ -21,17 +21,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { get, post } from "../../helpers/services.js";
 import { CheckBox } from 'react-native-elements';
 
-const sourceFile = require('../../helpers/services.js');
-
 export default class SignUpScreen extends React.Component {
     constructor(navigation) {
         super(navigation);
     }
 
     state = {
-        client_id: "",
         rememberMe: "",
-        scope: "",
         Token: "",
         Name: "",
         SurName: "",
@@ -46,7 +42,6 @@ export default class SignUpScreen extends React.Component {
         FavouriteTeam6: "",
         FavouriteTeam7: "",
         FavouriteTeam8: "",
-        isDone: false,
         checked: false
     };
 
@@ -81,7 +76,6 @@ export default class SignUpScreen extends React.Component {
             ConfirmPassword: this.state.ConfirmPassword,
             FavouriteTeam: this.state.FavouriteTeam1,
         };
-        console.log(this.state.FavouriteTeam1)
         if (this.state.Name === "" || this.state.SurName === "" || this.state.Email === "" || this.state.Password === "" || this.state.ConfirmPassword === "") {
             ToastAndroid.showWithGravity(
                 'please fill out mendatory fields !',
@@ -100,7 +94,6 @@ export default class SignUpScreen extends React.Component {
             else {
                 post(`/mobile/profile/Create`, data)
                     .then(response => {
-                        console.log("hello its my response", response)
                         if (response.ErrorId) {
                             ToastAndroid.showWithGravity(
                                 'Something went wrong, please try again later !',
@@ -112,9 +105,6 @@ export default class SignUpScreen extends React.Component {
                         else {
                             let token_id = response.Token;
                             this.setState({ Token: token_id });
-                            console.log(token_id)
-
-                            this.setState({ isDone: true });
                             AsyncStorage.setItem("token", this.state.Token);
                             ToastAndroid.showWithGravity(
                                 'you have successfully registered !',
@@ -274,8 +264,7 @@ export default class SignUpScreen extends React.Component {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 0 }} />
-                        : null}
+                  
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, marginLeft: 20 }}>
                         <CheckBox
                             title='By Signing up, i agree with'

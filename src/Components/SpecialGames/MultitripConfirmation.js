@@ -19,7 +19,6 @@ import Chat from "../FanChat/chat";
 import R from "res/R";
 import { get, post } from "../../helpers/services.js";
 
-const sourceFile = require('../../helpers/services.js');
 
 export default class MultitripConfirmation extends React.Component {
 

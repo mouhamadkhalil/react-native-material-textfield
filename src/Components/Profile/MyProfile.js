@@ -8,11 +8,11 @@ import {
     ImageBackground,
     ActivityIndicator,
     Button,
-    AsyncStorage,
     Picker,
     ToastAndroid,
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
+import * as SecureStore from 'expo-secure-store';
 import DatePicker from 'react-native-datepicker';
 import Chat from "../FanChat/chat";
 import R from "res/R";
@@ -57,7 +57,8 @@ export default class MyProfile extends React.Component {
 
 
 
-    getToken = async () => AsyncStorage.getItem('token');
+    getToken = async () => await SecureStore.getItem('token');
+
 
     componentDidMount = async () => {
         var token = await this.getToken();

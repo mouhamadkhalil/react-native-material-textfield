@@ -13,8 +13,6 @@ import { API_URL, API_TOKEN } from "@env";
 import Lightbox from 'react-native-lightbox-v2';
 import { get } from "../../helpers/services.js";
 
-const sourceFile = require('../../helpers/services.js');
-
 export default class SpotLightScreen extends React.Component {
   state = {
     Picture: "",

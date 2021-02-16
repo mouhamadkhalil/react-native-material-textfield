@@ -13,7 +13,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { get } from "../../helpers/services.js";
 import Chat from "../FanChat/chat";
 
-
 export default class Deals extends React.Component {
 
     constructor(props) {

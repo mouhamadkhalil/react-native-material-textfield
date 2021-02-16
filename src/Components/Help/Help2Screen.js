@@ -13,9 +13,6 @@ import { API_URL, API_TOKEN } from "@env";
 import Chat from "../FanChat/chat";
 import { get } from "../../helpers/services.js";
 
-
-const sourceFile = require('../../helpers/services.js');
-
 export default class Help2Screen extends React.Component {
 
     Back = () => {

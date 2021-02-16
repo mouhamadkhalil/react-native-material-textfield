@@ -22,7 +22,6 @@ import Gift5 from "../../../assets/images/games/gift5.png";
 import Chat from "../FanChat/chat";
 import R from "res/R";
 
-const sourceFile = require('../../helpers/services.js');
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemWeight = Math.round(itemWidth * 3 / 4);

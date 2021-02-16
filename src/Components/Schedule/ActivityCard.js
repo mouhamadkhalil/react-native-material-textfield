@@ -15,8 +15,6 @@ export default class ActivityCard extends React.Component {
     state = {
     };
 
-
-
     render() {
         return (
             <ScrollView style={styles.container}>
