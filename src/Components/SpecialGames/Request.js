@@ -20,8 +20,6 @@ import moment from 'moment';
 import R from "res/R";
 import { get, post } from "../../helpers/services.js";
 
-
-const sourceFile = require('../../helpers/services.js');
 const data = [
     {
         label: 'Doesnt matter, at least Iam there!',
