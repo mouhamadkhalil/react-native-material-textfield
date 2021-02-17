@@ -4,7 +4,7 @@ const colors = {
     button: '#036675',
     green: '#37CD0A',
     greenLight: "#76FF02",
-    blue: '#284CBE'
+    blue: '#374bbf'
 };
 
 export default colors;

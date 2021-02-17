@@ -76,7 +76,7 @@ export default class LoginScreen extends React.Component {
         };
         if (this.state.username === "" || this.state.password === "") {
             ToastAndroid.showWithGravity(
-                'please fill out mendatory fields !',
+                'please fill out mandatory fields !',
                 ToastAndroid.LONG,
                 ToastAndroid.CENTER
             );
