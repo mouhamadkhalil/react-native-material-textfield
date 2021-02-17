@@ -11,17 +11,26 @@
     "cities": "Cities",
     "date": "Date",
     "price": "Price",
-    "msgNotFound": "Not found!",
+    "fan": "Fan",
+    "days": "Days",
+
+    "back": "Back",
+    "continue": "Continue",
+    
     "sortBy": "sort by",
     "searchTeam": "Search for a team",
     "searchCity" : "Search for a city",
     "searchCompetition": "Search for a competition",
     "applyFilters": "Apply filters",
+
     "selectFlight": "Select your flight",
     "flightOptions": "Flight Options",
+    "dontWantFlights": "I don't want flights",
     
     "chatWithUs": "chat with us?",
     "messenger": "Messenger",
     "whatsapp": "Whatsapp",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+
+    "msgNotFound": "Not found!"
 }

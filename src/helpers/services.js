@@ -8,7 +8,8 @@ export const servicesUrl = {
     getAllLeagues: '/mobile/leagues/all',
     getCountriesWithTeams: '/mobile/team/countriesWithTeams',
     getSearchTeam: '/mobile/team/search?text=',
-
+    getGameV2: '/mobile/mobile/game/v2',
+    
     /* POST */
 }
 

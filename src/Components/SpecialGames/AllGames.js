@@ -199,7 +199,7 @@ export default class AllGames extends React.Component {
                     {item.Price > 0 && item.Price != null ?
                         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{ paddingStart: 10, fontSize: 20, fontWeight: "bold" }}>{item.Price}$</Text>
-                            <Text>/Fan</Text>
+                            <Text>/{translate('fan')}</Text>
                         </View>
                         : null
                     }
