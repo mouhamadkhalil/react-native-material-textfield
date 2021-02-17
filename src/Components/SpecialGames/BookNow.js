@@ -32,11 +32,15 @@ export default class BookNow extends React.Component {
             SpecialGameSelection: []
         };
     }
-
+    //test
     componentDidMount() {
         try {
             this.getData();
-        } catch { }
+
+
+        } catch {
+            console.log("test")
+        }
     }
 
     getTripDays(date1, date2) {
