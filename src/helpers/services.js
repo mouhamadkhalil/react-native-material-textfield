@@ -9,8 +9,10 @@ export const servicesUrl = {
     getCountriesWithTeams: '/mobile/team/countriesWithTeams',
     getSearchTeam: '/mobile/team/search?text=',
     getGameV2: '/mobile/mobile/game/v2',
-    
+    getAmadeusCities: '/mobile/city/amadeusCity',
+
     /* POST */
+    searchFlights: '/mobile/game/SearchFlight'
 }
 
 getToken = async () => {

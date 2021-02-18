@@ -23,9 +23,12 @@
     "searchCompetition": "Search for a competition",
     "applyFilters": "Apply filters",
 
-    "selectFlight": "Select your flight",
+    "selectYourFlight": "Select your flight",
     "flightOptions": "Flight Options",
     "dontWantFlights": "I don't want flights",
+    "tripDates": "Trip dates",
+    "flyingFrom": "Flying from",
+    "selectFlight": "Select flight",
     
     "chatWithUs": "chat with us?",
     "messenger": "Messenger",
