@@ -75,10 +75,9 @@ export default class TripOverViewScreen extends React.Component {
                 this.setState({ hotGameSelection: hotGameSelection });
                 this.setState({ idMatch2: this.state.hotGameSelection[0].idMatch });
                 if (this.state.idMatch1 === this.state.hotGameSelection[0].idMatch) {
-                    console.log("here:", this.state.hotGameSelection, response.Deals[0]);
                     this.setState({
                         idMatch2: this.state.hotGameSelection[0].idMatch,
-                        GameDate: this.state.hotGameSelection[0].GameDate.split("T")[0].split("-").reverse().join("."),
+                        GameDate: this.state.hotGameSelection[0].GameDate,
                         HomeTeam: this.state.hotGameSelection[0].HomeTeam,
                         AwayTeam: this.state.hotGameSelection[0].AwayTeam,
                         StadeCity: this.state.hotGameSelection[0].StadeCity,
@@ -112,7 +111,7 @@ export default class TripOverViewScreen extends React.Component {
                     if (this.state.idMatch1 === this.state.hotGameSelection[1].idMatch) {
                         this.setState({
                             idMatch2: this.state.hotGameSelection[0].idMatch,
-                            GameDate: this.state.hotGameSelection[1].GameDate.split("T")[0].split("-").reverse().join("."),
+                            GameDate: this.state.hotGameSelection[1].GameDate,
                             HomeTeam: this.state.hotGameSelection[1].HomeTeam,
                             AwayTeam: this.state.hotGameSelection[1].AwayTeam,
                             StadeCity: this.state.hotGameSelection[1].StadeCity,
@@ -169,40 +168,36 @@ export default class TripOverViewScreen extends React.Component {
                     shadowRadius: 2,
                     elevation: 5,
                 }}>
-                    <View style={{ padding: 0 }}>
-                        <View style={{ flexDirection: "row" }}>
-                            <View style={{ width: "50%", padding: 20 }}>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <LinearGradient
-                                        colors={[this.state.Team1Color1 || "blue", this.state.Team1Color2 || "green"]}
-                                        style={styles.linearGradient}
-                                        start={[0, 0]}
-                                        end={[1, 0]}
-                                        locations={[0.5, 0.5]}
-                                    ></LinearGradient>
-                                    <Text style={{ ...styles.blueText, marginStart: 10 }}>{this.state.HomeTeam}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <LinearGradient
-                                        colors={[this.state.Team2Color1 || "blue", this.state.Team2Color2 || "green"]}
-                                        style={styles.linearGradient}
-                                        start={[0, 0]}
-                                        end={[1, 0]}
-                                        locations={[0.5, 0.5]}
-                                    ></LinearGradient>
-                                    <Text style={{ ...styles.blueText, marginStart: 10 }}>{this.state.AwayTeam}</Text>
-                                </View>
-
+                    <View style={{ flexDirection: "row" }}>
+                        <View style={{ width: "50%", padding: 20 }}>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <LinearGradient
+                                    colors={[this.state.Team1Color1 || "blue", this.state.Team1Color2 || "green"]}
+                                    style={styles.linearGradient}
+                                    start={[0, 0]}
+                                    end={[1, 0]}
+                                    locations={[0.5, 0.5]}
+                                ></LinearGradient>
+                                <Text style={{ ...styles.blueText, marginStart: 10 }}>{this.state.HomeTeam}</Text>
                             </View>
-                            <Text style={{ width: "50%", ...styles.blueText, padding: 20 }}>{this.state.GameDate}</Text>
-                        </View>
-                        <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
-                            <Text style={{ flexBasis: "50%", ...styles.darkText, padding: 20, borderRightWidth: 1, borderColor: "#eee" }}>{this.state.tripDays} DAYS</Text>
-                            <Text style={{ flexBasis: "50%", ...styles.darkText, padding: 20, textTransform: "uppercase" }}>{this.state.StadeCity}</Text>
-                        </View>
-                    </View>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <LinearGradient
+                                    colors={[this.state.Team2Color1 || "blue", this.state.Team2Color2 || "green"]}
+                                    style={styles.linearGradient}
+                                    start={[0, 0]}
+                                    end={[1, 0]}
+                                    locations={[0.5, 0.5]}
+                                ></LinearGradient>
+                                <Text style={{ ...styles.blueText, marginStart: 10 }}>{this.state.AwayTeam}</Text>
+                            </View>
 
-                    {/* <Text style={{ color: "#8CD222", fontWeight: "bold", marginStart: 250, marginTop: -12, fontSize: 9 }}>{this.state.pricePerFan}$/fan</Text> */}
+                        </View>
+                        <Text style={{ width: "50%", ...styles.blueText, padding: 20 }}>{moment(this.state.GameDate).format('D.MM.YY')}</Text>
+                    </View>
+                    <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
+                        <Text style={{ width: "50%", ...styles.darkText, padding: 20, borderRightWidth: 1, borderColor: "#eee" }}>{this.state.tripDays} DAYS</Text>
+                        <Text style={{ width: "50%", ...styles.darkText, padding: 20, textTransform: "uppercase" }}>{this.state.StadeCity}</Text>
+                    </View>
 
                     <TouchableOpacity style={{ position: "absolute", width: "100%", top: 155, height: this.state.isButtonPressed ? 140 : 80, backgroundColor: "#fff", zIndex: 1 }}
                         onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
