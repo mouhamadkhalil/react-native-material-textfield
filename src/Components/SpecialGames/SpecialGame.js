@@ -248,7 +248,7 @@ export default class specialGames extends React.Component {
                                 <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>{item.PriceCaption}</Text>
                                 <Text style={{ color: "white", fontSize: 10, marginTop: 5 }}>{item.SharingRoomNote}</Text>
                             </View>
-                            <TouchableHighlight onPress={() => this.props.navigation.navigate('book now', { idMatch: item.idMatch })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('book now', { idMatch: item.idMatch })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
                                 <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                                     <View >
                                         {item.PricePerFan > 0 ? (
@@ -260,7 +260,7 @@ export default class specialGames extends React.Component {
                                         }
                                     </View>
                                 </ImageBackground>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </ImageBackground>
@@ -326,7 +326,7 @@ export default class specialGames extends React.Component {
                         </View>
                     </View>
                 </ImageBackground>
-                <TouchableHighlight style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { idMatch: item.idMatch }) : () => this.props.navigation.navigate('request', { idMatch: item.idMatch })}>
+                <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { idMatch: item.idMatch }) : () => this.props.navigation.navigate('request', { idMatch: item.idMatch })}>
                     <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                         <View >
                             {item.PricePerFan > 0 ? (
@@ -338,7 +338,7 @@ export default class specialGames extends React.Component {
                             }
                         </View>
                     </ImageBackground>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }

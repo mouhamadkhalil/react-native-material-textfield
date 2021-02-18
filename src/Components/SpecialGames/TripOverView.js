@@ -110,26 +110,38 @@ export default class TripOverViewScreen extends React.Component {
                 }
                 else
                     if (this.state.idMatch1 === this.state.hotGameSelection[1].idMatch) {
-                        this.setState({ idMatch2: this.state.hotGameSelection[1].idMatch });
-                        this.setState({ GameDate: this.state.hotGameSelection[1].GameDate.split("T")[0].split("-").reverse().join(".") });
-                        this.setState({ HomeTeam: this.state.hotGameSelection[1].HomeTeam });
-                        this.setState({ AwayTeam: this.state.hotGameSelection[1].AwayTeam });
-                        this.setState({ StadeCity: this.state.hotGameSelection[1].StadeCity });
-                        this.setState({ tripDays: this.state.hotGameSelection[1].TripDays });
-                        this.setState({ pricePerFan: this.state.hotGameSelection[1].PricePerFan });
-                        this.setState({ StartDate: response.Deals[1].StartDate.split("T")[0] });
-                        this.setState({ EndDate: response.Deals[1].EndDate.split("T")[0] });
-                        this.setState({ HotelName: response.Deals[1].HotelName });
-                        this.setState({ HotelStars: response.Deals[1].HotelStars });
-                        this.setState({ NumberOfFans: '0' + response.Deals[0].NumberOfTravelers });
-                        this.setState({ SeatingCategory: response.Deals[0].MatchBundleDetail[0].GameSeat.SeatCode });
-                        this.setState({ Stade: response.Deals[1].MatchBundleDetail[0].Game.Stade });
-                        this.setState({ Seats: response.Deals[1].MatchBundleDetail[0].GameSeat.Sequence });
-                        this.setState({ RoomType: response.GamesList.Items[0].HotelRoomType });
-                        this.setState({ HotelImage: response.GamesList.Items[2].Image });
-                        this.setState({ StadiumImage: response.GamesList.Items[0].MatchBundleDetail[0].GameSeats[0].StadiumMap_IMG_v3 });
-                        this.setState({ ExtraFeesPerFan: response.Deals[1].ExtraFeesPerFan });
-                        this.setState({ isDone: true });
+                        this.setState({
+                            idMatch2: this.state.hotGameSelection[0].idMatch,
+                            GameDate: this.state.hotGameSelection[1].GameDate.split("T")[0].split("-").reverse().join("."),
+                            HomeTeam: this.state.hotGameSelection[1].HomeTeam,
+                            AwayTeam: this.state.hotGameSelection[1].AwayTeam,
+                            StadeCity: this.state.hotGameSelection[1].StadeCity,
+                            tripDays: this.state.hotGameSelection[1].TripDays,
+                            pricePerFan: this.state.hotGameSelection[1].PricePerFan,
+                            StartDate: response.Deals[1].StartDate.split("T")[0],
+                            EndDate: response.Deals[1].EndDate.split("T")[0],
+                            HotelName: response.Deals[1].HotelName,
+                            HotelStars: response.Deals[1].HotelStars,
+                            NumberOfFans: '0' + response.Deals[0].NumberOfTravelers,
+                            SeatingCategory: response.Deals[0].MatchBundleDetail[0].GameSeat.SeatCode,
+                            Stade: response.Deals[1].MatchBundleDetail[0].Game.Stade,
+                            Seats: response.Deals[1].MatchBundleDetail[0].GameSeat.Sequence,
+                            RoomType: response.GamesList.Items[0].HotelRoomType,
+                            HotelImage: response.GamesList.Items[2].Image,
+                            StadiumImage: response.GamesList.Items[0].MatchBundleDetail[0].GameSeats[0].StadiumMap_IMG_v3,
+                            ExtraFeesPerFan: response.Deals[1].ExtraFeesPerFan,
+                            isDone: true,
+                            perks: {
+                                AirPortDropoff: response.Deals[1].Service_AirPortDropOff,
+                                AirPortPickup: response.Deals[1].Service_AirPortPickup,
+                                CityTour: response.Deals[1].Service_CityTour,
+                                Insurance: response.Deals[1].Service_Insurance,
+                                OnSpot: response.Deals[1].Service_OnSpot,
+                                StadiumTour: response.Deals[1].Service_StadiumTour,
+                                Train: response.Deals[1].Service_Train,
+                            }
+                        })
+
                     }
             });
     }
