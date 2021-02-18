@@ -12,8 +12,6 @@ import { API_URL, API_TOKEN } from "@env";
 import Lightbox from 'react-native-lightbox-v2';
 import { get } from "../../helpers/services.js";
 
-const sourceFile = require('../../helpers/services.js');
-
 export default class HotelScreen extends React.Component {
   Back = () => {
     this.props.navigation.navigate('Trip');

@@ -20,8 +20,6 @@ import Chat from "../FanChat/chat";
 import R from "res/R";
 import { get } from "../../helpers/services.js";
 
-const sourceFile = require('../../helpers/services.js');
-
 const data = [
     {
         label: 'Category 1  +442$'

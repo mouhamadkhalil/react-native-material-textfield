@@ -17,27 +17,18 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import { Ionicons } from '@expo/vector-icons';
-import { post } from "../../helpers/services.js";
+import { get, post } from "../../helpers/services.js";
 import { CheckBox } from 'react-native-elements';
-
-const sourceFile = require('../../helpers/services.js');
-
 
 export default class LoginScreen extends React.Component {
     constructor(props) {
-
         super(props);
         this.state =
         {
             showAlert: false,
-            userId: "",
-            grant_type: "Bearer Token",
             username: "",
             password: "",
-            rememberMe: "",
-            scope: "",
             Token: "",
-            isDone: false,
             forgotPassword: "",
             checked: false
         };
@@ -60,24 +51,9 @@ export default class LoginScreen extends React.Component {
             showAlert: false,
         });
 
-        const url = `${API_URL}/mobile/profile/forgetpassword?email=${this.state.forgotPassword}`;
-
-        fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": sourceFile.Content_Type,
-                "Accept": sourceFile.Accept,
-                "ff_version": sourceFile.ff_version,
-                "ff_language": sourceFile.ff_language,
-                "source": sourceFile.source,
-                // "Authorization": sourceFile.authorization + this.state.Token,
-            },
-        })
-            .then((res) => res.json())
-            .catch((error) => console.error("Error: ", error))
-            .then((response) => {
-                console.log(response);
-
+        const _this = this;
+        get(`/mobile/profile/forgetpassword?email=${this.state.forgotPassword}`)
+            .then(response => {
                 if (response.ErrorId) {
                     alert(response.Message);
                 }
@@ -100,7 +76,7 @@ export default class LoginScreen extends React.Component {
         };
         if (this.state.username === "" || this.state.password === "") {
             ToastAndroid.showWithGravity(
-                'please fill out mendatory fields !',
+                'please fill out mandatory fields !',
                 ToastAndroid.LONG,
                 ToastAndroid.CENTER
             );
@@ -118,7 +94,6 @@ export default class LoginScreen extends React.Component {
                             window.location.reload();
                         } else {
                             SecureStore.setItemAsync('token', response.Token);
-                            this.setState({ isDone: true });
                             this.props.navigation.navigate('book a trip');
                             ToastAndroid.showWithGravity(
                                 'you are successfully logged in !',
@@ -274,8 +249,7 @@ export default class LoginScreen extends React.Component {
                                     style={{ marginRight: 20 }}
                                 />
                             </View>
-                            {this.state.isDone ? <ActivityIndicator size="small" color="blue" style={{ marginTop: 22, marginLeft: -10 }} />
-                                : null}
+
                         </View>
                     </TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>

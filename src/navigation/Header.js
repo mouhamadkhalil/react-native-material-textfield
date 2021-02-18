@@ -11,7 +11,6 @@ const HeaderOptions = ({ navigation }) => {
     // const [selectedValue, setSelectedValue] = useState({});
 
     useEffect(() => {
-        console.log('games', games);
     }, [games]);
 
     const findAll = str => {

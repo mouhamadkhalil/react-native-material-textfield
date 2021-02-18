@@ -22,8 +22,6 @@ import Facebook from "../../assets/Images_Design/facebook.png";
 import Instagram from "../../assets/Images_Design/insta1.png";
 import Chat from "../FanChat/chat";
 
-
-
 const window = Dimensions.get("window");
 const uri =
   "https://media-exp1.licdn.com/dms/image/C4E0BAQH7PWLgwhKFcw/company-logo_200_200/0?e=2159024400&v=beta&t=KJDoqyv_HeIk8_XfhCo-IUgjVvw0OebXlKICT5HgR-A";
