@@ -28,7 +28,11 @@ const images = {
     search: require('../../../assets/images/icons/search1.png'),
     bell: require('../../../assets/images/icons/bell.png'),
     teams: require('../../../assets/images/icons/teams.png'),
-
+    bedGrey: require('../../../assets/images/icons/bed-grey.png'),
+    coffeeCupGrey: require('../../../assets/images/icons/coffee-cup-grey.png'),
+    refundGrey: require('../../../assets/images/icons/refund-grey.png'),
+    norefundWhite: require('../../../assets/images/icons/norefund-white.png'),
+    
     /* chat */
     chat: require('../../../assets/images/icons/chat1.png'),
     feedback: require('../../../assets/images/icons/feedback.png'),

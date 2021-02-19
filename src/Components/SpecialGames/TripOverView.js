@@ -26,7 +26,8 @@ export default class TripOverViewScreen extends React.Component {
 
         this.state = {
             isDone: false,
-            hotGameSelection: [],
+            bundleCode:  props?.route?.params?.bundleCode,
+            match: [],
         };
     }
 
@@ -49,7 +50,7 @@ export default class TripOverViewScreen extends React.Component {
         this.setState({ idMatch1: this.props.route.params.idMatch })
         get(`/mobile/game/GetHomePageDataMobile`)
             .then((response) => {
-                var hotGameSelection = response.Deals.map(function (item) {
+                var match = response.Deals.map(function (item) {
                     var game = item.MatchBundleDetail[0].Game;
                     return {
                         idMatch: game.idMatch,
@@ -62,7 +63,7 @@ export default class TripOverViewScreen extends React.Component {
                         AwayTeam: game.AwayTeam,
                         Team1Color1: game.Team1Color1,
                         Team1Color2: game.Team1Color2,
-                        Team2Color2: game.Team2Color1,
+                        Team2Color1: game.Team2Color1,
                         Team2Color2: game.Team2Color2,
                         StadeCity: game.StadeCity,
                         PriceCaption: item.PriceCaption,
@@ -72,18 +73,22 @@ export default class TripOverViewScreen extends React.Component {
                         PricePerFan: item.PricePerFan
                     };
                 });
-                this.setState({ hotGameSelection: hotGameSelection });
-                this.setState({ idMatch2: this.state.hotGameSelection[0].idMatch });
-                if (this.state.idMatch1 === this.state.hotGameSelection[0].idMatch) {
-                    console.log("here:", this.state.hotGameSelection, response.Deals[0]);
+                this.setState({ match: match });
+                this.setState({ idMatch2: this.state.match[0].idMatch });
+                if (this.state.idMatch1 === this.state.match[0].idMatch) {
                     this.setState({
-                        idMatch2: this.state.hotGameSelection[0].idMatch,
-                        GameDate: this.state.hotGameSelection[0].GameDate.split("T")[0].split("-").reverse().join("."),
-                        HomeTeam: this.state.hotGameSelection[0].HomeTeam,
-                        AwayTeam: this.state.hotGameSelection[0].AwayTeam,
-                        StadeCity: this.state.hotGameSelection[0].StadeCity,
-                        tripDays: this.state.hotGameSelection[0].TripDays,
-                        pricePerFan: this.state.hotGameSelection[0].PricePerFan,
+                        idMatch2: this.state.match[0].idMatch,
+                        GameCode: this.state.match[0].GameCode,
+                        GameDate: this.state.match[0].GameDate.split("T")[0].split("-").reverse().join("."),
+                        HomeTeam: this.state.match[0].HomeTeam,
+                        AwayTeam: this.state.match[0].AwayTeam,
+                        Team1Color1: this.state.match[0].Team1Color1,
+                        Team1Color2: this.state.match[0].Team1Color2,
+                        Team2Color1: this.state.match[0].Team2Color1,
+                        Team2Color2: this.state.match[0].Team2Color2,
+                        StadeCity: this.state.match[0].StadeCity,
+                        tripDays: this.state.match[0].TripDays,
+                        pricePerFan: this.state.match[0].PricePerFan,
                         StartDate: response.Deals[0].StartDate.split("T")[0].split("-").reverse().join("."),
                         EndDate: response.Deals[0].EndDate.split("T")[0].split("-").reverse().join("."),
                         HotelName: response.Deals[0].HotelName,
@@ -109,15 +114,20 @@ export default class TripOverViewScreen extends React.Component {
                     })
                 }
                 else
-                    if (this.state.idMatch1 === this.state.hotGameSelection[1].idMatch) {
+                    if (this.state.idMatch1 === this.state.match[1].idMatch) {
                         this.setState({
-                            idMatch2: this.state.hotGameSelection[0].idMatch,
-                            GameDate: this.state.hotGameSelection[1].GameDate.split("T")[0].split("-").reverse().join("."),
-                            HomeTeam: this.state.hotGameSelection[1].HomeTeam,
-                            AwayTeam: this.state.hotGameSelection[1].AwayTeam,
-                            StadeCity: this.state.hotGameSelection[1].StadeCity,
-                            tripDays: this.state.hotGameSelection[1].TripDays,
-                            pricePerFan: this.state.hotGameSelection[1].PricePerFan,
+                            idMatch2: this.state.match[1].idMatch,
+                            GameCode: this.state.match[1].GameCode,
+                            GameDate: this.state.match[1].GameDate.split("T")[0].split("-").reverse().join("."),
+                            HomeTeam: this.state.match[1].HomeTeam,
+                            AwayTeam: this.state.match[1].AwayTeam,
+                            Team1Color1: this.state.match[1].Team1Color1,
+                            Team1Color2: this.state.match[1].Team1Color2,
+                            Team2Color1: this.state.match[1].Team2Color1,
+                            Team2Color2: this.state.match[1].Team2Color2,
+                            StadeCity: this.state.match[1].StadeCity,
+                            tripDays: this.state.match[1].TripDays,
+                            pricePerFan: this.state.match[1].PricePerFan,
                             StartDate: response.Deals[1].StartDate.split("T")[0],
                             EndDate: response.Deals[1].EndDate.split("T")[0],
                             HotelName: response.Deals[1].HotelName,
@@ -147,11 +157,11 @@ export default class TripOverViewScreen extends React.Component {
     }
 
     Customize = () => {
-        this.props.navigation.navigate('customize');
+        this.props.navigation.navigate('customize', {gameCode: this.state.GameCode});
     };
 
     Flight = () => {
-        this.props.navigation.navigate('flight');
+        this.props.navigation.navigate('flight', {gameCode: this.state.GameCode});
     };
 
     render() {
@@ -174,7 +184,7 @@ export default class TripOverViewScreen extends React.Component {
                             <View style={{ width: "50%", padding: 20 }}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <LinearGradient
-                                        colors={[this.state.Team1Color1 || "blue", this.state.Team1Color2 || "green"]}
+                                        colors={[this.state.Team1Color1 , this.state.Team1Color2 ]}
                                         style={styles.linearGradient}
                                         start={[0, 0]}
                                         end={[1, 0]}
@@ -184,7 +194,7 @@ export default class TripOverViewScreen extends React.Component {
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <LinearGradient
-                                        colors={[this.state.Team2Color1 || "blue", this.state.Team2Color2 || "green"]}
+                                        colors={[this.state.Team2Color1 , this.state.Team2Color2]}
                                         style={styles.linearGradient}
                                         start={[0, 0]}
                                         end={[1, 0]}
@@ -197,12 +207,10 @@ export default class TripOverViewScreen extends React.Component {
                             <Text style={{ width: "50%", ...styles.blueText, padding: 20 }}>{this.state.GameDate}</Text>
                         </View>
                         <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
-                            <Text style={{ flexBasis: "50%", ...styles.darkText, padding: 20, borderRightWidth: 1, borderColor: "#eee" }}>{this.state.tripDays} DAYS</Text>
+                            <Text style={{ flexBasis: "50%", ...styles.darkText, padding: 20, borderRightWidth: 1, borderColor: "#eee", textTransform:'uppercase' }}>{this.state.tripDays} DAYS</Text>
                             <Text style={{ flexBasis: "50%", ...styles.darkText, padding: 20, textTransform: "uppercase" }}>{this.state.StadeCity}</Text>
                         </View>
                     </View>
-
-                    {/* <Text style={{ color: "#8CD222", fontWeight: "bold", marginStart: 250, marginTop: -12, fontSize: 9 }}>{this.state.pricePerFan}$/fan</Text> */}
 
                     <TouchableOpacity style={{ position: "absolute", width: "100%", top: 155, height: this.state.isButtonPressed ? 140 : 80, backgroundColor: "#fff", zIndex: 1 }}
                         onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
@@ -237,6 +245,8 @@ export default class TripOverViewScreen extends React.Component {
                         </TouchableOpacity>
                     </TouchableOpacity>
                 </View>
+
+                {/* package details */}
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
                     Semi-Package Details
                 </Text>
@@ -315,15 +325,15 @@ export default class TripOverViewScreen extends React.Component {
                                     </View>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: "row", marginStart: 15, marginEnd: 15, marginTop: 30 }}>
+                            <View style={{ width:'90%', alignSelf:'center', flexDirection: "row",  marginTop: 30, marginBottom:30 }}>
                                 <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.Customize}>
                                     <Text style={{ fontWeight: "bold", color: "#fff" }}>CUSTOMIZE</Text>
                                 </TouchableHighlight>
-                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.green, alignItems: "center", justifyContent: "center" }} onPress={this.Flight}>
+                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.greenLight, alignItems: "center", justifyContent: "center" }} onPress={this.Flight}>
                                     <Text style={{ fontWeight: "bold" }}>SELECT FLIGHT</Text>
                                 </TouchableHighlight>
                             </View>
-                            <View style={{ martinStart: 100, marginTop: 20 }}>
+                            <View style={{ martinStart: 50, marginTop: -40 }}>
                                 <Chat />
                             </View>
                         </>
@@ -369,6 +379,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
+        borderWidth:0.5,
         height: 20,
         width: 20,
     },

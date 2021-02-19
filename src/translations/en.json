@@ -11,9 +11,30 @@
     "cities": "Cities",
     "date": "Date",
     "price": "Price",
+    "basePrice": "Base Price",
     "fan": "Fan",
+    "fans": "Fans",
+    "total": "Total",
+    "totalFan": "Total/Fan",
     "days": "Days",
+    "semiPackageDetails": "Semi-Package Details",
+    "tripDates": "Trip dates",
+    "hotel": "Hotel",
+    "rooms": "Rooms",
+    "single": "Single",
+    "double": "Double",
+    "triple": "Triple",
+    "infantBed": "Infant bed",
 
+    "browse": "Browse",
+    "selectHotel": "Select hotel",
+    "noBreakfast": "No Breakfast",
+    "includeBreakfast": "Include Breakfast",
+
+    "stadium": "Stadium",
+    "seatingOptions": "Seating options",
+
+    "cancel": "cancel",
     "back": "Back",
     "continue": "Continue",
     
@@ -26,9 +47,10 @@
     "selectYourFlight": "Select your flight",
     "flightOptions": "Flight Options",
     "dontWantFlights": "I don't want flights",
-    "tripDates": "Trip dates",
     "flyingFrom": "Flying from",
     "selectFlight": "Select flight",
+
+    "customizeTrip": "Customize Trip",
     
     "chatWithUs": "chat with us?",
     "messenger": "Messenger",

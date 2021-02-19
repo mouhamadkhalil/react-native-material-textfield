@@ -25,7 +25,7 @@ export default class SelectFlightScreen extends React.Component {
         super(props);
         this.state = {
             idHotel: props?.route?.params?.idHotel,
-            bundleCode: props?.route?.params?.bundleCode,
+            gameCode: props?.route?.params?.gameCode,
             details: {},
             game: {},
             hotel: {},
@@ -52,7 +52,7 @@ export default class SelectFlightScreen extends React.Component {
 
     getData = () => {
         const params = `?customize=true&validateHotelPrice=true&hotelId=${this.state.hotelId}&hotelSource=R`;
-        //servicesUrl.getGameV2 + '/' + this.state.bundleCode + params
+        //servicesUrl.getGameV2 + '/' + this.state.gameCode + params
         const path = '/mobile/game/v2/EUR-19-20-ENG-CRO?customize=false&validateHotelPrice=true&hotelId=511819&hotelSource=R';
         get(path)
             .then((response) => {

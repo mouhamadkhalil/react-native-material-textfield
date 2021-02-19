@@ -9,7 +9,6 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     Button,
-    ImageBackground,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Lightbox from 'react-native-lightbox-v2';
@@ -25,21 +24,19 @@ export default class BookNow extends React.Component {
         super(props);
         this.state = {
             isDone: false,
-            searchText: "",
-            idMatch: "",
+            idMatch: props?.route?.params?.idMatch,
             date: "2016-05-15",
             NumberOfTravelers: "",
             SpecialGameSelection: []
         };
     }
-    //test
+
     componentDidMount() {
         try {
             this.getData();
 
-
-        } catch {
-            console.log("test")
+        } catch(ex) {
+            console.log("BookNow exception: ", ex)
         }
     }
 
@@ -77,6 +74,8 @@ export default class BookNow extends React.Component {
                     };
                 });
                 this.setState({ SpecialGameSelection: SpecialGameSelection });
+
+
                 if (this.state.idMatch1 === this.state.SpecialGameSelection[1].idMatch) {
                     this.setState({ SpecialGameSelection: SpecialGameSelection });
                     this.setState({ HomeTeam: this.state.SpecialGameSelection[1].HomeTeam });
@@ -160,12 +159,7 @@ export default class BookNow extends React.Component {
         const startDate = selectedStartDate ? selectedStartDate.toString() : '';
         return (
             <ScrollView style={styles.container}>
-                <ImageBackground source={R.images.gift_card} style={styles.headerBg}>
-                    <Text style={styles.pageTitleText}>
-                        Watch Blaugrana in Camp Nou
-                    </Text>
-                    <Text style={styles.pageText}>#FLYFOOTPROMISE</Text>
-                </ImageBackground>
+                <HeaderBackground title={translate('selectYourFlight')} image={R.images.trip_bg}></HeaderBackground>
                 <View style={{ backgroundColor: "white", width: 310, height: 80, marginLeft: 140, marginTop: -40 }}>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 10, marginTop: 15 }}>MATCH</Text>
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 140, marginTop: -18 }}>CITY</Text>
