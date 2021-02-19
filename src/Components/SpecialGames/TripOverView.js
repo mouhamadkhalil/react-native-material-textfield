@@ -73,17 +73,22 @@ export default class TripOverViewScreen extends React.Component {
                         PricePerFan: item.PricePerFan
                     };
                 });
-                this.setState({ hotGameSelection: hotGameSelection });
-                this.setState({ idMatch2: this.state.hotGameSelection[0].idMatch });
-                if (this.state.idMatch1 === this.state.hotGameSelection[0].idMatch) {
+                this.setState({ match: match });
+                this.setState({ idMatch2: this.state.match[0].idMatch });
+                if (this.state.idMatch1 === this.state.match[0].idMatch) {
                     this.setState({
-                        idMatch2: this.state.hotGameSelection[0].idMatch,
-                        GameDate: this.state.hotGameSelection[0].GameDate,
-                        HomeTeam: this.state.hotGameSelection[0].HomeTeam,
-                        AwayTeam: this.state.hotGameSelection[0].AwayTeam,
-                        StadeCity: this.state.hotGameSelection[0].StadeCity,
-                        tripDays: this.state.hotGameSelection[0].TripDays,
-                        pricePerFan: this.state.hotGameSelection[0].PricePerFan,
+                        idMatch2: this.state.match[0].idMatch,
+                        GameCode: this.state.match[0].GameCode,
+                        GameDate: this.state.match[0].GameDate,
+                        HomeTeam: this.state.match[0].HomeTeam,
+                        AwayTeam: this.state.match[0].AwayTeam,
+                        Team1Color1: this.state.match[0].Team1Color1,
+                        Team1Color2: this.state.match[0].Team1Color2,
+                        Team2Color1: this.state.match[0].Team2Color1,
+                        Team2Color2: this.state.match[0].Team2Color2,
+                        StadeCity: this.state.match[0].StadeCity,
+                        tripDays: this.state.match[0].TripDays,
+                        pricePerFan: this.state.match[0].PricePerFan,
                         StartDate: response.Deals[0].StartDate.split("T")[0].split("-").reverse().join("."),
                         EndDate: response.Deals[0].EndDate.split("T")[0].split("-").reverse().join("."),
                         HotelName: response.Deals[0].HotelName,
@@ -111,13 +116,18 @@ export default class TripOverViewScreen extends React.Component {
                 else
                     if (this.state.idMatch1 === this.state.match[1].idMatch) {
                         this.setState({
-                            idMatch2: this.state.hotGameSelection[0].idMatch,
-                            GameDate: this.state.hotGameSelection[1].GameDate,
-                            HomeTeam: this.state.hotGameSelection[1].HomeTeam,
-                            AwayTeam: this.state.hotGameSelection[1].AwayTeam,
-                            StadeCity: this.state.hotGameSelection[1].StadeCity,
-                            tripDays: this.state.hotGameSelection[1].TripDays,
-                            pricePerFan: this.state.hotGameSelection[1].PricePerFan,
+                            idMatch2: this.state.match[1].idMatch,
+                            GameCode: this.state.match[1].GameCode,
+                            GameDate: this.state.match[1].GameDate,
+                            HomeTeam: this.state.match[1].HomeTeam,
+                            AwayTeam: this.state.match[1].AwayTeam,
+                            Team1Color1: this.state.match[1].Team1Color1,
+                            Team1Color2: this.state.match[1].Team1Color2,
+                            Team2Color1: this.state.match[1].Team2Color1,
+                            Team2Color2: this.state.match[1].Team2Color2,
+                            StadeCity: this.state.match[1].StadeCity,
+                            tripDays: this.state.match[1].TripDays,
+                            pricePerFan: this.state.match[1].PricePerFan,
                             StartDate: response.Deals[1].StartDate.split("T")[0],
                             EndDate: response.Deals[1].EndDate.split("T")[0],
                             HotelName: response.Deals[1].HotelName,
@@ -173,7 +183,7 @@ export default class TripOverViewScreen extends React.Component {
                         <View style={{ width: "50%", padding: 20 }}>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <LinearGradient
-                                    colors={[this.state.Team1Color1 || "blue", this.state.Team1Color2 || "green"]}
+                                    colors={[this.state.Team1Color1, this.state.Team1Color2]}
                                     style={styles.linearGradient}
                                     start={[0, 0]}
                                     end={[1, 0]}
@@ -183,7 +193,7 @@ export default class TripOverViewScreen extends React.Component {
                             </View>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <LinearGradient
-                                    colors={[this.state.Team2Color1 || "blue", this.state.Team2Color2 || "green"]}
+                                    colors={[this.state.Team2Color1, this.state.Team2Color2 ]}
                                     style={styles.linearGradient}
                                     start={[0, 0]}
                                     end={[1, 0]}
