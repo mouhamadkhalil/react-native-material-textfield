@@ -9,6 +9,7 @@ const images = {
     flag_grey: require('../../../assets/images/icons/flag1.png'),
     share: require('../../../assets/images/icons/share.png'),
     location: require('../../../assets/images/icons/location-icon.png'),
+    location3: require('../../../assets/images/icons/location-3.png'),
     button_green: require('../../../assets/images/icons/btn-bg.png'),
     logo_icon: require('../../../assets/images/icons/flyfoot1.png'),
     question: require('../../../assets/images/icons/faq1.png'),
@@ -33,6 +34,8 @@ const images = {
     refundGrey: require('../../../assets/images/icons/refund-grey.png'),
     norefundWhite: require('../../../assets/images/icons/norefund-white.png'),
     
+    airplane: require('../../../assets/images/icons/airplane.png'),
+
     /* chat */
     chat: require('../../../assets/images/icons/chat1.png'),
     feedback: require('../../../assets/images/icons/feedback.png'),
