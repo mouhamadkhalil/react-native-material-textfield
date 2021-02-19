@@ -220,16 +220,10 @@ export default class AllGames extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={{ flex: 1, flexDirection: 'column' }}>
-                    {/* banner begin*/}
-                    <View>
-                        <Image source={R.images.all_games_bg} style={{ width: '100%' }} />
-                        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: 'white', fontSize: 26, fontWeight: 'bold' }} >All Games</Text>
-                        </View>
-                    </View>
-                    {/* banner end*/}
+                    {/* banner */}
+                    <HeaderBackground title={translate('allGames')} image={R.images.trip_bg}></HeaderBackground>
 
-                    {/* filter begin*/}
+                    {/* filter */}
                     <View style={{ flex: 1, flexDirection: 'row', backgroundColor: "white", width: '90%', height: 70, marginTop: -35, alignSelf: 'center', shadowColor: "grey", shadowOffset: { width: 0, height: 5, }, shadowOpacity: 0.5, shadowRadius: 5.84, elevation: 5 }}>
                         <TouchableOpacity style={{ flex: 1, flexDirection: 'row', width: '60%', height: '100%', justifyContent: 'center', alignItems: 'center', borderRightWidth: 1, borderRightColor: 'grey' }}
                             onPress={() => {
@@ -245,9 +239,8 @@ export default class AllGames extends React.Component {
                             <Image source={R.images.list_grey} style={{ width: 20, height: 20 }}></Image>
                         </TouchableOpacity>
                     </View>
-                    {/* filter end*/}
 
-                    {/* filter picker begin */}
+                    {/* filter picker */}
                     <View style={{
                         flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'flex-end', width: '90%', height: 20, marginTop: 10, ...(Platform.OS !== 'android' && {
                             zIndex: 10
@@ -276,9 +269,8 @@ export default class AllGames extends React.Component {
                             placeholderStyle={{ textTransform: 'uppercase' }}
                         />
                     </View>
-                    {/* filter picker end */}
 
-                    {/* render games begin*/}
+                    {/* render games */}
                     {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginLeft: 10 }} />
                         :
                         <View style={{ width: '90%', alignSelf: 'center', zIndex: 1 }}>
@@ -290,9 +282,8 @@ export default class AllGames extends React.Component {
                             />
                         </View>
                     }
-                    {/* render games end*/}
 
-                    {/* Filter modal begin*/}
+                    {/* Filter modal */}
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -481,7 +472,6 @@ export default class AllGames extends React.Component {
                                 : null}
                         </View>
                     </Modal>
-                    {/* Filter modal end*/}
 
                     <Chat />
                 </View>

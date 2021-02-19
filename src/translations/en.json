@@ -24,8 +24,10 @@
     "single": "Single",
     "double": "Double",
     "triple": "Triple",
+    "seats": "Seats",
     "infantBed": "Infant bed",
 
+    "tripOverview": "Trip overview",
     "browse": "Browse",
     "selectHotel": "Select hotel",
     "noBreakfast": "No Breakfast",
@@ -38,6 +40,7 @@
     "back": "Back",
     "continue": "Continue",
     
+    "allGames": "All games",
     "sortBy": "sort by",
     "searchTeam": "Search for a team",
     "searchCity" : "Search for a city",

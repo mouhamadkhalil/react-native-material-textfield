@@ -11,6 +11,12 @@ const styles = {
         fontSize: 26,
         fontWeight: 'bold',
         marginTop: '10%'
+    },
+    starStyle: {
+        color: "#f9d155",
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
     }
 };
 
