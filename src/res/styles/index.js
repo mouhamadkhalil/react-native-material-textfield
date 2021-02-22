@@ -8,6 +8,7 @@ const styles = {
     headerBackground: {
         height: 200,
         alignItems: "center",
+        justifyContent: "center"
     },
     pageTitleText: {
         color: '#fff',

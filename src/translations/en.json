@@ -2,11 +2,12 @@
     "specialGames": "special games",
     "popularGames": "popular games",
     "hotGames": "hot games",
-    "popularTeams":"popular teams",
+    "popularTeams": "popular teams",
     "competitions": "competitions",
     "loadMore": "Load more",
     "team": "Team",
     "teams": "Teams",
+    "request": "Request",
     "city": "City",
     "cities": "Cities",
     "date": "Date",
@@ -26,41 +27,32 @@
     "triple": "Triple",
     "seats": "Seats",
     "infantBed": "Infant bed",
-
     "tripOverview": "Trip overview",
     "browse": "Browse",
     "selectHotel": "Select hotel",
     "noBreakfast": "No Breakfast",
     "includeBreakfast": "Include Breakfast",
-
     "stadium": "Stadium",
     "seatingOptions": "Seating options",
-
     "perks": "Perks",
-
     "cancel": "cancel",
     "back": "Back",
     "continue": "Continue",
-    
     "allGames": "All games",
     "sortBy": "sort by",
     "searchTeam": "Search for a team",
-    "searchCity" : "Search for a city",
+    "searchCity": "Search for a city",
     "searchCompetition": "Search for a competition",
     "applyFilters": "Apply filters",
-
     "selectYourFlight": "Select your flight",
     "flightOptions": "Flight Options",
     "dontWantFlights": "I don't want flights",
     "flyingFrom": "Flying from",
     "selectFlight": "Select flight",
-
     "customizeTrip": "Customize Trip",
-    
     "chatWithUs": "chat with us?",
     "messenger": "Messenger",
     "whatsapp": "Whatsapp",
     "feedback": "Feedback",
-
     "msgNotFound": "Not found!"
 }

@@ -172,7 +172,7 @@ export default class TripOverViewScreen extends React.Component {
                                         {this.state.seating.InventoryTickets[0].qa + " " + translate('seats')}
                                     </Text>
                                     <Image source={{ uri: this.state.seating.StadiumMap_IMG_v3 }}
-                                        style={{ width: "100%", height: 200, marginTop: 30 }} />
+                                        style={{ width: "100%", height: 230, marginTop: 30 }} />
                                 </View>
 
                                 {/* perks */}
@@ -214,7 +214,7 @@ export default class TripOverViewScreen extends React.Component {
                             </View>
 
                             {/* buttons */}
-                            <View style={{ width: '90%', alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
+                            <View style={{ marginStart: 15, marginEnd: 15, alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
                                 <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.Customize}>
                                     <Text style={{ fontWeight: "bold", color: "#fff" }}>CUSTOMIZE</Text>
                                 </TouchableHighlight>
