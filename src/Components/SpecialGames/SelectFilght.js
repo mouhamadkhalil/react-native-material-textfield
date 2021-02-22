@@ -182,7 +182,7 @@ export default class SelectFlightScreen extends React.Component {
         console.log(Outbound, Return);
         const min = moment(Outbound.FlightSegment[Outbound.FlightSegment.length - 1].ArrivalDateTime).diff(moment(Outbound.FlightSegment[0].DepartureDateTime), "minutes");
         const time = Math.floor(min / 60) + "h " + (min % 60) + "min"
-        const min2 = moment(Outbound.FlightSegment[Return.FlightSegment.length - 1].ArrivalDateTime).diff(moment(Return.FlightSegment[0].DepartureDateTime), "minutes");
+        const min2 = moment(Return.FlightSegment[Return.FlightSegment.length - 1].ArrivalDateTime).diff(moment(Return.FlightSegment[0].DepartureDateTime), "minutes");
         const time2 = Math.floor(min2 / 60) + "h " + (min2 % 60) + "min"
 
         return (
