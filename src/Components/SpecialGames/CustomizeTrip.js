@@ -3,10 +3,8 @@ import {
     StyleSheet,
     Text,
     Image,
-    Button,
     ScrollView,
     View,
-    CheckBox,
     TouchableOpacity,
     Modal,
     ActivityIndicator,
@@ -18,24 +16,12 @@ import RadioButtonRN from 'radio-buttons-react-native';
 import { HeaderBackground } from "../Common/HeaderBackground";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { get, servicesUrl } from "../../helpers/services.js";
+import { get, post, servicesUrl } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils";
 import Chat from "../FanChat/chat";
 import moment from 'moment';
 import R from "res/R";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-
-const data = [
-    {
-        label: 'Category 1 '
-    },
-    {
-        label: 'Category 2 +222$'
-    },
-    {
-        label: 'Category 3  +0$'
-    },
-];
 
 export default class CustomizeTripScreen extends React.Component {
 
@@ -136,6 +122,29 @@ export default class CustomizeTripScreen extends React.Component {
             });
     }
 
+    browseHotels = () => {
+        var data = this.state.data;
+        data.NumberOfTravelers = this.state.details.NumberOfTravelers;
+        data.NumberOfRooms = this.state.details.NumberOfRooms;
+        data.RoomInfoList[0].AdultNum.RoomType = 'Triple';
+        data.RoomInfoList[0].AdultNum.text = 3;
+        post(servicesUrl.searchHotel, data)
+            .then((response) => {
+                this.setState({ data: response, hotelList: response.HotelList.Items })
+            });
+    }
+
+    loadMoreHotels = () => {
+        var data = this.state.data;
+        data.HotelList.PageNumber = data.HotelList.PageNumber + 1;
+        this.setState({isLoadingMore: true});
+        post(servicesUrl.searchHotel, data)
+        .then((response) => {
+            var joined = this.state.hotelList.concat(response.HotelList.Items);
+            this.setState({ data: response, hotelList: joined, isLoadingMore: false })
+        });
+    }
+
     Cancel = () => {
         this.props.navigation.navigate('tripoverview', { idMatch: this.state.game.idMatch, gameCode: this.state.game.GameCode });
     };
@@ -145,59 +154,63 @@ export default class CustomizeTripScreen extends React.Component {
     };
 
     IncrementFan = () => {
-        var details = this.state.details;
-        var fanNumbers = this.state.details.NumberOfTravelers + 1;
-        var roomNumbers = Math.ceil(fanNumbers / 3);
-        var roomsHeight = 200 + (roomNumbers * 100);
-        var roomDetails = [];
-        var restFanNumbers = fanNumbers;
-        for (let i = 0; i < roomNumbers; i++) {
-            var item = {
-                index: i,
-                active: 'single',
-                infant: false
+        if (this.state.details.NumberOfTravelers < 8) {
+            var details = this.state.details;
+            var fanNumbers = this.state.details.NumberOfTravelers + 1;
+            var roomNumbers = Math.ceil(fanNumbers / 3);
+            var roomsHeight = 200 + (roomNumbers * 100);
+            var roomDetails = [];
+            var restFanNumbers = fanNumbers;
+            for (let i = 0; i < roomNumbers; i++) {
+                var item = {
+                    index: i,
+                    active: 'single',
+                    infant: false
+                }
+                if (restFanNumbers >= 3) {
+                    item.active = 'triple'
+                    restFanNumbers = restFanNumbers - 3;
+                }
+                else if (restFanNumbers >= 2) {
+                    item.active = 'double';
+                    restFanNumbers = restFanNumbers - 2;
+                }
+                roomDetails.push(item)
             }
-            if (restFanNumbers >= 3) {
-                item.active = 'triple'
-                restFanNumbers = restFanNumbers - 3;
-            }
-            else if (restFanNumbers >= 2) {
-                item.active = 'double';
-                restFanNumbers = restFanNumbers - 2;
-            }
-            roomDetails.push(item)
+            details.NumberOfTravelers = fanNumbers;
+            details.NumberOfRooms = roomNumbers;
+            this.setState({ details, roomDetails, roomsHeight });
         }
-        details.NumberOfTravelers = fanNumbers;
-        details.NumberOfRooms = roomNumbers;
-        this.setState({ details, roomDetails, roomsHeight });
     };
 
     DecrementFan = () => {
-        var details = this.state.details;
-        var fanNumbers = this.state.details.NumberOfTravelers - 1;
-        var roomNumbers = Math.ceil(fanNumbers / 3);
-        var roomsHeight = this.state.roomsHeight > 200 ? this.state.roomsHeight - (100) : 200;
-        var roomDetails = [];
-        var restFanNumbers = fanNumbers;
-        for (let i = 0; i < roomNumbers; i++) {
-            var item = {
-                index: i,
-                active: 'single',
-                infant: false
+        if (this.state.details.NumberOfTravelers > 1) {
+            var details = this.state.details;
+            var fanNumbers = this.state.details.NumberOfTravelers - 1;
+            var roomNumbers = Math.ceil(fanNumbers / 3);
+            var roomsHeight = this.state.roomsHeight > 200 ? this.state.roomsHeight - (100) : 200;
+            var roomDetails = [];
+            var restFanNumbers = fanNumbers;
+            for (let i = 0; i < roomNumbers; i++) {
+                var item = {
+                    index: i,
+                    active: 'single',
+                    infant: false
+                }
+                if (restFanNumbers >= 3) {
+                    item.active = 'triple'
+                    restFanNumbers = restFanNumbers - 3;
+                }
+                else if (restFanNumbers >= 2) {
+                    item.active = 'double';
+                    restFanNumbers = restFanNumbers - 2;
+                }
+                roomDetails.push(item)
             }
-            if (restFanNumbers >= 3) {
-                item.active = 'triple'
-                restFanNumbers = restFanNumbers - 3;
-            }
-            else if (restFanNumbers >= 2) {
-                item.active = 'double';
-                restFanNumbers = restFanNumbers - 2;
-            }
-            roomDetails.push(item)
+            details.NumberOfTravelers = fanNumbers;
+            details.NumberOfRooms = roomNumbers;
+            this.setState({ details, roomDetails, roomsHeight });
         }
-        details.NumberOfTravelers = fanNumbers;
-        details.NumberOfRooms = roomNumbers;
-        this.setState({ details, roomDetails, roomsHeight });
     };
 
     IncrementRoom = () => {
@@ -213,20 +226,6 @@ export default class CustomizeTripScreen extends React.Component {
         var details = this.state.details;
         details.NumberOfRooms = this.state.details.NumberOfRooms - 1;
         this.setState({ details });
-    };
-
-    Infants1 = () => {
-        this.setState({ Infant1: true });
-    };
-
-    Infants2 = () => {
-        this.setState({ Infant2: true });
-    };
-
-    DisableInfant = () => {
-        this.setState({ Infant1: false });
-        this.setState({ Infant2: false });
-
     };
 
     roomItem = ({ item }) =>
@@ -325,7 +324,7 @@ export default class CustomizeTripScreen extends React.Component {
                 {this.state.pageCount > this.state.pageNumber ? (
                     <TouchableOpacity
                         activeOpacity={0.9}
-                        //onPress={this.loadMore}
+                        onPress={this.loadMoreHotels}
                         style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: 20, borderRadius: 20, zIndex: 100 }}>
                         <Text style={{ color: "white", fontWeight: "bold", textTransform: 'uppercase' }} >{translate('loadMore')}</Text>
                         {this.state.isLoadingMore ? (
@@ -497,7 +496,7 @@ export default class CustomizeTripScreen extends React.Component {
                         {/* browse */}
                         <View style={{ width: '60%', marginTop: 40, padding: 20 }}>
                             <TouchableOpacity style={{ backgroundColor: R.colors.greenLight, height: 60, alignItems: 'center', justifyContent: 'center' }}
-                                onPress={this.Browser}
+                                onPress={this.browseHotels}
                             >
                                 <Text style={{ fontSize: 20, textTransform: 'uppercase' }}>{translate('browse')}</Text>
                             </TouchableOpacity>
@@ -555,7 +554,7 @@ export default class CustomizeTripScreen extends React.Component {
                         PERKS
                     </Text>
                     <TouchableOpacity>
-                        <Image source={R.images.onspot} style={{ marginTop: 10, width:50, height:50, resizeMode:'contain' }} />
+                        <Image source={R.images.onspot} style={{ marginTop: 10, width: 50, height: 50, resizeMode: 'contain' }} />
                         <Text style={{ marginLeft: 143, color: "blue", fontWeight: "bold", width: 50, fontSize: 9 }}>
                             On Spot Service
                     </Text>
@@ -563,7 +562,7 @@ export default class CustomizeTripScreen extends React.Component {
                 </View>
 
                 {/* buttons begin */}
-                <View style={{ flex: 1, flexDirection: 'row', width:'90%',  alignSelf: 'center', height: 50, marginTop: 20 }}>
+                <View style={{ flex: 1, flexDirection: 'row', width: '90%', alignSelf: 'center', height: 50, marginTop: 20 }}>
                     <TouchableOpacity style={{ width: '50%', alignItems: 'center', justifyContent: 'center', textTransform: 'uppercase', backgroundColor: R.colors.buttonBlack }}
                         onPress={this.Cancel}
                     >

@@ -23,7 +23,7 @@ export default class TripOverViewScreen extends React.Component {
         super(props);
 
         this.state = {
-            isLoading: false,
+            isLoading: true,
             gameCode: this.props?.route?.params?.gameCode,
             idHotel: -1,
             details: {},
@@ -91,11 +91,11 @@ export default class TripOverViewScreen extends React.Component {
     }
 
     Customize = () => {
-        this.props.navigation.navigate('customize', { gameCode: this.state.GameCode });
+        this.props.navigation.navigate('customize', { gameCode: this.state.game.GameCode });
     };
 
     Flight = () => {
-        this.props.navigation.navigate('flight', { gameCode: this.state.GameCode });
+        this.props.navigation.navigate('flight', { gameCode: this.state.game.GameCode });
     };
 
     render() {
@@ -105,7 +105,7 @@ export default class TripOverViewScreen extends React.Component {
                 <HeaderBackground title={translate('tripOverview')} image={R.images.trip_bg}></HeaderBackground>
 
                 {/* match header */}
-                <MatchHeader game={this.state.game} details={this.state.details} perks={this.state.perks} />
+                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} perks={this.state.perks} />
 
                 {/* package details */}
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>

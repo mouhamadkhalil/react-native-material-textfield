@@ -18,19 +18,14 @@ export class MatchHeader extends React.Component {
         super(props);
 
         this.state = {
-            isLoading: true,
             isButtonPressed: false,
         };
-    }
-
-    componentDidMount() {
-        this.setState({ isLoading: false });
     }
 
     render() {
         return (
             <>
-                {this.state.isLoading ? <ActivityIndicator size="large" color={R.colors.blue} style={{ marginTop: 120, marginStart: 15 }} /> :
+                {this.props.isLoading ? <ActivityIndicator size="large" color={R.colors.blue} style={{ marginTop: 120, marginStart: 15 }} /> :
                     <View style={{
                         backgroundColor: "white", height: this.state.isButtonPressed ? 425 : 250, marginStart: 15, marginEnd: 15, marginTop: -40, padding: 0, shadowColor: "#000",
                         shadowOffset: { width: 0, height: 5 },

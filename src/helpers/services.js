@@ -12,7 +12,8 @@ export const servicesUrl = {
     getAmadeusCities: '/mobile/city/amadeusCity',
 
     /* POST */
-    searchFlights: '/mobile/game/SearchFlight'
+    searchFlights: '/mobile/game/SearchFlight',
+    searchHotel: '/mobile/game/SearchHotel'
 }
 
 getToken = async () => {
