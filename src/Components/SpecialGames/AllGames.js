@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, TouchableHighlight, Text, Image, Platform , ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, Modal, TouchableHighlight, Text, Image, Platform, ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import { get, servicesUrl } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils.js";
 import DatepickerRange from 'react-native-range-datepicker';
+import { HeaderBackground } from "../Common/HeaderBackground";
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chat from "../FanChat/chat";
 import moment from 'moment';
@@ -115,9 +116,11 @@ export default class AllGames extends React.Component {
     }
 
     loadMore = () => {
-        this.setState({ isLoadingMore: true, pageNumber: this.state.pageNumber + 1 }, () => {
-            this.getAllGames();
-        });
+        if (!this.state.isLoadingMore) {
+            this.setState({ isLoadingMore: true, pageNumber: this.state.pageNumber + 1 }, () => {
+                this.getAllGames();
+            });
+        }
     };
 
     applyFilter = () => {
@@ -138,11 +141,14 @@ export default class AllGames extends React.Component {
                     <TouchableOpacity
                         activeOpacity={0.9}
                         onPress={this.loadMore}
-                        style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: 20, borderRadius: 20, zIndex: 100 }}>
-                        <Text style={{ color: "white", fontWeight: "bold", textTransform: 'uppercase' }} >{translate('loadMore')}</Text>
-                        {this.state.isLoadingMore ? (
-                            <ActivityIndicator color="#fff" />
-                        ) : null}
+                        style={R.styles.loadMoreButton}>
+                        {this.state.isLoadingMore ?
+                            <ActivityIndicator color="white" />
+                            :
+                            <Text style={R.styles.loadMoreText} >
+                                {translate('loadMore')}
+                            </Text>
+                        }
                     </TouchableOpacity>
                 ) : null}
             </View>
@@ -209,7 +215,7 @@ export default class AllGames extends React.Component {
                         flexDirection: 'row', alignSelf: 'flex-end',
                         alignItems: 'center', justifyContent: 'center', width: '40%', height: '100%', backgroundColor: '#76ff02'
                     }}
-                    onPress={item.Price > 0 && item.Price != null ? () => this.props.navigation.navigate('book now', { idMatch: item.idMatch }) : () => this.props.navigation.navigate('request', { idMatch: item.idMatch })}>
+                    onPress={item.Price > 0 && item.Price != null ? () => this.props.navigation.navigate('tripoverview', { gameCode: item.GameCode }) : () => this.props.navigation.navigate('request', { idMatch: item.idMatch })}>
                     <Text style={{ fontSize: 14, textTransform: 'uppercase' }}>{item.Price > 0 && item.Price != null ? 'book now' : 'request'}</Text>
                     <Image source={R.images.arrowRight} style={{ marginLeft: 10 }} />
                 </TouchableOpacity>
@@ -446,7 +452,7 @@ export default class AllGames extends React.Component {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                                <TouchableOpacity onPress={this.applyFilter} style={{ width: '50%', marginTop: 20, padding: 20, backgroundColor: R.colors.greenLight, alignSelf: 'center' }}>
+                                <TouchableOpacity onPress={this.applyFilter} style={{ width: '50%', marginTop: 20, padding: 20, backgroundColor: R.colors.lightGreen, alignSelf: 'center' }}>
                                     <Text style={{ fontSize: 15, textTransform: 'uppercase', alignSelf: 'center' }}>
                                         {translate('applyFilters')}
                                     </Text>

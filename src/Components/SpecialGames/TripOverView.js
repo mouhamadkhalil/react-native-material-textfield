@@ -56,11 +56,6 @@ export default class TripOverViewScreen extends React.Component {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = response.SelectedHotel;
                 hotel.Stars = new Array(parseInt(hotel.Rating)).fill(1);
-                
-                // test
-                var selected = hotel.SelectedCategory;
-                console.log(selected); 
-                
                 var seating = response.MatchBundleDetail[0].GameSeat;
                 var perks = {
                     OnSpot: response.Service_OnSpot,
@@ -145,14 +140,14 @@ export default class TripOverViewScreen extends React.Component {
                                         {this.state.hotel.HotelName}
                                     </Text>
                                     <View style={{ flex: 1, flexDirection: 'row' }}>
-                                        {/*this.state.hotel.Stars.map(star => {
+                                        {this.state.hotel.Stars.map(star => {
                                             return (
-                                                <Icon name='star-outline' style={R.styles.starStyle} />
+                                                <Icon name='star' style={R.styles.hotelStar} />
                                             );
-                                        })*/}
+                                        })}
                                     </View>
                                     <Text style={{ color: "gray", marginTop: 30, fontSize: 16 }}>
-                                        {/*this.state.hotel.SelectedCategory.RoomType[0].TypeName + " x " + this.state.hotel.SelectedCategory.RoomType[0].NumRooms*/}
+                                        {this.state.hotel.SelectedCategory.RoomType[0].TypeName + " x " + this.state.hotel.SelectedCategory.RoomType[0].NumRooms}
                                     </Text>
 
                                     <Lightbox >
@@ -174,7 +169,7 @@ export default class TripOverViewScreen extends React.Component {
                                         {this.state.game.Stade}, {this.state.game.StadeCity}
                                     </Text>
                                     <Text style={{ color: "gray", fontSize: 16 }}>
-                                        {/*this.state.seating.InventoryTickets[0].qa + " " + translate('seats')*/}
+                                        {this.state.seating.InventoryTickets[0].qa + " " + translate('seats')}
                                     </Text>
                                     <Image source={{ uri: this.state.seating.StadiumMap_IMG_v3 }}
                                         style={{ width: "100%", height: 200, marginTop: 30 }} />
@@ -182,7 +177,9 @@ export default class TripOverViewScreen extends React.Component {
 
                                 {/* perks */}
                                 <View style={{ padding: 25, borderBottomWidth: 2, borderColor: "#eee" }}>
-                                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginBottom: 15 }}>PERKS</Text>
+                                    <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginBottom: 15 }}>
+                                        {translate('perks')}
+                                    </Text>
                                     <View style={styles.perksRow}>
                                         <View style={styles.perk}>
                                             <Image source={this.state.perks.OnSpot ? R.images.onspot : R.images.onspotGrey} style={styles.perkImage} />
@@ -221,7 +218,7 @@ export default class TripOverViewScreen extends React.Component {
                                 <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.Customize}>
                                     <Text style={{ fontWeight: "bold", color: "#fff" }}>CUSTOMIZE</Text>
                                 </TouchableHighlight>
-                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.greenLight, alignItems: "center", justifyContent: "center" }} onPress={this.Flight}>
+                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }} onPress={this.Flight}>
                                     <Text style={{ fontWeight: "bold" }}>SELECT FLIGHT</Text>
                                 </TouchableHighlight>
                             </View>
@@ -242,21 +239,6 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: "#eeeeee",
     },
-    pageTitleBar: {
-        backgroundColor: "black",
-        height: 8,
-        width: 30,
-    },
-    pageTitleText: {
-        color: "white",
-        fontSize: 26,
-        fontWeight: "bold",
-    },
-    headerBg: {
-        height: 200,
-        alignItems: "center",
-        justifyContent: "center",
-    },
     blueText: {
         fontWeight: "bold",
         color: R.colors.blue,
@@ -266,14 +248,6 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         color: "#151b20",
         fontSize: 14
-    },
-    linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        borderWidth: 0.5,
-        height: 20,
-        width: 20,
     },
     perksRow: { flexDirection: "row", justifyContent: "space-between" },
     perkImage: { width: 42, height: 44 },

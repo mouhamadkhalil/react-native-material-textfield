@@ -14,7 +14,7 @@ import R from "res/R";
 import { get, post, servicesUrl } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils";
 import { HeaderBackground } from "../Common/HeaderBackground";
-import { LinearGradient } from "expo-linear-gradient";
+import { MatchHeader } from "../Trips/MatchHeader";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import DropDownPicker from "react-native-dropdown-picker";
 import Svg from 'react-native-remote-svg';
@@ -39,7 +39,7 @@ export default class SelectFlightScreen extends React.Component {
             airlines: [],
             pageCount: 1,
             pageNumber: 1,
-            isLoading: false,
+            isLoading: true,
             isLoadingMore: false,
             isVisibleDropdownPicker: false
         };
@@ -105,7 +105,7 @@ export default class SelectFlightScreen extends React.Component {
                     FinalPricePerFan: response.FinalPricePerFan,
                     SharingRoomNote: response.SharingRoomNote,
                 }
-                this.setState({ data: response, game: game, hotel: hotel, seating: seating, pearks: pearks, details: details })
+                this.setState({ data: response, game: game, hotel: hotel, seating: seating, pearks: pearks, details: details, isLoading: false })
             });
     }
 
@@ -251,11 +251,14 @@ export default class SelectFlightScreen extends React.Component {
                     <TouchableOpacity
                         activeOpacity={0.9}
                         //onPress={this.loadMore}
-                        style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: 20, borderRadius: 20, zIndex: 100 }}>
-                        <Text style={{ color: "white", fontWeight: "bold", textTransform: 'uppercase' }} >{translate('loadMore')}</Text>
-                        {this.state.isLoadingMore ? (
-                            <ActivityIndicator color="#fff" />
-                        ) : null}
+                        style={R.styles.loadMoreButton}>
+                        {this.state.isLoadingMore ?
+                            <ActivityIndicator color="white" />
+                            :
+                            <Text style={R.styles.loadMoreText} >
+                                {translate('loadMore')}
+                            </Text>
+                        }
                     </TouchableOpacity>
                 ) : null}
             </View>
@@ -265,76 +268,13 @@ export default class SelectFlightScreen extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
+                {/* banner */}
                 <HeaderBackground title={translate('selectYourFlight')} image={R.images.trip_bg}></HeaderBackground>
-                <View style={{
-                    backgroundColor: "white", height: this.state.isButtonPressed ? 425 : 250, marginStart: 15, marginEnd: 15, marginTop: -40, padding: 0, shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 5 },
-                    shadowOpacity: 1.2,
-                    shadowRadius: 2,
-                    elevation: 5,
-                }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <View style={{ width: '50%', padding: 20 }} >
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <LinearGradient
-                                    colors={[this.state.game.Team1Color1, this.state.game.Team1Color2]}
-                                    style={styles.linearGradient}
-                                    start={[0, 0]}
-                                    end={[1, 0]}
-                                    locations={[0.5, 0.5]}
-                                />
-                                <Text style={{ ...styles.blueText, marginStart: 10 }}>{this.state.game.HomeTeam}</Text>
-                            </View>
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <LinearGradient
-                                    colors={[this.state.game.Team2Color1, this.state.game.Team2Color2]}
-                                    style={styles.linearGradient}
-                                    start={[0, 0]}
-                                    end={[1, 0]}
-                                    locations={[0.5, 0.5]}
-                                />
-                                <Text style={{ ...styles.blueText, marginStart: 10 }}>{this.state.game.AwayTeam}</Text>
-                            </View>
-                        </View>
-                        <Text style={{ width: "50%", ...styles.blueText, padding: 20 }}>{moment(this.state.game.GameDate).format('D.MM.YY')}</Text>
-                    </View>
-                    <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
-                        <Text style={{ width: "50%", ...styles.darkText, padding: 20, borderRightWidth: 1, borderColor: "#eee" }}>{this.state.details.TripDays + " " + translate('days')}</Text>
-                        <Text style={{ width: "50%", ...styles.darkText, padding: 20, textTransform: "uppercase" }}>{this.state.game.City}</Text>
-                    </View>
-                    <TouchableOpacity style={{ position: "absolute", width: "100%", top: 155, height: this.state.isButtonPressed ? 140 : 80, backgroundColor: "#fff", zIndex: 1 }}
-                        onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 20 }}>
-                            <View style={{}}>
-                                <Text style={{ fontSize: 17.5, color: R.colors.green, fontWeight: "bold" }}>{this.state.details.PricePerFan}$ / fan</Text>
-                                <Text style={{ fontSize: 14, marginTop: 5 }}>{(this.state.details.BasePricePerFan + 46) * this.state.details.NumberOfTravelers}$ Total *</Text>
-                            </View>
-                            <Image source={R.images.arrow_down} style={{ height: 14, width: 12 }} />
-                        </View>
-                        <TouchableOpacity onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })} style={{
-                            height: 170, width: "100%", backgroundColor: "#fff", display: this.state.isButtonPressed ? "flex" : "none", padding: 20, width: "100%",
-                            zIndex: 2
-                        }}>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                <Text style={{ fontSize: 13, color: "#666" }}>Base Price</Text>
-                                <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>{this.state.details.BasePricePerFan}$ </Text>
-                            </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15, marginBottom: 15 }}>
-                                <Text style={{ fontSize: 11.5, color: R.colors.blue }}>+ ON-SPOT SERVICE</Text>
-                                <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>46$ </Text>
-                            </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                <Text style={{ fontSize: 13, color: "#212121" }}>Total/Fan</Text>
-                                <Text style={{ fontWeight: "bold", color: R.colors.green }}>{this.state.details.PricePerFan}$ </Text>
-                            </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                <Text style={{ fontSize: 16, color: "#212121" }}>Total</Text>
-                                <Text style={{ fontWeight: "bold", color: R.colors.green }}>{this.state.details.FinalPrice}$ </Text>
-                            </View>
-                            <Text style={{ fontSize: 9, color: "#999", marginTop: 10, marginBottom: 10 }}>*Price for 2 fans traveling together </Text>
-                        </TouchableOpacity>
-                    </TouchableOpacity>
-                </View>
+
+                {/* match header */}
+                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} perks={this.state.perks} />
+
+                {/* flight options */}
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
                     {translate('flightOptions')}
                 </Text>

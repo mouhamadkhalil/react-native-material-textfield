@@ -3,7 +3,7 @@ const colors = {
     text: '#0C222B',
     button: '#036675',
     green: '#37CD0A',
-    greenLight: "#76FF02",
+    lightGreen: "#76FF02",
     blue: '#374bbf',
     grey: '#666',
     lightGrey: '#f7f7f7',

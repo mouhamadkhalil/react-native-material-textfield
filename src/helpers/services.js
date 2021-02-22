@@ -3,6 +3,7 @@ import { API_URL, API_TOKEN } from "@env";
 
 export const servicesUrl = {
     /* GET */
+    getHomePageData: '/mobile/game/GetHomePageDataMobile',
     getAllTeams: '/mobile/team/all',
     getAllCities: '/mobile/city/destinationCity',
     getAllLeagues: '/mobile/leagues/all',
@@ -13,7 +14,8 @@ export const servicesUrl = {
 
     /* POST */
     searchFlights: '/mobile/game/SearchFlight',
-    searchHotel: '/mobile/game/SearchHotel'
+    searchHotel: '/mobile/game/SearchHotel',
+    getPagedHotels: '/mobile/game/getPagedHotels'
 }
 
 getToken = async () => {

@@ -12,7 +12,7 @@ import {
     ActivityIndicator,
     Pressable
 } from "react-native";
-import { get } from "../../helpers/services.js";
+import { get, servicesUrl } from "../../helpers/services.js";
 import Carousel from 'react-native-snap-carousel';
 import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -23,7 +23,8 @@ import R from "res/R";
 
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
-const itemWeight = Math.round(itemWidth * 3 / 4);
+const itemHeight = Math.round(itemWidth * 3 / 4);
+
 
 const Screen = Dimensions.get('window');
 
@@ -33,7 +34,6 @@ export default class specialGames extends React.Component {
         super(props);
 
         this.state = {
-            loading: true,
             pageNumber: 1,
             pageSize: 7,
             pageCount: 1,
@@ -44,8 +44,14 @@ export default class specialGames extends React.Component {
             popularTeams: [],
             competitions: [],
             isButtonPressed: false,
-            isDone: false
+            isLoading: false,
+            isLoadingMore: false,
         };
+
+        this.specialGamesCarousel = {}
+        this.hotGamesCarousel = {};
+        this.popularTeamsCarousel = {};
+        this.competitonsCarousel = {};
     }
 
     componentDidMount() {
@@ -64,7 +70,7 @@ export default class specialGames extends React.Component {
 
     getData = () => {
         const _this = this;
-        get('/mobile/game/GetHomePageDataMobile')
+        get(servicesUrl.getHomePageData)
             .then(response => {
                 // Special Games Data
                 var specialGames = response.SpecialGames.map(function (item) {
@@ -86,8 +92,6 @@ export default class specialGames extends React.Component {
                         PricePerFan: item.PricePerFan
                     };
                 });
-                this.setState({ specialGames: specialGames });
-                this.setState({ isDone: true });
 
                 // Popular Games Data
                 var popularGames = response.GamesList.Items.map(function (item) {
@@ -109,7 +113,6 @@ export default class specialGames extends React.Component {
                         FinalPrice: item.FinalPrice
                     };
                 });
-                this.setState({ popularGames: popularGames });
 
                 // Hot Games Data
                 var hotGames = response.Deals.map(function (item) {
@@ -131,7 +134,6 @@ export default class specialGames extends React.Component {
                         PricePerFan: item.PricePerFan
                     };
                 });
-                this.setState({ hotGames: hotGames });
 
                 // Popular Teams Data
                 var popularTeams = response.MainTeams.map(function (team) {
@@ -144,7 +146,6 @@ export default class specialGames extends React.Component {
                         Image: team.v3ImageReference
                     };
                 });
-                this.setState({ popularTeams: popularTeams });
 
                 // Competitions Data
                 var competitions = response.MainLeagues.map(function (league) {
@@ -155,7 +156,7 @@ export default class specialGames extends React.Component {
                         ImageReference: league.ImageReference
                     };
                 });
-                this.setState({ competitions: competitions, loading: false, pageCount: response.GamesList.PageCount });
+                this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: response.GamesList.PageCount, pageSize: response.GamesList.PageSize, isLoading: false });
             });
     };
 
@@ -167,11 +168,14 @@ export default class specialGames extends React.Component {
                     <TouchableOpacity
                         activeOpacity={0.9}
                         onPress={this.loadMore}
-                        style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: -10, borderRadius: 20, zIndex: 100 }}>
-                        <Text style={{ color: "white", fontWeight: "bold", textTransform: 'uppercase' }} >{translate('loadMore')}</Text>
-                        {this.state.loading ? (
-                            <ActivityIndicator color="#fff" />
-                        ) : null}
+                        style={R.styles.loadMoreButton}>
+                        {this.state.isLoadingMore ?
+                            <ActivityIndicator color="white" />
+                            :
+                            <Text style={R.styles.loadMoreText} >
+                                {translate('loadMore')}
+                            </Text>
+                        }
                     </TouchableOpacity>
                 ) : null}
             </View>
@@ -179,37 +183,39 @@ export default class specialGames extends React.Component {
     };
 
     loadMore = () => {
-        this.setState({ loading: true, pageNumber: this.state.pageNumber + 1 }, () => {
-            try {
-                const _this = this;
-                get(`/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}`)
-                    .then(response => {
-                        // Popular Games Data
-                        var data = response.Items.map(function (item) {
-                            var game = item.MatchBundleDetail[0].Game;
-                            return {
-                                idMatch: game.idMatch,
-                                City: game.City,
-                                Stade: game.Stade,
-                                GameDate: game.GameDate,
-                                LeagueName: game.LeagueName,
-                                GameCode: game.GameCode,
-                                HomeTeam: game.HomeTeam,
-                                AwayTeam: game.AwayTeam,
-                                StadeCity: game.StadeCity,
-                                Team1Color1: game.Team1Color1,
-                                Team1Color2: game.Team1Color2,
-                                Team2Color1: game.Team2Color1,
-                                Team2Color2: game.Team2Color2,
-                                FinalPrice: item.FinalPrice
-                            };
+        if (!this.state.isLoadingMore) {
+            this.setState({ isLoadingMore: true, pageNumber: this.state.pageNumber + 1 }, () => {
+                try {
+                    const _this = this;
+                    get(`/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}`)
+                        .then(response => {
+                            // Popular Games Data
+                            var data = response.Items.map(function (item) {
+                                var game = item.MatchBundleDetail[0].Game;
+                                return {
+                                    idMatch: game.idMatch,
+                                    City: game.City,
+                                    Stade: game.Stade,
+                                    GameDate: game.GameDate,
+                                    LeagueName: game.LeagueName,
+                                    GameCode: game.GameCode,
+                                    HomeTeam: game.HomeTeam,
+                                    AwayTeam: game.AwayTeam,
+                                    StadeCity: game.StadeCity,
+                                    Team1Color1: game.Team1Color1,
+                                    Team1Color2: game.Team1Color2,
+                                    Team2Color1: game.Team2Color1,
+                                    Team2Color2: game.Team2Color2,
+                                    FinalPrice: item.FinalPrice
+                                };
+                            });
+                            var joined = this.state.popularGames.concat(data);
+                            this.setState({ popularGames: joined, isLoadingMore: false });
                         });
-                        var joined = this.state.popularGames.concat(data);
-                        this.setState({ popularGames: joined, loading: false });
-                    });
-            }
-            catch { }
-        });
+                }
+                catch { }
+            });
+        }
     };
 
     /******************* Special Game Item ************************/
@@ -270,7 +276,7 @@ export default class specialGames extends React.Component {
 
     /******************* Popular Game Item ************************/
     popularGameItem = ({ item }) =>
-        <Pressable onPress={() => this.props.navigation.navigatenavigate('tripoverview', { gameCode: item.GameCode })}>
+        <Pressable onPress={() => this.props.navigation.navigate('tripoverview', { gameCode: item.GameCode })}>
             <View style={styles.popularGameItem}>
                 <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{moment(new Date(item.GameDate)).format('DD MMM')}</Text>
                 <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{item.HomeTeam}</Text>
@@ -386,7 +392,7 @@ export default class specialGames extends React.Component {
                         <Text style={styles.topNavBtnText}>Deals</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ position: "absolute", right: 0, height: this.state.isButtonPressed ? 100 : 50, width: 100, padding: 10, backgroundColor: R.colors.greenLight, marginLeft: 10, zIndex: 1 }}
+                    <TouchableOpacity style={{ position: "absolute", right: 0, height: this.state.isButtonPressed ? 100 : 50, width: 100, padding: 10, backgroundColor: R.colors.lightGreen, marginLeft: 10, zIndex: 1 }}
                         onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
                         <Text style={styles.topNavBtnText}>Book Trip</Text>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('all games')} style={{ height: 50, width: 100, marginLeft: -10, marginRight: -10, padding: 10, backgroundColor: R.colors.green, display: this.state.isButtonPressed ? "flex" : "none", marginTop: 20 }}>
@@ -419,8 +425,8 @@ export default class specialGames extends React.Component {
                         <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
                     </TouchableOpacity> */}
                 </View>
-                {!this.state.isDone ?
-                    <ActivityIndicator size="large" color="blue" style={{ marginTop: 100, marginLeft: -10 }} />
+                {this.state.isLoading ?
+                    <ActivityIndicator size="large" color="blue" style={{ marginTop: 100 }} />
                     :
                     // Special Games
                     <>
@@ -433,7 +439,7 @@ export default class specialGames extends React.Component {
                             <View style={{ marginTop: -30, marginStart: '-10%' }}>
                                 <Carousel
                                     layout={"default"}
-                                    ref={ref => this.carousel = ref}
+                                    ref={(c) => { this.specialGamesCarousel = c; }}
                                     data={this.state.specialGames}
                                     sliderWidth={485}
                                     itemWidth={350}
@@ -454,7 +460,7 @@ export default class specialGames extends React.Component {
                                     keyExtractor={(item, index) => index}
                                     data={this.state.popularGames}
                                     renderItem={item => this.popularGameItem(item)}
-                                    ListFooterComponent={this.renderPopularGamesFooter.bind(this)}
+                                    ListFooterComponent={this.renderPopularGamesFooter}
                                 />
                             </View>
                         </View>
@@ -469,7 +475,7 @@ export default class specialGames extends React.Component {
                                 <Carousel
                                     style={{ marginLeft: -15 }}
                                     layout={"default"}
-                                    ref={ref => this.carousel = ref}
+                                    ref={(c) => { this.hotGamesCarousel = c; }}
                                     data={this.state.hotGames}
                                     sliderWidth={485}
                                     itemWidth={280}
@@ -489,13 +495,18 @@ export default class specialGames extends React.Component {
                             <View style={{ marginTop: -320, marginBottom: 0, paddingBottom: 50 }}>
                                 <Carousel
                                     layout={"default"}
-                                    ref={ref => this.carousel = ref}
+                                    ref={(c) => { this.popularTeamsCarousel = c; }}
                                     data={this.state.popularTeams}
                                     sliderWidth={Screen.width}
                                     itemWidth={150}
                                     itemHeight={200}
                                     renderItem={this.popularTeamsItem}
-                                    onSnapToItem={index => this.setState({ activeIndex: index })}
+                                    firstItem={1}
+                                    initialScrollIndex={1}
+                                    getItemLayout={(data, index) => (
+                                        { length: 150, offset: 150 * index, index }
+                                    )}
+                                    inactiveSlideOpacity={1}
                                 />
                             </View>
                         </View>
@@ -509,7 +520,7 @@ export default class specialGames extends React.Component {
                             <View style={{ marginTop: -30, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-start' }}>
                                 <Carousel
                                     layout={"default"}
-                                    ref={ref => this.carousel = ref}
+                                    ref={(c) => { this.competitonsCarousel = c; }}
                                     data={this.state.competitions}
                                     sliderWidth={Screen.width}
                                     itemWidth={290}

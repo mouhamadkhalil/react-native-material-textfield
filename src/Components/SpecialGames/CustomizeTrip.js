@@ -36,15 +36,13 @@ export default class CustomizeTripScreen extends React.Component {
             hotelList: [],
             seating: {},
             seatingOptions: [],
-            pearks: {},
+            perks: {},
             cities: [],
             data: {},
             flights: [],
             flightsData: [],
             airlines: [],
-            pageCount: 1,
-            pageNumber: 1,
-            isLoading: false,
+            isLoading: true,
             isLoadingMore: false,
             isButtonPressed: false,
             showDatePicker: false,
@@ -84,7 +82,6 @@ export default class CustomizeTripScreen extends React.Component {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = response.SelectedHotel;
                 var hotelList = response.HotelList.Items;
-                var pageCount = response.HotelList.PageCount;
                 var seating = response.MatchBundleDetail[0].GameSeat;
                 var seatingOptions = response.MatchBundleDetail[0].GameSeats.map(function (option) {
                     return {
@@ -94,14 +91,14 @@ export default class CustomizeTripScreen extends React.Component {
                     }
                 });
                 var stadiumMap = seating.StadiumMap_IMG_v3;
-                var pearks = {
-                    Service_OnSpot: response.Service_OnSpot,
-                    Service_AirPortPickup: response.Service_AirPortPickup,
-                    Service_AirPortDropOff: response.Service_AirPortDropOff,
-                    Service_StadiumTour: response.Service_StadiumTour,
-                    Service_CityTour: response.Service_CityTour,
-                    Service_Train: response.Service_Train,
-                    Service_Insurance: response.Service_Insurance,
+                var perks = {
+                    OnSpot: response.Service_OnSpot,
+                    AirPortPickup: response.Service_AirPortPickup,
+                    AirPortDropOff: response.Service_AirPortDropOff,
+                    StadiumTour: response.Service_StadiumTour,
+                    CityTour: response.Service_CityTour,
+                    Train: response.Service_Train,
+                    Insurance: response.Service_Insurance,
                 }
                 var details = {
                     idMatchBundle: response.idMatchBundle,
@@ -118,7 +115,7 @@ export default class CustomizeTripScreen extends React.Component {
                     NumberOfRooms: response.NumberOfRooms,
                     SharingRoomNote: response.SharingRoomNote,
                 }
-                this.setState({ data: response, game, hotel, hotelList, pageCount, seating, seatingOptions, stadiumMap, pearks, details })
+                this.setState({ data: response, game, hotel, hotelList, seating, seatingOptions, stadiumMap, perks, details, isLoading: false })
             });
     }
 
@@ -135,21 +132,25 @@ export default class CustomizeTripScreen extends React.Component {
     }
 
     loadMoreHotels = () => {
-        var data = this.state.data;
-        data.HotelList.PageNumber = data.HotelList.PageNumber + 1;
-        this.setState({ isLoadingMore: true });
-        post(servicesUrl.searchHotel, data)
-            .then((response) => {
-                var joined = this.state.hotelList.concat(response.HotelList.Items);
-                this.setState({ data: response, hotelList: joined, isLoadingMore: false })
-            });
+        if (!this.state.isLoadingMore) {
+            var data = this.state.data;
+            var params = `?pageNumber=${data.HotelList.PageNumber + 1}&pageSize=${data.HotelList.PageSize}&getCancellationPolicy=false`;
+            this.setState({ isLoadingMore: true });
+            post(servicesUrl.getPagedHotels + params, data)
+                .then((response) => {
+                    var joined = this.state.hotelList.concat(response.Items);
+                    data.HotelList.PageNumber = response.PageNumber;
+                    data.HotelList.PageCount = response.PageCount;
+                    this.setState({ data: data, hotelList: joined, isLoadingMore: false })
+                });
+        }
     }
 
-    Cancel = () => {
-        this.props.navigation.navigate('tripoverview', { idMatch: this.state.game.idMatch, gameCode: this.state.game.GameCode });
+    cancel = () => {
+        this.props.navigation.navigate('tripoverview', { gameCode: this.state.game.GameCode });
     };
 
-    Flight = () => {
+    continue = () => {
         this.props.navigation.navigate('flight', { gameCode: this.state.game.GameCode });
     };
 
@@ -276,7 +277,7 @@ export default class CustomizeTripScreen extends React.Component {
                             <View style={{ flex: 1, flexDirection: 'row' }}>
                                 {rating.map(star => {
                                     return (
-                                        <Icon name='star-outline' style={styles.starStyle} />
+                                        <Icon name='star' style={R.styles.hotelStar} />
                                     );
                                 })}
                             </View>
@@ -321,15 +322,18 @@ export default class CustomizeTripScreen extends React.Component {
         return (
             //Footer View with Load More button
             <View >
-                {this.state.pageCount > this.state.pageNumber ? (
+                {this.state.data.HotelList != undefined && (this.state.data.HotelList.PageCount > this.state.data.HotelList.PageNumber) ? (
                     <TouchableOpacity
                         activeOpacity={0.9}
                         onPress={this.loadMoreHotels}
-                        style={{ backgroundColor: "#4AD219", width: 150, height: 50, alignSelf: "center", alignItems: 'center', justifyContent: 'center', marginTop: 20, borderRadius: 20, zIndex: 100 }}>
-                        <Text style={{ color: "white", fontWeight: "bold", textTransform: 'uppercase' }} >{translate('loadMore')}</Text>
-                        {this.state.isLoadingMore ? (
-                            <ActivityIndicator color={R.colors.greenLight} />
-                        ) : null}
+                        style={R.styles.loadMoreButton}>
+                        {this.state.isLoadingMore ?
+                            <ActivityIndicator color="white" />
+                            :
+                            <Text style={R.styles.loadMoreText} >
+                                {translate('loadMore')}
+                            </Text>
+                        }
                     </TouchableOpacity>
                 ) : null}
             </View>
@@ -341,7 +345,7 @@ export default class CustomizeTripScreen extends React.Component {
             <ScrollView style={styles.container}>
                 {/* banner */}
                 <HeaderBackground title={translate('customizeTrip')} image={R.images.trip_bg}></HeaderBackground>
-                
+
                 {/* match header */}
                 <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} perks={this.state.perks} />
 
@@ -350,40 +354,44 @@ export default class CustomizeTripScreen extends React.Component {
                     <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
                         {translate('semiPackageDetails')}
                     </Text>
-
-                    {/* trip dates */}
-                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: "white", height: 100, marginTop: 10, padding: 20 }}>
-                        <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
-                            {translate('tripDates')}
-                        </Text>
-                        <TouchableOpacity style={{ marginTop: 10, borderBottomWidth: 0.5 }}
-                            onPress={() => this.setState({ showDatePicker: true })}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ height: 30, fontSize: 20, fontWeight: 'bold', width: '90%' }}>
-                                    {moment(this.state.details.StartDate).format('DD.MM.yyy') + " - " + moment(this.state.details.EndDate).format('DD.MM.yyyy')}
+                    {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginStart: 15 }} />
+                        :
+                        <>
+                            {/* trip dates */}
+                            <View style={{ flex: 1, flexDirection: 'column', backgroundColor: "white", height: 100, marginTop: 10, padding: 20 }}>
+                                <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
+                                    {translate('tripDates')}
                                 </Text>
-                                <Image source={R.images.calendar} style={{ width: 20, height: 20 }} ></Image>
+                                <TouchableOpacity style={{ marginTop: 10, borderBottomWidth: 0.5 }}
+                                    onPress={() => this.setState({ showDatePicker: true })}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text style={{ height: 30, fontSize: 20, fontWeight: 'bold', width: '90%' }}>
+                                            {moment(this.state.details.StartDate).format('DD.MM.yyy') + " - " + moment(this.state.details.EndDate).format('DD.MM.yyyy')}
+                                        </Text>
+                                        <Image source={R.images.calendar} style={{ width: 20, height: 20 }} ></Image>
+                                    </View>
+                                </TouchableOpacity>
                             </View>
-                        </TouchableOpacity>
-                    </View>
 
-                    {/* fans */}
-                    <View style={{ backgroundColor: "white", height: 100, marginTop: 5, padding: 20 }}>
-                        <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
-                            {translate('fans')}
-                        </Text>
-                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
-                            <TouchableOpacity style={{ width: 25 }} onPress={this.DecrementFan}>
-                                <Icon name='remove-circle-outline' style={styles.textStyle} />
-                            </TouchableOpacity>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10 }}>
-                                {this.state.details.NumberOfTravelers}
-                            </Text>
-                            <TouchableOpacity style={{ width: 25 }} onPress={this.IncrementFan}>
-                                <Icon name='add-circle-outline' style={styles.textStyle} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                            {/* fans */}
+                            <View style={{ backgroundColor: "white", height: 100, marginTop: 5, padding: 20 }}>
+                                <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
+                                    {translate('fans')}
+                                </Text>
+                                <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
+                                    <TouchableOpacity style={{ width: 25 }} onPress={this.DecrementFan}>
+                                        <Icon name='remove-circle-outline' style={styles.textStyle} />
+                                    </TouchableOpacity>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10 }}>
+                                        {this.state.details.NumberOfTravelers}
+                                    </Text>
+                                    <TouchableOpacity style={{ width: 25 }} onPress={this.IncrementFan}>
+                                        <Icon name='add-circle-outline' style={styles.textStyle} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </>
+                    }
                 </View>
 
                 {/* hotels */}
@@ -426,7 +434,7 @@ export default class CustomizeTripScreen extends React.Component {
 
                         {/* browse */}
                         <View style={{ width: '60%', marginTop: 40, padding: 20 }}>
-                            <TouchableOpacity style={{ backgroundColor: R.colors.greenLight, height: 60, alignItems: 'center', justifyContent: 'center' }}
+                            <TouchableOpacity style={{ backgroundColor: R.colors.lightGreen, height: 60, alignItems: 'center', justifyContent: 'center' }}
                                 onPress={this.browseHotels}
                             >
                                 <Text style={{ fontSize: 20, textTransform: 'uppercase' }}>{translate('browse')}</Text>
@@ -481,26 +489,30 @@ export default class CustomizeTripScreen extends React.Component {
 
                 {/* perks */}
                 <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center', marginTop: 50 }}>
-                    <Text style={{ color: "gray", fontWeight: "bold", marginTop: 20 }}>
-                        PERKS
+                    <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
+                        {translate('perks')}
                     </Text>
-                    <TouchableOpacity>
-                        <Image source={R.images.onspot} style={{ marginTop: 10, width: 50, height: 50, resizeMode: 'contain' }} />
-                        <Text style={{ marginLeft: 143, color: "blue", fontWeight: "bold", width: 50, fontSize: 9 }}>
-                            On Spot Service
-                    </Text>
-                    </TouchableOpacity>
+                    <View style={styles.perksRow}>
+                        <View style={styles.perk}>
+                            <Image source={this.state.perks.OnSpot ? R.images.onspot : R.images.onspotGrey} style={styles.perkImage} />
+                            <Text style={{ ...styles.perkLabel, color: this.state.perks.OnSpot ? R.colors.blue : "#ddd" }}>On Spot Service</Text>
+                        </View>
+                        <View style={styles.perk}>
+                            <Image source={this.state.perks.AirPortPickup ? R.images.car : R.images.carGrey} style={styles.perkImage} />
+                            <Text style={{ ...styles.perkLabel, color: this.state.perks.AirPortPickup ? R.colors.blue : "#ddd" }}>Airport Pick up</Text>
+                        </View>
+                    </View>
                 </View>
 
                 {/* buttons begin */}
                 <View style={{ flex: 1, flexDirection: 'row', width: '90%', alignSelf: 'center', height: 50, marginTop: 20 }}>
                     <TouchableOpacity style={{ width: '50%', alignItems: 'center', justifyContent: 'center', textTransform: 'uppercase', backgroundColor: R.colors.buttonBlack }}
-                        onPress={this.Cancel}
+                        onPress={this.cancel}
                     >
                         <Text style={{ color: 'white', fontSize: 20 }}>{translate('cancel')}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ width: '50%', alignItems: 'center', justifyContent: 'center', textTransform: 'uppercase', backgroundColor: R.colors.greenLight }}
-                        onPress={this.Continue}
+                    <TouchableOpacity style={{ width: '50%', alignItems: 'center', justifyContent: 'center', textTransform: 'uppercase', backgroundColor: R.colors.lightGreen }}
+                        onPress={this.continue}
                     >
                         <Text style={{ color: 'black', fontSize: 20 }}>{translate('continue')}</Text>
                     </TouchableOpacity>
@@ -573,10 +585,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 5
     },
-    starStyle: {
-        color: "#f9d155",
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    }
+    perksRow: { flexDirection: "row", justifyContent: "space-between" },
+    perkImage: { width: 42, height: 44 },
+    perk: { width: "50%", alignItems: "center", height: 100 },
+    perkLabel: { fontSize: 13, marginTop: 15 }
 });
