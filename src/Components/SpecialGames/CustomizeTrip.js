@@ -14,10 +14,10 @@ import Lightbox from 'react-native-lightbox-v2';
 import DatepickerRange from 'react-native-range-datepicker';
 import RadioButtonRN from 'radio-buttons-react-native';
 import { HeaderBackground } from "../Common/HeaderBackground";
-import { LinearGradient } from "expo-linear-gradient";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { get, post, servicesUrl } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils";
+import { MatchHeader } from "../Trips/MatchHeader";
 import Chat from "../FanChat/chat";
 import moment from 'moment';
 import R from "res/R";
@@ -137,12 +137,12 @@ export default class CustomizeTripScreen extends React.Component {
     loadMoreHotels = () => {
         var data = this.state.data;
         data.HotelList.PageNumber = data.HotelList.PageNumber + 1;
-        this.setState({isLoadingMore: true});
+        this.setState({ isLoadingMore: true });
         post(servicesUrl.searchHotel, data)
-        .then((response) => {
-            var joined = this.state.hotelList.concat(response.HotelList.Items);
-            this.setState({ data: response, hotelList: joined, isLoadingMore: false })
-        });
+            .then((response) => {
+                var joined = this.state.hotelList.concat(response.HotelList.Items);
+                this.setState({ data: response, hotelList: joined, isLoadingMore: false })
+            });
     }
 
     Cancel = () => {
@@ -339,80 +339,11 @@ export default class CustomizeTripScreen extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
+                {/* banner */}
                 <HeaderBackground title={translate('customizeTrip')} image={R.images.trip_bg}></HeaderBackground>
-                <View style={{
-                    backgroundColor: "white", height: this.state.isButtonPressed ? 425 : 250, marginStart: 15, marginEnd: 15, marginTop: -40, padding: 0, shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 5 },
-                    shadowOpacity: 1.2,
-                    shadowRadius: 2,
-                    elevation: 5,
-                }}>
-                    <View style={{ padding: 0 }}>
-                        <View style={{ flexDirection: "row" }}>
-                            <View style={{ width: "50%", padding: 20 }}>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <LinearGradient
-                                        colors={[this.state.game.Team1Color1, this.state.game.Team1Color2]}
-                                        style={styles.linearGradient}
-                                        start={[0, 0]}
-                                        end={[1, 0]}
-                                        locations={[0.5, 0.5]}
-                                    ></LinearGradient>
-                                    <Text style={{ ...styles.blueText, marginStart: 10 }}>{this.state.game.HomeTeam}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <LinearGradient
-                                        colors={[this.state.game.Team2Color1, this.state.game.Team2Color2]}
-                                        style={styles.linearGradient}
-                                        start={[0, 0]}
-                                        end={[1, 0]}
-                                        locations={[0.5, 0.5]}
-                                    ></LinearGradient>
-                                    <Text style={{ ...styles.blueText, marginStart: 10 }}>{this.state.game.AwayTeam}</Text>
-                                </View>
-
-                            </View>
-                            <Text style={{ width: "50%", ...styles.blueText, padding: 20 }}>{moment(this.state.game.GameDate).format('DD.MM.YY')}</Text>
-                        </View>
-                        <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
-                            <Text style={{ flexBasis: "50%", ...styles.darkText, padding: 20, borderRightWidth: 1, borderColor: "#eee" }}>{this.state.details.TripDays + " " + translate('days')}</Text>
-                            <Text style={{ flexBasis: "50%", ...styles.darkText, padding: 20, textTransform: "uppercase" }}>{this.state.game.StadeCity}</Text>
-                        </View>
-                    </View>
-
-                    <TouchableOpacity style={{ position: "absolute", width: "100%", top: 155, height: this.state.isButtonPressed ? 140 : 80, backgroundColor: "#fff", zIndex: 1 }}
-                        onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 20 }}>
-                            <View style={{}}>
-                                <Text style={{ fontSize: 17.5, color: R.colors.green, fontWeight: "bold" }}>{this.state.details.BasePricePerFan + "$ /" + translate('fan')}</Text>
-                                <Text style={{ fontSize: 14, marginTop: 5 }}>{this.state.details.FinalPrice + "$ " + translate('total') + " *"}</Text>
-                            </View>
-                            <Image source={R.images.arrow_down} style={{ height: 14, width: 12 }} />
-                        </View>
-                        <TouchableOpacity onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })} style={{
-                            height: 170, width: "100%", backgroundColor: "#fff", display: this.state.isButtonPressed ? "flex" : "none", padding: 20, width: "100%",
-                            zIndex: 2
-                        }}>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                <Text style={{ fontSize: 13, color: "#666" }}>{translate('basePrice')}</Text>
-                                <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>{this.state.details.BasePricePerFan}$ </Text>
-                            </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15, marginBottom: 15 }}>
-                                <Text style={{ fontSize: 11.5, color: R.colors.blue }}>+ ON-SPOT SERVICE</Text>
-                                <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>{this.state.details.ExtraFeesPerFan}$ </Text>
-                            </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                <Text style={{ fontSize: 13, color: "#212121" }}>{translate('totalFan')}</Text>
-                                <Text style={{ fontWeight: "bold", color: R.colors.green }}>{this.state.details.FinalPricePerFan}$ </Text>
-                            </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                <Text style={{ fontSize: 16, color: "#212121" }}>{translate('total')}</Text>
-                                <Text style={{ fontWeight: "bold", color: R.colors.green }}>{this.state.details.FinalPrice}$ </Text>
-                            </View>
-                            <Text style={{ fontSize: 9, color: "#999", marginTop: 10, marginBottom: 10 }}>*Price for 2 fans traveling together </Text>
-                        </TouchableOpacity>
-                    </TouchableOpacity>
-                </View>
+                
+                {/* match header */}
+                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} perks={this.state.perks} />
 
                 {/* package details */}
                 <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center', marginTop: 50 }}>
@@ -621,14 +552,6 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         color: "#151b20",
         fontSize: 14
-    },
-    linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        borderWidth: 0.5,
-        height: 20,
-        width: 20,
     },
     modalView: {
         width: '100%',
