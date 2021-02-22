@@ -16,6 +16,13 @@ const styles = {
         fontWeight: 'bold',
         marginTop: '10%'
     },
+    linearGradient: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        height: 20,
+        width: 20,
+    },
     hotelStar: {
         color: "#f9d155",
         fontSize: 16,

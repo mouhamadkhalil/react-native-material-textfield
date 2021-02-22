@@ -16,7 +16,6 @@ import { HeaderBackground } from "../Common/HeaderBackground";
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from 'react-native-datepicker';
 import RadioButtonRN from 'radio-buttons-react-native';
-import Chat from "../FanChat/chat";
 import moment from 'moment';
 import R from "res/R";
 import { get, post } from "../../helpers/services.js";
@@ -406,9 +405,6 @@ export default class Request extends React.Component {
                                     color="#8CD222"
                                 />
                             </ScrollView>
-                            <View style={{ marginTop: 40, marginLeft: 100 }}>
-                                <Chat />
-                            </View>
                         </>
                     }
                 </View>

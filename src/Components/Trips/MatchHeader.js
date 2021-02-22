@@ -38,7 +38,7 @@ export class MatchHeader extends React.Component {
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <LinearGradient
                                         colors={[this.props.game.Team1Color1, this.props.game.Team1Color2]}
-                                        style={styles.linearGradient}
+                                        style={R.styles.linearGradient}
                                         start={[0, 0]}
                                         end={[1, 0]}
                                         locations={[0.5, 0.5]}
@@ -48,7 +48,7 @@ export class MatchHeader extends React.Component {
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <LinearGradient
                                         colors={[this.props.game.Team2Color1, this.props.game.Team2Color2]}
-                                        style={styles.linearGradient}
+                                        style={R.styles.linearGradient}
                                         start={[0, 0]}
                                         end={[1, 0]}
                                         locations={[0.5, 0.5]}
@@ -141,13 +141,5 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         color: "#151b20",
         fontSize: 14
-    },
-    linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        borderWidth: 0.5,
-        height: 20,
-        width: 20,
-    },
+    }
 });

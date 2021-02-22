@@ -18,7 +18,6 @@ import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Image from 'react-native-remote-svg';
 import { translate } from "../../helpers/utils.js";
-import Chat from "../FanChat/chat";
 import R from "res/R";
 
 const sliderWidth = Dimensions.get('window').width;
@@ -77,6 +76,7 @@ export default class specialGames extends React.Component {
                     var game = item.MatchBundleDetail[0].Game;
                     return {
                         idMatch: game.idMatch,
+                        BundleCode: item.BundleCode,
                         City: game.City,
                         Stade: game.Stade,
                         GameDate: game.GameDate,
@@ -98,6 +98,7 @@ export default class specialGames extends React.Component {
                     var game = item.MatchBundleDetail[0].Game;
                     return {
                         idMatch: game.idMatch,
+                        BundleCode: item.BundleCode,
                         City: game.City,
                         Stade: game.Stade,
                         GameDate: game.GameDate,
@@ -119,6 +120,7 @@ export default class specialGames extends React.Component {
                     var game = item.MatchBundleDetail[0].Game;
                     return {
                         idMatch: game.idMatch,
+                        BundleCode: item.BundleCode,
                         City: game.City,
                         Stade: game.Stade,
                         GameDate: game.GameDate,
@@ -186,14 +188,15 @@ export default class specialGames extends React.Component {
         if (!this.state.isLoadingMore) {
             this.setState({ isLoadingMore: true, pageNumber: this.state.pageNumber + 1 }, () => {
                 try {
-                    const _this = this;
-                    get(`/mobile/game/getall?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}`)
+                    const params = `?pageNumber=${this.state.pageNumber}&pageSize=${this.state.pageSize}&source=homepage`;
+                    get(servicesUrl.getAllGames + params)
                         .then(response => {
                             // Popular Games Data
                             var data = response.Items.map(function (item) {
                                 var game = item.MatchBundleDetail[0].Game;
                                 return {
                                     idMatch: game.idMatch,
+                                    BundleCode: item.BundleCode,
                                     City: game.City,
                                     Stade: game.Stade,
                                     GameDate: game.GameDate,
@@ -254,7 +257,7 @@ export default class specialGames extends React.Component {
                                 <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>{item.PriceCaption}</Text>
                                 <Text style={{ color: "white", fontSize: 10, marginTop: 5 }}>{item.SharingRoomNote}</Text>
                             </View>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('tripoverview', { gameCode: item.GameCode })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
                                 <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                                     <View >
                                         {item.PricePerFan > 0 ? (
@@ -276,14 +279,14 @@ export default class specialGames extends React.Component {
 
     /******************* Popular Game Item ************************/
     popularGameItem = ({ item }) =>
-        <Pressable onPress={() => this.props.navigation.navigate('tripoverview', { gameCode: item.GameCode })}>
+        <Pressable onPress={() => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode })}>
             <View style={styles.popularGameItem}>
                 <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{moment(new Date(item.GameDate)).format('DD MMM')}</Text>
                 <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{item.HomeTeam}</Text>
                 <View>
                     <LinearGradient
                         colors={[item.Team1Color1, item.Team1Color2]}
-                        style={styles.linearGradient}
+                        style={R.styles.linearGradient}
                         start={[0, 0]}
                         end={[1, 0]}
                         locations={[0.5, 0.5]}
@@ -292,7 +295,7 @@ export default class specialGames extends React.Component {
                 <View>
                     <LinearGradient
                         colors={[item.Team2Color1, item.Team2Color2]}
-                        style={styles.linearGradient}
+                        style={R.styles.linearGradient}
                         start={[0, 0]}
                         end={[1, 0]}
                         locations={[0.5, 0.5]}
@@ -332,7 +335,7 @@ export default class specialGames extends React.Component {
                         </View>
                     </View>
                 </ImageBackground>
-                <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { gameCode: item.GameCode }) : () => this.props.navigation.navigate('request', { idMatch: item.idMatch })}>
+                <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode }) : () => this.props.navigation.navigate('request', { bundleCode: item.BundleCode })}>
                     <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                         <View >
                             {item.PricePerFan > 0 ? (
@@ -537,8 +540,6 @@ export default class specialGames extends React.Component {
                                 <Text style={{ fontSize: 17, fontWeight: "bold", textTransform: 'uppercase' }}> gift card</Text>
                             </TouchableOpacity>
                         </View >
-
-                        <Chat />
                     </>
                 }
             </ScrollView >
@@ -570,18 +571,6 @@ const styles = StyleSheet.create({
     topNavBtnText: {
         fontSize: 15,
         fontWeight: "bold"
-    },
-    teamCircle: {
-        width: 10,
-        height: 10,
-        borderRadius: 50,
-    },
-    linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        height: 20,
-        width: 20,
     },
     pageTitleBar: {
         backgroundColor: "black",

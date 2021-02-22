@@ -4,6 +4,7 @@ import { API_URL, API_TOKEN } from "@env";
 export const servicesUrl = {
     /* GET */
     getHomePageData: '/mobile/game/GetHomePageDataMobile',
+    getAllGames: '/mobile/game/getall',
     getAllTeams: '/mobile/team/all',
     getAllCities: '/mobile/city/destinationCity',
     getAllLeagues: '/mobile/leagues/all',

@@ -9,7 +9,6 @@ import {
     TouchableOpacity,
     FlatList
 } from "react-native";
-import Chat from "../FanChat/chat";
 import R from "res/R";
 import { get, post, servicesUrl } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils";
@@ -26,7 +25,7 @@ export default class SelectFlightScreen extends React.Component {
         super(props);
         this.state = {
             idHotel: props?.route?.params?.idHotel,
-            gameCode: props?.route?.params?.gameCode,
+            bundleCode: props?.route?.params?.bundleCode,
             details: {},
             game: {},
             hotel: {},
@@ -63,9 +62,7 @@ export default class SelectFlightScreen extends React.Component {
     getData = () => {
         const _this = this;
         const params = `?customize=true&validateHotelPrice=true&hotelId=${this.state.hotelId}&hotelSource=R`;
-        //servicesUrl.getGameV2 + '/' + this.state.gameCode + params
-        const path = '/mobile/game/v2/EUR-19-20-ENG-CRO?customize=false&validateHotelPrice=true&hotelId=511819&hotelSource=R';
-        get(path)
+        get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = {
@@ -351,8 +348,6 @@ export default class SelectFlightScreen extends React.Component {
                     </View>
 
                 </View>
-
-                <Chat />
             </ScrollView>
         );
     }
@@ -361,14 +356,6 @@ export default class SelectFlightScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-    },
-    linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        borderWidth: 0.5,
-        height: 20,
-        width: 20,
     },
     colorBlue: {
         color: R.colors.blue

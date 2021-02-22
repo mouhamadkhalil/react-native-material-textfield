@@ -11,7 +11,6 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Lightbox from 'react-native-lightbox-v2';
 import moment from 'moment';
-import Chat from "../FanChat/chat";
 import R from "res/R";
 import { get, servicesUrl } from "../../helpers/services.js";
 import { HeaderBackground } from "../Common/HeaderBackground";
@@ -24,7 +23,7 @@ export default class TripOverViewScreen extends React.Component {
 
         this.state = {
             isLoading: true,
-            gameCode: this.props?.route?.params?.gameCode,
+            bundleCode: props?.route?.params?.bundleCode,
             idHotel: -1,
             details: {},
             game: {},
@@ -51,7 +50,7 @@ export default class TripOverViewScreen extends React.Component {
 
     getData = () => {
         const params = `?customize=false&validateHotelPrice=false&hotelId=${this.state.idHotel}&hotelSource=R`;
-        get(servicesUrl.getGameV2 + this.state.gameCode + params)
+        get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = response.SelectedHotel;
@@ -86,11 +85,11 @@ export default class TripOverViewScreen extends React.Component {
     }
 
     Customize = () => {
-        this.props.navigation.navigate('customize', { gameCode: this.state.game.GameCode });
+        this.props.navigation.navigate('customize', { bundleCode: this.state.bundleCode });
     };
 
     Flight = () => {
-        this.props.navigation.navigate('flight', { gameCode: this.state.game.GameCode });
+        this.props.navigation.navigate('flight', { bundleCode: this.state.bundleCode });
     };
 
     render() {
@@ -221,9 +220,6 @@ export default class TripOverViewScreen extends React.Component {
                                 <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }} onPress={this.Flight}>
                                     <Text style={{ fontWeight: "bold" }}>SELECT FLIGHT</Text>
                                 </TouchableHighlight>
-                            </View>
-                            <View style={{ martinStart: 50, marginTop: -40 }}>
-                                <Chat />
                             </View>
                         </>
                     }

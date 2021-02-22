@@ -18,7 +18,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { get, post, servicesUrl } from "../../helpers/services.js";
 import { translate } from "../../helpers/utils";
 import { MatchHeader } from "../Trips/MatchHeader";
-import Chat from "../FanChat/chat";
 import moment from 'moment';
 import R from "res/R";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -29,7 +28,7 @@ export default class CustomizeTripScreen extends React.Component {
         super(props);
         this.state = {
             idHotel: -1,
-            gameCode: props?.route?.params?.gameCode,
+            bundleCode: props?.route?.params?.bundleCode,
             details: {},
             game: {},
             hotel: {},
@@ -77,7 +76,7 @@ export default class CustomizeTripScreen extends React.Component {
 
     getData = () => {
         const params = `?customize=true&validateHotelPrice=true&hotelId=${this.state.idHotel}&hotelSource=R`;
-        get(servicesUrl.getGameV2 + this.state.gameCode + params)
+        get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = response.SelectedHotel;
@@ -147,11 +146,11 @@ export default class CustomizeTripScreen extends React.Component {
     }
 
     cancel = () => {
-        this.props.navigation.navigate('tripoverview', { gameCode: this.state.game.GameCode });
+        this.props.navigation.navigate('tripoverview', { bundleCode: this.state.bundleCode });
     };
 
     continue = () => {
-        this.props.navigation.navigate('flight', { gameCode: this.state.game.GameCode });
+        this.props.navigation.navigate('flight', { bundleCode: this.state.bundleCode });
     };
 
     IncrementFan = () => {
@@ -519,9 +518,6 @@ export default class CustomizeTripScreen extends React.Component {
                 </View>
                 {/* buttons end*/}
 
-                <View style={{ marginLeft: 100, marginTop: 20 }}>
-                    <Chat />
-                </View>
                 <Modal
                     animationType="slide"
                     transparent={true}

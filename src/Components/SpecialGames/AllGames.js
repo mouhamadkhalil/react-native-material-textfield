@@ -8,7 +8,6 @@ import { translate } from "../../helpers/utils.js";
 import DatepickerRange from 'react-native-range-datepicker';
 import { HeaderBackground } from "../Common/HeaderBackground";
 import Icon from 'react-native-vector-icons/Ionicons';
-import Chat from "../FanChat/chat";
 import moment from 'moment';
 import R from "res/R";
 
@@ -57,12 +56,13 @@ export default class AllGames extends React.Component {
         const idTeam = this.state.idTeam ? '&idTeam=' + this.state.idTeam : '';
         const idCity = this.state.idCity ? '&idCity=' + this.state.idCity : '';
         const idLeague = this.state.idLeague ? '&idLeague=' + this.state.idLeague : '';
-        const path = `/mobile/game/getall?pageNumber=${pageNumber}&pageSize=${pageSize}&order=${orderBy}${fromDate}${toDate}${idTeam}${idCity}${idLeague}`;
-        get(path).then((response) => {
+        const params = `?pageNumber=${pageNumber}&pageSize=${pageSize}&order=${orderBy}${fromDate}${toDate}${idTeam}${idCity}${idLeague}`;
+        get(servicesUrl.getAllGames + params).then((response) => {
             var data = response.Items.map(function (item) {
                 var game = item.MatchBundleDetail[0].Game;
                 return {
                     idMatch: game.idMatch,
+                    BundleCode: item.BundleCode,
                     City: game.City,
                     Stade: game.Stade,
                     GameDate: game.GameDate,
@@ -167,7 +167,7 @@ export default class AllGames extends React.Component {
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <LinearGradient
                             colors={[item.Team1Color1, item.Team1Color2]}
-                            style={styles.linearGradient}
+                            style={R.styles.linearGradient}
                             start={[0, 0]}
                             end={[1, 0]}
                             locations={[0.5, 0.5]}
@@ -177,7 +177,7 @@ export default class AllGames extends React.Component {
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <LinearGradient
                             colors={[item.Team2Color1, item.Team2Color2]}
-                            style={styles.linearGradient}
+                            style={R.styles.linearGradient}
                             start={[0, 0]}
                             end={[1, 0]}
                             locations={[0.5, 0.5]}
@@ -215,7 +215,7 @@ export default class AllGames extends React.Component {
                         flexDirection: 'row', alignSelf: 'flex-end',
                         alignItems: 'center', justifyContent: 'center', width: '40%', height: '100%', backgroundColor: '#76ff02'
                     }}
-                    onPress={item.Price > 0 && item.Price != null ? () => this.props.navigation.navigate('tripoverview', { gameCode: item.GameCode }) : () => this.props.navigation.navigate('request', { idMatch: item.idMatch })}>
+                    onPress={item.Price > 0 && item.Price != null ? () => this.props.navigation.navigate('tripoverview', {bundleCode: item.BundleCode }) : () => this.props.navigation.navigate('request', { bundleCode: item.BundleCode })}>
                     <Text style={{ fontSize: 14, textTransform: 'uppercase' }}>{item.Price > 0 && item.Price != null ? 'book now' : 'request'}</Text>
                     <Image source={R.images.arrowRight} style={{ marginLeft: 10 }} />
                 </TouchableOpacity>
@@ -478,8 +478,6 @@ export default class AllGames extends React.Component {
                                 : null}
                         </View>
                     </Modal>
-
-                    <Chat />
                 </View>
             </ScrollView >
         );
@@ -491,13 +489,6 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 0,
         marginBottom: 30,
-    },
-    linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        height: 20,
-        width: 20,
     },
     modalView: {
         width: '100%',
