@@ -270,7 +270,7 @@ export default class specialGames extends React.Component {
 
     /******************* Popular Game Item ************************/
     popularGameItem = ({ item }) =>
-        <Pressable onPress={() => this.props.navigation.navigatenavigate('tripoverview', { gameCode: item.GameCode })}>
+        <Pressable onPress={() => this.props.navigation.navigate('tripoverview', { gameCode: item.GameCode })}>
             <View style={styles.popularGameItem}>
                 <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{moment(new Date(item.GameDate)).format('DD MMM')}</Text>
                 <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{item.HomeTeam}</Text>

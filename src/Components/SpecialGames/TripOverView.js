@@ -217,7 +217,7 @@ export default class TripOverViewScreen extends React.Component {
                             </View>
 
                             {/* buttons */}
-                            <View style={{ width: '90%', alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
+                            <View style={{ marginStart: 15, marginEnd: 15, alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
                                 <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.Customize}>
                                     <Text style={{ fontWeight: "bold", color: "#fff" }}>CUSTOMIZE</Text>
                                 </TouchableHighlight>
