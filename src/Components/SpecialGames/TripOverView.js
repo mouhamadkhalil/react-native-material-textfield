@@ -56,11 +56,11 @@ export default class TripOverViewScreen extends React.Component {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = response.SelectedHotel;
                 hotel.Stars = new Array(parseInt(hotel.Rating)).fill(1);
-                
+
                 // test
                 var selected = hotel.SelectedCategory;
-                console.log(selected); 
-                
+                console.log(selected);
+
                 var seating = response.MatchBundleDetail[0].GameSeat;
                 var perks = {
                     OnSpot: response.Service_OnSpot,
@@ -145,14 +145,14 @@ export default class TripOverViewScreen extends React.Component {
                                         {this.state.hotel.HotelName}
                                     </Text>
                                     <View style={{ flex: 1, flexDirection: 'row' }}>
-                                        {/*this.state.hotel.Stars.map(star => {
+                                        {this.state.hotel.Stars.map(star => {
                                             return (
                                                 <Icon name='star-outline' style={R.styles.starStyle} />
                                             );
-                                        })*/}
+                                        })}
                                     </View>
                                     <Text style={{ color: "gray", marginTop: 30, fontSize: 16 }}>
-                                        {/*this.state.hotel.SelectedCategory.RoomType[0].TypeName + " x " + this.state.hotel.SelectedCategory.RoomType[0].NumRooms*/}
+                                        {this.state.hotel.SelectedCategory.RoomType[0].TypeName + " x " + this.state.hotel.SelectedCategory.RoomType[0].NumRooms}
                                     </Text>
 
                                     <Lightbox >
@@ -174,10 +174,10 @@ export default class TripOverViewScreen extends React.Component {
                                         {this.state.game.Stade}, {this.state.game.StadeCity}
                                     </Text>
                                     <Text style={{ color: "gray", fontSize: 16 }}>
-                                        {/*this.state.seating.InventoryTickets[0].qa + " " + translate('seats')*/}
+                                        {this.state.seating.InventoryTickets[0].qa + " " + translate('seats')}
                                     </Text>
                                     <Image source={{ uri: this.state.seating.StadiumMap_IMG_v3 }}
-                                        style={{ width: "100%", height: 200, marginTop: 30 }} />
+                                        style={{ width: "100%", height: 230, marginTop: 30 }} />
                                 </View>
 
                                 {/* perks */}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Modal, TouchableHighlight, Text, Image, Platform , ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, Modal, TouchableHighlight, Text, Image, Platform, ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Chat from "../FanChat/chat";
 import moment from 'moment';
 import R from "res/R";
+import { HeaderBackground } from "../Common/HeaderBackground";
 
 export default class AllGames extends React.Component {
 
