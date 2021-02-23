@@ -12,12 +12,11 @@ import {
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import R from 'res/R';
-import { API_URL, API_TOKEN } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import { Ionicons } from '@expo/vector-icons';
-import { get, post } from "../../helpers/services.js";
+import { get, postLogin, servicesUrl } from "../../helpers/services.js";
 import { CheckBox } from 'react-native-elements';
 
 export default class LoginScreen extends React.Component {
@@ -83,7 +82,7 @@ export default class LoginScreen extends React.Component {
         }
         else {
             if (this.state.username != ' ' && this.state.password != ' ') {
-                post(`/mobile/profile/login`, data)
+                postLogin(servicesUrl.login, data)
                     .then(response => {
                         if (response.ErrorId) {
                             ToastAndroid.showWithGravity(

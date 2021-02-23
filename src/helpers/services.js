@@ -14,6 +14,7 @@ export const servicesUrl = {
     getAmadeusCities: '/mobile/city/amadeusCity',
 
     /* POST */
+    login: '/mobile/profile/login',
     searchFlights: '/mobile/game/SearchFlight',
     searchHotel: '/mobile/game/SearchHotel',
     getPagedHotels: '/mobile/game/getPagedHotels'
@@ -98,6 +99,28 @@ export async function post(path, data) {
             "source": "mobile",
             "gps_location": location,
             "Authorization": 'Bearer ' + token
+        },
+        body: JSON.stringify(data)
+    })
+        .then((res) => res.json())
+        .catch((error) => console.error("Error: ", error))
+        .then((response) => {
+            return response;
+        });
+}
+
+export async function postLogin(path, data) {
+    const location = await getLocation();
+    const url = `${API_URL}${path}`;
+    return fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "ff_version": 10,
+            "ff_language": "en",
+            "source": "mobile",
+            "gps_location": location,
         },
         body: JSON.stringify(data)
     })
