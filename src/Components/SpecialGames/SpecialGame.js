@@ -43,7 +43,7 @@ export default class specialGames extends React.Component {
             popularTeams: [],
             competitions: [],
             isButtonPressed: false,
-            isLoading: false,
+            isLoading: true,
             isLoadingMore: false,
         };
 
@@ -447,7 +447,6 @@ export default class specialGames extends React.Component {
                                     sliderWidth={485}
                                     itemWidth={350}
                                     renderItem={this.specialGameItem.bind(this)}
-                                    onSnapToItem={index => this.setState({ activeIndex: index })}
                                 />
                             </View>
                         </View>
@@ -483,7 +482,6 @@ export default class specialGames extends React.Component {
                                     sliderWidth={485}
                                     itemWidth={280}
                                     renderItem={this.hotGameItem.bind(this)}
-                                    onSnapToItem={index => this.setState({ activeIndex: index })}
                                 />
                             </View>
                         </View>
@@ -528,7 +526,6 @@ export default class specialGames extends React.Component {
                                     sliderWidth={Screen.width}
                                     itemWidth={290}
                                     renderItem={this.competitionItem}
-                                    onSnapToItem={index => this.setState({ activeIndex: index })}
                                 />
                             </View>
                         </View>

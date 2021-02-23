@@ -6,16 +6,20 @@ import {
     ScrollView,
     View,
     TouchableHighlight,
-    ActivityIndicator
+    ActivityIndicator,
+    Modal,
+    TouchableOpacity
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
-import Lightbox from 'react-native-lightbox-v2';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import moment from 'moment';
 import R from "res/R";
 import { get, servicesUrl } from "../../helpers/services.js";
 import { HeaderBackground } from "../Common/HeaderBackground";
 import { MatchHeader } from "../Trips/MatchHeader";
 import { translate } from "../../helpers/utils";
+import Svg from 'react-native-remote-svg';
+
 
 export default class TripOverViewScreen extends React.Component {
     constructor(props) {
@@ -31,6 +35,7 @@ export default class TripOverViewScreen extends React.Component {
             seating: {},
             perks: {},
             data: {},
+            showPictures: false
         };
     }
 
@@ -55,6 +60,13 @@ export default class TripOverViewScreen extends React.Component {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = response.SelectedHotel;
                 hotel.Stars = new Array(parseInt(hotel.Rating)).fill(1);
+
+                // convert array of String to array of Objects 
+                var images =[];
+                for (let img of hotel.Images) {
+                    images.push({url: img});
+                }
+                hotel.Images = images;
                 var seating = response.MatchBundleDetail[0].GameSeat;
                 var perks = {
                     OnSpot: response.Service_OnSpot,
@@ -84,11 +96,11 @@ export default class TripOverViewScreen extends React.Component {
             });
     }
 
-    Customize = () => {
+    customize = () => {
         this.props.navigation.navigate('customize', { bundleCode: this.state.bundleCode });
     };
 
-    Flight = () => {
+    flight = () => {
         this.props.navigation.navigate('flight', { bundleCode: this.state.bundleCode });
     };
 
@@ -149,10 +161,10 @@ export default class TripOverViewScreen extends React.Component {
                                         {this.state.hotel.SelectedCategory.RoomType[0].TypeName + " x " + this.state.hotel.SelectedCategory.RoomType[0].NumRooms}
                                     </Text>
 
-                                    <Lightbox >
-                                        <Image source={{ uri: this.state.hotel.Image }}
+                                    <TouchableOpacity onPress={() => this.setState({ showPictures: true })} >
+                                        <Image source={{ uri: this.state.hotel?.Image }}
                                             style={{ width: "100%", height: 250, marginTop: 20 }} />
-                                    </Lightbox>
+                                    </TouchableOpacity>
 
                                 </View>
 
@@ -170,7 +182,7 @@ export default class TripOverViewScreen extends React.Component {
                                     <Text style={{ color: "gray", fontSize: 16 }}>
                                         {this.state.seating.InventoryTickets[0].qa + " " + translate('seats')}
                                     </Text>
-                                    <Image source={{ uri: this.state.seating.StadiumMap_IMG_v3 }}
+                                    <Svg source={{ uri: this.state.seating.StadiumMap_SVG_v3 }}
                                         style={{ width: "100%", height: 230, marginTop: 30 }} />
                                 </View>
 
@@ -214,16 +226,24 @@ export default class TripOverViewScreen extends React.Component {
 
                             {/* buttons */}
                             <View style={{ marginStart: 15, marginEnd: 15, alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
-                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.Customize}>
-                                    <Text style={{ fontWeight: "bold", color: "#fff" }}>CUSTOMIZE</Text>
+                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.customize}>
+                                    <Text style={{ fontWeight: "bold", color: "#fff", textTransform: 'uppercase' }}>
+                                        {translate('customize')}
+                                    </Text>
                                 </TouchableHighlight>
-                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }} onPress={this.Flight}>
-                                    <Text style={{ fontWeight: "bold" }}>SELECT FLIGHT</Text>
+                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }} onPress={this.flight}>
+                                    <Text style={{ fontWeight: "bold", textTransform: 'uppercase' }}>
+                                        {translate('selectFlight')}
+                                    </Text>
                                 </TouchableHighlight>
                             </View>
                         </>
                     }
                 </View>
+                <Modal visible={this.state.showPictures} transparent={true}
+                    onRequestClose={() => this.setState({ showPictures: false })}>
+                    <ImageViewer imageUrls={this.state.hotel.Images} />
+                </Modal>
             </ScrollView >
         );
     }
