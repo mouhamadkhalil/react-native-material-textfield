@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import R from "res/R";
 import { get, post, servicesUrl } from "../../helpers/services.js";
-import { translate } from "../../helpers/utils";
+import { getTripDays, translate } from "../../helpers/utils";
 import { HeaderBackground } from "../Common/HeaderBackground";
 import { MatchHeader } from "../Trips/MatchHeader";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -30,7 +30,7 @@ export default class SelectFlightScreen extends React.Component {
             game: {},
             hotel: {},
             seating: {},
-            pearks: {},
+            perks: [],
             cities: [],
             data: {},
             flights: [],
@@ -51,58 +51,66 @@ export default class SelectFlightScreen extends React.Component {
         } catch { }
     }
 
-    getTripDays(date1, date2) {
-        if (!date1 || !date1)
-            return 0;
-        let firstDate = moment(date1);
-        let secondDate = moment(date2);
-        return secondDate.diff(firstDate, 'days') + 1;
-    }
-
     getData = () => {
-        const _this = this;
-        const params = `?customize=true&validateHotelPrice=true&hotelId=${this.state.hotelId}&hotelSource=R`;
+        const params = `?customize=true&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
                 var game = response.MatchBundleDetail[0].Game;
-                var hotel = {
-                    HotelCode: response.HotelCode,
-                    HotelName: response.HotelName,
-                    HotelStars: response.HotelStars,
-                    IncludeBreakfast: response.IncludeBreakfast,
-                    HotelRoomType: response.HotelRoomType,
-                    HotelRoomCategory: response.HotelRoomCategory,
-                    NumberOfRooms: response.NumberOfRooms,
-                    CancellationPolicyData: response.CancellationPolicyData,
-                    FacilitiesData: response.FacilitiesData,
-                    Image: response.Image,
-                    Images: response.Images,
-                    Notes: response.SharingRoomNote
-                }
+                var hotel = response.SelectedHotel;
                 var seating = response.MatchBundleDetail[0].GameSeat;
-                var pearks = {
-                    Service_OnSpot: response.Service_OnSpot,
-                    Service_AirPortPickup: response.Service_AirPortPickup,
-                    Service_AirPortDropOff: response.Service_AirPortDropOff,
-                    Service_StadiumTour: response.Service_StadiumTour,
-                    Service_CityTour: response.Service_CityTour,
-                    Service_Train: response.Service_Train,
-                    Service_Insurance: response.Service_Insurance,
-                }
+                var perks = [
+                    {
+                        Title: translate('onSpotService'),
+                        Price: response.Price_OnSpot,
+                        Selected: true
+                    },
+                    {
+                        Title: translate('airportPickup'),
+                        Price: response.Price_AirtportPickup,
+                        Selected: response.Service_AirPortPickup
+                    },
+                    {
+                        Title: translate('airportDropOff'),
+                        Price: response.Price_AirportDropoff,
+                        Selected: response.Service_AirPortDropOff
+                    },
+                    {
+                        Title: translate('stadiumTour'),
+                        Price: response.Price_StadiumTour,
+                        Selected: response.Service_StadiumTour
+                    },
+                    {
+                        Title: translate('cityTour'),
+                        Price: response.Price_CityTour,
+                        Selected: response.Service_CityTour
+                    },
+                    /*{
+                        Title: translate('train'),
+                        Price: response.Price_Train,
+                        Selected: response.Service_Train
+                    },*/
+                    {
+                        Title: translate('insurance'),
+                        Price: response.Price_Insurance,
+                        Selected: response.Service_Insurance
+                    }
+                ];
                 var details = {
                     idMatchBundle: response.idMatchBundle,
                     BundleCode: response.BundleCode,
                     StartDate: response.StartDate,
                     EndDate: response.EndDate,
-                    TripDays: _this.getTripDays(response.StartDate, response.EndDate),
+                    TripDays: getTripDays(response.StartDate, response.EndDate),
                     NumberOfTravelers: response.NumberOfTravelers,
                     BasePricePerFan: response.BasePricePerFan,
                     PricePerFan: response.PricePerFan,
+                    ExtraFeesPerFan: response.ExtraFeesPerFan,
                     FinalPrice: response.FinalPrice,
                     FinalPricePerFan: response.FinalPricePerFan,
+                    NumberOfRooms: response.NumberOfRooms,
                     SharingRoomNote: response.SharingRoomNote,
                 }
-                this.setState({ data: response, game: game, hotel: hotel, seating: seating, pearks: pearks, details: details, isLoading: false })
+                this.setState({ data: response, game, hotel, seating, perks, details, isLoading: false })
             });
     }
 
@@ -269,7 +277,7 @@ export default class SelectFlightScreen extends React.Component {
                 <HeaderBackground title={translate('selectYourFlight')} image={R.images.trip_bg}></HeaderBackground>
 
                 {/* match header */}
-                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} perks={this.state.perks} />
+                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} hotel={this.state.hotel} ticket={this.state.seating} perks={this.state.perks} />
 
                 {/* flight options */}
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>

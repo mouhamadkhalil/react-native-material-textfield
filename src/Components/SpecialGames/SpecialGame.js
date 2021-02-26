@@ -257,7 +257,7 @@ export default class specialGames extends React.Component {
                                 <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>{item.PriceCaption}</Text>
                                 <Text style={{ color: "white", fontSize: 10, marginTop: 5 }}>{item.SharingRoomNote}</Text>
                             </View>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
+                            <TouchableOpacity key={'special'+ index} onPress={() => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
                                 <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                                     <View >
                                         {item.PricePerFan > 0 ? (
@@ -278,8 +278,8 @@ export default class specialGames extends React.Component {
     }
 
     /******************* Popular Game Item ************************/
-    popularGameItem = ({ item }) =>
-        <Pressable onPress={() => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode })}>
+    popularGameItem = ({ item, index }) =>
+        <Pressable key={'popular'+ index} onPress={() => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode })}>
             <View style={styles.popularGameItem}>
                 <Text style={{ fontSize: 11, fontWeight: "bold", width: 40, flex: 0 }}>{moment(new Date(item.GameDate)).format('DD MMM')}</Text>
                 <Text style={{ fontSize: 14, fontWeight: "bold", width: 60 }}>{item.HomeTeam}</Text>
@@ -335,7 +335,7 @@ export default class specialGames extends React.Component {
                         </View>
                     </View>
                 </ImageBackground>
-                <TouchableOpacity style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode }) : () => this.props.navigation.navigate('request', { bundleCode: item.BundleCode })}>
+                <TouchableOpacity key={'hot'+ index} style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode }) : () => this.props.navigation.navigate('request', { bundleCode: item.BundleCode })}>
                     <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                         <View >
                             {item.PricePerFan > 0 ? (
@@ -356,7 +356,7 @@ export default class specialGames extends React.Component {
     popularTeamsItem = ({ item, index }) => {
         const image = { uri: item.Image };
         return (
-            <Pressable style={{ width: 130, height: 180, margin: 20, backgroundColor: "#fff", borderRadius: 20, justifyContent: "center", shadowColor: { width: 0, height: 8, }, shadowOpacity: .44, shadowRadius: 10, elevation: 15, justifyContent: "center", alignItems: "center" }}>
+            <Pressable key={'team'+ index} style={{ width: 130, height: 180, margin: 20, backgroundColor: "#fff", borderRadius: 20, justifyContent: "center", shadowColor: { width: 0, height: 8, }, shadowOpacity: .44, shadowRadius: 10, elevation: 15, justifyContent: "center", alignItems: "center" }}>
                 <Image source={image} style={{ width: 80, height: 80 }} />
                 <Text style={{ fontSize: 16, fontWeight: 'bold', width: "80%", textAlign: "center", marginTop: 7 }}>{item.TeamName}</Text>
             </Pressable>
