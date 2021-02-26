@@ -166,7 +166,7 @@ export default class CustomizeTripScreen extends React.Component {
                         hotel: bundle.SelectedHotel,
                         hotelId: bundle.SelectedHotel.HotelId,
                         hotelSource: "R",
-                        hotelUniqueKey: "",
+                        hotelUniqueKey: bundle.uniqueKey,
                         idMatchBundle: bundle.MatchBundleDetail[0].idMatchBundle,
                         internalCode: null,
                         roomInfo: bundle.RoomInfoList
@@ -232,9 +232,19 @@ export default class CustomizeTripScreen extends React.Component {
         catch { }
     };
 
+    selectInfant = (index) => {
+        var bundle = this.state.bundle;
+        bundle.RoomInfoList[index].AdultNum.RQBedChild = !bundle.RoomInfoList[index].AdultNum.RQBedChild;
+        if (bundle.RoomInfoList[index].AdultNum.RQBedChild)
+            bundle.NumberOfChildren++;
+        else
+            bundle.NumberOfChildren--;
+        this.setState({ bundle })
+    }
+
     selectSeat = (option) => {
-        var bundle = {...this.state.bundle};
-        var seating = {...this.state.seating};
+        var bundle = { ...this.state.bundle };
+        var seating = { ...this.state.seating };
         option.Selected = true;
         bundle.MatchBundleDetail[0].GameSeat = seating = option;
         this.setState({ bundle, seating, stadiumMap: option.StadiumMap_SVG_v3 })
@@ -297,7 +307,7 @@ export default class CustomizeTripScreen extends React.Component {
                 }
                 roomInfoList.push(item)
             }
-            var details = {...this.state.details};
+            var details = { ...this.state.details };
             bundle.NumberOfTravelers = details.NumberOfTravelers = fanNumbers;
             bundle.NumberOfRooms = details.NumberOfRooms = roomNumbers;
             bundle.RoomInfoList = roomInfoList;
@@ -336,7 +346,7 @@ export default class CustomizeTripScreen extends React.Component {
                 }
                 roomInfoList.push(item)
             }
-            var details = {...this.state.details};
+            var details = { ...this.state.details };
             bundle.NumberOfTravelers = details.NumberOfTravelers = fanNumbers;
             bundle.NumberOfRooms = details.NumberOfRooms = roomNumbers;
             bundle.RoomInfoList = roomInfoList;
@@ -379,7 +389,7 @@ export default class CustomizeTripScreen extends React.Component {
                 restRoomNumber--;
                 roomInfoList.push(item)
             }
-            var details = {...this.state.details};
+            var details = { ...this.state.details };
             bundle.NumberOfRooms = details.NumberOfRooms = roomNumbers;
             bundle.RoomInfoList = roomInfoList;
             this.setState({ bundle, details, roomsHeight, isCustomized: true });
@@ -421,7 +431,7 @@ export default class CustomizeTripScreen extends React.Component {
                 restRoomNumber--;
                 roomInfoList.push(item)
             }
-            var details = {...this.state.details};
+            var details = { ...this.state.details };
             bundle.NumberOfRooms = details.NumberOfRooms = roomNumbers;
             bundle.RoomInfoList = roomInfoList;
             this.setState({ bundle, details, roomsHeight, isCustomized: true });
@@ -465,11 +475,7 @@ export default class CustomizeTripScreen extends React.Component {
                         containerStyle={{ backgroundColor: 'white', borderWidth: 0 }}
                         checkedColor='white'
                         textStyle={{ color: 'black' }}
-                        onPress={() => {
-                            var bundle = this.state.bundle;
-                            bundle.RoomInfoList[index].AdultNum.RQBedChild = true;
-                            this.setState({ bundle })
-                        }} />
+                        onPress={() => this.selectInfant(index)} />
                 ) : null}
             </View>
         )
