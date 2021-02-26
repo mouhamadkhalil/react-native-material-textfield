@@ -33,7 +33,8 @@ const images = {
     coffeeCupGrey: require('../../../assets/images/icons/coffee-cup-grey.png'),
     refundGrey: require('../../../assets/images/icons/refund-grey.png'),
     norefundWhite: require('../../../assets/images/icons/norefund-white.png'),
-    
+    connectionIcon: require('../../../assets/images/icons/connection-icon.svg'),
+
     airplane: require('../../../assets/images/icons/airplane.png'),
 
     /* chat */
@@ -59,7 +60,11 @@ const images = {
     /* brand */
     flyfoot: require('../../../assets/images/flyfoot.png'),
     flyfoot_grey: require('../../../assets/images/fly-foot2.png'),
-    logo: require('../../../assets/images/fly-foot.png')
+    logo: require('../../../assets/images/fly-foot.png'),
+
+    /* plus and minus */
+    plus: require('../../../assets/images/icons/icon-plus.svg'),
+    minus: require('../../../assets/images/icons/icon-minus.svg'),
 }
 
 export default images

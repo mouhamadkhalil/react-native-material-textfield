@@ -215,7 +215,7 @@ export default class AllGames extends React.Component {
                         flexDirection: 'row', alignSelf: 'flex-end',
                         alignItems: 'center', justifyContent: 'center', width: '40%', height: '100%', backgroundColor: '#76ff02'
                     }}
-                    onPress={item.Price > 0 && item.Price != null ? () => this.props.navigation.navigate('tripoverview', {bundleCode: item.BundleCode }) : () => this.props.navigation.navigate('request', { bundleCode: item.BundleCode })}>
+                    onPress={item.Price > 0 && item.Price != null ? () => this.props.navigation.navigate('tripoverview', { GameCode: item.GameCode, bundleCode: item.BundleCode }) : () => this.props.navigation.navigate('request', { GameCode: item.GameCode, bundleCode: item.BundleCode })}>
                     <Text style={{ fontSize: 14, textTransform: 'uppercase' }}>{item.Price > 0 && item.Price != null ? 'book now' : 'request'}</Text>
                     <Image source={R.images.arrowRight} style={{ marginLeft: 10 }} />
                 </TouchableOpacity>
