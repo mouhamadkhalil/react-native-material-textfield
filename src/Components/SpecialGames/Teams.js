@@ -4,22 +4,22 @@ import {
     Text,
     ScrollView,
     View,
-    ImageBackground,
     ActivityIndicator,
     TouchableOpacity,
 } from "react-native";
+import { HeaderBackground } from "components/Common/HeaderBackground";
 import Accordion from 'react-native-collapsible/Accordion';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get, servicesUrl } from "../../helpers/services.js";
-import Chat from "../FanChat/chat";
+import { get, servicesUrl } from "helpers/services.js";
 import R from "res/R";
+import { translate } from "helpers/utils";
 
 export default class Teams extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
+            isLoading: true,
             list: [],
             activeSections: [],
         };
@@ -32,7 +32,6 @@ export default class Teams extends React.Component {
     }
 
     getData = () => {
-
         get(servicesUrl.getCountriesWithTeams)
             .then((response) => {
                 var data = response.map(function (item) {
@@ -42,22 +41,24 @@ export default class Teams extends React.Component {
                         content: item.Teams
                     };
                 });
-                this.setState({ list: data, isLoading: true });
+                this.setState({ list: data, isLoading: false });
             });
     };
 
     renderTeam(team) {
         return (
-            <TouchableOpacity style={{ marginTop: 10, marginBottom: 10, flexDirection: "row" }} onPress={() => this.props.navigation.navigate('AllGames', { idTeam: team.idTeams })}>
+            <TouchableOpacity key={'team' + team.idTeams} style={styles.team}
+                onPress={() => this.props.navigation.navigate('AllGames', { idTeam: team.idTeams })}>
                 <LinearGradient
                     colors={[team.TeamColor1, team.TeamColor2]}
-                    style={styles.linearGradient}
+                    style={[R.styles.linearGradient, { height: 40, width: 40 }]}
                     start={[0, 0]}
                     end={[1, 0]}
                     locations={[0.5, 0.5]}
-                >
-                </LinearGradient>
-                <Text style={{ marginStart: 10 }}>{team.TeamName}</Text>
+                />
+                <Text style={{ marginStart: 10, fontSize: 18, fontWeight: 'bold' }}>
+                    {team.TeamName}
+                </Text>
             </TouchableOpacity>
         );
     }
@@ -71,17 +72,17 @@ export default class Teams extends React.Component {
 
     renderHeader = section => {
         return (
-
-            <View style={{ padding: 20, backgroundColor: '#f7f7f7', borderBottomWidth: 2, borderBottomColor: '#fff' }}>
-                <Text>{section.title}</Text>
+            <View style={styles.accordionHeader}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                    {section.title}
+                </Text>
             </View>
         );
     };
 
     renderContent = section => {
         return (
-
-            <View style={{ backgroundColor: "#f7f7f7", paddingStart: 20, paddingEnd: 20 }}>
+            <View style={styles.accordionContent}>
                 {section.content.map(this.renderTeam.bind(this))}
             </View>
         );
@@ -94,19 +95,23 @@ export default class Teams extends React.Component {
     render() {
         return (
             <View>
-                <ScrollView style={styles.container}>
-                    <View style={{ backgroundColor: "#eee", marginTop: 0 }}>
-                        <ImageBackground source={R.images.teams_bg} style={styles.headerBg}>
-                            <Text style={styles.pageTitleText}>Teams</Text>
-                        </ImageBackground>
-                    </View>
-                    <View style={{ textAlign: "center", alignItems: "center", marginTop: 60, marginBottom: 60 }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 23, marginBottom: 20 }}>Start booking a trip</Text>
-                        <Text style={{ fontSize: 15 }}>Choose between a single, multi-destination</Text>
-                        <Text style={{ fontSize: 15 }}> or group trip and gift your friends a fun</Text>
-                        <Text style={{ fontSize: 15 }}> stadium experience.</Text>
+                <ScrollView style={[R.styles.container, { backgroundColor: '#fff' }]}>
+                    {/* banner */}
+                    <HeaderBackground title={translate('teams')} image={R.images.teams_bg} />
+
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.heading}>
+                            {translate('startBooking')}
+                        </Text>
+                        <View style={{width:300}}>
+                            <Text style={{ fontSize: 15, textAlign :'center' }}>
+                                Choose between a single, multi-destination or group trip and gift your friends a fun stadium experience.
+                        </Text>
+                        </View>
                     </View>
                     {this.state.isLoading ?
+                        <ActivityIndicator size="large" color="blue" style={{ marginTop: 22, marginLeft: 0 }} />
+                        :
                         <Accordion
                             sections={this.state.list}
                             activeSections={this.state.activeSections}
@@ -115,10 +120,7 @@ export default class Teams extends React.Component {
                             renderContent={this.renderContent}
                             onChange={this.updateSections}
                         />
-                        :
-                        <ActivityIndicator size="large" color="blue" style={{ marginTop: 22, marginLeft: 0 }} />
                     }
-                    <Chat />
                 </ScrollView >
             </View>
         );
@@ -126,27 +128,33 @@ export default class Teams extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: "100%",
-        backgroundColor: "#fff",
-    },
-    headerBg: {
-        height: 200,
+    headerContainer: {
+        textAlign: "center",
         alignItems: "center",
-        justifyContent: "center",
+        marginTop: 60,
+        marginBottom: 60
     },
-    linearGradient: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        height: 25,
-        width: 25,
-        marginStart: 0,
-        marginTop: 0
-    },
-    pageTitleText: {
-        color: "white",
-        fontSize: 26,
+    heading: {
         fontWeight: "bold",
+        fontSize: 23,
+        marginBottom: 20
     },
+    accordionHeader:
+    {
+        padding: 20,
+        backgroundColor: R.colors.lightGrey,
+        borderBottomWidth: 2,
+        borderBottomColor: '#fff'
+    },
+    accordionContent: {
+        backgroundColor: R.colors.lightGrey,
+        paddingStart: 20,
+        paddingEnd: 20
+    },
+    team: {
+        marginTop: 10,
+        marginBottom: 10,
+        flexDirection: "row",
+        alignItems: 'center'
+    }
 });

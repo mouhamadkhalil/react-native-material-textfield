@@ -12,14 +12,13 @@ import {
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import { get, servicesUrl } from "helpers/services.js";
+import { HeaderBackground } from "components/Common/HeaderBackground";
+import { MatchHeader } from "components/Trips/MatchHeader";
+import { getHotelImages, getTripDays, translate } from "helpers/utils";
+import Svg from 'react-native-remote-svg';
 import moment from 'moment';
 import R from "res/R";
-import { get, servicesUrl } from "../../helpers/services.js";
-import { HeaderBackground } from "../Common/HeaderBackground";
-import { MatchHeader } from "../Trips/MatchHeader";
-import { translate } from "../../helpers/utils";
-import Svg from 'react-native-remote-svg';
-
 
 export default class TripOverViewScreen extends React.Component {
     constructor(props) {
@@ -28,12 +27,11 @@ export default class TripOverViewScreen extends React.Component {
         this.state = {
             isLoading: true,
             bundleCode: props?.route?.params?.bundleCode,
-            idHotel: -1,
             details: {},
             game: {},
             hotel: {},
             seating: {},
-            perks: {},
+            perks: [],
             data: {},
             showPictures: false
         };
@@ -45,44 +43,64 @@ export default class TripOverViewScreen extends React.Component {
         } catch { }
     }
 
-    getTripDays(date1, date2) {
-        if (!date1 || !date1)
-            return 0;
-        let firstDate = moment(date1);
-        let secondDate = moment(date2);
-        return secondDate.diff(firstDate, 'days') + 1;
-    }
-
     getData = () => {
-        const params = `?customize=false&validateHotelPrice=false&hotelId=${this.state.idHotel}&hotelSource=R`;
+        const params = `?customize=false&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = response.SelectedHotel;
                 hotel.Stars = new Array(parseInt(hotel.Rating)).fill(1);
+                hotel.HotelRoomType = response.HotelRoomType;
+                hotel.NumberOfRooms = response.NumberOfRooms;
 
                 // convert array of String to array of Objects 
-                var images =[];
-                for (let img of hotel.Images) {
-                    images.push({url: img});
-                }
+                var images = getHotelImages(hotel.Images);
                 hotel.Images = images;
+
                 var seating = response.MatchBundleDetail[0].GameSeat;
-                var perks = {
-                    OnSpot: response.Service_OnSpot,
-                    AirPortPickup: response.Service_AirPortPickup,
-                    AirPortDropOff: response.Service_AirPortDropOff,
-                    StadiumTour: response.Service_StadiumTour,
-                    CityTour: response.Service_CityTour,
-                    Train: response.Service_Train,
-                    Insurance: response.Service_Insurance,
-                }
+                var perks = [
+                    {
+                        Title: translate('onSpotService'),
+                        Price: response.Price_OnSpot,
+                        Selected: true
+                    },
+                    {
+                        Title: translate('airportPickup'),
+                        Price: response.Price_AirtportPickup,
+                        Selected: response.Service_AirPortPickup
+                    },
+                    {
+                        Title: translate('airportDropOff'),
+                        Price: response.Price_AirportDropoff,
+                        Selected: response.Service_AirPortDropOff
+                    },
+                    {
+                        Title: translate('stadiumTour'),
+                        Price: response.Price_StadiumTour,
+                        Selected: response.Service_StadiumTour
+                    },
+                    {
+                        Title: translate('cityTour'),
+                        Price: response.Price_CityTour,
+                        Selected: response.Service_CityTour
+                    },
+                    /*{
+                        Title: translate('train'),
+                        Price: response.Price_Train,
+                        Selected: response.Service_Train
+                    },*/
+                    {
+                        Title: translate('insurance'),
+                        Price: response.Price_Insurance,
+                        Selected: response.Service_Insurance
+                    }
+                ];
                 var details = {
                     idMatchBundle: response.idMatchBundle,
                     BundleCode: response.BundleCode,
                     StartDate: response.StartDate,
                     EndDate: response.EndDate,
-                    TripDays: this.getTripDays(response.StartDate, response.EndDate),
+                    TripDays: getTripDays(response.StartDate, response.EndDate),
                     NumberOfTravelers: response.NumberOfTravelers,
                     BasePricePerFan: response.BasePricePerFan,
                     PricePerFan: response.PricePerFan,
@@ -111,7 +129,7 @@ export default class TripOverViewScreen extends React.Component {
                 <HeaderBackground title={translate('tripOverview')} image={R.images.trip_bg}></HeaderBackground>
 
                 {/* match header */}
-                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} perks={this.state.perks} />
+                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} hotel={this.state.hotel} ticket={this.state.seating} perks={this.state.perks} />
 
                 {/* package details */}
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
@@ -151,19 +169,26 @@ export default class TripOverViewScreen extends React.Component {
                                         {this.state.hotel.HotelName}
                                     </Text>
                                     <View style={{ flex: 1, flexDirection: 'row' }}>
-                                        {this.state.hotel.Stars.map(star => {
+                                        {this.state.hotel.Stars.map((star, index) => {
                                             return (
-                                                <Icon name='star' style={R.styles.hotelStar} />
+                                                <Icon key={'star' + index} name='star' style={R.styles.hotelStar} />
                                             );
                                         })}
                                     </View>
-                                    <Text style={{ color: "gray", marginTop: 30, fontSize: 16 }}>
-                                        {this.state.hotel.SelectedCategory.RoomType[0].TypeName + " x " + this.state.hotel.SelectedCategory.RoomType[0].NumRooms}
-                                    </Text>
+                                    <View style={[R.styles.flexRow, { marginTop: 30 }]}>
+                                        <Image source={R.images.bedGrey} />
+                                        <Text style={{ color: "gray", fontSize: 16, marginStart: 10 }}>
+                                            {this.state.hotel.HotelRoomType + " x " + this.state.hotel.NumberOfRooms}
+                                        </Text>
+                                    </View>
 
-                                    <TouchableOpacity onPress={() => this.setState({ showPictures: true })} >
-                                        <Image source={{ uri: this.state.hotel?.Image }}
-                                            style={{ width: "100%", height: 250, marginTop: 20 }} />
+                                    <TouchableOpacity style={{ marginTop: 20 }} onPress={() => this.setState({ showPictures: true })}>
+                                        <View>
+                                            <View style={{ position: 'absolute', zIndex: 2, width: '100%', height: '100%', backgroundColor: 'black', opacity: 0.6, alignItems: 'center', justifyContent: 'center' }}>
+                                                <Icon key='eye' name='eye-outline' style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }} />
+                                            </View>
+                                            <Image source={{ uri: this.state.hotel?.Image }} style={{ width: "100%", height: 250 }} />
+                                        </View>
                                     </TouchableOpacity>
 
                                 </View>
@@ -176,12 +201,18 @@ export default class TripOverViewScreen extends React.Component {
                                     <Text style={{ fontSize: 17.5, color: R.colors.blue, fontWeight: "bold" }}>
                                         {this.state.seating.SeatCode}
                                     </Text>
-                                    <Text style={{ color: "gray", fontSize: 16 }}>
-                                        {this.state.game.Stade}, {this.state.game.StadeCity}
-                                    </Text>
-                                    <Text style={{ color: "gray", fontSize: 16 }}>
-                                        {this.state.seating.InventoryTickets[0].qa + " " + translate('seats')}
-                                    </Text>
+                                    <View style={R.styles.flexRow}>
+                                        <Image source={R.images.stadiumGrey_sm} />
+                                        <Text style={{ color: "gray", fontSize: 16, marginStart: 10 }}>
+                                            {this.state.game.Stade}, {this.state.game.StadeCity}
+                                        </Text>
+                                    </View>
+                                    <View style={R.styles.flexRow}>
+                                        <Image source={R.images.seatsGrey} />
+                                        <Text style={{ color: "gray", fontSize: 16, marginStart: 10 }}>
+                                            {this.state.details.NumberOfTravelers + " " + translate('seats')}
+                                        </Text>
+                                    </View>
                                     <Svg source={{ uri: this.state.seating.StadiumMap_SVG_v3 }}
                                         style={{ width: "100%", height: 230, marginTop: 30 }} />
                                 </View>
@@ -191,36 +222,60 @@ export default class TripOverViewScreen extends React.Component {
                                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginBottom: 15 }}>
                                         {translate('perks')}
                                     </Text>
-                                    <View style={styles.perksRow}>
-                                        <View style={styles.perk}>
-                                            <Image source={this.state.perks.OnSpot ? R.images.onspot : R.images.onspotGrey} style={styles.perkImage} />
-                                            <Text style={{ ...styles.perkLabel, color: this.state.perks.OnSpot ? R.colors.blue : "#ddd" }}>On Spot Service</Text>
+                                    {this.state.perks.length > 0 ? 
+                                    <>
+                                        <View style={styles.perksRow}>
+                                            {/* on spot service */}
+                                            <View style={styles.perk}>
+                                                <Image source={this.state.perks[0].Selected ? R.images.onspot : R.images.onspotGrey} style={styles.perkImage} />
+                                                <Text style={[styles.perkLabel, { color: this.state.perks[0].Selected ? R.colors.blue : "#ddd" }]}>
+                                                    {this.state.perks[0].Title}
+                                                </Text>
+                                            </View>
+                                            {/* airport pick up */}
+                                            <View style={styles.perk}>
+                                                <Image source={this.state.perks[1].Selected ? R.images.car : R.images.carGrey} style={styles.perkImage} />
+                                                <Text style={[styles.perkLabel, { color: this.state.perks[1].Selected ? R.colors.blue : "#ddd" }]}>
+                                                    {this.state.perks[1].Title}
+                                                </Text>
+                                            </View>
                                         </View>
-                                        <View style={styles.perk}>
-                                            <Image source={this.state.perks.AirPortPickup ? R.images.car : R.images.carGrey} style={styles.perkImage} />
-                                            <Text style={{ ...styles.perkLabel, color: this.state.perks.AirPortPickup ? R.colors.blue : "#ddd" }}>Airport Pick up</Text>
+                                        <View style={styles.perksRow}>
+                                            {/* airport drop off */}
+                                            <View style={styles.perk}>
+                                                <Image source={this.state.perks[2].Selected ? R.images.car : R.images.carGrey} style={styles.perkImage} />
+                                                <Text style={[styles.perkLabel, { color: this.state.perks[2].Selected ? R.colors.blue : "#ddd" }]}>
+                                                    {this.state.perks[2].Title}
+                                                </Text>
+                                            </View>
+                                            {/* stadium tour */}
+                                            <View style={styles.perk}>
+                                                <Image source={this.state.perks[3].Selected ? R.images.stadium : R.images.stadiumGrey} style={styles.perkImage} />
+                                                <Text style={[styles.perkLabel, { color: this.state.perks[3].Selected ? R.colors.blue : "#ddd" }]}>
+                                                    {this.state.perks[3].Title}
+                                                </Text>
+                                            </View>
                                         </View>
-                                    </View>
-                                    <View style={styles.perksRow}>
-                                        <View style={styles.perk}>
-                                            <Image source={this.state.perks.AirPortDropOff ? R.images.car : R.images.carGrey} style={styles.perkImage} />
-                                            <Text style={{ ...styles.perkLabel, color: this.state.perks.AirPortDropoff ? R.colors.blue : "#ddd" }}>Airport Drop off</Text>
+                                        <View style={styles.perksRow}>
+                                            {/* city tour */}
+                                            <View style={styles.perk}>
+                                                <Image source={this.state.perks[4].Selected ? R.images.hotel : R.images.hotelGrey} style={styles.perkImage} />
+                                                <Text style={[styles.perkLabel, { color: this.state.perks[4].Selected ? R.colors.blue : "#ddd" }]}>
+                                                    {this.state.perks[4].Title}
+                                                </Text>
+                                            </View>
+                                            {/* insurance */}
+                                            <View style={styles.perk}>
+                                                <Image source={this.state.perks[5].Selected ? R.images.insurance : R.images.insuranceGrey} style={styles.perkImage} />
+                                                <Text style={[styles.perkLabel, { color: this.state.perks[5].Selected ? R.colors.blue : "#ddd" }]}>
+                                                    {this.state.perks[5].Title}
+                                                </Text>
+                                            </View>
                                         </View>
-                                        <View style={styles.perk}>
-                                            <Image source={this.state.perks.StadiumTour ? R.images.stadium : R.images.stadiumGrey} style={styles.perkImage} />
-                                            <Text style={{ ...styles.perkLabel, color: this.state.perks.StadiumTour ? R.colors.blue : "#ddd" }}>Stadium Tour</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.perksRow}>
-                                        <View style={styles.perk}>
-                                            <Image source={this.state.perks.CityTour ? R.images.hotel : R.images.hotelGrey} style={styles.perkImage} />
-                                            <Text style={{ ...styles.perkLabel, color: this.state.perks.CityTour ? R.colors.blue : "#ddd" }}>City Tour</Text>
-                                        </View>
-                                        <View style={styles.perk}>
-                                            <Image source={this.state.perks.Insurance ? R.images.insurance : R.images.insuranceGrey} style={styles.perkImage} />
-                                            <Text style={{ ...styles.perkLabel, color: this.state.perks.Insurance ? R.colors.blue : "#ddd" }}>Insurance</Text>
-                                        </View>
-                                    </View>
+                                    </>
+                                        :
+                                        <ActivityIndicator size='small' />
+                                    }
                                 </View>
                             </View>
 
@@ -266,7 +321,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     perksRow: { flexDirection: "row", justifyContent: "space-between" },
-    perkImage: { width: 42, height: 44 },
+    perkImage: { width: 42, height: 44, resizeMode: 'contain' },
     perk: { width: "50%", alignItems: "center", height: 100 },
     perkLabel: { fontSize: 13, marginTop: 15 }
 });

@@ -17,7 +17,8 @@ export const servicesUrl = {
     login: '/mobile/profile/login',
     searchFlights: '/mobile/game/SearchFlight',
     searchHotel: '/mobile/game/SearchHotel',
-    getPagedHotels: '/mobile/game/getPagedHotels'
+    getPagedHotels: '/mobile/game/getPagedHotels',
+    viewCancelPolicy: '/mobile/hotel/ViewCancelPolicyV2'
 }
 
 getToken = async () => {

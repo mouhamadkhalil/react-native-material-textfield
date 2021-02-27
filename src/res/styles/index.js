@@ -19,6 +19,7 @@ const styles = {
     linearGradient: {
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth:0.5,
         borderRadius: 50,
         height: 20,
         width: 20,
@@ -44,6 +45,14 @@ const styles = {
         color: "#fff",
         fontWeight: "bold",
         textTransform: 'uppercase'
+    },
+    flexRow: {
+        flex:1,
+        flexDirection:'row'
+    },
+    flexColumn: {
+        flex:1,
+        flexDirection:'column'
     }
 };
 
