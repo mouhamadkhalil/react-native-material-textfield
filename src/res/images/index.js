@@ -62,7 +62,7 @@ const images = {
     all_games_bg: require('../../../assets/images/bg/all-games.jpg'),
     trip_bg: require('../../../assets/images/bg/trip.jpg'),
     teams_bg: require('../../../assets/images/bg/teams.jpg'),
-    leagues_bg: require('../../../assets/images/bg/teams.jpg'),
+    leagues_bg: require('../../../assets/images/bg/leagues.jpg'),
     football_bg: require('../../../assets/images/bg/football.jpg'),
 
     /* brand */

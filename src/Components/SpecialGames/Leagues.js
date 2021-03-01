@@ -1,19 +1,15 @@
 import React from "react";
 import {
     StyleSheet,
-    TextInput,
     Text,
     Image,
     ScrollView,
     View,
-    ImageBackground,
     TouchableOpacity,
     ActivityIndicator,
-    SafeAreaView,
-    Button,
     Dimensions
 } from "react-native";
-import { API_URL, API_TOKEN } from "@env";
+import { HeaderBackground } from "components/Common/HeaderBackground";
 import Image1 from "../../../assets/images/games/image1.png";
 import Image2 from "../../../assets/images/games/image2.png";
 import Image3 from "../../../assets/images/games/image3.png";
@@ -30,12 +26,8 @@ import Image13 from "../../../assets/images/games/image13.png";
 import Image14 from "../../../assets/images/games/image14.png";
 import Image15 from "../../../assets/images/games/image15.png";
 import R from "res/R";
-import Chat from "../FanChat/chat";
-import { get } from "../../helpers/services.js";
-
-const sliderWidth = Dimensions.get('window').width;
-const itemWidth = Math.round(sliderWidth * 0.7);
-const itemWeight = Math.round(itemWidth * 3 / 4);
+import { get } from "helpers/services.js";
+import { translate } from "helpers/utils.js";
 
 export default class Leagues extends React.Component {
 
@@ -65,7 +57,7 @@ export default class Leagues extends React.Component {
             .then((response) => {
                 var data = response.map(function (item) {
                     return {
-                        ID: item.idMatch,
+                        ID: item.ID,
                         Value: item.Value,
                         disabled: item.disabled,
                         ExtraField: item.ExtraField,
@@ -78,11 +70,9 @@ export default class Leagues extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <ImageBackground source={R.images.leagues_bg} style={styles.headerBg}>
-                    <Text style={styles.pageTitleText}>
-                        LEAGUES
-                    </Text>
-                </ImageBackground>
+                {/* banner */}
+                <HeaderBackground title={translate('leagues')} image={R.images.leagues_bg} />
+
                 <Text style={styles.sectionHeading}>European</Text>
                 <View style={styles.teamsWrap}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGames')}>
@@ -149,7 +139,7 @@ export default class Leagues extends React.Component {
                         <Image source={Image15} style={styles.teamImage} />
                     </TouchableOpacity>
                 </View>
-                <Chat />
+
             </ScrollView >
         );
     }
