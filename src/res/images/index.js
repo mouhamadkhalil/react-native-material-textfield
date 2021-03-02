@@ -5,8 +5,11 @@ const images = {
     arrow_right_sm: require('../../../assets/images/icons/arrow_right1.png'),
     calendar: require('../../../assets/images/icons/calendar.png'),
     calendar_grey: require('../../../assets/images/icons/calendar-grey.png'),
-    list_grey: require('../../../assets/images/icons/list-grey-icon.png'),
-    flag_grey: require('../../../assets/images/icons/flag1.png'),
+    calendar_blue: require('../../../assets/images/icons/calendar-blue.png'),
+    list_grey: require('../../../assets/images/icons/list-grey.png'),
+    list_blue: require('../../../assets/images/icons/list-blue.png'),
+    flag_grey: require('../../../assets/images/icons/flag-grey.png'),
+    flag_green: require('../../../assets/images/icons/flag-green.png'),
     share: require('../../../assets/images/icons/share.png'),
     location: require('../../../assets/images/icons/location-icon.png'),
     location3: require('../../../assets/images/icons/location-3.png'),
@@ -40,9 +43,11 @@ const images = {
     refundWhite: require('../../../assets/images/icons/refund-white.png'),
     norefundGrey: require('../../../assets/images/icons/norefund-grey.png'),
     norefundWhite: require('../../../assets/images/icons/norefund-white.png'),
+    connectionIcon: require('../../../assets/images/icons/connection-icon.svg'),
+
     infoGrey: require('../../../assets/images/icons/info-grey.png'),
     infoWhite: require('../../../assets/images/icons/info-white.png'),
-    
+
     airplane: require('../../../assets/images/icons/airplane.png'),
 
     /* chat */
@@ -68,7 +73,11 @@ const images = {
     /* brand */
     flyfoot: require('../../../assets/images/flyfoot.png'),
     flyfoot_grey: require('../../../assets/images/fly-foot2.png'),
-    logo: require('../../../assets/images/fly-foot.png')
+    logo: require('../../../assets/images/fly-foot.png'),
+
+    /* plus and minus */
+    plus: require('../../../assets/images/icons/icon-plus.svg'),
+    minus: require('../../../assets/images/icons/icon-minus.svg'),
 }
 
 export default images

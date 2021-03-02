@@ -41,7 +41,7 @@ export class MatchHeader extends React.PureComponent {
 
     calculHotel = () => {
         if (this.props.hotel != null) {
-            var hotelUpgrade = this.props.hotel.SelectedCategory.ExtraCostPerFan;
+            var hotelUpgrade = this.props.hotel?.SelectedCategory?.ExtraCostPerFan;
             var totalPerFan = this.calculPerFan(hotelUpgrade, this.state.ticketUpgrade, this.state.perksUpgrade);
             var total = totalPerFan * this.props.details.NumberOfTravelers;
             this.setState({ hotelUpgrade, totalPerFan, total });
@@ -49,7 +49,7 @@ export class MatchHeader extends React.PureComponent {
     }
 
     calculTicket = () => {
-        var ticketUpgrade = this.props.ticket.ExtraCostPerFan;
+        var ticketUpgrade = this.props.ticket?.ExtraCostPerFan;
         var totalPerFan = this.calculPerFan(this.state.hotelUpgrade, ticketUpgrade, this.state.perksUpgrade);
         var total = totalPerFan * this.props.details.NumberOfTravelers;
         this.setState({ ticketUpgrade, totalPerFan, total });

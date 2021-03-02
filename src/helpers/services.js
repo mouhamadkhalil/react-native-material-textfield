@@ -5,6 +5,7 @@ export const servicesUrl = {
     /* GET */
     getHomePageData: '/mobile/game/GetHomePageDataMobile',
     getAllGames: '/mobile/game/getall',
+    getGameCalendar: '/mobile/game/GameCalendar',
     getAllTeams: '/mobile/team/all',
     getAllCities: '/mobile/city/destinationCity',
     getAllLeagues: '/mobile/leagues/all',
@@ -12,6 +13,7 @@ export const servicesUrl = {
     getSearchTeam: '/mobile/team/search?text=',
     getGameV2: '/mobile/game/v2/',
     getAmadeusCities: '/mobile/city/amadeusCity',
+    getFlagBundle: '/mobile/game/flagBundle',
 
     /* POST */
     login: '/mobile/profile/login',

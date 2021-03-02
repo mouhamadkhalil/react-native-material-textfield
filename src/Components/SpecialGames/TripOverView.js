@@ -15,6 +15,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import { get, servicesUrl } from "helpers/services.js";
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
+import RatingStars from "components/Common/RatingStars";
 import { getHotelImages, getTripDays, translate } from "helpers/utils";
 import Svg from 'react-native-remote-svg';
 import moment from 'moment';
@@ -49,7 +50,6 @@ export default class TripOverViewScreen extends React.Component {
             .then((response) => {
                 var game = response.MatchBundleDetail[0].Game;
                 var hotel = response.SelectedHotel;
-                hotel.Stars = new Array(parseInt(hotel.Rating)).fill(1);
                 hotel.HotelRoomType = response.HotelRoomType;
                 hotel.NumberOfRooms = response.NumberOfRooms;
 
@@ -146,7 +146,7 @@ export default class TripOverViewScreen extends React.Component {
                                         {translate('tripDates')}
                                     </Text>
                                     <Text style={{ fontSize: 17.5, color: R.colors.blue, fontWeight: "bold" }}>
-                                        {moment(this.state.details.StartDate).format('DD.MM.YY')} - {moment(this.state.details.EndDate).format('DD.MM.YY')}
+                                        {moment(this.state.details?.StartDate).format('DD.MM.YY')} - {moment(this.state.details?.EndDate).format('DD.MM.YY')}
                                     </Text>
                                 </View>
 
@@ -156,7 +156,7 @@ export default class TripOverViewScreen extends React.Component {
                                         {translate('fans')}
                                     </Text>
                                     <Text style={{ fontSize: 17.5, color: R.colors.blue, fontWeight: "bold" }}>
-                                        {this.state.details.NumberOfTravelers}
+                                        {this.state.details?.NumberOfTravelers}
                                     </Text>
                                 </View>
 
@@ -169,11 +169,7 @@ export default class TripOverViewScreen extends React.Component {
                                         {this.state.hotel.HotelName}
                                     </Text>
                                     <View style={{ flex: 1, flexDirection: 'row' }}>
-                                        {this.state.hotel.Stars.map((star, index) => {
-                                            return (
-                                                <Icon key={'star' + index} name='star' style={R.styles.hotelStar} />
-                                            );
-                                        })}
+                                        <RatingStars rating={parseInt(this.state.hotel.Rating)} />
                                     </View>
                                     <View style={[R.styles.flexRow, { marginTop: 30 }]}>
                                         <Image source={R.images.bedGrey} />
@@ -199,21 +195,21 @@ export default class TripOverViewScreen extends React.Component {
                                         {translate('seatingOptions')}
                                     </Text>
                                     <Text style={{ fontSize: 17.5, color: R.colors.blue, fontWeight: "bold" }}>
-                                        {this.state.seating.SeatCode}
+                                        {this.state.seating?.SeatCode}
                                     </Text>
                                     <View style={R.styles.flexRow}>
                                         <Image source={R.images.stadiumGrey_sm} />
                                         <Text style={{ color: "gray", fontSize: 16, marginStart: 10 }}>
-                                            {this.state.game.Stade}, {this.state.game.StadeCity}
+                                            {this.state.game?.Stade}, {this.state.game?.StadeCity}
                                         </Text>
                                     </View>
                                     <View style={R.styles.flexRow}>
                                         <Image source={R.images.seatsGrey} />
                                         <Text style={{ color: "gray", fontSize: 16, marginStart: 10 }}>
-                                            {this.state.details.NumberOfTravelers + " " + translate('seats')}
+                                            {this.state.details?.NumberOfTravelers + " " + translate('seats')}
                                         </Text>
                                     </View>
-                                    <Svg source={{ uri: this.state.seating.StadiumMap_SVG_v3 }}
+                                    <Svg source={{ uri: this.state.seating?.StadiumMap_SVG_v3 }}
                                         style={{ width: "100%", height: 230, marginTop: 30 }} />
                                 </View>
 
@@ -222,7 +218,7 @@ export default class TripOverViewScreen extends React.Component {
                                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginBottom: 15 }}>
                                         {translate('perks')}
                                     </Text>
-                                    {this.state.perks.length > 0 ? 
+                                    {this.state.perks?.length > 0 ? 
                                     <>
                                         <View style={styles.perksRow}>
                                             {/* on spot service */}
@@ -297,7 +293,7 @@ export default class TripOverViewScreen extends React.Component {
                 </View>
                 <Modal visible={this.state.showPictures} transparent={true}
                     onRequestClose={() => this.setState({ showPictures: false })}>
-                    <ImageViewer imageUrls={this.state.hotel.Images} />
+                    <ImageViewer imageUrls={this.state.hotel?.Images} />
                 </Modal>
             </ScrollView >
         );

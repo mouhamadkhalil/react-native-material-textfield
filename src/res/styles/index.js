@@ -24,7 +24,7 @@ const styles = {
         height: 20,
         width: 20,
     },
-    hotelStar: {
+    star: {
         color: "#f9d155",
         fontSize: 16,
         fontWeight: 'bold',

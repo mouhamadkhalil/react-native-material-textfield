@@ -20,6 +20,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { get, post, servicesUrl } from "helpers/services.js";
 import { getHotelImages, getTripDays, translate } from "helpers/utils";
 import { MatchHeader } from "components/Trips/MatchHeader";
+import RatingStars from "components/Common/RatingStars";
 import { CheckBox, Tooltip } from 'react-native-elements';
 import Svg from 'react-native-remote-svg';
 import moment from 'moment';
@@ -56,11 +57,11 @@ export default class CustomizeTripScreen extends React.Component {
 
     componentDidMount() {
         try {
-            this.getData();
+            this.getBundle();
         } catch { }
     }
 
-    getData = () => {
+    getBundle = () => {
         const params = `?customize=true&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
@@ -173,6 +174,7 @@ export default class CustomizeTripScreen extends React.Component {
                     }
                     post(servicesUrl.viewCancelPolicy, cancelPolicyRequest)
                         .then((response) => {
+                            bundle.SelectedHotel.Policies = response;
                             var cancelPolicy = response.Policy[0];
                             cancelPolicy.HotelId = bundle.SelectedHotel.HotelId;
 
@@ -293,7 +295,7 @@ export default class CustomizeTripScreen extends React.Component {
                         RoomType: 'Single',
                         Text: '1'
                     },
-                    ChildAges: { ChildAge: [] }
+                    ChildAges: { ChildAge: [null, null] }
                 }
                 if (restFanNumbers >= 3) {
                     item.AdultNum.RoomType = 'Triple';
@@ -332,7 +334,7 @@ export default class CustomizeTripScreen extends React.Component {
                         RoomType: 'Single',
                         Text: '1'
                     },
-                    ChildAges: { ChildAge: [] }
+                    ChildAges: { ChildAge: [null, null] }
                 }
                 if (restFanNumbers >= 3) {
                     item.AdultNum.RoomType = 'Triple';
@@ -373,7 +375,7 @@ export default class CustomizeTripScreen extends React.Component {
                         RoomType: 'Single',
                         Text: '1'
                     },
-                    ChildAges: { ChildAge: [] }
+                    ChildAges: { ChildAge: [null, null] }
                 }
                 switch (fanRoom) {
                     case 2:
@@ -415,7 +417,7 @@ export default class CustomizeTripScreen extends React.Component {
                         RoomType: 'Single',
                         Text: '1'
                     },
-                    ChildAges: { ChildAge: [] }
+                    ChildAges: { ChildAge: [null, null] }
                 }
                 switch (fanRoom) {
                     case 2:
@@ -482,7 +484,7 @@ export default class CustomizeTripScreen extends React.Component {
     }
 
     hotelItem = ({ item, index }) => {
-        var rating = new Array(parseInt(item.Rating)).fill(0);
+        var rating = parseInt(item.Rating);
         var selected = this.state.bundle.SelectedHotel.HotelId === item.HotelId;
         var policy = this.state.cancelPolicies.find(p => p.HotelId === item.HotelId);
         return (
@@ -510,11 +512,7 @@ export default class CustomizeTripScreen extends React.Component {
                         {/* rating + cost */}
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
-                                {rating.map((star, index) => {
-                                    return (
-                                        <Icon key={'star' + index} name='star' style={R.styles.hotelStar} />
-                                    );
-                                })}
+                                <RatingStars rating={rating} key={item.HotelId} />
                             </View>
                             <Text style={{ fontWeight: 'bold', color: selected ? R.colors.lightGreen : 'black', alignSelf: 'flex-end', }}>
                                 + {item.SelectedCategory.ExtraCostPerFan} $
