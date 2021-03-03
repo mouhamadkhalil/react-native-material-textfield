@@ -11,8 +11,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Svg from 'react-native-remote-svg';
 import moment from 'moment';
 
-const FlightItem = (props) => {
-    const item = props.item.item;
+const FlightItem = ({ item }) => {
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const Outbound = item.Destinations[0], Return = item.Destinations[1];
     const min = moment(Outbound.FlightSegment[Outbound.FlightSegment.length - 1].ArrivalDateTime).diff(moment(Outbound.FlightSegment[0].DepartureDateTime), "minutes");

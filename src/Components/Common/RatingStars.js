@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons';
 import R from "res/R";
 
-function RatingStars({ rating, key }) {
+function RatingStars({ rating, tag =''}) {
     var array = new Array(rating).fill(1);
     return (
         array.map((star, index) => {
             return (
-                <Icon key={key + 'star' + index} name='star' style={R.styles.star} />
+                <Icon key={tag + 'star' + index} name='star' style={R.styles.star} />
             );
         })
     )
@@ -17,7 +17,7 @@ function RatingStars({ rating, key }) {
 
 RatingStars.propTypes = {
     rating: PropTypes.number.isRequired,
-    key: PropTypes.string,
+    tag: PropTypes.string,
 }
 
 export default RatingStars

@@ -2,15 +2,20 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import R from "res/R";
 import { translate } from "helpers/utils.js";
-
+import R from "res/R";
 
 const MatchItem = ({ item, height }) => {
     const navigation = useNavigation();
+    const navigate = () => {
+        if(item.Price != null  && item.Price > 0)
+         navigation.navigate('tripoverview', { bundleCode: item.GameCode }) ;
+         else navigation.navigate('request', { bundleCode: item.GameCode });
+    }
+
     return (
         <TouchableOpacity style={[R.styles.flexColumn, styles.container, { height: height }]}
-            onPress={() => { navigation.navigate('tripoverview', { bundleCode: item.GameCode }) }}>
+            onPress={navigate}>
             {/* home team */}
             <View style={[R.styles.flexRow, styles.team]}>
                 <LinearGradient
@@ -39,7 +44,7 @@ const MatchItem = ({ item, height }) => {
             </View>
             <Text>{item.LeagueName}</Text>
             <Text style={{ width: '80%' }}>{item.City + ", " + item.Stade}</Text>
-            <Text style={ styles.viewMatch}>{translate('viewMatch')}</Text>
+            <Text style={styles.viewMatch}>{translate('viewMatch')}</Text>
         </TouchableOpacity>
     );
 };
@@ -49,8 +54,8 @@ const styles = StyleSheet.create({
         width: '50%',
         marginTop: 30
     },
-    team:{
-        alignItems:'center'
+    team: {
+        alignItems: 'center'
     },
     teamName:
     {
@@ -60,10 +65,10 @@ const styles = StyleSheet.create({
         paddingStart: 5
     },
     viewMatch: {
-        marginTop:10,
+        marginTop: 10,
         textTransform: 'uppercase',
         fontWeight: 'bold',
-        color:R.colors.grey
+        color: R.colors.grey
     }
 })
 

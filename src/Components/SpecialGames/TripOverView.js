@@ -16,7 +16,8 @@ import { get, servicesUrl } from "helpers/services.js";
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
 import RatingStars from "components/Common/RatingStars";
-import { getHotelImages, getTripDays, translate } from "helpers/utils";
+import { formatBundle } from "helpers/tripHelper";
+import { translate } from "helpers/utils";
 import Svg from 'react-native-remote-svg';
 import moment from 'moment';
 import R from "res/R";
@@ -28,6 +29,7 @@ export default class TripOverViewScreen extends React.Component {
         this.state = {
             isLoading: true,
             bundleCode: props?.route?.params?.bundleCode,
+            bundle: props?.route?.params?.bundle,
             details: {},
             game: {},
             hotel: {},
@@ -40,78 +42,30 @@ export default class TripOverViewScreen extends React.Component {
 
     componentDidMount() {
         try {
-            this.getData();
+            this.init();
         } catch { }
     }
 
-    getData = () => {
+    init = () => {
+        if (this.state.bundle == null)
+            this.getBundle();
+        else
+            this.initBundle();
+    }
+
+    getBundle = () => {
         const params = `?customize=false&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
-                var game = response.MatchBundleDetail[0].Game;
-                var hotel = response.SelectedHotel;
-                hotel.HotelRoomType = response.HotelRoomType;
-                hotel.NumberOfRooms = response.NumberOfRooms;
-
-                // convert array of String to array of Objects 
-                var images = getHotelImages(hotel.Images);
-                hotel.Images = images;
-
-                var seating = response.MatchBundleDetail[0].GameSeat;
-                var perks = [
-                    {
-                        Title: translate('onSpotService'),
-                        Price: response.Price_OnSpot,
-                        Selected: true
-                    },
-                    {
-                        Title: translate('airportPickup'),
-                        Price: response.Price_AirtportPickup,
-                        Selected: response.Service_AirPortPickup
-                    },
-                    {
-                        Title: translate('airportDropOff'),
-                        Price: response.Price_AirportDropoff,
-                        Selected: response.Service_AirPortDropOff
-                    },
-                    {
-                        Title: translate('stadiumTour'),
-                        Price: response.Price_StadiumTour,
-                        Selected: response.Service_StadiumTour
-                    },
-                    {
-                        Title: translate('cityTour'),
-                        Price: response.Price_CityTour,
-                        Selected: response.Service_CityTour
-                    },
-                    /*{
-                        Title: translate('train'),
-                        Price: response.Price_Train,
-                        Selected: response.Service_Train
-                    },*/
-                    {
-                        Title: translate('insurance'),
-                        Price: response.Price_Insurance,
-                        Selected: response.Service_Insurance
-                    }
-                ];
-                var details = {
-                    idMatchBundle: response.idMatchBundle,
-                    BundleCode: response.BundleCode,
-                    StartDate: response.StartDate,
-                    EndDate: response.EndDate,
-                    TripDays: getTripDays(response.StartDate, response.EndDate),
-                    NumberOfTravelers: response.NumberOfTravelers,
-                    BasePricePerFan: response.BasePricePerFan,
-                    PricePerFan: response.PricePerFan,
-                    ExtraFeesPerFan: response.ExtraFeesPerFan,
-                    FinalPrice: response.FinalPrice,
-                    FinalPricePerFan: response.FinalPricePerFan,
-                    NumberOfRooms: response.NumberOfRooms,
-                    SharingRoomNote: response.SharingRoomNote,
-                }
-                this.setState({ data: response, game, hotel, seating, perks, details, isLoading: false })
+                this.initBundle(response);
             });
+    }
+
+    initBundle = (bundle = null) => {
+        if (bundle == null)
+            bundle = this.state.bundle;
+        const [details, game, hotel, seating, perks] = formatBundle(bundle);
+        this.setState({ bundle, details, game, hotel, seating, perks, isLoading: false })
     }
 
     customize = () => {
@@ -119,7 +73,7 @@ export default class TripOverViewScreen extends React.Component {
     };
 
     flight = () => {
-        this.props.navigation.navigate('flight', { bundleCode: this.state.bundleCode });
+        this.props.navigation.navigate('flight', { bundle: this.state.bundle });
     };
 
     render() {
@@ -218,57 +172,57 @@ export default class TripOverViewScreen extends React.Component {
                                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginBottom: 15 }}>
                                         {translate('perks')}
                                     </Text>
-                                    {this.state.perks?.length > 0 ? 
-                                    <>
-                                        <View style={styles.perksRow}>
-                                            {/* on spot service */}
-                                            <View style={styles.perk}>
-                                                <Image source={this.state.perks[0].Selected ? R.images.onspot : R.images.onspotGrey} style={styles.perkImage} />
-                                                <Text style={[styles.perkLabel, { color: this.state.perks[0].Selected ? R.colors.blue : "#ddd" }]}>
-                                                    {this.state.perks[0].Title}
-                                                </Text>
+                                    {this.state.perks?.length > 0 ?
+                                        <>
+                                            <View style={styles.perksRow}>
+                                                {/* on spot service */}
+                                                <View style={styles.perk}>
+                                                    <Image source={this.state.perks[0].Selected ? R.images.onspot : R.images.onspotGrey} style={styles.perkImage} />
+                                                    <Text style={[styles.perkLabel, { color: this.state.perks[0].Selected ? R.colors.blue : "#ddd" }]}>
+                                                        {this.state.perks[0].Title}
+                                                    </Text>
+                                                </View>
+                                                {/* airport pick up */}
+                                                <View style={styles.perk}>
+                                                    <Image source={this.state.perks[1].Selected ? R.images.car : R.images.carGrey} style={styles.perkImage} />
+                                                    <Text style={[styles.perkLabel, { color: this.state.perks[1].Selected ? R.colors.blue : "#ddd" }]}>
+                                                        {this.state.perks[1].Title}
+                                                    </Text>
+                                                </View>
                                             </View>
-                                            {/* airport pick up */}
-                                            <View style={styles.perk}>
-                                                <Image source={this.state.perks[1].Selected ? R.images.car : R.images.carGrey} style={styles.perkImage} />
-                                                <Text style={[styles.perkLabel, { color: this.state.perks[1].Selected ? R.colors.blue : "#ddd" }]}>
-                                                    {this.state.perks[1].Title}
-                                                </Text>
+                                            <View style={styles.perksRow}>
+                                                {/* airport drop off */}
+                                                <View style={styles.perk}>
+                                                    <Image source={this.state.perks[2].Selected ? R.images.car : R.images.carGrey} style={styles.perkImage} />
+                                                    <Text style={[styles.perkLabel, { color: this.state.perks[2].Selected ? R.colors.blue : "#ddd" }]}>
+                                                        {this.state.perks[2].Title}
+                                                    </Text>
+                                                </View>
+                                                {/* stadium tour */}
+                                                <View style={styles.perk}>
+                                                    <Image source={this.state.perks[3].Selected ? R.images.stadium : R.images.stadiumGrey} style={styles.perkImage} />
+                                                    <Text style={[styles.perkLabel, { color: this.state.perks[3].Selected ? R.colors.blue : "#ddd" }]}>
+                                                        {this.state.perks[3].Title}
+                                                    </Text>
+                                                </View>
                                             </View>
-                                        </View>
-                                        <View style={styles.perksRow}>
-                                            {/* airport drop off */}
-                                            <View style={styles.perk}>
-                                                <Image source={this.state.perks[2].Selected ? R.images.car : R.images.carGrey} style={styles.perkImage} />
-                                                <Text style={[styles.perkLabel, { color: this.state.perks[2].Selected ? R.colors.blue : "#ddd" }]}>
-                                                    {this.state.perks[2].Title}
-                                                </Text>
+                                            <View style={styles.perksRow}>
+                                                {/* city tour */}
+                                                <View style={styles.perk}>
+                                                    <Image source={this.state.perks[4].Selected ? R.images.hotel : R.images.hotelGrey} style={styles.perkImage} />
+                                                    <Text style={[styles.perkLabel, { color: this.state.perks[4].Selected ? R.colors.blue : "#ddd" }]}>
+                                                        {this.state.perks[4].Title}
+                                                    </Text>
+                                                </View>
+                                                {/* insurance */}
+                                                <View style={styles.perk}>
+                                                    <Image source={this.state.perks[5].Selected ? R.images.insurance : R.images.insuranceGrey} style={styles.perkImage} />
+                                                    <Text style={[styles.perkLabel, { color: this.state.perks[5].Selected ? R.colors.blue : "#ddd" }]}>
+                                                        {this.state.perks[5].Title}
+                                                    </Text>
+                                                </View>
                                             </View>
-                                            {/* stadium tour */}
-                                            <View style={styles.perk}>
-                                                <Image source={this.state.perks[3].Selected ? R.images.stadium : R.images.stadiumGrey} style={styles.perkImage} />
-                                                <Text style={[styles.perkLabel, { color: this.state.perks[3].Selected ? R.colors.blue : "#ddd" }]}>
-                                                    {this.state.perks[3].Title}
-                                                </Text>
-                                            </View>
-                                        </View>
-                                        <View style={styles.perksRow}>
-                                            {/* city tour */}
-                                            <View style={styles.perk}>
-                                                <Image source={this.state.perks[4].Selected ? R.images.hotel : R.images.hotelGrey} style={styles.perkImage} />
-                                                <Text style={[styles.perkLabel, { color: this.state.perks[4].Selected ? R.colors.blue : "#ddd" }]}>
-                                                    {this.state.perks[4].Title}
-                                                </Text>
-                                            </View>
-                                            {/* insurance */}
-                                            <View style={styles.perk}>
-                                                <Image source={this.state.perks[5].Selected ? R.images.insurance : R.images.insuranceGrey} style={styles.perkImage} />
-                                                <Text style={[styles.perkLabel, { color: this.state.perks[5].Selected ? R.colors.blue : "#ddd" }]}>
-                                                    {this.state.perks[5].Title}
-                                                </Text>
-                                            </View>
-                                        </View>
-                                    </>
+                                        </>
                                         :
                                         <ActivityIndicator size='small' />
                                     }

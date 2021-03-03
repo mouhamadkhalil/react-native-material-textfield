@@ -20,7 +20,8 @@ export const servicesUrl = {
     searchFlights: '/mobile/game/SearchFlight',
     searchHotel: '/mobile/game/SearchHotel',
     getPagedHotels: '/mobile/game/getPagedHotels',
-    viewCancelPolicy: '/mobile/hotel/ViewCancelPolicyV2'
+    viewCancelPolicy: '/mobile/hotel/ViewCancelPolicyV2',
+    saveBundleMulti : '/mobile/game/saveBundleMulti'
 }
 
 getToken = async () => {

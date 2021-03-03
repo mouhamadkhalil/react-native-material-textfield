@@ -13,19 +13,21 @@ import {
     ToastAndroid,
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { HeaderBackground } from "../Common/HeaderBackground";
+import { HeaderBackground } from "components/Common/HeaderBackground";
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from 'react-native-datepicker';
 import RadioButtonRN from 'radio-buttons-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import moment from 'moment';
 import R from "res/R";
-import { get, post, servicesUrl } from "../../helpers/services.js";
-import { translate } from "../../helpers/utils";
+import { get, post, servicesUrl } from "helpers/services.js";
+import { translate } from "helpers/utils";
 import DatepickerRange from 'react-native-range-datepicker';
 import Svg from 'react-native-remote-svg';
 import RangeSlider from 'rn-range-slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import { formatDetails, formatGames } from "helpers/tripHelper";
+import RatingStars from "components/Common/RatingStars";
 
 const data = [
     {
@@ -48,15 +50,15 @@ const data = [
 
 const dataHotel = [
     {
-        label: new Array(5).fill(1).map(star => <Icon name='star' style={R.styles.star} />),
+        label: <RatingStars rating={5} tag='5stars'/>,
         value: 5
     },
     {
-        label: new Array(4).fill(1).map(star => <Icon name='star' style={R.styles.star} />),
+        label: <RatingStars rating={4} tag='4stars'/>,
         value: 4
     },
     {
-        label: new Array(3).fill(1).map(star => <Icon name='star' style={R.styles.star} />),
+        label: <RatingStars rating={3} tag='3stars'/> ,
         value: 3
     },
 ];
@@ -69,14 +71,10 @@ export default class Request extends React.Component {
         this.state = {
             isLoading: true,
             bundleCode: props?.route?.params?.bundleCode,
-            idHotel: -1,
             details: {},
             game: {},
             hotel: {},
-            seating: {},
-            perks: {},
-            data: {},
-            isDone: false,
+            bundle: {},
             suggestedGames: [],
             MultiDetails: [],
             StartDate: "",
@@ -102,7 +100,7 @@ export default class Request extends React.Component {
 
     componentDidMount() {
         try {
-            this.getGameData();
+            this.getBundle();
             this.getCities();
         } catch { }
     }
@@ -120,55 +118,16 @@ export default class Request extends React.Component {
             });
     }
 
-    getTripDays(date1, date2) {
-        if (!date1 || !date1)
-            return 0;
-        let firstDate = moment(date1);
-        let secondDate = moment(date2);
-        return secondDate.diff(firstDate, 'days') + 1;
-    }
-
-    getGameData = () => {
-        const _this = this;
-        const params = `?customize=false&validateHotelPrice=false&hotelId=${this.state.idHotel}&hotelSource=R`;
+    getBundle = () => {
+        const params = `?customize=false&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then(response => {
-                console.log("response:", response)
-                var game = response.MatchBundleDetail[0].Game;
-                var hotel = response.SelectedHotel;
-                hotel.Stars = new Array(parseInt(hotel.Rating)).fill(1);
-
-                var seating = response.MatchBundleDetail[0].GameSeat;
-                var perks = {
-                    OnSpot: response.Service_OnSpot,
-                    AirPortPickup: response.Service_AirPortPickup,
-                    AirPortDropOff: response.Service_AirPortDropOff,
-                    StadiumTour: response.Service_StadiumTour,
-                    CityTour: response.Service_CityTour,
-                    Train: response.Service_Train,
-                    Insurance: response.Service_Insurance,
-                }
-                var details = {
-                    idMatchBundle: response.idMatchBundle,
-                    BundleCode: response.BundleCode,
-                    StartDate: response.StartDate,
-                    EndDate: response.EndDate,
-                    TripDays: this.getTripDays(response.StartDate, response.EndDate),
-                    NumberOfTravelers: response.NumberOfTravelers,
-                    BasePricePerFan: response.BasePricePerFan,
-                    PricePerFan: response.PricePerFan,
-                    ExtraFeesPerFan: response.ExtraFeesPerFan,
-                    FinalPrice: response.FinalPrice,
-                    FinalPricePerFan: response.FinalPricePerFan,
-                    NumberOfRooms: response.NumberOfRooms,
-                    SharingRoomNote: response.SharingRoomNote,
-                }
-                this.setState({ data: response, game, hotel, seating, perks, details, isLoading: false })
+                const details = formatDetails(response), game = formatGames(response);
+                this.setState({ bundle: response, details, game, isLoading: false })
             });
     }
 
     SendRequest = () => {
-        const _this = this;
         const data = {
             NumberOfTravelers: this.state.NumberOfTravelers,
             StartDate: this.state.StartDate,
@@ -197,7 +156,7 @@ export default class Request extends React.Component {
             );
         }
         else {
-            post(`/mobile/game/saveBundleMulti`, data)
+            post(servicesUrl.saveBundleMulti, bundle)
                 .then(response => {
                     var dataContacts = response.OfferContacts.map(function (item) {
                         return {
@@ -260,7 +219,7 @@ export default class Request extends React.Component {
 
         return (
             <ScrollView style={styles.container}>
-                <HeaderBackground title={translate("request")} image={R.images.all_games_bg}></HeaderBackground>
+                <HeaderBackground title={translate("request")} image={R.images.all_games_bg} />
 
                 <View style={{ marginStart: 15, marginEnd: 15, marginTop: 30 }}>
 
@@ -362,11 +321,11 @@ export default class Request extends React.Component {
                                             selectedLabelStyle={{ color: '#3333ff', fontWeight: 'bold', }}
                                             activeLabelStyle={{ color: '#3333ff' }}
                                             onChangeItem={(item) => {
-                                                var data = this.state.data;
-                                                data.idDepartureCity = item.value;
-                                                data.flightClass = 2;
-                                                this.setState({ data: data, isLoading: true }, function () {
-                                                    console.log(data);
+                                                var bundle = this.state.bundle;
+                                                bundle.idDepartureCity = item.value;
+                                                bundle.flightClass = 2;
+                                                this.setState({ bundle, isLoading: true }, function () {
+                                                    console.log(bundle);
                                                 });
                                             }}
                                             onOpen={() => this.setState({ isVisibleDropdownPicker: true })}

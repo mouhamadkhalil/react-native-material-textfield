@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Modal, TouchableHighlight, Text, Image, Platform, ScrollView, View, ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { get, getWithToken, servicesUrl } from "helpers/services.js";
-import { translate } from "helpers/utils.js";
 import DatepickerRange from 'react-native-range-datepicker';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import ListItem from 'components/AllGames/ListItem';
 import CalendarItem from 'components/AllGames/CalendarItem';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { getTripDays } from 'helpers/utils';
+import { get, getWithToken, servicesUrl } from "helpers/services.js";
+import { getTripDays } from 'helpers/tripHelper.js';
+import { translate } from "helpers/utils.js";
 import moment from 'moment';
 import R from "res/R";
 
@@ -440,7 +440,7 @@ export default class AllGames extends React.Component {
                                         </TouchableOpacity>
                                     </View>
                                 </View>
-                                <TouchableOpacity onPress={this.reload} style={{ width: '50%', marginTop: 20, padding: 20, backgroundColor: R.colors.lightGreen, alignSelf: 'center' }}>
+                                <TouchableOpacity onPress={()=>this.reload()} style={{ width: '50%', marginTop: 20, padding: 20, backgroundColor: R.colors.lightGreen, alignSelf: 'center' }}>
                                     <Text style={{ fontSize: 15, textTransform: 'uppercase', alignSelf: 'center' }}>
                                         {translate('applyFilters')}
                                     </Text>

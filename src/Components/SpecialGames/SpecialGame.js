@@ -12,12 +12,14 @@ import {
     ActivityIndicator,
     Pressable
 } from "react-native";
-import { get, servicesUrl } from "../../helpers/services.js";
+import { get, servicesUrl } from "helpers/services.js";
 import Carousel from 'react-native-snap-carousel';
 import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import Image from 'react-native-remote-svg';
-import { translate } from "../../helpers/utils.js";
+import { translate } from "helpers/utils.js";
+import { getTripDays } from "helpers/tripHelper.js";
+
 import R from "res/R";
 
 const sliderWidth = Dimensions.get('window').width;
@@ -59,14 +61,6 @@ export default class specialGames extends React.Component {
         } catch { }
     }
 
-    getTripDays(date1, date2) {
-        if (!date1 || !date1)
-            return 0;
-        let firstDate = moment(date1);
-        let secondDate = moment(date2);
-        return secondDate.diff(firstDate, 'days') + 1;
-    }
-
     getData = () => {
         const _this = this;
         get(servicesUrl.getHomePageData)
@@ -88,7 +82,7 @@ export default class specialGames extends React.Component {
                         PriceCaption: item.PriceCaption,
                         BackGroundImage: item.BackGroundImage,
                         SharingRoomNote: item.SharingRoomNote,
-                        TripDays: _this.getTripDays(item.StartDate, item.EndDate),
+                        TripDays: getTripDays(item.StartDate, item.EndDate),
                         PricePerFan: item.PricePerFan
                     };
                 });
@@ -132,7 +126,7 @@ export default class specialGames extends React.Component {
                         PriceCaption: item.PriceCaption,
                         BackGroundImage: item.BackGroundImage,
                         SharingRoomNote: item.SharingRoomNote,
-                        TripDays: _this.getTripDays(item.StartDate, item.EndDate),
+                        TripDays: getTripDays(item.StartDate, item.EndDate),
                         PricePerFan: item.PricePerFan
                     };
                 });

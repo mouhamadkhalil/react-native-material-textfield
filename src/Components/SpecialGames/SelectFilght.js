@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     StyleSheet,
     Text,
@@ -9,147 +9,29 @@ import {
     TouchableOpacity,
     FlatList
 } from "react-native";
-import R from "res/R";
-import { get, post, servicesUrl } from "../../helpers/services.js";
-import { getTripDays, translate } from "../../helpers/utils";
-import { HeaderBackground } from "../Common/HeaderBackground";
-import { MatchHeader } from "../Trips/MatchHeader";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import DropDownPicker from "react-native-dropdown-picker";
-import Svg from 'react-native-remote-svg';
+import { HeaderBackground } from "components/Common/HeaderBackground";
+import { MatchHeader } from "components/Trips/MatchHeader";
+import FlightItem from "components/Flights/FlightItem";
+import { get, post, servicesUrl } from "helpers/services.js";
+import { getTripDays } from "helpers/tripHelper.js";
+import { translate } from "helpers/utils.js";
 import moment from 'moment';
-
-const FlightItem = (props) => {
-    const item = props.item.item;
-    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-    const Outbound = item.Destinations[0], Return = item.Destinations[1];
-    console.log(Outbound, Return);
-    const min = moment(Outbound.FlightSegment[Outbound.FlightSegment.length - 1].ArrivalDateTime).diff(moment(Outbound.FlightSegment[0].DepartureDateTime), "minutes");
-    const time = Math.floor(min / 60) + "h " + (min % 60) + "min"
-    const min2 = moment(Return.FlightSegment[Return.FlightSegment.length - 1].ArrivalDateTime).diff(moment(Return.FlightSegment[0].DepartureDateTime), "minutes");
-    const time2 = Math.floor(min2 / 60) + "h " + (min2 % 60) + "min"
-
-    return (
-        <View style={{ flex: 1, flexDirection: 'column', marginTop: 20, backgroundColor: '#fff' }}>
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: "center", padding: 15, paddingRight: 30 }}>
-                <Svg source={{ uri: Outbound.FlightSegment[0].Airline.LogoUrl }} style={{ width: 30, height: 30 }} />
-                <View style={{ flexDirection: 'column', marginStart: 10, width: 40 }}>
-                    <Text style={{ fontWeight: "bold" }}>{moment(Outbound.FlightSegment[0].DepartureDateTime).format('HH:mm')}</Text>
-                    <Text>{Outbound.FlightSegment[0].DepartureAirport.LocationCode}</Text>
-                </View>
-                <View style={{ flex: 1, paddingStart: 15, paddingEnd: 15, position: "relative" }}>
-                    <Text style={{ textAlign: "center", fontWeight: "bold" }}>{time}</Text>
-                    <View style={{ borderBottomWidth: 1, width: "100%", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                        {Outbound.FlightSegment.map((value, index) => {
-                            if (!index) return null
-                            return <View style={{ width: 18, height: 18, marginStart: 4, marginEnd: 4, borderRadius: 15, backgroundColor: "#da353d", borderWidth: 3, borderColor: "#fff", marginBottom: -9 }}></View>
-                        })}
-                    </View>
-                    <Text style={{ textAlign: "center", marginTop: 5, color: "#da353d" }}>{Outbound.FlightSegment.length - 1} Stop</Text>
-                </View>
-                <Image source={R.images.airplane} style={{ width: 20, height: 16, marginTop: 5, marginStart: 0, marginEnd: 8 }}></Image>
-                <View>
-                    <Text style={{ fontWeight: "bold" }}>{moment(Outbound.FlightSegment[1].ArrivalDateTime).format('HH:mm')}</Text>
-                    <Text>{Outbound.FlightSegment[1].ArrivalAirport.LocationCode}</Text>
-                </View>
-            </View>
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: "center", marginTop: 10, marginBottom: 10, padding: 15, paddingRight: 30, paddingTop: 0 }}>
-                <Svg source={{ uri: Return.FlightSegment[0].Airline.LogoUrl }} style={{ width: 30, height: 30 }} />
-                <View style={{ flexDirection: 'column', marginStart: 10, width: 40 }}>
-                    <Text style={{ fontWeight: "bold" }}>{moment(Return.FlightSegment[0].DepartureDateTime).format('HH:mm')}</Text>
-                    <Text>{Return.FlightSegment[0].DepartureAirport.LocationCode}</Text>
-                </View>
-                <View style={{ flex: 1, paddingStart: 15, paddingEnd: 15, position: "relative" }}>
-                    <Text style={{ textAlign: "center", fontWeight: "bold" }}>{time2}</Text>
-                    <View style={{ borderBottomWidth: 1, width: "100%", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                        {Return.FlightSegment.map((value, index) => {
-                            if (!index) return null
-                            return <View style={{ width: 18, height: 18, marginStart: 4, marginEnd: 4, borderRadius: 15, backgroundColor: "#da353d", borderWidth: 3, borderColor: "#fff", marginBottom: -9 }}></View>
-                        })}
-                    </View>
-                    <Text style={{ textAlign: "center", marginTop: 5, color: "#da353d" }}>{Return.FlightSegment.length - 1} Stop</Text>
-                </View>
-                <Image source={R.images.airplane} style={{ width: 20, height: 16, marginTop: 5, marginStart: 0, marginEnd: 8 }}></Image>
-                <View>
-                    <Text style={{ fontWeight: "bold" }}>{moment(Return.FlightSegment[1].ArrivalDateTime).format('HH:mm')}</Text>
-                    <Text>{Return.FlightSegment[1].ArrivalAirport.LocationCode}</Text>
-                </View>
-            </View>
-            <View style={{ flexDirection: 'row', borderTopWidth: 1, borderColor: "#eee" }}>
-                <View style={{ width: '50%', alignItems: 'center', justifyContent: "center", borderRightWidth: 1, borderColor: "#eee", padding: 15 }}>
-                    <Text style={{ fontSize: 17.5, color: R.colors.green }}>${item.AmountPerFan}/<Text style={{ fontSize: 12 }}>1 fan roundtrip</Text></Text>
-                </View>
-                <View style={{ width: '50%', alignItems: 'center', justifyContent: "center", padding: 15 }}>
-                    <BouncyCheckbox text={translate('selectFlight')} borderColor='black' fillColor={R.colors.blue}></BouncyCheckbox>
-                </View>
-            </View>
-            <TouchableOpacity style={{ position: "absolute", top: 7, right: 7 }} onPress={() => setIsDetailsOpen(!isDetailsOpen)}>
-                <Image source={R.images.arrow_down} style={{ height: 14, width: 12 }} />
-            </TouchableOpacity>
-            <View style={{ display: isDetailsOpen ? "flex" : "none", paddingStart: 30, paddingEnd: 30, paddingBottom: 30 }}>
-                <Text style={{ fontSize: 21, fontWeight: "bold" }}>Outbound</Text>
-                {Outbound.FlightSegment.map((fs, index) => {
-                    return <View style={{ marginTop: 30 }}>
-                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                            <View style={{ width: 70, alignItems: "flex-end", paddingRight: 7 }}>
-                                <Svg source={{ uri: fs.Airline.LogoUrl }} style={{ width: 30, height: 30 }} />
-                            </View>
-                            <Text style={{ color: "#9f9f9f", flex: 1, paddingLeft: 7 }}>{fs.Airline.Code} {fs.FlightNumber}-{fs.Airline.CompanyName}</Text>
-                        </View>
-                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 15 }}>
-                            <View style={{ flexDirection: "row", alignItems: "center", width: 70, paddingRight: 7 }}>
-                                <Text style={{ flex: 1, marginRight: 7, textAlign: "right" }}>2h 0m</Text>
-                                <Svg source={R.images.connectionIcon} style={{ width: 10, height: 30 }} />
-                            </View>
-                            <View style={{ flex: 1, paddingLeft: 7 }}>
-                                <Text style={{ width: "80%" }}>{moment(fs.DepartureDateTime).format("HH:mm") + " " + fs.DepartureAirport.LocationCode + " " + fs.DepartureAirport.CityName + " " + fs.DepartureAirport.AirportName} </Text>
-                                <Text style={{ width: "80%" }}>{moment(fs.ArrivalTime).format("HH:mm") + " " + fs.ArrivalAirport.CityName + " " + fs.ArrivalAirport.AirportName} </Text>
-                            </View>
-                        </View>
-                    </View>
-                })}
-
-                <Text style={{ fontSize: 21, fontWeight: "bold", marginTop: 30 }}>Return</Text>
-                {Return.FlightSegment.map((fs, index) => {
-                    return <View style={{ marginTop: 30 }}>
-                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                            <View style={{ width: 70, alignItems: "flex-end", paddingRight: 7 }}>
-                                <Svg source={{ uri: fs.Airline.LogoUrl }} style={{ width: 30, height: 30 }} />
-                            </View>
-                            <Text style={{ color: "#9f9f9f", flex: 1, paddingLeft: 7 }}>{fs.Airline.Code} {fs.FlightNumber}-{fs.Airline.CompanyName}</Text>
-                        </View>
-                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 15 }}>
-                            <View style={{ flexDirection: "row", alignItems: "center", width: 70, paddingRight: 7 }}>
-                                <Text style={{ flex: 1, marginRight: 7, textAlign: "right" }}>2h 0m</Text>
-                                <Svg source={R.images.connectionIcon} style={{ width: 10, height: 30 }} />
-                            </View>
-                            <View style={{ flex: 1, paddingLeft: 7 }}>
-                                <Text style={{ width: "80%" }}>{moment(fs.DepartureDateTime).format("HH:mm") + " " + fs.DepartureAirport.LocationCode + " " + fs.DepartureAirport.CityName + " " + fs.DepartureAirport.AirportName} </Text>
-                                <Text style={{ width: "80%" }}>{moment(fs.ArrivalTime).format("HH:mm") + " " + fs.ArrivalAirport.CityName + " " + fs.ArrivalAirport.AirportName} </Text>
-                            </View>
-                        </View>
-                    </View>
-                })}
-
-            </View>
-        </View >
-    );
-};
+import R from "res/R";
 
 export default class SelectFlightScreen extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            idHotel: props?.route?.params?.idHotel,
-            bundleCode: props?.route?.params?.bundleCode,
+            bundle: props?.route?.params?.bundle,
             details: {},
             game: {},
             hotel: {},
             seating: {},
             perks: [],
             cities: [],
-            data: {},
             flights: [],
             flightsData: [],
             airlines: [],
@@ -163,72 +45,69 @@ export default class SelectFlightScreen extends React.Component {
 
     componentDidMount() {
         try {
-            this.getData();
+            this.initBundle();
             this.getCities();
         } catch { }
     }
 
-    getData = () => {
-        const params = `?customize=true&validateHotelPrice=false&hotelId=-1`;
-        get(servicesUrl.getGameV2 + this.state.bundleCode + params)
-            .then((response) => {
-                var game = response.MatchBundleDetail[0].Game;
-                var hotel = response.SelectedHotel;
-                var seating = response.MatchBundleDetail[0].GameSeat;
-                var perks = [
-                    {
-                        Title: translate('onSpotService'),
-                        Price: response.Price_OnSpot,
-                        Selected: true
-                    },
-                    {
-                        Title: translate('airportPickup'),
-                        Price: response.Price_AirtportPickup,
-                        Selected: response.Service_AirPortPickup
-                    },
-                    {
-                        Title: translate('airportDropOff'),
-                        Price: response.Price_AirportDropoff,
-                        Selected: response.Service_AirPortDropOff
-                    },
-                    {
-                        Title: translate('stadiumTour'),
-                        Price: response.Price_StadiumTour,
-                        Selected: response.Service_StadiumTour
-                    },
-                    {
-                        Title: translate('cityTour'),
-                        Price: response.Price_CityTour,
-                        Selected: response.Service_CityTour
-                    },
-                    /*{
-                        Title: translate('train'),
-                        Price: response.Price_Train,
-                        Selected: response.Service_Train
-                    },*/
-                    {
-                        Title: translate('insurance'),
-                        Price: response.Price_Insurance,
-                        Selected: response.Service_Insurance
-                    }
-                ];
-                var details = {
-                    idMatchBundle: response.idMatchBundle,
-                    BundleCode: response.BundleCode,
-                    StartDate: response.StartDate,
-                    EndDate: response.EndDate,
-                    TripDays: getTripDays(response.StartDate, response.EndDate),
-                    NumberOfTravelers: response.NumberOfTravelers,
-                    BasePricePerFan: response.BasePricePerFan,
-                    PricePerFan: response.PricePerFan,
-                    ExtraFeesPerFan: response.ExtraFeesPerFan,
-                    FinalPrice: response.FinalPrice,
-                    FinalPricePerFan: response.FinalPricePerFan,
-                    NumberOfRooms: response.NumberOfRooms,
-                    SharingRoomNote: response.SharingRoomNote,
-                }
-                this.setState({ data: response, game, hotel, seating, perks, details, isLoading: false })
-            });
+    initBundle = () => {
+        var bundle = this.state.bundle;
+        var game = bundle.MatchBundleDetail[0].Game;
+        var hotel = bundle.SelectedHotel;
+        var seating = bundle.MatchBundleDetail[0].GameSeat;
+        var perks = [
+            {
+                Title: translate('onSpotService'),
+                Price: bundle.Price_OnSpot,
+                Selected: true
+            },
+            {
+                Title: translate('airportPickup'),
+                Price: bundle.Price_AirtportPickup,
+                Selected: bundle.Service_AirPortPickup
+            },
+            {
+                Title: translate('airportDropOff'),
+                Price: bundle.Price_AirportDropoff,
+                Selected: bundle.Service_AirPortDropOff
+            },
+            {
+                Title: translate('stadiumTour'),
+                Price: bundle.Price_StadiumTour,
+                Selected: bundle.Service_StadiumTour
+            },
+            {
+                Title: translate('cityTour'),
+                Price: bundle.Price_CityTour,
+                Selected: bundle.Service_CityTour
+            },
+            /*{
+                Title: translate('train'),
+                Price: bundle.Price_Train,
+                Selected: bundle.Service_Train
+            },*/
+            {
+                Title: translate('insurance'),
+                Price: bundle.Price_Insurance,
+                Selected: bundle.Service_Insurance
+            }
+        ];
+        var details = {
+            idMatchBundle: bundle.idMatchBundle,
+            BundleCode: bundle.BundleCode,
+            StartDate: bundle.StartDate,
+            EndDate: bundle.EndDate,
+            TripDays: getTripDays(bundle.StartDate, bundle.EndDate),
+            NumberOfTravelers: bundle.NumberOfTravelers,
+            BasePricePerFan: bundle.BasePricePerFan,
+            PricePerFan: bundle.PricePerFan,
+            ExtraFeesPerFan: bundle.ExtraFeesPerFan,
+            FinalPrice: bundle.FinalPrice,
+            FinalPricePerFan: bundle.FinalPricePerFan,
+            NumberOfRooms: bundle.NumberOfRooms,
+            SharingRoomNote: bundle.SharingRoomNote,
+        }
+        this.setState({ game, hotel, seating, perks, details, isLoading: false })
     }
 
     getCities = () => {
@@ -245,7 +124,7 @@ export default class SelectFlightScreen extends React.Component {
     }
 
     searchFlights = () => {
-        post(servicesUrl.searchFlights, this.state.data)
+        post(servicesUrl.searchFlights, this.state.bundle)
             .then((response) => {
                 var airlines = response.Item1.Lookups.Airlines.map(function (airline) {
                     return {
@@ -291,13 +170,21 @@ export default class SelectFlightScreen extends React.Component {
                         AmountPerFan: flight.AirItineraryPricingInfo.ItinTotalFare.TotalFare.AmountPerFan
                     }
                 })
-                this.setState({ flights: response.Item1.items, airlines: airlines, flightsData: flightsData, pageCount: response.PageCount, isLoading: false, isLoadingMore: false })
+                this.setState({ flights: response.Item1.items, airlines, flightsData, pageCount: response.PageCount, isLoading: false, isLoadingMore: false })
             });
     }
 
-    Back = () => {
-        this.props.navigation.navigate('tripoverview');
+    goBack = () => {
+        this.props.navigation.goBack();
     };
+
+    keyExtractor = ({ item, index }) => {
+        return 'flight' + index
+    }
+
+    renderItem = ({ item }) => {
+        return <FlightItem item={item} />
+    }
 
     renderFooter = () => {
         return (
@@ -325,7 +212,7 @@ export default class SelectFlightScreen extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 {/* banner */}
-                <HeaderBackground title={translate('selectYourFlight')} image={R.images.trip_bg}></HeaderBackground>
+                <HeaderBackground title={translate('selectYourFlight')} image={R.images.trip_bg}/>
 
                 {/* match header */}
                 <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} hotel={this.state.hotel} ticket={this.state.seating} perks={this.state.perks} />
@@ -356,10 +243,10 @@ export default class SelectFlightScreen extends React.Component {
                                 selectedLabelStyle={{ color: '#3333ff', fontWeight: 'bold', }}
                                 activeLabelStyle={{ color: '#3333ff' }}
                                 onChangeItem={(item) => {
-                                    var data = this.state.data;
-                                    data.idDepartureCity = item.value;
-                                    data.flightClass = 2;
-                                    this.setState({ data: data, isLoading: true }, function () {
+                                    var bundle = this.state.bundle;
+                                    bundle.idDepartureCity = item.value;
+                                    bundle.flightClass = 2;
+                                    this.setState({ bundle, isLoading: true }, function () {
                                         this.searchFlights();
                                     });
                                 }}
@@ -375,27 +262,25 @@ export default class SelectFlightScreen extends React.Component {
                 </View>
                 {/* render flights begin*/}
                 <View style={{ marginStart: 15, marginEnd: 15, marginTop: 30 }}>
-                    {/* <View style={{ marginTop: 80 }}> */}
-                    {this.state.isLoading ? <ActivityIndicator size="large" color={R.colors.green} />
+                    {this.state.isLoading ? <ActivityIndicator size="large" color={R.colors.lightGreen} />
                         :
                         <FlatList
                             data={this.state.flightsData}
-                            renderItem={item => <FlightItem item={item} />}
-                            keyExtractor={item => item.AmountPerFan.toString()}
+                            renderItem={this.renderItem}
+                            keyExtractor={this.keyExtractor}
                             ListFooterComponent={this.renderFooter.bind(this)}
-                        />}
-                    {/* </View> */}
+                            />}
                     {/* render flights end*/}
 
                     {/* buttons begin */}
                     <View style={{ zIndex: -5, flex: 1, flexDirection: 'row', height: 50, marginTop: 20 }}>
                         <TouchableOpacity style={{ width: '50%', alignItems: 'center', justifyContent: 'center', textTransform: 'uppercase', backgroundColor: R.colors.buttonBlack }}
-                            onPress={this.Back}
+                            onPress={this.goBack}
                         >
                             <Text style={{ color: 'white', fontSize: 20 }}>{translate('back')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ width: '50%', alignItems: 'center', justifyContent: 'center', textTransform: 'uppercase', backgroundColor: R.colors.buttonBlack }}
-                            onPress={this.Continue}
+                            onPress={this.continue}
                         >
                             <Text style={{ color: 'white', fontSize: 20 }}>{translate('continue')}</Text>
                         </TouchableOpacity>

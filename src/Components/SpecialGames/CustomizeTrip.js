@@ -14,15 +14,16 @@ import {
 import DatepickerRange from 'react-native-range-datepicker';
 import DropDownPicker from "react-native-dropdown-picker";
 import ImageViewer from 'react-native-image-zoom-viewer';
-//import RadioButtonRN from 'radio-buttons-react-native';
-import { HeaderBackground } from "components/Common/HeaderBackground";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { get, post, servicesUrl } from "helpers/services.js";
-import { getHotelImages, getTripDays, translate } from "helpers/utils";
-import { MatchHeader } from "components/Trips/MatchHeader";
-import RatingStars from "components/Common/RatingStars";
 import { CheckBox, Tooltip } from 'react-native-elements';
 import Svg from 'react-native-remote-svg';
+import { HeaderBackground } from "components/Common/HeaderBackground";
+import { MatchHeader } from "components/Trips/MatchHeader";
+import RatingStars from "components/Common/RatingStars";
+//import RadioButtonRN from 'radio-buttons-react-native';
+import { get, post, servicesUrl } from "helpers/services.js";
+import { getHotelImages, getTripDays } from "helpers/tripHelper.js";
+import { translate } from "helpers/utils.js";
 import moment from 'moment';
 import R from "res/R";
 
@@ -32,6 +33,7 @@ export default class CustomizeTripScreen extends React.Component {
         super(props);
         this.state = {
             bundleCode: props?.route?.params?.bundleCode,
+            bundle: props?.route?.params?.bundle,
             details: {},
             game: {},
             hotel: {},
@@ -57,95 +59,109 @@ export default class CustomizeTripScreen extends React.Component {
 
     componentDidMount() {
         try {
-            this.getBundle();
+            this.init();
         } catch { }
+    }
+
+    init = () => {
+        if (this.state.bundle == null)
+            this.getBundle();
+        else
+            this.initBundle();
     }
 
     getBundle = () => {
         const params = `?customize=true&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
-                var game = response.MatchBundleDetail[0].Game;
-                var hotel = response.SelectedHotel;
-
-                // convert array of String to array of Objects 
-                var hotelImages = getHotelImages(hotel.Images);
-
-                var hotelList = response.HotelList.Items;
-                var seating = response.MatchBundleDetail[0].GameSeat;
-                var seatingOptions = response.MatchBundleDetail[0].GameSeats;
-                var stadiumMap = seating.StadiumMap_SVG_v3;
-                var perks = [
-                    {
-                        Title: translate('onSpotService'),
-                        Price: response.Price_OnSpot,
-                        Image: R.images.onspotWhite,
-                        ImageGrey: R.images.onspotGrey,
-                        Selected: true
-                    },
-                    {
-                        Title: translate('airportPickup'),
-                        Price: response.Price_AirtportPickup,
-                        Image: R.images.car,
-                        ImageGrey: R.images.carGrey,
-                        Selected: response.Service_AirPortPickup
-                    },
-                    {
-                        Title: translate('airportDropOff'),
-                        Price: response.Price_AirportDropoff,
-                        Image: R.images.car,
-                        ImageGrey: R.images.carGrey,
-                        Selected: response.Service_AirPortDropOff
-                    },
-                    {
-                        Title: translate('stadiumTour'),
-                        Price: response.Price_StadiumTour,
-                        Image: R.images.stadium,
-                        ImageGrey: R.images.stadiumGrey,
-                        Selected: response.Service_StadiumTour
-                    },
-                    {
-                        Title: translate('cityTour'),
-                        Price: response.Price_CityTour,
-                        Image: R.images.hotel,
-                        ImageGrey: R.images.hotelGrey,
-                        Selected: response.Service_CityTour
-                    },
-                    /*{
-                        Title: translate('train'),
-                        Price: response.Price_Train,
-                        Image: R.images.onspot,
-                        ImageGrey: R.images.onspotGrey,
-                        Selected: response.Service_Train
-                    },*/
-                    {
-                        Title: translate('insurance'),
-                        Price: response.Price_Insurance,
-                        Image: R.images.insurance,
-                        ImageGrey: R.images.insuranceGrey,
-                        Selected: response.Service_Insurance
-                    }
-                ]
-                var details = {
-                    idMatchBundle: response.idMatchBundle,
-                    BundleCode: response.BundleCode,
-                    StartDate: response.StartDate,
-                    EndDate: response.EndDate,
-                    TripDays: getTripDays(response.StartDate, response.EndDate),
-                    NumberOfTravelers: response.NumberOfTravelers,
-                    BasePricePerFan: response.BasePricePerFan,
-                    PricePerFan: response.PricePerFan,
-                    ExtraFeesPerFan: response.ExtraFeesPerFan,
-                    FinalPrice: response.FinalPrice,
-                    FinalPricePerFan: response.FinalPricePerFan,
-                    NumberOfRooms: response.NumberOfRooms,
-                    SharingRoomNote: response.SharingRoomNote,
-                }
-                this.setState({ bundle: response, game, hotel, hotelImages, hotelList, seating, seatingOptions, stadiumMap, perks, details, isLoading: false },
-                    function () {
-                        this.getCancelPolicy(hotel.HotelId);
-                    })
+                this.initBundle(response);
             });
+    }
+
+    initBundle = (bundle = null) => {
+        if (bundle == null)
+            bundle = this.state.bundle;
+
+        var game = bundle.MatchBundleDetail[0].Game;
+        var hotel = bundle.SelectedHotel;
+
+        // convert array of String to array of Objects 
+        var hotelImages = getHotelImages(hotel.Images);
+
+        var hotelList = bundle.HotelList.Items;
+        var seating = bundle.MatchBundleDetail[0].GameSeat;
+        var seatingOptions = bundle.MatchBundleDetail[0].GameSeats;
+        var stadiumMap = seating.StadiumMap_SVG_v3;
+        var perks = [
+            {
+                Title: translate('onSpotService'),
+                Price: bundle.Price_OnSpot,
+                Image: R.images.onspotWhite,
+                ImageGrey: R.images.onspotGrey,
+                Selected: true
+            },
+            {
+                Title: translate('airportPickup'),
+                Price: bundle.Price_AirtportPickup,
+                Image: R.images.car,
+                ImageGrey: R.images.carGrey,
+                Selected: bundle.Service_AirPortPickup
+            },
+            {
+                Title: translate('airportDropOff'),
+                Price: bundle.Price_AirportDropoff,
+                Image: R.images.car,
+                ImageGrey: R.images.carGrey,
+                Selected: bundle.Service_AirPortDropOff
+            },
+            {
+                Title: translate('stadiumTour'),
+                Price: bundle.Price_StadiumTour,
+                Image: R.images.stadium,
+                ImageGrey: R.images.stadiumGrey,
+                Selected: bundle.Service_StadiumTour
+            },
+            {
+                Title: translate('cityTour'),
+                Price: bundle.Price_CityTour,
+                Image: R.images.hotel,
+                ImageGrey: R.images.hotelGrey,
+                Selected: bundle.Service_CityTour
+            },
+            /*{
+                Title: translate('train'),
+                Price: bundle.Price_Train,
+                Image: R.images.onspot,
+                ImageGrey: R.images.onspotGrey,
+                Selected: bundle.Service_Train
+            },*/
+            {
+                Title: translate('insurance'),
+                Price: bundle.Price_Insurance,
+                Image: R.images.insurance,
+                ImageGrey: R.images.insuranceGrey,
+                Selected: bundle.Service_Insurance
+            }
+        ]
+        var details = {
+            idMatchBundle: bundle.idMatchBundle,
+            BundleCode: bundle.BundleCode,
+            StartDate: bundle.StartDate,
+            EndDate: bundle.EndDate,
+            TripDays: getTripDays(bundle.StartDate, bundle.EndDate),
+            NumberOfTravelers: bundle.NumberOfTravelers,
+            BasePricePerFan: bundle.BasePricePerFan,
+            PricePerFan: bundle.PricePerFan,
+            ExtraFeesPerFan: bundle.ExtraFeesPerFan,
+            FinalPrice: bundle.FinalPrice,
+            FinalPricePerFan: bundle.FinalPricePerFan,
+            NumberOfRooms: bundle.NumberOfRooms,
+            SharingRoomNote: bundle.SharingRoomNote,
+        }
+        this.setState({ bundle, game, hotel, hotelImages, hotelList, seating, seatingOptions, stadiumMap, perks, details, isLoading: false },
+            function () {
+                this.getCancelPolicy(hotel.HotelId);
+            })
     }
 
     getCancelPolicy = (hotelId) => {
@@ -445,7 +461,7 @@ export default class CustomizeTripScreen extends React.Component {
     };
 
     continue = () => {
-        this.props.navigation.navigate('flight', { bundleCode: this.state.bundleCode });
+        this.props.navigation.navigate('flight', { bundle: this.state.bundle });
     };
 
     roomItem = ({ item, index }) => {
@@ -512,7 +528,7 @@ export default class CustomizeTripScreen extends React.Component {
                         {/* rating + cost */}
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <RatingStars rating={rating} key={item.HotelId} />
+                                <RatingStars rating={rating} tag={item.HotelId} />
                             </View>
                             <Text style={{ fontWeight: 'bold', color: selected ? R.colors.lightGreen : 'black', alignSelf: 'flex-end', }}>
                                 + {item.SelectedCategory.ExtraCostPerFan} $

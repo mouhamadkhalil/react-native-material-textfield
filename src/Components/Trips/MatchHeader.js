@@ -43,7 +43,7 @@ export class MatchHeader extends React.PureComponent {
         if (this.props.hotel != null) {
             var hotelUpgrade = this.props.hotel?.SelectedCategory?.ExtraCostPerFan;
             var totalPerFan = this.calculPerFan(hotelUpgrade, this.state.ticketUpgrade, this.state.perksUpgrade);
-            var total = totalPerFan * this.props.details.NumberOfTravelers;
+            var total = totalPerFan * this.props.details?.NumberOfTravelers;
             this.setState({ hotelUpgrade, totalPerFan, total });
         }
     }
@@ -51,7 +51,7 @@ export class MatchHeader extends React.PureComponent {
     calculTicket = () => {
         var ticketUpgrade = this.props.ticket?.ExtraCostPerFan;
         var totalPerFan = this.calculPerFan(this.state.hotelUpgrade, ticketUpgrade, this.state.perksUpgrade);
-        var total = totalPerFan * this.props.details.NumberOfTravelers;
+        var total = totalPerFan * this.props.details?.NumberOfTravelers;
         this.setState({ ticketUpgrade, totalPerFan, total });
     }
 
@@ -61,12 +61,12 @@ export class MatchHeader extends React.PureComponent {
             return total + perk.Price
         }, 0);
         var totalPerFan = this.calculPerFan(this.state.hotelUpgrade, this.state.ticketUpgrade, perksUpgrade);
-        var total = totalPerFan * this.props.details.NumberOfTravelers;
+        var total = totalPerFan * this.props.details?.NumberOfTravelers;
         this.setState({ perksUpgrade, totalPerFan, total });
     }
 
     calculPerFan = (hotel, ticket, perks) => {
-        return this.props.details.BasePricePerFan + hotel + ticket + perks + this.props.details.ExtraFeesPerFan;
+        return this.props.details?.BasePricePerFan + hotel + ticket + perks + this.props.details?.ExtraFeesPerFan;
     }
 
     render() {
@@ -80,43 +80,43 @@ export class MatchHeader extends React.PureComponent {
                             <View style={{ width: "50%", padding: 20 }}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <LinearGradient
-                                        colors={[this.props.game.Team1Color1, this.props.game.Team1Color2]}
+                                        colors={[this.props.game?.Team1Color1, this.props.game?.Team1Color2]}
                                         style={R.styles.linearGradient}
                                         start={[0, 0]}
                                         end={[1, 0]}
                                         locations={[0.5, 0.5]}
                                     />
                                     <Text style={[styles.blueText, { marginStart: 10 }]}>
-                                        {this.props.game.HomeTeam}
+                                        {this.props.game?.HomeTeam}
                                     </Text>
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <LinearGradient
-                                        colors={[this.props.game.Team2Color1, this.props.game.Team2Color2]}
+                                        colors={[this.props.game?.Team2Color1, this.props.game?.Team2Color2]}
                                         style={R.styles.linearGradient}
                                         start={[0, 0]}
                                         end={[1, 0]}
                                         locations={[0.5, 0.5]}
                                     />
                                     <Text style={[styles.blueText, { marginStart: 10 }]}>
-                                        {this.props.game.AwayTeam}
+                                        {this.props.game?.AwayTeam}
                                     </Text>
                                 </View>
                             </View>
 
                             {/* game date */}
                             <Text style={[styles.blueText, { width: "50%", padding: 20 }]}>
-                                {moment(this.props.game.GameDate).format('DD.MM.YY')}
+                                {moment(this.props.game?.GameDate).format('DD.MM.YY')}
                             </Text>
                         </View>
 
                         {/* trip info */}
                         <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
                             <Text style={[styles.darkText, { width: "50%", padding: 20, textTransform: "uppercase", borderRightWidth: 1, borderColor: "#eee" }]}>
-                                {this.props.details.TripDays + " " + translate('days')}
+                                {this.props.details?.TripDays + " " + translate('days')}
                             </Text>
                             <Text style={[styles.darkText, { width: "50%", padding: 20, textTransform: "uppercase" }]}>
-                                {this.props.game.StadeCity}
+                                {this.props.game?.StadeCity}
                             </Text>
                         </View>
 
@@ -146,7 +146,7 @@ export class MatchHeader extends React.PureComponent {
                                         {translate('basePrice')}
                                     </Text>
                                     <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                        {this.props.details.BasePricePerFan}$
+                                        {this.props.details?.BasePricePerFan}$
                                     </Text>
                                 </View>
 
@@ -198,7 +198,7 @@ export class MatchHeader extends React.PureComponent {
                                         + {translate('onSpotService')}
                                     </Text>
                                     <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>
-                                        {this.props.details.ExtraFeesPerFan}$
+                                        {this.props.details?.ExtraFeesPerFan}$
                                     </Text>
                                 </View>
 
