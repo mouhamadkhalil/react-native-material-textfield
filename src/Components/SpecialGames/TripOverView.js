@@ -16,7 +16,7 @@ import { get, servicesUrl } from "helpers/services.js";
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
 import RatingStars from "components/Common/RatingStars";
-import { formatBundle } from "helpers/tripHelper";
+import { getHotelImages, formatBundle } from "helpers/tripHelper";
 import { translate } from "helpers/utils";
 import Svg from 'react-native-remote-svg';
 import moment from 'moment';
@@ -33,9 +33,9 @@ export default class TripOverViewScreen extends React.Component {
             details: {},
             game: {},
             hotel: {},
+            hotelImages: [],
             seating: {},
             perks: [],
-            data: {},
             showPictures: false
         };
     }
@@ -57,15 +57,16 @@ export default class TripOverViewScreen extends React.Component {
         const params = `?customize=false&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
-                this.initBundle(response);
+                this.initBundle({ ...response });
             });
     }
 
     initBundle = (bundle = null) => {
         if (bundle == null)
-            bundle = this.state.bundle;
+            bundle = { ...this.state.bundle };
         const [details, game, hotel, seating, perks] = formatBundle(bundle);
-        this.setState({ bundle, details, game, hotel, seating, perks, isLoading: false })
+        const hotelImages = getHotelImages(hotel.Images);
+        this.setState({ bundle, details, game, hotel, hotelImages, seating, perks, isLoading: false })
     }
 
     customize = () => {
@@ -83,7 +84,7 @@ export default class TripOverViewScreen extends React.Component {
                 <HeaderBackground title={translate('tripOverview')} image={R.images.trip_bg}></HeaderBackground>
 
                 {/* match header */}
-                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} hotel={this.state.hotel} ticket={this.state.seating} perks={this.state.perks} />
+                <MatchHeader isLoading={this.state.isLoading} bundle={this.state.bundle} />
 
                 {/* package details */}
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
@@ -247,7 +248,7 @@ export default class TripOverViewScreen extends React.Component {
                 </View>
                 <Modal visible={this.state.showPictures} transparent={true}
                     onRequestClose={() => this.setState({ showPictures: false })}>
-                    <ImageViewer imageUrls={this.state.hotel?.Images} />
+                    <ImageViewer imageUrls={this.state.hotelImages} />
                 </Modal>
             </ScrollView >
         );

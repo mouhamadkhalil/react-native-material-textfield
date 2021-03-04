@@ -18,7 +18,8 @@ import GiftCardScreen from "components/SpecialGames/GiftCard";
 import GiftCard2Screen from "components/SpecialGames/GiftCard2";
 import TripOverViewScreen from "components/SpecialGames/TripOverView";
 import CustomizeTripScreen from "components/SpecialGames/CustomizeTrip";
-import SelectFlightScreen from "components/SpecialGames/SelectFilght";
+import SelectFlightScreen from "screens/Trips/SelectFilghtScreen";
+import ExperiencesScreen from "screens/Trips/ExperiencesScreen";
 import MyTripsScreen from "components/SpecialGames/MyTrips";
 import MyProfileScreen from "components/Profile/MyProfile";
 import QuizScreen from "components/WebView/Quiz";
@@ -62,6 +63,8 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="tripoverview" navigationProps={navigation} component={TripOverViewScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="experiences" navigationProps={navigation} component={ExperiencesScreen} options={HeaderOptions({ navigation })} />
+            
             <Stack.Screen name="my trips" navigationProps={navigation} component={MyTripsScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="my profile" navigationProps={navigation} component={MyProfileScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="quiz" navigationProps={navigation} component={QuizScreen} options={HeaderOptions({ navigation })} />

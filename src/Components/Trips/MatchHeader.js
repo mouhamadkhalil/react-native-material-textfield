@@ -8,6 +8,7 @@ import {
     ActivityIndicator,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { formatBundle } from "helpers/tripHelper";
 import { translate } from "helpers/utils";
 import moment from 'moment';
 import R from "res/R";
@@ -18,55 +19,71 @@ export class MatchHeader extends React.PureComponent {
         super(props);
 
         this.state = {
+            bundle: props.bundle,
+            details: {},
+            game: {},
+            hotel: {},
+            seating: {},
+            perks: [],
             isButtonPressed: false,
             hotelUpgrade: 0,
             ticketUpgrade: 0,
             perksUpgrade: 0,
             totalPerFan: 0,
-            total: 0
+            total: 0,
         };
     }
 
+    initBundle = () => {
+        var bundle = { ...this.props.bundle }
+        const [details, game, hotel, seating, perks] = formatBundle(bundle);
+        this.setState({ bundle, details, game, hotel, seating, perks })
+    }
+
+
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.hotel !== this.props.hotel) {
+        if (prevProps.bundle != this.props.bundle) {
+            this.initBundle();
+        }
+        if (prevState.hotel !== this.state.hotel) {
             this.calculHotel();
         }
-        if (prevProps.ticket !== this.props.ticket) {
+        if (prevState.seating !== this.state.seating) {
             this.calculTicket();
         }
-        if (prevProps.perks !== this.props.perks) {
+        if (prevState.perks !== this.state.perks) {
             this.calculPerks();
         }
     }
 
     calculHotel = () => {
-        if (this.props.hotel != null) {
-            var hotelUpgrade = this.props.hotel?.SelectedCategory?.ExtraCostPerFan;
+        if (this.state.hotel != null) {
+            var hotelUpgrade = this.state.hotel?.SelectedCategory?.ExtraCostPerFan;
             var totalPerFan = this.calculPerFan(hotelUpgrade, this.state.ticketUpgrade, this.state.perksUpgrade);
-            var total = totalPerFan * this.props.details?.NumberOfTravelers;
+            var total = totalPerFan * this.state.details?.NumberOfTravelers;
             this.setState({ hotelUpgrade, totalPerFan, total });
         }
     }
 
     calculTicket = () => {
-        var ticketUpgrade = this.props.ticket?.ExtraCostPerFan;
+        var ticketUpgrade = this.state.seating?.ExtraCostPerFan;
         var totalPerFan = this.calculPerFan(this.state.hotelUpgrade, ticketUpgrade, this.state.perksUpgrade);
-        var total = totalPerFan * this.props.details?.NumberOfTravelers;
+        var total = totalPerFan * this.state.details?.NumberOfTravelers;
         this.setState({ ticketUpgrade, totalPerFan, total });
     }
 
     calculPerks = () => {
-        var selectedPerks = this.props.perks.filter((perk, index) => perk.Selected == true && index > 0);
+        var selectedPerks = this.state.perks.filter((perk, index) => perk.Selected == true && index > 0);
         var perksUpgrade = selectedPerks.reduce(function (total, perk) {
             return total + perk.Price
         }, 0);
         var totalPerFan = this.calculPerFan(this.state.hotelUpgrade, this.state.ticketUpgrade, perksUpgrade);
-        var total = totalPerFan * this.props.details?.NumberOfTravelers;
+        var total = totalPerFan * this.state.details?.NumberOfTravelers;
         this.setState({ perksUpgrade, totalPerFan, total });
     }
 
     calculPerFan = (hotel, ticket, perks) => {
-        return this.props.details?.BasePricePerFan + hotel + ticket + perks + this.props.details?.ExtraFeesPerFan;
+        return this.state.details?.BasePricePerFan + hotel + ticket + perks + this.state.details?.ExtraFeesPerFan;
     }
 
     render() {
@@ -80,43 +97,43 @@ export class MatchHeader extends React.PureComponent {
                             <View style={{ width: "50%", padding: 20 }}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <LinearGradient
-                                        colors={[this.props.game?.Team1Color1, this.props.game?.Team1Color2]}
+                                        colors={[this.state.game?.Team1Color1, this.state.game?.Team1Color2]}
                                         style={R.styles.linearGradient}
                                         start={[0, 0]}
                                         end={[1, 0]}
                                         locations={[0.5, 0.5]}
                                     />
                                     <Text style={[styles.blueText, { marginStart: 10 }]}>
-                                        {this.props.game?.HomeTeam}
+                                        {this.state.game?.HomeTeam}
                                     </Text>
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <LinearGradient
-                                        colors={[this.props.game?.Team2Color1, this.props.game?.Team2Color2]}
+                                        colors={[this.state.game?.Team2Color1, this.state.game?.Team2Color2]}
                                         style={R.styles.linearGradient}
                                         start={[0, 0]}
                                         end={[1, 0]}
                                         locations={[0.5, 0.5]}
                                     />
                                     <Text style={[styles.blueText, { marginStart: 10 }]}>
-                                        {this.props.game?.AwayTeam}
+                                        {this.state.game?.AwayTeam}
                                     </Text>
                                 </View>
                             </View>
 
                             {/* game date */}
                             <Text style={[styles.blueText, { width: "50%", padding: 20 }]}>
-                                {moment(this.props.game?.GameDate).format('DD.MM.YY')}
+                                {moment(this.state.game?.GameDate).format('DD.MM.YY')}
                             </Text>
                         </View>
 
                         {/* trip info */}
                         <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
                             <Text style={[styles.darkText, { width: "50%", padding: 20, textTransform: "uppercase", borderRightWidth: 1, borderColor: "#eee" }]}>
-                                {this.props.details?.TripDays + " " + translate('days')}
+                                {this.state.details?.TripDays + " " + translate('days')}
                             </Text>
                             <Text style={[styles.darkText, { width: "50%", padding: 20, textTransform: "uppercase" }]}>
-                                {this.props.game?.StadeCity}
+                                {this.state.game?.StadeCity}
                             </Text>
                         </View>
 
@@ -146,7 +163,7 @@ export class MatchHeader extends React.PureComponent {
                                         {translate('basePrice')}
                                     </Text>
                                     <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                        {this.props.details?.BasePricePerFan}$
+                                        {this.state.details?.BasePricePerFan}$
                                     </Text>
                                 </View>
 
@@ -198,7 +215,7 @@ export class MatchHeader extends React.PureComponent {
                                         + {translate('onSpotService')}
                                     </Text>
                                     <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>
-                                        {this.props.details?.ExtraFeesPerFan}$
+                                        {this.state.details?.ExtraFeesPerFan}$
                                     </Text>
                                 </View>
 

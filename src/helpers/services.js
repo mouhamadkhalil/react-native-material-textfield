@@ -21,7 +21,8 @@ export const servicesUrl = {
     searchHotel: '/mobile/game/SearchHotel',
     getPagedHotels: '/mobile/game/getPagedHotels',
     viewCancelPolicy: '/mobile/hotel/ViewCancelPolicyV2',
-    saveBundleMulti : '/mobile/game/saveBundleMulti'
+    saveBundleMulti : '/mobile/game/saveBundleMulti',
+    getExtraServices: '/mobile/game/getExtraServices'
 }
 
 getToken = async () => {

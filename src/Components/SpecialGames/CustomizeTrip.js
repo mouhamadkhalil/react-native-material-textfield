@@ -38,12 +38,11 @@ export default class CustomizeTripScreen extends React.Component {
             game: {},
             hotel: {},
             hotelList: [],
+            hotelImages: [],
             cancelPolicies: [],
             seating: {},
             seatingOptions: [],
             perks: [],
-            bundle: {},
-            hotelImages: [],
             stadiumMap: null,
             roomsHeight: 200,
             isLoading: true,
@@ -74,16 +73,16 @@ export default class CustomizeTripScreen extends React.Component {
         const params = `?customize=true&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
-                this.initBundle(response);
+                this.initBundle({...response});
             });
     }
 
     initBundle = (bundle = null) => {
         if (bundle == null)
-            bundle = this.state.bundle;
+            bundle = {...this.state.bundle};
 
         var game = bundle.MatchBundleDetail[0].Game;
-        var hotel = bundle.SelectedHotel;
+        var hotel = {...bundle.SelectedHotel};
 
         // convert array of String to array of Objects 
         var hotelImages = getHotelImages(hotel.Images);
@@ -501,7 +500,7 @@ export default class CustomizeTripScreen extends React.Component {
 
     hotelItem = ({ item, index }) => {
         var rating = parseInt(item.Rating);
-        var selected = this.state.bundle.SelectedHotel.HotelId === item.HotelId;
+        var selected = this.state.bundle?.SelectedHotel?.HotelId === item.HotelId;
         var policy = this.state.cancelPolicies.find(p => p.HotelId === item.HotelId);
         return (
             <View style={{ flex: 1, flexDirection: 'column', backgroundColor: selected ? R.colors.blue : 'white', height: 200, marginTop: 10 }}>
@@ -603,7 +602,7 @@ export default class CustomizeTripScreen extends React.Component {
         return (
             //Footer View with Load More button
             <View >
-                {this.state.bundle.HotelList != undefined && (this.state.bundle.HotelList.PageCount > this.state.bundle.HotelList.PageNumber) ? (
+                {this.state.bundle?.HotelList != undefined && (this.state.bundle?.HotelList.PageCount > this.state.bundle?.HotelList.PageNumber) ? (
                     <TouchableOpacity
                         activeOpacity={0.9}
                         onPress={this.loadMoreHotels}
@@ -669,7 +668,7 @@ export default class CustomizeTripScreen extends React.Component {
                 <HeaderBackground title={translate('customizeTrip')} image={R.images.trip_bg} />
 
                 {/* match header */}
-                <MatchHeader isLoading={this.state.isLoading} game={this.state.game} details={this.state.details} hotel={this.state.hotel} ticket={this.state.seating} perks={this.state.perks} />
+                <MatchHeader isLoading={this.state.isLoading} bundle={{...this.state.bundle}} />
 
                 {/* package details */}
                 <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center', marginTop: 50 }}>
@@ -688,7 +687,7 @@ export default class CustomizeTripScreen extends React.Component {
                                     onPress={() => this.setState({ showDatePicker: true })}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={{ height: 30, fontSize: 20, fontWeight: 'bold', width: '90%' }}>
-                                            {moment(this.state.bundle.StartDate).format('DD.MM.yyy') + " - " + moment(this.state.bundle.EndDate).format('DD.MM.yyyy')}
+                                            {moment(this.state.bundle?.StartDate).format('DD.MM.yyy') + " - " + moment(this.state.bundle?.EndDate).format('DD.MM.yyyy')}
                                         </Text>
                                         <Image source={R.images.calendar} style={{ width: 20, height: 20 }} ></Image>
                                     </View>
@@ -705,7 +704,7 @@ export default class CustomizeTripScreen extends React.Component {
                                         <Icon name='remove-circle-outline' style={styles.textStyle} />
                                     </TouchableOpacity>
                                     <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10 }}>
-                                        {this.state.bundle.NumberOfTravelers}
+                                        {this.state.bundle?.NumberOfTravelers}
                                     </Text>
                                     <TouchableOpacity style={{ width: 25 }} onPress={this.incrementFan}>
                                         <Icon name='add-circle-outline' style={styles.textStyle} />
@@ -736,7 +735,7 @@ export default class CustomizeTripScreen extends React.Component {
                                         <Icon name='remove-circle-outline' style={styles.textStyle} />
                                     </TouchableOpacity>
                                     <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10 }}>
-                                        {this.state.bundle.NumberOfRooms}
+                                        {this.state.bundle?.NumberOfRooms}
                                     </Text>
                                     <TouchableOpacity style={{ width: 25 }} onPress={this.incrementRoom}>
                                         <Icon name='add-circle-outline' style={styles.textStyle} />
@@ -747,7 +746,7 @@ export default class CustomizeTripScreen extends React.Component {
                             {/* rooms details */}
                             <View style={{ height: '100%' }} >
                                 <FlatList
-                                    data={this.state.bundle.RoomInfoList}
+                                    data={this.state.bundle?.RoomInfoList}
                                     renderItem={this.roomItem}
                                     keyExtractor={(index) => index.toString()}
                                 />
@@ -872,8 +871,8 @@ export default class CustomizeTripScreen extends React.Component {
                     visible={this.state.showDatePicker}>
                     <View style={styles.modalView}>
                         <DatepickerRange
-                            startDate={moment(this.state.bundle.StartDate).format("DDMMyyyy")}
-                            untilDate={moment(this.state.bundle.EndDate).add(1, 'year').format("DDMMyyyy")}
+                            startDate={moment(this.state.bundle?.StartDate).format("DDMMyyyy")}
+                            untilDate={moment(this.state.bundle?.EndDate).add(1, 'year').format("DDMMyyyy")}
                             placeHolderStart='Start Date'
                             placeHolderUntil='Until Date'
                             selectedBackgroundColor={R.colors.blue}
@@ -921,7 +920,7 @@ export default class CustomizeTripScreen extends React.Component {
                                         {translate('ratings')}:
                                     </Text>
                                     <CheckBox title={translate('3stars')}
-                                        checked={this.state.bundle.stars3}
+                                        checked={this.state.bundle?.stars3}
                                         containerStyle={{ backgroundColor: 'white', borderWidth: 0 }}
                                         checkedColor={R.colors.blue}
                                         onPress={() => {
@@ -931,7 +930,7 @@ export default class CustomizeTripScreen extends React.Component {
                                         }}
                                     />
                                     <CheckBox title={translate('4stars')}
-                                        checked={this.state.bundle.stars4}
+                                        checked={this.state.bundle?.stars4}
                                         containerStyle={{ backgroundColor: 'white', borderWidth: 0 }}
                                         checkedColor={R.colors.blue}
                                         onPress={() => {
@@ -941,7 +940,7 @@ export default class CustomizeTripScreen extends React.Component {
                                         }}
                                     />
                                     <CheckBox title={translate('5stars')}
-                                        checked={this.state.bundle.stars5}
+                                        checked={this.state.bundle?.stars5}
                                         containerStyle={{ backgroundColor: 'white', borderWidth: 0 }}
                                         checkedColor={R.colors.blue}
                                         onPress={() => {
@@ -958,7 +957,7 @@ export default class CustomizeTripScreen extends React.Component {
                                         {translate('addOns')}:
                                     </Text>
                                     <CheckBox title={translate('breakfastIncluded')}
-                                        checked={this.state.bundle.includeBreakfastSearch}
+                                        checked={this.state.bundle?.includeBreakfastSearch}
                                         containerStyle={{ backgroundColor: 'white', borderWidth: 0 }}
                                         checkedColor={R.colors.blue}
                                         onPress={() => {

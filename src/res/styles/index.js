@@ -41,6 +41,20 @@ const styles = {
         borderRadius: 20,
         zIndex: 100
     },
+    greenButton:{
+        width: '50%', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        textTransform: 'uppercase', 
+        backgroundColor: colors.lightGreen
+    },
+    blackButton: {
+        width: '50%', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        textTransform: 'uppercase', 
+        backgroundColor: colors.blackButton
+    },
     loadMoreText: {
         color: "#fff",
         fontWeight: "bold",

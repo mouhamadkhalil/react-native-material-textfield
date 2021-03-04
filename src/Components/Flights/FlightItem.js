@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 import R from "res/R";
-import {  translate } from "helpers/utils";
+import { translate } from "helpers/utils";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Svg from 'react-native-remote-svg';
 import moment from 'moment';
@@ -30,7 +30,7 @@ const FlightItem = ({ item }) => {
                 <View style={{ flex: 1, paddingStart: 15, paddingEnd: 15, position: "relative" }}>
                     <Text style={{ textAlign: "center", fontWeight: "bold" }}>{time}</Text>
                     <View style={{ borderBottomWidth: 1, width: "100%", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                        {Outbound.FlightSegment.map((value, index) => {
+                        {Outbound.FlightSegment?.map((value, index) => {
                             if (!index) return null
                             return <View style={{ width: 18, height: 18, marginStart: 4, marginEnd: 4, borderRadius: 15, backgroundColor: "#da353d", borderWidth: 3, borderColor: "#fff", marginBottom: -9 }}></View>
                         })}
@@ -52,7 +52,7 @@ const FlightItem = ({ item }) => {
                 <View style={{ flex: 1, paddingStart: 15, paddingEnd: 15, position: "relative" }}>
                     <Text style={{ textAlign: "center", fontWeight: "bold" }}>{time2}</Text>
                     <View style={{ borderBottomWidth: 1, width: "100%", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                        {Return.FlightSegment.map((value, index) => {
+                        {Return.FlightSegment?.map((value, index) => {
                             if (!index) return null
                             return <View style={{ width: 18, height: 18, marginStart: 4, marginEnd: 4, borderRadius: 15, backgroundColor: "#da353d", borderWidth: 3, borderColor: "#fff", marginBottom: -9 }}></View>
                         })}
@@ -78,7 +78,7 @@ const FlightItem = ({ item }) => {
             </TouchableOpacity>
             <View style={{ display: isDetailsOpen ? "flex" : "none", paddingStart: 30, paddingEnd: 30, paddingBottom: 30 }}>
                 <Text style={{ fontSize: 21, fontWeight: "bold" }}>Outbound</Text>
-                {Outbound.FlightSegment.map((fs, index) => {
+                {Outbound.FlightSegment?.map((fs, index) => {
                     return <View style={{ marginTop: 30 }}>
                         <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                             <View style={{ width: 70, alignItems: "flex-end", paddingRight: 7 }}>
@@ -100,7 +100,7 @@ const FlightItem = ({ item }) => {
                 })}
 
                 <Text style={{ fontSize: 21, fontWeight: "bold", marginTop: 30 }}>Return</Text>
-                {Return.FlightSegment.map((fs, index) => {
+                {Return.FlightSegment?.map((fs, index) => {
                     return <View style={{ marginTop: 30 }}>
                         <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                             <View style={{ width: 70, alignItems: "flex-end", paddingRight: 7 }}>

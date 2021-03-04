@@ -7,7 +7,7 @@ const colors = {
     blue: '#374bbf',
     grey: '#666',
     lightGrey: '#f7f7f7',
-    buttonBlack: '#151b20'
+    blackButton: '#151b20'
 };
 
 export default colors;

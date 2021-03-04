@@ -52,10 +52,6 @@ export function formatBundle(bundle) {
     hotel.HotelRoomType = bundle.HotelRoomType;
     hotel.NumberOfRooms = bundle.NumberOfRooms;
 
-    // convert array of String to array of Objects 
-    var images = getHotelImages(hotel.Images);
-    hotel.Images = images;
-
     var seating = bundle.MatchBundleDetail[0].GameSeat;
     var perks = [
         {
