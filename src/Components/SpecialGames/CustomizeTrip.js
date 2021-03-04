@@ -73,16 +73,16 @@ export default class CustomizeTripScreen extends React.Component {
         const params = `?customize=true&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
-                this.initBundle({...response});
+                this.initBundle({ ...response });
             });
     }
 
     initBundle = (bundle = null) => {
         if (bundle == null)
-            bundle = {...this.state.bundle};
+            bundle = { ...this.state.bundle };
 
         var game = bundle.MatchBundleDetail[0].Game;
-        var hotel = {...bundle.SelectedHotel};
+        var hotel = { ...bundle.SelectedHotel };
 
         // convert array of String to array of Objects 
         var hotelImages = getHotelImages(hotel.Images);
@@ -668,7 +668,7 @@ export default class CustomizeTripScreen extends React.Component {
                 <HeaderBackground title={translate('customizeTrip')} image={R.images.trip_bg} />
 
                 {/* match header */}
-                <MatchHeader isLoading={this.state.isLoading} bundle={{...this.state.bundle}} />
+                <MatchHeader isLoading={this.state.isLoading} bundle={{ ...this.state.bundle }} />
 
                 {/* package details */}
                 <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center', marginTop: 50 }}>
@@ -900,7 +900,7 @@ export default class CustomizeTripScreen extends React.Component {
                     <View style={styles.modalView}>
                         <View style={{ flex: 1, flexDirection: 'column' }}>
                             {/* logo + close */}
-                            <View style={{ flex: 1, flexDirection: 'row', height: '10%', backgroundColor: '#eee', borderBottomColor: '#eee', borderBottomWidth: 1 }}>
+                            <View style={{ flex: 0, flexDirection: 'row', backgroundColor: '#eee', borderBottomColor: '#eee', borderBottomWidth: 1 }}>
                                 <View style={{ width: '80%', padding: 10 }}>
                                     <Image source={R.images.flyfoot_grey}></Image>
                                 </View>
@@ -984,7 +984,7 @@ export default class CustomizeTripScreen extends React.Component {
                                         style={{ backgroundColor: "#EEEEEE", borderWidth: 0, width: 100 }}
                                         itemStyle={{ justifyContent: "flex-start", textTransform: 'uppercase' }}
                                         arrowStyle={{ color: 'black' }}
-                                        dropDownStyle={{ width: 100 }}
+                                        dropDownStyle={{}}
                                         onChangeItem={(item) => {
                                             var bundle = this.state.bundle;
                                             bundle.sortHotelBy = item.value;
