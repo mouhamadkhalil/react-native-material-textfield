@@ -55,12 +55,12 @@ export default class ExperiencesScreen extends React.Component {
             });
     }
 
-    continue = () => {
-        this.props.navigation.navigate('customize', { bundleCode: this.state.bundleCode });
-    };
-
     goBack = () => {
         this.props.navigation.goBack();
+    };
+
+    continue = () => {
+        this.props.navigation.navigate('summary', { bundle: this.state.bundle });
     };
 
      renderItem = ({item}) => {
