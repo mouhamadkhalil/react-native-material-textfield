@@ -23,6 +23,8 @@ const images = {
     stadiumGrey_sm: require('../../../assets/images/icons/stadium-grey-sm.png'),
     stadiumGrey: require('../../../assets/images/icons/stadium-grey.png'),
     seatsGrey: require('../../../assets/images/icons/seats-grey.png'),
+    train: require('../../../assets/images/icons/train.png'),
+    trainGrey: require('../../../assets/images/icons/train-grey.png'),
     car: require('../../../assets/images/icons/car.png'),
     carGrey: require('../../../assets/images/icons/car-grey.png'),
     hotel: require('../../../assets/images/icons/hotel.png'),

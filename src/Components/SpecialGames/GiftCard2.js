@@ -99,7 +99,7 @@ export default class GiftCard2 extends React.Component {
         return (
             <ScrollView style={styles.container}>
                 <ImageBackground source={R.images.gift_card} style={styles.headerBg}>
-                    <Text style={styles.pageTitleText}>
+                    <Text >
                         Gift card
                     </Text>
                 </ImageBackground>
@@ -271,13 +271,6 @@ const styles = StyleSheet.create({
         width: 30,
         marginLeft: 30,
         marginTop: 35
-    },
-    pageTitleText: {
-        marginTop: 0,
-        color: "white",
-        fontSize: 25,
-        fontWeight: "bold",
-        marginLeft: -120
     },
     headerBg: {
         height: 200,

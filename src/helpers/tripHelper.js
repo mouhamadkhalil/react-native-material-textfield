@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { translate } from 'helpers/utils';
+import R from "res/R";
 
 // convert array of string to array of objects
 export function getHotelImages(images) {
@@ -57,36 +58,50 @@ export function formatBundle(bundle) {
         {
             Title: translate('onSpotService'),
             Price: bundle.Price_OnSpot,
+            Image: R.images.onspot,
+            ImageGrey: R.images.onspotGrey,
             Selected: true
+        },
+        {
+            Title: translate('train'),
+            Price: bundle.Price_Train,
+            Image: R.images.train,
+            ImageGrey: R.images.trainGrey,
+            Selected: bundle.Service_Train
         },
         {
             Title: translate('airportPickup'),
             Price: bundle.Price_AirtportPickup,
+            Image: R.images.car,
+            ImageGrey: R.images.carGrey,
             Selected: bundle.Service_AirPortPickup
         },
         {
             Title: translate('airportDropOff'),
             Price: bundle.Price_AirportDropoff,
+            Image: R.images.car,
+            ImageGrey: R.images.carGrey,
             Selected: bundle.Service_AirPortDropOff
         },
         {
             Title: translate('stadiumTour'),
             Price: bundle.Price_StadiumTour,
+            Image: R.images.stadium,
+            ImageGrey: R.images.stadiumGrey,
             Selected: bundle.Service_StadiumTour
         },
         {
             Title: translate('cityTour'),
             Price: bundle.Price_CityTour,
+            Image: R.images.hotel,
+            ImageGrey: R.images.hotelGrey,
             Selected: bundle.Service_CityTour
-        },
-        {
-            Title: translate('train'),
-            Price: bundle.Price_Train,
-            Selected: bundle.Service_Train
         },
         {
             Title: translate('insurance'),
             Price: bundle.Price_Insurance,
+            Image: R.images.insurance,
+            ImageGrey: R.images.insuranceGrey,
             Selected: bundle.Service_Insurance
         }
     ];

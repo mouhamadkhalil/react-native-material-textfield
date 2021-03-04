@@ -4,7 +4,9 @@ import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons';
 import R from "res/R";
 
-function RatingStars({ rating, tag =''}) {
+function RatingStars({ rating, tag = '' }) {
+    if (isNaN(rating))
+        rating = 0;
     var array = new Array(rating).fill(1);
     return (
         array.map((star, index) => {

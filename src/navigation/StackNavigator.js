@@ -16,7 +16,7 @@ import AllGamesScreen from "components/SpecialGames/AllGames";
 import RequestScreen from "components/SpecialGames/Request";
 import GiftCardScreen from "components/SpecialGames/GiftCard";
 import GiftCard2Screen from "components/SpecialGames/GiftCard2";
-import TripOverViewScreen from "components/SpecialGames/TripOverView";
+import TripOverViewScreen from "screens/Trips/TripOverViewScreen";
 import CustomizeTripScreen from "components/SpecialGames/CustomizeTrip";
 import SelectFlightScreen from "screens/Trips/SelectFilghtScreen";
 import ExperiencesScreen from "screens/Trips/ExperiencesScreen";

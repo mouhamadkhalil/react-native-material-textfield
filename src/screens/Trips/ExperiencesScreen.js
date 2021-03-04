@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import { get, servicesUrl } from "helpers/services.js";
+import { post, servicesUrl } from "helpers/services.js";
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
 import { formatBundle } from "helpers/tripHelper.js";
@@ -64,7 +64,7 @@ export default class ExperiencesScreen extends React.Component {
     };
 
      renderItem = ({item}) => {
-       <Experience item={item} />
+       return <Experience item={item} />
      }
 
     render() {

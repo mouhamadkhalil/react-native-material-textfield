@@ -6,11 +6,17 @@ import Moment from 'moment';
 import R from "res/R";
 
 const Experience = ({ item }) => {
-    return (<View style={{ marginTop: 20, backgroundColor: 'white', elevation: 5 , padding:20}}>
-        <Text style={{ color: 'grey', textTransform: 'uppercase' }}>{item.ServiceCategory}</Text>
-        <Text style={{ color: R.colors.blue, fontSize: 18 }}>{item.ServiceCategory}</Text>
-        <Image source={item.ImageReference} style={{ width: 100, height: 100, resizeMode: 'cover' }} ></Image>
-        <Text style={{ color: 'grey' }}>{item.Description}</Text>
+    return (<View style={{ marginTop: 20, backgroundColor: 'white', elevation: 5, padding: 20 }}>
+        <Text style={{ color: 'grey', textTransform: 'uppercase' }}>
+            {item.ServiceCategory}
+        </Text>
+        <Text style={{ color: R.colors.blue, fontSize: 18 }}>
+            {item.ServiceName}
+        </Text>
+        <Image source={{uri:item.ImageReference}} style={{ width: '100%', height: 300, resizeMode: 'cover' }} />
+        <Text style={{ color: 'grey' }}>
+            {item.Description}
+        </Text>
     </View>);
 }
 
