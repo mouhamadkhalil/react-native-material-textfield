@@ -90,7 +90,7 @@ export class MatchHeader extends React.PureComponent {
         return (
             <>
                 {this.props.isLoading ? <ActivityIndicator size="large" color={R.colors.blue} style={{ marginTop: 120 }} /> :
-                    <View style={[styles.container, { height: this.state.isButtonPressed ? 425 : 250 }]}>
+                    <View style={[styles.container, {}]}>
                         {/* game */}
                         <View style={{ flexDirection: "row" }}>
                             {/* teams */}
@@ -138,7 +138,7 @@ export class MatchHeader extends React.PureComponent {
                         </View>
 
                         {/* trip price */}
-                        <TouchableOpacity style={{ position: "absolute", width: "100%", top: 155, height: this.state.isButtonPressed ? 140 : 80, backgroundColor: "#fff", zIndex: 1 }}
+                        <TouchableOpacity style={{ backgroundColor: "#fff", zIndex: 1 }}
                             onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
                             {/* price */}
                             <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 20 }}>
