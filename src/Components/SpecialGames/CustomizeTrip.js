@@ -99,6 +99,13 @@ export default class CustomizeTripScreen extends React.Component {
                 ImageGrey: R.images.onspotGrey,
                 Selected: true
             },
+            /*{
+                Title: translate('train'),
+                Price: bundle.Price_Train,
+                Image: R.images.train,
+                ImageGrey: R.images.trainGrey,
+                Selected: bundle.Service_Train
+            },*/
             {
                 Title: translate('airportPickup'),
                 Price: bundle.Price_AirtportPickup,
@@ -127,13 +134,6 @@ export default class CustomizeTripScreen extends React.Component {
                 ImageGrey: R.images.hotelGrey,
                 Selected: bundle.Service_CityTour
             },
-            /*{
-                Title: translate('train'),
-                Price: bundle.Price_Train,
-                Image: R.images.onspot,
-                ImageGrey: R.images.onspotGrey,
-                Selected: bundle.Service_Train
-            },*/
             {
                 Title: translate('insurance'),
                 Price: bundle.Price_Insurance,

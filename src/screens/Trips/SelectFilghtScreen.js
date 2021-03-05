@@ -12,7 +12,7 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import { CheckBox } from 'react-native-elements';
 import { HeaderBackground } from "components/Common/HeaderBackground";
-import  {MatchHeader}  from "components/Trips/MatchHeader";
+import { MatchHeader } from "components/Trips/MatchHeader";
 import FlightItem from "components/Flights/FlightItem";
 import { formatDetails } from "helpers/tripHelper.js";
 import { get, post, servicesUrl } from "helpers/services.js";
@@ -47,7 +47,7 @@ export default class SelectFlightScreen extends React.Component {
         } catch { }
     }
 
-    init = async() => {
+    init = async () => {
         var bundle = this.state.bundle;
         var details = formatDetails(bundle);
         var cities = await this.getCities();
@@ -68,7 +68,7 @@ export default class SelectFlightScreen extends React.Component {
     }
 
     searchFlights = (item) => {
-        var bundle = {...this.state.bundle};
+        var bundle = { ...this.state.bundle };
         bundle.idDepartureCity = item.value;
         bundle.flightClass = 2;
         this.setState({ bundle, isBrowsing: true }, function () {
@@ -128,11 +128,24 @@ export default class SelectFlightScreen extends React.Component {
     };
 
     continue = () => {
-        this.props.navigation.navigate('experiences', { bundle: this.state.bundle })
+        var bodyRequest = {
+            StartDate: moment(this.state.bundle.StartDate).format('YYYY-MM-DD'),
+            EndDate: moment(this.state.bundle.EndDate).format('YYYY-MM-DD'),
+            idCity: this.state.bundle.idCity,
+            idMatch: this.state.bundle.idDefaultMatch,
+            idMatchBundle: this.state.bundle.idMatchBundle
+        }
+        post(servicesUrl.getExtraServices, bodyRequest)
+            .then((response) => {
+                if (response.length == 0)
+                    this.props.navigation.navigate('summary', { bundle: this.state.bundle })
+                else 
+                    this.props.navigation.navigate('experiences', { bundle: this.state.bundle, extraServices : response })
+            })
     }
 
     dontFlight = () => {
-        var bundle = {...this.state.bundle};
+        var bundle = { ...this.state.bundle };
         bundle.NoFlight = !bundle.NoFlight;
         var canContinue = bundle.NoFlight || bundle.SelectedFlight != null;
         this.setState({ bundle, canContinue });
@@ -175,7 +188,7 @@ export default class SelectFlightScreen extends React.Component {
                 <HeaderBackground title={translate('selectYourFlight')} image={R.images.trip_bg} />
 
                 {/* match header */}
-                <MatchHeader isLoading={this.state.isLoading} bundle={{...this.state.bundle}} />
+                <MatchHeader isLoading={this.state.isLoading} bundle={{ ...this.state.bundle }} />
 
                 {/* flight options */}
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
@@ -231,7 +244,7 @@ export default class SelectFlightScreen extends React.Component {
                     <View style={{ zIndex: -5, flex: 1, flexDirection: 'row', height: 50, marginTop: 20 }}>
                         <TouchableOpacity style={R.styles.blackButton}
                             onPress={this.goBack}>
-                            <Text style={{ color: 'white', fontSize: 16 ,textTransform:'uppercase'}}>
+                            <Text style={{ color: 'white', fontSize: 16, textTransform: 'uppercase' }}>
                                 {translate('back')}
                             </Text>
                         </TouchableOpacity>
@@ -240,7 +253,7 @@ export default class SelectFlightScreen extends React.Component {
                             onPress={this.continue}
                             activeOpacity={this.state.canContinue ? 0 : 1}
                             disabled={!this.state.canContinue}>
-                            <Text style={{ color: this.state.canContinue ? 'black' : 'white', fontSize: 16, textTransform:'uppercase' }}>
+                            <Text style={{ color: this.state.canContinue ? 'black' : 'white', fontSize: 16, textTransform: 'uppercase' }}>
                                 {translate('continue')}
                             </Text>
                         </TouchableOpacity>
@@ -252,7 +265,7 @@ export default class SelectFlightScreen extends React.Component {
                             containerStyle={{ backgroundColor: R.colors.lightGrey, borderWidth: 0 }}
                             checkedColor={R.colors.blue}
                             textStyle={{ color: 'black' }}
-                            checked={this.state.bundle.NoFlight}
+                            checked={this.state.bundle?.NoFlight}
                             onPress={this.dontFlight} />
                     </View>
                 </View>

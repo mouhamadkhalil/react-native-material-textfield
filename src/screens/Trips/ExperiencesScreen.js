@@ -15,7 +15,7 @@ export default class ExperiencesScreen extends React.Component {
 
         this.state = {
             bundle: props?.route?.params?.bundle,
-            extraServices: [],
+            extraServices: props?.route?.params?.extraServices,
             isLoading: true,
             showPictures: false
         };
@@ -23,7 +23,7 @@ export default class ExperiencesScreen extends React.Component {
 
     componentDidMount() {
         try {
-            this.getExtraServices();
+            //this.getExtraServices();
         } catch { }
     }
 
