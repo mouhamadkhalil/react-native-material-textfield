@@ -1,15 +1,16 @@
 import React from "react";
-import {StyleSheet,Text,ScrollView,View,TouchableHighlight,ActivityIndicator,} from "react-native";
+import { StyleSheet, Text, ScrollView, View, TouchableHighlight, ActivityIndicator, } from "react-native";
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
 import { TripDetails } from "components/Trips/TripDetails";
 import { SeatingOptions } from "components/Trips/SeatingOptions";
 import { Perks } from "components/Trips/Perks";
+import FlightItem from "components/Flights/FlightItem";
 import { formatBundle } from "helpers/tripHelper";
 import { translate } from "helpers/utils";
 import R from "res/R";
 
-export default class TripOverViewScreen extends React.Component {
+export default class SummaryScreen extends React.Component {
     constructor(props) {
         super(props);
 
@@ -35,19 +36,19 @@ export default class TripOverViewScreen extends React.Component {
         this.setState({ details, game, hotel, seating, perks, isLoading: false })
     }
 
-    goback = () => {
+    goBack = () => {
         this.props.navigation.goBack();
     };
 
-    flight = () => {
-        this.props.navigation.navigate('checkout', { bundle: this.state.bundle });
+    continue = () => {
+        this.props.navigation.navigate('checkoutFanInfo', { bundle: this.state.bundle });
     };
 
     render() {
         return (
             <ScrollView style={styles.container}>
                 {/* banner */}
-                <HeaderBackground title={translate('summary')} image={R.images.trip_bg}/>
+                <HeaderBackground title={translate('summary')} image={R.images.trip_bg} />
 
                 {/* match header */}
                 <MatchHeader isLoading={this.state.isLoading} bundle={{ ...this.state.bundle }} />
@@ -68,19 +69,19 @@ export default class TripOverViewScreen extends React.Component {
                                 <SeatingOptions details={this.state.details} game={this.state.game} seating={this.state.seating} />
 
                                 {/* perks */}
-                                <Perks perks={this.state.perks}/>
+                                <Perks perks={this.state.perks} />
                             </View>
 
                             {/* buttons */}
-                            <View style={{ marginStart: 15, marginEnd: 15, alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
-                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} 
-                                onPress={this.goBack}>
+                            <View style={{ height: 60, marginStart: 15, marginEnd: 15, flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
+                                <TouchableHighlight style={R.styles.blackButton}
+                                    onPress={this.goBack}>
                                     <Text style={{ fontWeight: "bold", color: "#fff", textTransform: 'uppercase' }}>
                                         {translate('back')}
                                     </Text>
                                 </TouchableHighlight>
-                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }} 
-                                onPress={this.continue}>
+                                <TouchableHighlight style={R.styles.greenButton}
+                                    onPress={this.continue}>
                                     <Text style={{ fontWeight: "bold", textTransform: 'uppercase' }}>
                                         {translate('checkout')}
                                     </Text>

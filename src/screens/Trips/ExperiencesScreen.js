@@ -1,26 +1,12 @@
 import React from "react";
-import {
-    StyleSheet,
-    Text,
-    Image,
-    ScrollView,
-    View,
-    TouchableHighlight,
-    ActivityIndicator,
-    Modal,
-    TouchableOpacity
-} from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons';
+import { StyleSheet, Text, ScrollView, View, TouchableHighlight, ActivityIndicator, Modal, FlatList } from "react-native";
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { post, servicesUrl } from "helpers/services.js";
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
-import { formatBundle } from "helpers/tripHelper.js";
 import { translate } from "helpers/utils";
-import Svg from 'react-native-remote-svg';
 import moment from 'moment';
 import R from "res/R";
-import { FlatList } from "react-native";
 import Experience from "components/Experiences/Experience";
 
 export default class ExperiencesScreen extends React.Component {
@@ -63,9 +49,11 @@ export default class ExperiencesScreen extends React.Component {
         this.props.navigation.navigate('summary', { bundle: this.state.bundle });
     };
 
-     renderItem = ({item}) => {
-       return <Experience item={item} />
-     }
+    renderItem = ({ item }) => {
+        return <Experience item={item} />
+    }
+
+    keyExtractor = (item, index) => 'exp-'+index;
 
     render() {
         return (
@@ -89,7 +77,7 @@ export default class ExperiencesScreen extends React.Component {
                                 <FlatList
                                     data={this.state.extraServices}
                                     renderItem={this.renderItem}
-                                    keyExtractor={(index) => index.toString()}
+                                    keyExtractor={this.keyExtractor}
                                 />
                             </View>
                             {/* buttons */}

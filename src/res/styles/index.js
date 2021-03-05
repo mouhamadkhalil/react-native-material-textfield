@@ -55,6 +55,13 @@ const styles = {
         textTransform: 'uppercase', 
         backgroundColor: colors.blackButton
     },
+    greyButton: {
+        width: '50%', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        textTransform: 'uppercase', 
+        backgroundColor: 'grey'
+    },
     loadMoreText: {
         color: "#fff",
         fontWeight: "bold",

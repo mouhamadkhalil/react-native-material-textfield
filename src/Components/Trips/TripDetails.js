@@ -1,12 +1,5 @@
 import React from "react";
-import {
-    StyleSheet,
-    Text,
-    Image,
-    View,
-    TouchableOpacity,
-    Modal
-} from "react-native";
+import { StyleSheet, Text, Image, View, TouchableOpacity, Modal } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import RatingStars from "components/Common/RatingStars";
@@ -36,7 +29,7 @@ export class TripDetails extends React.PureComponent {
 
     render() {
         return (
-            <>
+            <View style={{backgroundColor:'white'}}>
                 {/* trip dates */}
                 <View style={{ padding: 25, borderBottomWidth: 2, borderColor: "#eee" }}>
                     <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginBottom: 15, textTransform: 'uppercase' }}>
@@ -89,7 +82,7 @@ export class TripDetails extends React.PureComponent {
                     onRequestClose={() => this.setState({ showPictures: false })}>
                     <ImageViewer imageUrls={this.state.hotelImages} />
                 </Modal>
-            </>
+            </View>
         );
     }
 }

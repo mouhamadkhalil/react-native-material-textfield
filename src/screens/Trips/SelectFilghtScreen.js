@@ -231,16 +231,16 @@ export default class SelectFlightScreen extends React.Component {
                     <View style={{ zIndex: -5, flex: 1, flexDirection: 'row', height: 50, marginTop: 20 }}>
                         <TouchableOpacity style={R.styles.blackButton}
                             onPress={this.goBack}>
-                            <Text style={{ color: 'white', fontSize: 20 }}>
+                            <Text style={{ color: 'white', fontSize: 16 ,textTransform:'uppercase'}}>
                                 {translate('back')}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={this.state.canContinue ? R.styles.greenButton : { ...R.styles.greenButton, ...styles.disabledButton }}
+                            style={this.state.canContinue ? R.styles.greenButton : R.styles.greyButton}
                             onPress={this.continue}
                             activeOpacity={this.state.canContinue ? 0 : 1}
                             disabled={!this.state.canContinue}>
-                            <Text style={{ color: this.state.canContinue ? 'black' : 'white', fontSize: 20 }}>
+                            <Text style={{ color: this.state.canContinue ? 'black' : 'white', fontSize: 16, textTransform:'uppercase' }}>
                                 {translate('continue')}
                             </Text>
                         </TouchableOpacity>
@@ -266,7 +266,4 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: R.colors.lightGrey
     },
-    disabledButton: {
-        backgroundColor: 'grey'
-    }
 });
