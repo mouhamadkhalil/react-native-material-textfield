@@ -29,7 +29,7 @@ export class Perks extends React.PureComponent {
 
     render() {
         return (
-            <View style={{ padding: 25, borderBottomWidth: 2, borderColor: "#eee" }}>
+            <View style={{ padding: 25, backgroundColor:'white', borderBottomWidth: 2, borderColor: "#eee" }}>
                 <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginBottom: 15 }}>
                     {translate('perks')}
                 </Text>

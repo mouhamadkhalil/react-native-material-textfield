@@ -22,6 +22,7 @@ export const servicesUrl = {
     getPagedHotels: '/mobile/game/getPagedHotels',
     viewCancelPolicy: '/mobile/hotel/ViewCancelPolicyV2',
     saveBundleMulti : '/mobile/game/saveBundleMulti',
+    saveBundle : '/mobile/game/saveBundle',
     getExtraServices: '/mobile/game/getExtraServices'
 }
 

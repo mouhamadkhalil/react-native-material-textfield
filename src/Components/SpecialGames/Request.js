@@ -430,7 +430,7 @@ export default class Request extends React.Component {
                                             value={this.state.Phone}
                                             keyboardType="number-pad"
                                             onChangeText={(Phone) => this.setState({ Phone })}
-                                            style={{ borderBottomWidth: 1, bordercolor: "#ccc" }}
+                                            style={{ borderBottomWidth: 1, borderColor: "#ccc" }}
                                         />
                                     </View>
                                 </View>

@@ -20,6 +20,11 @@ import TripOverViewScreen from "screens/Trips/TripOverViewScreen";
 import CustomizeTripScreen from "components/SpecialGames/CustomizeTrip";
 import SelectFlightScreen from "screens/Trips/SelectFilghtScreen";
 import ExperiencesScreen from "screens/Trips/ExperiencesScreen";
+import SummaryScreen from "screens/Trips/SummaryScreen";
+import CheckoutFanInfoScreen from "screens/Trips/CheckoutFanInfoScreen";
+import CheckoutSummaryScreen from "screens/Trips/CheckoutSummaryScreen";
+import CheckoutPaymentScreen from "screens/Trips/CheckoutPaymentScreen";
+
 import MyTripsScreen from "components/SpecialGames/MyTrips";
 import MyProfileScreen from "components/Profile/MyProfile";
 import QuizScreen from "components/WebView/Quiz";
@@ -64,6 +69,10 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="experiences" navigationProps={navigation} component={ExperiencesScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="summary" navigationProps={navigation} component={SummaryScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutFanInfo" navigationProps={navigation} component={CheckoutFanInfoScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutSummary" navigationProps={navigation} component={CheckoutSummaryScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutPayment" navigationProps={navigation} component={CheckoutPaymentScreen} options={HeaderOptions({ navigation })} />
             
             <Stack.Screen name="my trips" navigationProps={navigation} component={MyTripsScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="my profile" navigationProps={navigation} component={MyProfileScreen} options={HeaderOptions({ navigation })} />

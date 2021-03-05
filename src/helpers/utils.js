@@ -2,6 +2,7 @@ import { I18nManager } from "react-native";
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better performance
+import { Platform } from 'react-native'
 
 const translate = memoize(
   (key, config) => i18n.t(key, config),
@@ -26,4 +27,9 @@ const setI18nConfig = () => {
   i18n.fallbacks = true;
 };
 
-export { translate, setI18nConfig } 
+const testID = (id) => {
+  return Platform.OS === 'android' ? { accessible: true, accessibilityLabel: id } : { testID: id }
+}
+
+export { translate, setI18nConfig, testID } 
+
