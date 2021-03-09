@@ -128,7 +128,7 @@ const ListItem = ({ item }) => {
                 {/* book now OR request */}
                 <TouchableOpacity
                     style={styles.greenButton}
-                    onPress={item.Price != null  && item.Price > 0 ? () => navigation.navigate('tripoverview', { bundleCode: item.BundleCode }) : () => navigation.navigate('request', { bundleCode: item.BundleCode })}>
+                    onPress={item.Price != null  && item.Price > 0 ? () => navigation.navigate('tripOverview', { bundleCode: item.BundleCode }) : () => navigation.navigate('request', { bundleCode: item.BundleCode })}>
                     <Text style={{ fontSize: 14, textTransform: 'uppercase' }}>
                         {item.Price != null && item.Price > 0 ? translate('bookNow') : translate('request')}
                     </Text>

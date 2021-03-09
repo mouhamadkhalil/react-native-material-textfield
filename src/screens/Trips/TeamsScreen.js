@@ -11,8 +11,8 @@ import { HeaderBackground } from "components/Common/HeaderBackground";
 import Accordion from 'react-native-collapsible/Accordion';
 import { LinearGradient } from 'expo-linear-gradient';
 import { get, servicesUrl } from "helpers/services.js";
-import R from "res/R";
 import { translate } from "helpers/utils";
+import R from "res/R";
 
 export default class Teams extends React.Component {
 

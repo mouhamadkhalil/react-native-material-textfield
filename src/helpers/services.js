@@ -21,10 +21,35 @@ export const servicesUrl = {
     searchHotel: '/mobile/game/SearchHotel',
     getPagedHotels: '/mobile/game/getPagedHotels',
     viewCancelPolicy: '/mobile/hotel/ViewCancelPolicyV2',
-    saveBundleMulti : '/mobile/game/saveBundleMulti',
-    saveBundle : '/mobile/game/saveBundle',
+    saveBundleMulti: '/mobile/game/saveBundleMulti',
+    saveBundle: '/mobile/game/saveBundle',
     getExtraServices: '/mobile/game/getExtraServices'
 }
+
+export async function setUserCredentials(email, password) {
+    try {
+        await SecureStore.setItemAsync('email', email);
+        await SecureStore.setItemAsync('password', password);
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+}
+
+export async function getUserCredentials() {
+    var email = '', password='';
+    try {
+        var email = await SecureStore.getItemAsync('email');
+        if (email == null)
+            email = '';
+        var password = await SecureStore.getItemAsync('password');
+        if (password == null)
+            password = '';
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+    return [email, password];
+}
+
 
 getToken = async () => {
     try {

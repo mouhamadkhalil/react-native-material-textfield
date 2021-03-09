@@ -2,15 +2,21 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { get, servicesUrl } from 'helpers/services';
 import { translate } from "helpers/utils.js";
 import R from "res/R";
 
 const MatchItem = ({ item, height }) => {
     const navigation = useNavigation();
+
     const navigate = () => {
-        if(item.Price != null  && item.Price > 0)
-         navigation.navigate('tripoverview', { bundleCode: item.GameCode }) ;
-         else navigation.navigate('request', { bundleCode: item.GameCode });
+        const params = `?customize=false&validateHotelPrice=false&hotelId=-1`;
+        get(servicesUrl.getGameV2 + item.GameCode + params)
+            .then((response) => {
+                if (response.Price != null && response.Price > 0)
+                    navigation.navigate('tripOverview', { bundle: response });
+                else navigation.navigate('request', { bundle: response });
+            })
     }
 
     return (

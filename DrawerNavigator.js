@@ -70,7 +70,7 @@ import Group2Screen from "./Components/Fan Chat/Group2Screen";
 
 
 import SpecialGameScreen from "./Components/SpecialGames/SpecialGame";
-import AllGamesScreen from "./Components/SpecialGames/AllGames";
+import AllGamesScreen from "./screens/Trips/AllGames";
 
 
 import Info from "./Components/More/Info";

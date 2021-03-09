@@ -77,7 +77,7 @@ import Group2Screen from "./Components/Fan Chat/Group2Screen";
 import InfoScreen from "./Components/More/Info";
 
 import SpecialGamesScreen from "./Components/SpecialGames/SpecialGame";
-import AllGamesScreen from "./Components/SpecialGames/AllGames";
+import AllGamesScreen from "./screens/Trips/AllGames";
 
 
 

@@ -5,6 +5,11 @@ const styles = {
         width: '100%',
         height: '100%'
     },
+    whiteContainer:{
+        width: '100%',
+        height: '100%',
+        backgroundColor:'white'
+    },
     headerBackground: {
         height: 200,
         alignItems: "center",

@@ -29,7 +29,6 @@ const HeaderOptions = ({ navigation }) => {
                     .then(res => res.json())
                     .then(json => {
                         res.push(...json);
-                        console.log("teams and games:", res);
                         setGames(res);
                         //setTimeout(() => console.log("games:", games), 2000);
                     });

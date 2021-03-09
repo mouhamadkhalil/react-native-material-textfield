@@ -12,20 +12,19 @@ import {
     ActivityIndicator,
     Pressable
 } from "react-native";
-import { get, servicesUrl } from "helpers/services.js";
-import Carousel from 'react-native-snap-carousel';
-import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
+import Carousel from 'react-native-snap-carousel';
 import Image from 'react-native-remote-svg';
-import { translate } from "helpers/utils.js";
+import moment from 'moment';
+import { get, servicesUrl } from "helpers/services.js";
 import { getTripDays } from "helpers/tripHelper.js";
-
+import { translate } from "helpers/utils.js";
 import R from "res/R";
 
 const sliderWidth = Dimensions.get('window').width;
 const itemWidth = Math.round(sliderWidth * 0.7);
 const itemHeight = Math.round(itemWidth * 3 / 4);
-
 
 const Screen = Dimensions.get('window');
 
@@ -62,7 +61,6 @@ export default class specialGames extends React.Component {
     }
 
     getData = () => {
-        const _this = this;
         get(servicesUrl.getHomePageData)
             .then(response => {
                 // Special Games Data
@@ -152,6 +150,9 @@ export default class specialGames extends React.Component {
                         ImageReference: league.ImageReference
                     };
                 });
+                const allTeams = ["@allTeams", JSON.stringify(response.CountiesWithTeams)];
+                const allLeagues = ["@allLeagues", JSON.stringify(response.AllLeagues)];
+                AsyncStorage.multiSet([allTeams, allLeagues]);
                 this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: response.GamesList.PageCount, pageSize: response.GamesList.PageSize, isLoading: false });
             });
     };
@@ -251,7 +252,7 @@ export default class specialGames extends React.Component {
                                 <Text style={{ color: "white", fontWeight: "bold", fontSize: 14 }}>{item.PriceCaption}</Text>
                                 <Text style={{ color: "white", fontSize: 10, marginTop: 5 }}>{item.SharingRoomNote}</Text>
                             </View>
-                            <TouchableOpacity key={'special' + index} onPress={() => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
+                            <TouchableOpacity key={'special' + index} onPress={() => this.props.navigation.navigate('tripOverview', { bundleCode: item.BundleCode })} style={{ width: 110, height: 46, marginBottom: -23, justifySelf: "center", alignSelf: "center" }}>
                                 <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                                     <View >
                                         {item.PricePerFan > 0 ? (
@@ -273,7 +274,7 @@ export default class specialGames extends React.Component {
 
     /******************* Popular Game Item ************************/
     popularGameItem = ({ item, index }) =>
-        <Pressable key={'popular' + index} onPress={() => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode })}>
+        <Pressable key={'popular' + index} onPress={() => this.props.navigation.navigate('tripOverview', { bundleCode: item.BundleCode })}>
             <View style={styles.popularGameItem}>
                 <View>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -341,7 +342,7 @@ export default class specialGames extends React.Component {
                         </View>
                     </View>
                 </ImageBackground>
-                <TouchableOpacity key={'hot' + index} style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripoverview', { bundleCode: item.BundleCode }) : () => this.props.navigation.navigate('request', { bundleCode: item.BundleCode })}>
+                <TouchableOpacity key={'hot' + index} style={{ width: 110, height: 46, marginTop: -23, justifySelf: "center", alignSelf: "center" }} onPress={item.PricePerFan > 0 ? () => this.props.navigation.navigate('tripOverview', { bundleCode: item.BundleCode }) : () => this.props.navigation.navigate('request', { bundleCode: item.BundleCode })}>
                     <ImageBackground source={R.images.button_green} style={{ flex: 1, resizeMode: "cover", justifyContent: "center", alignItems: "flex-start", paddingLeft: 10 }}>
                         <View >
                             {item.PricePerFan > 0 ? (
@@ -388,52 +389,6 @@ export default class specialGames extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <TouchableOpacity style={styles.topNavBtn}
-                        onPress={() => this.props.navigation.navigate('teams')}>
-                        <Text style={styles.topNavBtnText}> Teams</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.topNavBtn}
-                        onPress={() => this.props.navigation.navigate('leagues')}>
-                        <Text style={styles.topNavBtnText}>Leagues</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.topNavBtn}>
-                        <Text style={styles.topNavBtnText}>Deals</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{ position: "absolute", right: 0, height: this.state.isButtonPressed ? 100 : 50, width: 100, padding: 10, backgroundColor: R.colors.lightGreen, marginLeft: 10, zIndex: 1 }}
-                        onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
-                        <Text style={styles.topNavBtnText}>Book Trip</Text>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('all games')} style={{ height: 50, width: 100, marginLeft: -10, marginRight: -10, padding: 10, backgroundColor: R.colors.green, display: this.state.isButtonPressed ? "flex" : "none", marginTop: 20 }}>
-                            <Text style={styles.topNavBtnText}>Single Trip</Text>
-                        </TouchableOpacity>
-                    </TouchableOpacity>
-
-                    {/* <TouchableOpacity style={styles.topNavBtn}
-                        onPress={() => this.props.navigation.navigate('request')}>
-                        <Text style={{}}>Request</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.topNavBtn}
-                        onPress={() => this.props.navigation.navigate('my trips')}>
-                        <Text style={styles.topNavBtnText}>My Trips</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.topNavBtn}
-                        onPress={() => this.props.navigation.navigate('my profile')}>
-                        <Text style={styles.topNavBtnText}>My Profile</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.topNavBtn}
-                        onPress={() => this.props.navigation.navigate('quiz')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>Quiz</Text>
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity style={styles.topNavBtn}
-                        onPress={() => this.props.navigation.navigate('leader board')}>
-                        <Text style={{ fontSize: 17, fontWeight: "bold" }}>Leader Board</Text>
-                    </TouchableOpacity> */}
-                </View>
                 {this.state.isLoading ?
                     <ActivityIndicator size="large" color="blue" style={{ marginTop: 100 }} />
                     :

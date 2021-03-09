@@ -23,7 +23,7 @@ export default class ExperiencesScreen extends React.Component {
 
     componentDidMount() {
         try {
-            //this.getExtraServices();
+            this.getExtraServices();
         } catch { }
     }
 

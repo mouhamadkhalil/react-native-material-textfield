@@ -456,7 +456,7 @@ export default class CustomizeTripScreen extends React.Component {
     };
 
     cancel = () => {
-        this.props.navigation.navigate('tripoverview', { bundleCode: this.state.bundleCode });
+        this.props.navigation.navigate('tripOverview', { bundleCode: this.state.bundleCode });
     };
 
     continue = () => {
