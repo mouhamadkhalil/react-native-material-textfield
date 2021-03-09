@@ -2,35 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import Autocomplete from 'react-native-autocomplete-input';
+import { get, servicesUrl } from 'helpers/services';
 import Moment from 'moment';
 import R from "res/R";
 
 const HeaderOptions = ({ navigation }) => {
     const [games, setGames] = useState([]);
-    // const [filteredFilms, setFilteredFilms] = useState([]);
-    // const [selectedValue, setSelectedValue] = useState({});
+    const [suggestedGames, setSuggestedGames] = useState([]);
 
     useEffect(() => {
     }, [games]);
 
     const findAll = str => {
-        let res = [];
-        if (!str.trim().length) {
+        let results = [];
+        if (str.trim().length == 0) {
             getSuggestedGames();
             return;
         }
-        fetch(`https://fly-foot.com/api/mobile/team/search?text=${str.trim()}`)
-            .then(res => res.json())
-            .then(json => {
-                res.push(...json);
+        get(servicesUrl.getTeamSearch + str.trim())
+            .then(response => {
+                results.push(...json);
             })
             .then(() => {
-                fetch(`https://fly-foot.com/api/mobile/game/search?text=${str.trim()}`)
-                    .then(res => res.json())
+                get(servicesUrl.getGameSearch + str.trim())
                     .then(json => {
-                        res.push(...json);
-                        setGames(res);
-                        //setTimeout(() => console.log("games:", games), 2000);
+                        results.push(...json);
+                        setGames(results);
                     });
             })
             .catch(e => {
@@ -39,16 +36,23 @@ const HeaderOptions = ({ navigation }) => {
     };
 
     const getSuggestedGames = () => {
-        fetch('https://apitest.fly-foot.com/api/mobile/game/getSuggestedGames')
-            .then(res => res.json())
-            .then(json => {
-                setGames(json);
-                console.log(json);
+        if (suggestedGames == null || suggestedGames.length == 0) {
+            get(servicesUrl.getSuggestedGames)
+            .then(response => {
+                setGames(response);
+                setSuggestedGames(response);
             })
             .catch(e => {
                 console.error(e);
             });
+        }
+        else
+            setGames(suggestedGames);
     };
+
+    const clear = () => {
+        setGames([]);
+    }
 
     return (
         {
@@ -72,16 +76,13 @@ const HeaderOptions = ({ navigation }) => {
                                 inputContainerStyle={styles.inputContainer}
                                 listContainerStyle={styles.listContainer}
                                 data={games}
-                                // defaultValue={
-                                //     JSON.stringify(selectedValue) === '{}' ? '' : selectedValue.title
-                                // }
                                 onChangeText={text => findAll(text)}
-                                placeholder="&nbsp;&nbsp;Search your games ... "
-                                onBlur={() => setTimeout(() => setGames([]), 2000)}
+                                placeholder="Search your games ... "
+                                onBlur={() => clear()}
+                                onFocus={() => findAll('')}
                                 renderItem={({ item }) => (
                                     <Pressable
                                         onPress={() => {
-                                            // setSelectedValue(item);
                                             this.props.navigation.navigate('book now', { idMatch: 123 });
                                         }}>
                                         {item.idTeams ?

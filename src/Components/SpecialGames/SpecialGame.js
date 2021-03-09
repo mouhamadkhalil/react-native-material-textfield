@@ -536,6 +536,7 @@ const styles = StyleSheet.create({
         width: 30,
     },
     pageTitleText: {
+        fontFamily:R.fonts.HellixRegular,
         color: "black",
         fontSize: 20,
         marginLeft: 10,

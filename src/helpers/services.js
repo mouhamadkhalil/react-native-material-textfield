@@ -14,6 +14,9 @@ export const servicesUrl = {
     getGameV2: '/mobile/game/v2/',
     getAmadeusCities: '/mobile/city/amadeusCity',
     getFlagBundle: '/mobile/game/flagBundle',
+    getSuggestedGames: '/mobile/game/getSuggestedGames',
+    getGameSearch: '/mobile/game/search?text=',
+    getTeamSearch: '/mobile/team/search?text=',
 
     /* POST */
     login: '/mobile/profile/login',

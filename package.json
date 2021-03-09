@@ -7,6 +7,11 @@
     "start": "nodemon App.js",
     "test": "jest"
   },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "^1.14.1",
@@ -43,7 +48,9 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-dotenv": "^2.4.3",
     "react-native-dropdown-picker": "^3.8.0",
+    "react-native-eject": "^0.1.2",
     "react-native-elements": "^3.2.0",
+    "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-hide-show-password-input": "^1.2.0",
     "react-native-image-zoom-viewer": "^3.0.1",

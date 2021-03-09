@@ -31,6 +31,12 @@ export default class Teams extends React.Component {
         } catch { }
     }
 
+    /* get the data from the async storage
+    getData = async () => {
+        var allTeams = JSON.parse(await AsyncStorage.getItem('@allTeams'));
+        this.setState({ allLeagues, isLoading: false });
+    }*/
+
     getData = () => {
         get(servicesUrl.getCountriesWithTeams)
             .then((response) => {
@@ -103,8 +109,8 @@ export default class Teams extends React.Component {
                         <Text style={styles.heading}>
                             {translate('startBooking')}
                         </Text>
-                        <View style={{width:300}}>
-                            <Text style={{ fontSize: 15, textAlign :'center' }}>
+                        <View style={{ width: 300 }}>
+                            <Text style={{ fontSize: 15, textAlign: 'center' }}>
                                 Choose between a single, multi-destination or group trip and gift your friends a fun stadium experience.
                         </Text>
                         </View>
