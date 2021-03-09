@@ -626,12 +626,12 @@ export default class CustomizeTripScreen extends React.Component {
             return (
                 index % 2 == 0 ? (
                     <View key={'perk' + index} style={styles.perksRow}>
-                        <TouchableOpacity style={[styles.perk], { backgroundColor: perks[index].Selected ? R.colors.blue : '#fff' }}
+                        <TouchableOpacity style={[styles.perk, { backgroundColor: perks[index].Selected ? R.colors.blue : '#fff' }]}
                             onPress={() => this.selectPerk(index)}>
                             {index == 0 ? null :
                                 <CheckBox
                                     checked={perks[index].Selected}
-                                    containerStyle={{ backgroundColor: perks[index].Selected ? R.colors.blue : 'white', borderWidth: 0 }}
+                                    containerStyle={{ backgroundColor: perks[index].Selected ? R.colors.blue : 'white', borderWidth: 0, position: "absolute", top: 0, left: 0 }}
                                     checkedColor='white'
                                     onPress={() => this.selectPerk(index)} />
                             }
@@ -641,11 +641,11 @@ export default class CustomizeTripScreen extends React.Component {
                             </Text>
                         </TouchableOpacity>
                         {perks[index + 1] != undefined ?
-                            <TouchableOpacity style={[styles.perk], { backgroundColor: perks[index + 1].Selected ? R.colors.blue : '#fff' }}
+                            <TouchableOpacity style={[styles.perk, { backgroundColor: perks[index + 1].Selected ? R.colors.blue : '#fff' }]}
                                 onPress={() => this.selectPerk(index + 1)}>
                                 <CheckBox
                                     checked={perks[index + 1].Selected}
-                                    containerStyle={{ backgroundColor: perks[index + 1].Selected ? R.colors.blue : 'white', borderWidth: 0 }}
+                                    containerStyle={{ backgroundColor: perks[index + 1].Selected ? R.colors.blue : 'white', borderWidth: 0, position: "absolute", top: 0, left: 0 }}
                                     checkedColor='white'
                                     onPress={() => this.selectPerk(index + 1)} />
                                 <Image source={perks[index + 1].Selected ? perks[index + 1].Image : perks[index + 1].ImageGrey} style={styles.perkImage} />
@@ -1049,9 +1049,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 5
     },
-    perksRow: { flexDirection: "row", justifyContent: "space-between" },
+    perksRow: { flexDirection: "row" },
     perkImage: { width: 42, height: 44 },
-    perk: { width: "50%", alignItems: "center", height: 100 },
+    perk: { width: "50%", alignItems: "center", height: 150, flex: 0, justifyContent: "center" },
     perkLabel: { fontSize: 13, marginTop: 15 },
     close: {
         color: '#fff',
