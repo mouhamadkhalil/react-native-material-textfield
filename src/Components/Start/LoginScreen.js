@@ -193,11 +193,8 @@ export default class LoginScreen extends React.Component {
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
                             <Image
                                 source={R.images.flyfoot}
-                                style={{ marginLeft: -30, width: 60, height: 60 }}
+                                style={{ width: 60, height: 60 }}
                             />
-                            <Text style={{ marginTop: 10, marginLeft: 10, fontSize: 25, fontWeight: "bold" }}>
-                                FLY-FOOT
-                        </Text>
                         </View>
                         <TouchableOpacity onPress={this.FBLogin.bind(this)} style={{ marginRight: 35, marginLeft: 35 }}>
                             <View style={{ flex: 1, flexDirection: 'row', marginTop: 30, backgroundColor: '#37568F' }}>

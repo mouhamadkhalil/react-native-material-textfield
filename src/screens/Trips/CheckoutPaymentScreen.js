@@ -30,7 +30,7 @@ Stripe.setOptionsAsync({
     addressZip: '55555',
   };
 
-  const token = await Stripe.createTokenWithCardAsync(params);
+  //const token = await Stripe.createTokenWithCardAsync(params);
 
 
 export default class CheckoutPaymentScreen extends React.Component {
