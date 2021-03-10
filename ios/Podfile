@@ -23,8 +23,6 @@ target 'flyfoot2' do
   #  end
   pod 'RNLocalize', :path => '../node_modules/react-native-localize'
 
-  pod 'tipsi-stripe', :path => '../node_modules/tipsi-stripe'
-
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
 end

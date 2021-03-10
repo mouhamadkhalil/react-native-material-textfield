@@ -420,7 +420,7 @@ export default class specialGames extends React.Component {
                             </View>
                             <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center', paddingLeft: 15, paddingRight: 15 }}>
                                 <FlatList
-                                    keyExtractor={(item, index) => index}
+                                    keyExtractor={(item, index) => 'popular'+item.idMatch}
                                     data={this.state.popularGames}
                                     renderItem={item => this.popularGameItem(item)}
                                     ListFooterComponent={this.renderPopularGamesFooter}
@@ -536,7 +536,7 @@ const styles = StyleSheet.create({
         width: 30,
     },
     pageTitleText: {
-        fontFamily:R.fonts.HellixRegular,
+        fontFamily: 'Hellix-Regular',
         color: "black",
         fontSize: 20,
         marginLeft: 10,

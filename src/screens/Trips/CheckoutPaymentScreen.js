@@ -1,11 +1,37 @@
 import React from "react";
 import { StyleSheet, Text, ScrollView, View, TouchableHighlight, ActivityIndicator, Modal } from "react-native";
 import { CheckBox } from 'react-native-elements';
+import { PaymentsStripe as Stripe } from 'expo-payments-stripe';
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
 import { translate } from "helpers/utils";
 import R from "res/R";
-import CardTextFieldScreen from "components/Common/CardTextFieldScreen";
+
+Stripe.setOptionsAsync({
+    publishableKey: 'pk_test_51ITH7lBjTdcHLCeR9AODAVHFSqXspLKffxcjCofsANht6u83zETdAwsYZpWckf2yFolDqy3GyCg343R2MUmednGn00knzo3UIk', // Your key
+    androidPayMode: 'test', // [optional] used to set wallet environment (AndroidPay)
+    merchantId: 'your_merchant_id', // [optional] used for payments with ApplePay
+  });
+
+  const params = {
+    // mandatory
+    number: '4242424242424242',
+    expMonth: 11,
+    expYear: 17,
+    cvc: '223',
+    // optional
+    name: 'Test User',
+    currency: 'usd',
+    addressLine1: '123 Test Street',
+    addressLine2: 'Apt. 5',
+    addressCity: 'Test City',
+    addressState: 'Test State',
+    addressCountry: 'Test Country',
+    addressZip: '55555',
+  };
+
+  const token = await Stripe.createTokenWithCardAsync(params);
+
 
 export default class CheckoutPaymentScreen extends React.Component {
     constructor(props) {
@@ -103,7 +129,6 @@ export default class CheckoutPaymentScreen extends React.Component {
                     }
                     <Modal visible={this.state.showPayment} transparent={true}
                         onRequestClose={() => this.setState({ showPayment: false })}>
-                        <CardTextFieldScreen></CardTextFieldScreen>
                     </Modal>
                 </View>
             </ScrollView >

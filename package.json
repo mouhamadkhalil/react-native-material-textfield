@@ -4,12 +4,13 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "nodemon App.js",
-    "test": "jest"
+    "start": "react-native start",
+    "test": "jest",
+    "fonts": "node scripts/fonts.js"
   },
   "rnpm": {
     "assets": [
-      "./assets/fonts/"
+      "./src/res/fonts/"
     ]
   },
   "dependencies": {
@@ -22,7 +23,9 @@
     "@react-navigation/stack": "^5.12.8",
     "accordion-collapse-react-native": "^0.4.0",
     "expo": "~40.0.0",
-    "expo-constants": "^10.0.1",
+    "expo-app-loading": "^1.0.1",
+    "expo-constants": "^9.3.3",
+    "expo-font": "~8.4.0",
     "expo-facebook": "~9.1.0",
     "expo-linear-gradient": "~8.4.0",
     "expo-localization": "~9.1.0",
@@ -56,16 +59,16 @@
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-lightbox-v2": "^0.8.7",
     "react-native-range-datepicker": "^1.9.1",
-    "react-native-reanimated": "^2.0.0",
+    "react-native-reanimated": "^1.13.0",
     "react-native-remote-svg": "^2.0.6",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-unimodules": "~0.12.0",
     "react-native-web": "^0.15.0",
-    "react-native-webview": "^11.2.1",
+    "react-native-webview": "^11.0.0",
     "rn-range-slider": "^2.0.4",
-    "tipsi-stripe": "^8.0.2"
+    "expo-payments-stripe": "~8.4.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
@@ -76,5 +79,7 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "name": "flyfoot2",
+  "version": "1.0.0"
 }

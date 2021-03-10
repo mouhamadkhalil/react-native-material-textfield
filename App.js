@@ -1,37 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import * as SecureStore from 'expo-secure-store';
+import AppLoading from 'expo-app-loading';
 import Constants from 'expo-constants';
+import * as Font from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from "./src/navigation/DrawerNavigator";
 import * as Location from 'expo-location';
-import {setI18nConfig}  from './src/helpers/utils.js';
+import { setI18nConfig } from 'helpers/utils.js';
+import fonts from 'fonts';
 
-const App = () => {
-  setI18nConfig();
-  const [errorMsg, setErrorMsg] = useState(null);
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS === 'android' && !Constants.isDevice) {
-        setErrorMsg(
-          'Oops, this will not work on Snack in an Android emulator. Try it on your device!'
-        );
-        return;
-      }
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      await SecureStore.setItemAsync('location', location);
-    })();
-  }, []);
+export default class App extends React.Component {
 
-  return (
-    <NavigationContainer>
-      <DrawerNavigator />
-    </NavigationContainer>
-  );
-};
+  state = {
+    fontsLoaded: false,
+    errorMsg: null
+  };
 
-export default App;
+  async loadFontsAsync() {
+    await Font.loadAsync(fonts).then(() =>
+      this.setState({ fontsLoaded: true }));
+  }
+
+  componentDidMount = async () => {
+    // load fonts
+    await this.loadFontsAsync();
+    
+    // init I18 config
+    setI18nConfig();
+
+    // get location
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({ErrorMsg : 'Oops, this will not work on Snack in an Android emulator. Try it on your device!'});
+      return;
+    }
+    let { status } = await Location.requestPermissionsAsync();
+    if (status !== 'granted') {
+      this.setState({ErrorMsg : 'Permission to access location was denied'});
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    await SecureStore.setItemAsync('location', location);
+  }
+
+  render() {
+    return (
+      this.state.fontsLoaded ?
+        <NavigationContainer>
+          <DrawerNavigator />
+        </NavigationContainer>
+        :
+        <AppLoading />)
+  }
+}
+
