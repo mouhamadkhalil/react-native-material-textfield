@@ -9,28 +9,28 @@ export class Perks extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        this.state ={
-            perks:[]
+        this.state = {
+            perks: []
         }
     }
 
     componentDidMount = () => {
-        var perks = this.props.perks.filter((perk, index) => (perk.Selected == true && index == 1) || index !=1);
-        this.setState({perks});
+        var perks = this.props.perks.filter((perk, index) => (perk.Selected == true && index == 1) || index != 1);
+        this.setState({ perks });
     }
 
-    renderItem = ({item, index}) => {
+    renderItem = ({ item }) => {
         return <PerkItem item={item} height={itemHeight} />
     }
 
-    keyExtractor = (item, index) => {
-        return "perk" + index;
+    keyExtractor = (item) => {
+        return "perk-" + item.Title;
     }
 
     render() {
         return (
-            <View style={{ padding: 25, backgroundColor:'white', borderBottomWidth: 2, borderColor: "#eee" }}>
-                <Text style={{ fontSize: 12, color: "gray", fontWeight: "bold", marginBottom: 15 }}>
+            <View style={styles.container}>
+                <Text style={styles.title}>
                     {translate('perks')}
                 </Text>
                 <FlatList
@@ -48,5 +48,16 @@ export class Perks extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        padding: 25,
+        backgroundColor: 'white',
+        borderBottomWidth: 2,
+        borderColor: "#eee"
+    },
+    title: {
+        fontSize: 12,
+        color: "gray",
+        fontWeight: "bold",
+        marginBottom: 15
+    }
 });

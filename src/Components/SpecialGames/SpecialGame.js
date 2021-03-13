@@ -150,7 +150,7 @@ export default class specialGames extends React.Component {
                         ImageReference: league.ImageReference
                     };
                 });
-                const allTeams = ["@allTeams", JSON.stringify(response.CountiesWithTeams)];
+                const allTeams = ["@allTeams", JSON.stringify(response.CountriesWithTeams)];
                 const allLeagues = ["@allLeagues", JSON.stringify(response.AllLeagues)];
                 AsyncStorage.multiSet([allTeams, allLeagues]);
                 this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: response.GamesList.PageCount, pageSize: response.GamesList.PageSize, isLoading: false });

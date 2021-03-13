@@ -38,7 +38,7 @@ export function formatDetails(bundle) {
     return details;
 }
 
-export function formatGames(bundle){
+export function formatGames(bundle) {
     var game = bundle.MatchBundleDetail[0].Game;
     return game;
 }
@@ -50,9 +50,10 @@ export function formatBundle(bundle) {
     var details = formatDetails(bundle);
     var game = formatGames(bundle);
     var hotel = bundle.SelectedHotel;
-    hotel.HotelRoomType = bundle.HotelRoomType;
-    hotel.NumberOfRooms = bundle.NumberOfRooms;
-
+    if (hotel != null) {
+        hotel.HotelRoomType = bundle.HotelRoomType;
+        hotel.NumberOfRooms = bundle.NumberOfRooms;
+    }
     var seating = bundle.MatchBundleDetail[0].GameSeat;
     var perks = [
         {

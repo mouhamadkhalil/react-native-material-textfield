@@ -150,7 +150,9 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 5,
+        marginStart:15,
+        marginEnd:15
     },
     greenButton: {
         flexDirection: 'row',

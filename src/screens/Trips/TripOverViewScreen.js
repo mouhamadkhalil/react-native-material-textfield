@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet,Text,ScrollView,View,TouchableHighlight,ActivityIndicator,} from "react-native";
+import { StyleSheet, Text, FlatList, View, TouchableHighlight, ActivityIndicator, SafeAreaView } from "react-native";
 import { get, servicesUrl } from "helpers/services.js";
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
@@ -10,7 +10,7 @@ import { formatBundle } from "helpers/tripHelper";
 import { translate } from "helpers/utils";
 import R from "res/R";
 
-export default class TripOverViewScreen extends React.Component {
+export default class TripOverViewScreen extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -62,60 +62,82 @@ export default class TripOverViewScreen extends React.Component {
         this.props.navigation.navigate('flight', { bundle: this.state.bundle });
     };
 
-    render() {
+    keyExtractor = (item, index) => {
+        return "part-" + index;
+    }
+
+    renderHeader = () => {
         return (
-            <ScrollView style={styles.container}>
+            <>
                 {/* banner */}
-                <HeaderBackground title={translate('tripOverview')} image={R.images.trip_bg}></HeaderBackground>
+                <HeaderBackground title={translate('tripOverview')} image={R.images.trip_bg} />
 
                 {/* match header */}
                 <MatchHeader isLoading={this.state.isLoading} bundle={this.state.bundle} />
+            </>
+        )
+    }
 
-                {/* package details */}
-                <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
-                    {translate('semiPackageDetails')}
-                </Text>
-                <View>
-                    {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginStart: 15 }} />
-                        :
-                        <>
-                            <View style={{ marginStart: 15, marginEnd: 15, backgroundColor: "white", marginTop: 30 }}>
-                                {/* trip details + hotel */}
-                                <TripDetails details={this.state.details} game={this.state.game} hotel={this.state.hotel} />
+    renderFooter = () => {
+        return (
+            <>
+                {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginStart: 15 }} />
+                    :
+                    <>
+                        {/* package details */}
+                        <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
+                            {translate('semiPackageDetails')}
+                        </Text>
 
-                                {/* seating options */}
-                                <SeatingOptions details={this.state.details} game={this.state.game} seating={this.state.seating} />
+                        <View style={{ marginStart: 15, marginEnd: 15, backgroundColor: "white", marginTop: 30 }}>
+                            {/* trip details + hotel */}
+                            <TripDetails details={this.state.details} game={this.state.game} hotel={this.state.hotel} />
 
-                                {/* perks */}
-                                <Perks perks={this.state.perks}/>
-                            </View>
+                            {/* seating options */}
+                            <SeatingOptions details={this.state.details} game={this.state.game} seating={this.state.seating} />
 
-                            {/* buttons */}
-                            <View style={{ marginStart: 15, marginEnd: 15, alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
-                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.customize}>
-                                    <Text style={{ fontWeight: "bold", color: "#fff", textTransform: 'uppercase' }}>
-                                        {translate('customize')}
-                                    </Text>
-                                </TouchableHighlight>
-                                <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }} onPress={this.flight}>
-                                    <Text style={{ fontWeight: "bold", textTransform: 'uppercase' }}>
-                                        {translate('selectFlight')}
-                                    </Text>
-                                </TouchableHighlight>
-                            </View>
-                        </>
-                    }
-                </View>
-            </ScrollView >
+                            {/* perks */}
+                            <Perks perks={this.state.perks} />
+                        </View>
+
+                        {/* buttons */}
+                        <View style={{ marginStart: 15, marginEnd: 15, alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
+                            <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.customize}>
+                                <Text style={{ fontWeight: "bold", color: "#fff", textTransform: 'uppercase' }}>
+                                    {translate('customize')}
+                                </Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }} onPress={this.flight}>
+                                <Text style={{ fontWeight: "bold", textTransform: 'uppercase' }}>
+                                    {translate('selectFlight')}
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                    </>
+                }
+            </>
+        )
+    }
+
+    render() {
+        return (
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    data={[]}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={null}
+                    ListHeaderComponent={this.renderHeader}
+                    ListFooterComponent={this.renderFooter}
+                />
+            </SafeAreaView  >
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%',
-        width: '100%',
-        backgroundColor: "#eeeeee",
+        backgroundColor: "#eee",
+        flex: 1
     },
     blueText: {
         fontWeight: "bold",

@@ -5,7 +5,7 @@ import {
 } from "react-native";
 import R from "res/R";
 
-export class HeaderBackground extends React.Component {
+export class HeaderBackground extends React.PureComponent {
     render() {
         return (
             <ImageBackground source={this.props.image} style={R.styles.headerBackground}>

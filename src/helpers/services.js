@@ -26,7 +26,8 @@ export const servicesUrl = {
     viewCancelPolicy: '/mobile/hotel/ViewCancelPolicyV2',
     saveBundleMulti: '/mobile/game/saveBundleMulti',
     saveBundle: '/mobile/game/saveBundle',
-    getExtraServices: '/mobile/game/getExtraServices'
+    getExtraServices: '/mobile/game/getExtraServices',
+    addGames: "/mobile/game/addGames"
 }
 
 export async function setUserCredentials(email, password) {

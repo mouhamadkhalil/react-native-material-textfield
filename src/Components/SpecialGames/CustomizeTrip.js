@@ -3,7 +3,6 @@ import {
     StyleSheet,
     Text,
     Image,
-    ScrollView,
     View,
     TouchableOpacity,
     TouchableHighlight,
@@ -17,9 +16,15 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CheckBox, Tooltip } from 'react-native-elements';
 import Svg from 'react-native-remote-svg';
+import RatingStars from "components/Common/RatingStars";
+
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
-import RatingStars from "components/Common/RatingStars";
+import HotelItem from "components/CustomizeTrip/HotelItem";
+import { Hotels } from "components/CustomizeTrip/Hotels";
+import { Stadium } from "components/CustomizeTrip/Stadium";
+import { Perks } from "components/CustomizeTrip/Perks";
+
 //import RadioButtonRN from 'radio-buttons-react-native';
 import { get, post, servicesUrl } from "helpers/services.js";
 import { getHotelImages, getTripDays } from "helpers/tripHelper.js";
@@ -40,8 +45,6 @@ export default class CustomizeTripScreen extends React.Component {
             hotelList: [],
             hotelImages: [],
             cancelPolicies: [],
-            seating: {},
-            seatingOptions: [],
             perks: [],
             stadiumMap: null,
             roomsHeight: 200,
@@ -73,7 +76,7 @@ export default class CustomizeTripScreen extends React.Component {
         const params = `?customize=true&validateHotelPrice=false&hotelId=-1`;
         get(servicesUrl.getGameV2 + this.state.bundleCode + params)
             .then((response) => {
-                this.initBundle({ ...response });
+                this.initBundle(response);
             });
     }
 
@@ -82,62 +85,73 @@ export default class CustomizeTripScreen extends React.Component {
             bundle = { ...this.state.bundle };
 
         var game = bundle.MatchBundleDetail[0].Game;
-        var hotel = { ...bundle.SelectedHotel };
+        var hotel = bundle.SelectedHotel;
 
         // convert array of String to array of Objects 
-        var hotelImages = getHotelImages(hotel.Images);
+        var hotelImages = hotel ? getHotelImages(hotel.Images) : [];
 
-        var hotelList = bundle.HotelList.Items;
-        var seating = bundle.MatchBundleDetail[0].GameSeat;
-        var seatingOptions = bundle.MatchBundleDetail[0].GameSeats;
-        var stadiumMap = seating.StadiumMap_SVG_v3;
+        var hotelList = bundle.HotelList?.Items;
         var perks = [
             {
                 Title: translate('onSpotService'),
+                Label: 'onSpotService',
+                Sequence: 0,
                 Price: bundle.Price_OnSpot,
                 Image: R.images.onspotWhite,
                 ImageGrey: R.images.onspotGrey,
                 Selected: true
             },
-            /*{
+            {
                 Title: translate('train'),
+                Label: 'train',
+                Sequence: 1,
                 Price: bundle.Price_Train,
-                Image: R.images.train,
+                Image: R.images.trainWhite,
                 ImageGrey: R.images.trainGrey,
                 Selected: bundle.Service_Train
-            },*/
+            },
             {
                 Title: translate('airportPickup'),
+                Label: 'airportPickup',
+                Sequence: 2,
                 Price: bundle.Price_AirtportPickup,
-                Image: R.images.car,
+                Image: R.images.carWhite,
                 ImageGrey: R.images.carGrey,
                 Selected: bundle.Service_AirPortPickup
             },
             {
                 Title: translate('airportDropOff'),
+                Label: 'airportDropOff',
+                Sequence: 3,
                 Price: bundle.Price_AirportDropoff,
-                Image: R.images.car,
+                Image: R.images.carWhite,
                 ImageGrey: R.images.carGrey,
                 Selected: bundle.Service_AirPortDropOff
             },
             {
                 Title: translate('stadiumTour'),
+                Label: 'stadiumTour',
+                Sequence: 4,
                 Price: bundle.Price_StadiumTour,
-                Image: R.images.stadium,
+                Image: R.images.stadiumWhite,
                 ImageGrey: R.images.stadiumGrey,
                 Selected: bundle.Service_StadiumTour
             },
             {
                 Title: translate('cityTour'),
+                Label: 'cityTour',
+                Sequence: 5,
                 Price: bundle.Price_CityTour,
-                Image: R.images.hotel,
+                Image: R.images.hotelWhite,
                 ImageGrey: R.images.hotelGrey,
                 Selected: bundle.Service_CityTour
             },
             {
                 Title: translate('insurance'),
+                Label: 'insurance',
+                Sequence: 6,
                 Price: bundle.Price_Insurance,
-                Image: R.images.insurance,
+                Image: R.images.insuranceWhite,
                 ImageGrey: R.images.insuranceGrey,
                 Selected: bundle.Service_Insurance
             }
@@ -157,9 +171,10 @@ export default class CustomizeTripScreen extends React.Component {
             NumberOfRooms: bundle.NumberOfRooms,
             SharingRoomNote: bundle.SharingRoomNote,
         }
-        this.setState({ bundle, game, hotel, hotelImages, hotelList, seating, seatingOptions, stadiumMap, perks, details, isLoading: false },
+        this.setState({ bundle, game, hotel, hotelImages, hotelList, perks, details, isLoading: false },
             function () {
-                this.getCancelPolicy(hotel.HotelId);
+                if (hotel != null)
+                    this.getCancelPolicy(hotel.HotelId);
             })
     }
 
@@ -181,7 +196,7 @@ export default class CustomizeTripScreen extends React.Component {
                         flagAvail: false,
                         hotel: bundle.SelectedHotel,
                         hotelId: bundle.SelectedHotel.HotelId,
-                        hotelSource: "R",
+                        hotelSource: bundle.HotelSource,
                         hotelUniqueKey: bundle.uniqueKey,
                         idMatchBundle: bundle.MatchBundleDetail[0].idMatchBundle,
                         internalCode: null,
@@ -204,13 +219,15 @@ export default class CustomizeTripScreen extends React.Component {
 
     browseHotels = () => {
         try {
-            this.setState({ isBrowsing: true }, function () {
-                var bundle = this.state.bundle;
-                post(servicesUrl.searchHotel, bundle)
-                    .then((response) => {
-                        this.setState({ bundle: response, hotelList: response.HotelList.Items, isBrowsing: false, isCustomized: false })
-                    });
-            })
+            if (!this.state.isBrowsing) {
+                this.setState({ isBrowsing: true }, function () {
+                    var bundle = this.state.bundle;
+                    post(servicesUrl.searchHotel, bundle)
+                        .then((response) => {
+                            this.setState({ bundle: response, hotelList: response.HotelList.Items, isBrowsing: false, isCustomized: false })
+                        });
+                })
+            }
         } catch { }
     }
 
@@ -236,6 +253,38 @@ export default class CustomizeTripScreen extends React.Component {
         this.setState({ hotelImages, showPictures: true });
     }
 
+    addMatch = (otherMatches) => {
+        var bundle = { ...this.state.bundle };
+        var isModified = false;
+        otherMatches.forEach(match => {
+            var index = bundle.MatchBundleDetail.findIndex(m => m.Game?.idMatch == match.idMatch);
+
+            if (match.Selected) {
+                // add match
+                if (index == -1) {
+                    var game = { 'Game': match, idMatches: match.idMatch }
+                    bundle.MatchBundleDetail.push(game)
+                    bundle.firstGame = bundle.MatchBundleDetail[0];
+                    isModified = true
+                }
+            }
+            // remove match
+            else {
+                if (index > -1) {
+                    bundle.MatchBundleDetail.splice(index, 1);
+                    isModified = true
+                }
+            }
+        });
+
+        if (isModified)
+            post(servicesUrl.addGames, bundle)
+                .then((response) => {
+                    bundle = { ...response };
+                    this.setState({ bundle });
+                });
+    }
+
     selectHotel = (selectedHotel) => {
         try {
             var bundle = { ...this.state.bundle };
@@ -252,40 +301,35 @@ export default class CustomizeTripScreen extends React.Component {
     selectInfant = (index) => {
         var bundle = this.state.bundle;
         bundle.RoomInfoList[index].AdultNum.RQBedChild = !bundle.RoomInfoList[index].AdultNum.RQBedChild;
-        if (bundle.RoomInfoList[index].AdultNum.RQBedChild)
-            bundle.NumberOfChildren++;
-        else
-            bundle.NumberOfChildren--;
         this.setState({ bundle })
     }
 
-    selectSeat = (option) => {
+    selectSeat = (option, index) => {
         var bundle = { ...this.state.bundle };
-        var seating = { ...this.state.seating };
         option.Selected = true;
-        bundle.MatchBundleDetail[0].GameSeat = seating = option;
-        this.setState({ bundle, seating, stadiumMap: option.StadiumMap_SVG_v3 })
+        bundle.MatchBundleDetail[index].GameSeat = { ...option };
+        this.setState({ bundle })
     }
 
     selectPerk = (index) => {
-        if (index > 0) {
-            var bundle = this.state.bundle;
+        if (index > 1) {
+            var bundle = { ...this.state.bundle };
             var perks = [...this.state.perks];
             perks[index].Selected = !perks[index].Selected;
             switch (index) {
-                case 1:
+                case 2:
                     bundle.Service_AirPortPickup = perks[index].Selected;
                     break;
-                case 2:
+                case 3:
                     bundle.Service_AirPortDropOff = perks[index].Selected;
                     break;
-                case 3:
+                case 4:
                     bundle.Service_StadiumTour = perks[index].Selected;
                     break;
-                case 4:
+                case 5:
                     bundle.Service_CityTour = perks[index].Selected;
                     break;
-                case 5:
+                case 6:
                     bundle.Service_Insurance = perks[index].Selected;
                     break;
             }
@@ -498,12 +542,12 @@ export default class CustomizeTripScreen extends React.Component {
         )
     }
 
-    hotelItem = ({ item, index }) => {
+    renderHotels = ({ item }) => {
         var rating = parseInt(item.Rating);
         var selected = this.state.bundle?.SelectedHotel?.HotelId === item.HotelId;
         var policy = this.state.cancelPolicies.find(p => p.HotelId === item.HotelId);
         return (
-            <View style={{ flex: 1, flexDirection: 'column', backgroundColor: selected ? R.colors.blue : 'white', height: 200, marginTop: 10 }}>
+            <View style={{ flex: 1, flexDirection: 'column', backgroundColor: selected ? R.colors.blue : 'white', height: 200, marginTop: 10, marginStart: 15, marginEnd: 15 }}>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     {/* images */}
                     <View style={{ width: '30%', height: '100%' }}>
@@ -569,7 +613,7 @@ export default class CustomizeTripScreen extends React.Component {
                                         :
                                         (
                                             <>
-                                                <Image source={selected ? R.images.norefundWhite : R.images.norefundGrey} style={{ width: 25 }} />
+                                                <Image source={selected ? R.images.norefundWhite : R.images.norefundGrey} style={{ width: 25, resizeMode: 'contain' }} />
                                                 <Text style={{ color: selected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>
                                                     {translate('nonRefundable')}
                                                 </Text>
@@ -596,88 +640,25 @@ export default class CustomizeTripScreen extends React.Component {
                 </View>
             </View>
         );
-    };
-
-    renderFooter = () => {
-        return (
-            //Footer View with Load More button
-            <View >
-                {this.state.bundle?.HotelList != undefined && (this.state.bundle?.HotelList.PageCount > this.state.bundle?.HotelList.PageNumber) ? (
-                    <TouchableOpacity
-                        activeOpacity={0.9}
-                        onPress={this.loadMoreHotels}
-                        style={[R.styles.loadMoreButton, { marginTop: 10 }]}>
-                        {this.state.isLoadingMore ?
-                            <ActivityIndicator color="white" />
-                            :
-                            <Text style={R.styles.loadMoreText} >
-                                {translate('loadMore')}
-                            </Text>
-                        }
-                    </TouchableOpacity>
-                ) : null}
-            </View>
-        );
-    };
-
-    renderPerks = () => {
-        const perks = this.state.perks.filter((perk, index) => (perk.Price != null && perk.Price > 0) || index == 0);
-        return perks.map((perk, index) => {
-            return (
-                index % 2 == 0 ? (
-                    <View key={'perk' + index} style={styles.perksRow}>
-                        <TouchableOpacity style={[styles.perk, { backgroundColor: perks[index].Selected ? R.colors.blue : '#fff' }]}
-                            onPress={() => this.selectPerk(index)}>
-                            {index == 0 ? null :
-                                <CheckBox
-                                    checked={perks[index].Selected}
-                                    containerStyle={{ backgroundColor: perks[index].Selected ? R.colors.blue : 'white', borderWidth: 0, position: "absolute", top: 0, left: 0 }}
-                                    checkedColor='white'
-                                    onPress={() => this.selectPerk(index)} />
-                            }
-                            <Image source={perks[index].Selected ? perks[index].Image : perks[index].ImageGrey} style={styles.perkImage} />
-                            <Text style={[styles.perkLabel, { color: perks[index].Selected ? '#fff' : '#ddd' }]}>
-                                {perks[index].Title}
-                            </Text>
-                        </TouchableOpacity>
-                        {perks[index + 1] != undefined ?
-                            <TouchableOpacity style={[styles.perk, { backgroundColor: perks[index + 1].Selected ? R.colors.blue : '#fff' }]}
-                                onPress={() => this.selectPerk(index + 1)}>
-                                <CheckBox
-                                    checked={perks[index + 1].Selected}
-                                    containerStyle={{ backgroundColor: perks[index + 1].Selected ? R.colors.blue : 'white', borderWidth: 0, position: "absolute", top: 0, left: 0 }}
-                                    checkedColor='white'
-                                    onPress={() => this.selectPerk(index + 1)} />
-                                <Image source={perks[index + 1].Selected ? perks[index + 1].Image : perks[index + 1].ImageGrey} style={styles.perkImage} />
-                                <Text style={[styles.perkLabel, { color: perks[index + 1].Selected ? '#fff' : '#ddd' }]}>
-                                    {perks[index + 1].Title}
-                                </Text>
-                            </TouchableOpacity>
-                            : null
-                        }
-                    </View>)
-                    : null
-            )
-        })
     }
 
-    render() {
+    renderHeader = () => {
         return (
-            <ScrollView style={styles.container}>
+            <>
                 {/* banner */}
                 <HeaderBackground title={translate('customizeTrip')} image={R.images.trip_bg} />
 
                 {/* match header */}
-                <MatchHeader isLoading={this.state.isLoading} bundle={{ ...this.state.bundle }} />
+                <MatchHeader isLoading={this.state.isLoading} isCustomize={true} bundle={{ ...this.state.bundle }} addMatch={this.addMatch} />
 
-                {/* package details */}
-                <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center', marginTop: 50 }}>
-                    <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
-                        {translate('semiPackageDetails')}
-                    </Text>
-                    {this.state.isLoading ? <ActivityIndicator size="large" color={R.colors.blue} style={{ marginTop: 120, marginStart: 15 }} />
-                        :
-                        <>
+                {this.state.isLoading ? <ActivityIndicator size="large" color={R.colors.blue} style={{ marginTop: 120, marginStart: 15 }} />
+                    :
+                    //* package details *//
+                    <View style={{ marginStart: 15, marginEnd: 15, marginTop: 50 }}>
+                        <View style={{ flex: 1, flexDirection: 'column' }}>
+                            <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
+                                {translate('semiPackageDetails')}
+                            </Text>
                             {/* trip dates */}
                             <View style={{ flex: 1, flexDirection: 'column', backgroundColor: "white", height: 100, marginTop: 10, padding: 20 }}>
                                 <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
@@ -711,158 +692,148 @@ export default class CustomizeTripScreen extends React.Component {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                        </>
-                    }
-                </View>
-
-                {/* hotels */}
-                <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center', marginTop: 50 }}>
-                    <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
-                        {translate('hotel')}
-                    </Text>
-
-                    {/* rooms */}
-                    <View style={{ backgroundColor: 'white', marginTop: 10 }}>
-                        <View style={{ flex: 1, flexDirection: 'column', backgroundColor: "white", height: this.state.roomsHeight, marginTop: 5, padding: 20 }}>
-                            <View style={{ height: 80 }}>
-                                <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
-                                    {translate('rooms')}
-                                </Text>
-
-                                {/* increment/decrement */}
-                                <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
-                                    <TouchableOpacity style={{ width: 25 }} onPress={this.decrementRoom}>
-                                        <Icon name='remove-circle-outline' style={styles.textStyle} />
-                                    </TouchableOpacity>
-                                    <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10 }}>
-                                        {this.state.bundle?.NumberOfRooms}
-                                    </Text>
-                                    <TouchableOpacity style={{ width: 25 }} onPress={this.incrementRoom}>
-                                        <Icon name='add-circle-outline' style={styles.textStyle} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-
-                            {/* rooms details */}
-                            <View style={{ height: '100%' }} >
-                                <FlatList
-                                    data={this.state.bundle?.RoomInfoList}
-                                    renderItem={this.roomItem}
-                                    keyExtractor={(index) => index.toString()}
-                                />
-                            </View>
                         </View>
 
-                        {/* browse */}
-                        {this.state.isCustomized ?
-                            <View style={{ width: '60%', marginTop: 40, padding: 20 }}>
-                                <TouchableOpacity style={{ backgroundColor: R.colors.lightGreen, height: 60, alignItems: 'center', justifyContent: 'center' }}
-                                    onPress={this.browseHotels}>
-                                    <Text style={{ fontSize: 20, textTransform: 'uppercase' }}>
-                                        {translate('browse')}
-                                    </Text>
+                        {/* hotels */}
+                        <View style={{ flex: 1, flexDirection: 'column', marginTop: 50 }}>
+                            <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
+                                {translate('hotel')}
+                            </Text>
+
+                            {/* rooms */}
+                            <View style={{ backgroundColor: 'white', marginTop: 10 }}>
+                                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: "white", height: 'auto', marginTop: 5, padding: 20 }}>
+                                    <View style={{ height: 80 }}>
+                                        <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
+                                            {translate('rooms')}
+                                        </Text>
+
+                                        {/* increment/decrement */}
+                                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
+                                            <TouchableOpacity style={{ width: 25 }} onPress={this.decrementRoom}>
+                                                <Icon name='remove-circle-outline' style={styles.textStyle} />
+                                            </TouchableOpacity>
+                                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10 }}>
+                                                {this.state.bundle?.NumberOfRooms}
+                                            </Text>
+                                            <TouchableOpacity style={{ width: 25 }} onPress={this.incrementRoom}>
+                                                <Icon name='add-circle-outline' style={styles.textStyle} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+
+                                    {/* rooms details */}
+                                    <View style={{ width: '100%' }}>
+                                        <FlatList
+                                            data={this.state.bundle?.RoomInfoList}
+                                            extraData={this.state}
+                                            renderItem={this.roomItem}
+                                            keyExtractor={(item, index) => 'room-' + index}
+                                            listKey={(item, index) => 'room-list-' + index}
+                                        />
+                                    </View>
+                                </View>
+
+                                {/* browse */}
+                                {this.state.isCustomized ?
+                                    <View style={{ width: '60%', marginTop: 40, padding: 20 }}>
+                                        <TouchableOpacity style={{ backgroundColor: R.colors.lightGreen, height: 60, alignItems: 'center', justifyContent: 'center' }}
+                                            onPress={this.browseHotels}>
+                                            <Text style={{ fontSize: 20, textTransform: 'uppercase' }}>
+                                                {translate('browse')}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    : null}
+
+                                {/* filter */}
+                                <TouchableOpacity style={{ marginTop: 10, height: 60, backgroundColor: '#ccc' }} onPress={() => this.setState({ showFilter: true })}>
+                                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text style={{ fontSize: 16, color: '#222', textTransform: 'uppercase' }}>
+                                            {translate('filter')}
+                                        </Text>
+                                        <Icon name='chevron-down-outline' style={{ fontSize: 16, color: '#222', marginStart: 5 }} />
+                                    </View>
                                 </TouchableOpacity>
                             </View>
-                            : null}
-
-                        {/* filter */}
-                        <TouchableOpacity style={{ marginTop: 10, height: 60, backgroundColor: '#ccc' }} onPress={() => this.setState({ showFilter: true })}>
-                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 16, color: '#222', textTransform: 'uppercase' }}>
-                                    {translate('filter')}
-                                </Text>
-                                <Icon name='chevron-down-outline' style={{ fontSize: 16, color: '#222', marginStart: 5 }} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-                    {/* hotels list */}
-                    <View style={{ marginTop: 20 }}>
-                        {this.state.isCustomized ?
-                            <View style={{ width: '100%', height: '100%', position: 'absolute', backgroundColor: 'black', opacity: 0.5, zIndex: 2 }} >
-                                {this.state.isBrowsing ?
-                                    <ActivityIndicator size='large' color={R.colors.lightGreen} />
-                                    : null}
-                            </View>
-                            : null}
-                        <FlatList
-                            data={this.state.hotelList}
-                            renderItem={this.hotelItem}
-                            keyExtractor={item => item.HotelId}
-                            ListFooterComponent={this.renderFooter}
-                        />
-                    </View>
-                </View>
-
-                {/* stadium */}
-                <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center', marginTop: 50 }}>
-                    <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
-                        {translate('stadium')}
-                    </Text>
-
-                    {/* stadium map */}
-                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: R.colors.lightGrey, height: 300, marginTop: 10, padding: 20 }}>
-                        <Text style={{ fontSize: 16, textTransform: 'uppercase' }}>
-                            {this.state.game.Stade}
-                        </Text>
-                        <View style={{ width: '100%', height: '100%', alignSelf: 'center' }}>
-                            <Svg source={{ uri: this.state.stadiumMap }}
-                                style={{ width: '100%', height: '100%', resizeMode: 'contain' }} />
                         </View>
                     </View>
+                }
+            </>
+        )
+    }
 
-                    {/* seating options */}
-                    <View style={{ backgroundColor: 'white', padding: 20 }}>
-                        <Text style={{ fontSize: 14, color: "gray", fontWeight: "bold", textTransform: 'uppercase' }}>
-                            {translate('seatingOptions')}
-                        </Text>
-                        <View>
-                            {this.state.seatingOptions.map((option, index) => {
-                                const checked = this.state.seating.SeatCode === option.SeatCode;
-                                return (
-                                    <CheckBox key={'seat' + index} title={
-                                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                                            <Text style={{ color: checked ? 'white' : 'black' }}>{option.SeatCode}</Text>
-                                            <Text style={{ color: checked ? 'white' : 'black' }}>+{option.ExtraCostPerFan}$</Text>
-                                        </View>}
-                                        checked={checked}
-                                        containerStyle={{ backgroundColor: checked ? R.colors.blue : 'white', borderWidth: 0 }}
-                                        checkedColor='white'
-                                        checkedIcon='dot-circle-o'
-                                        uncheckedIcon='circle-o'
-                                        onPress={() => this.selectSeat(option)}
-                                    />
-                                );
-                            })}
+    renderFooter = () => {
+        return (
+            <>
+                {/* Footer View with Load More button */}
+                {this.state.bundle?.HotelList != undefined && (this.state.bundle?.HotelList.PageCount > this.state.bundle?.HotelList.PageNumber) ? (
+                    <TouchableOpacity
+                        activeOpacity={0.9}
+                        onPress={this.loadMoreHotels}
+                        style={[R.styles.loadMoreButton, { marginTop: 10 }]}>
+                        {this.state.isLoadingMore ?
+                            <ActivityIndicator color="white" />
+                            :
+                            <Text style={R.styles.loadMoreText} >
+                                {translate('loadMore')}
+                            </Text>
+                        }
+                    </TouchableOpacity>
+                ) : null}
+                <View style={{ marginStart: 15, marginEnd: 15 }}>
+                    {/* stadium */}
+                    <Stadium matchBundleDetails={this.state.bundle?.MatchBundleDetail} selectSeat={this.selectSeat} />
+
+                    {/* perks */}
+                    <Perks perks={this.state.perks} selectPerk={this.selectPerk} />
+
+                    {/* buttons */}
+                    <View style={{ alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
+                        <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: 'black', alignItems: "center", justifyContent: "center" }}
+                            onPress={this.cancel}>
+                            <Text style={{ color: 'white', fontSize: 20, textTransform: 'uppercase' }}>
+                                {translate('cancel')}
+                            </Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }}
+                            onPress={this.continue}>
+                            <Text style={{ color: 'black', fontSize: 20, textTransform: 'uppercase' }}>
+                                {translate('continue')}
+                            </Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
+            </>
+        );
+    };
+
+    hotelsKeyExtractor = (item) => {
+        return 'hotel-' + item.HotelId
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+
+                {/* hotels list */}
+                <>
+                    {this.state.isCustomized && !this.state.isCustomized ?
+                        <View style={{ width: '100%', height: '100%', position: 'absolute', backgroundColor: 'black', opacity: 0.5, zIndex: 2 }} >
+                            {this.state.isBrowsing ?
+                                <ActivityIndicator size='large' color={R.colors.lightGreen} />
+                                : null}
                         </View>
-                    </View>
-                </View>
-
-                {/* perks */}
-                <View style={{ flex: 1, flexDirection: 'column', width: '90%', alignSelf: 'center', marginTop: 50 }}>
-                    <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
-                        {translate('perks')}
-                    </Text>
-                    <View style={{ flex: 1, flexDirection: 'column', marginTop: 10 }}>
-                        {this.renderPerks()}
-                    </View>
-                </View>
-
-                {/* buttons */}
-                <View style={{ marginStart: 15, marginEnd: 15, alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
-                    <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: 'black', alignItems: "center", justifyContent: "center" }}
-                        onPress={this.cancel}>
-                        <Text style={{ color: 'white', fontSize: 20, textTransform: 'uppercase' }}>
-                            {translate('cancel')}
-                        </Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }}
-                        onPress={this.continue}>
-                        <Text style={{ color: 'black', fontSize: 20, textTransform: 'uppercase' }}>
-                            {translate('continue')}
-                        </Text>
-                    </TouchableHighlight>
-                </View>
+                        : null}
+                    <FlatList
+                        data={this.state.hotelList}
+                        extraData={this.state}
+                        keyExtractor={this.hotelsKeyExtractor}
+                        ListHeaderComponent={this.renderHeader}
+                        renderItem={this.renderHotels}
+                        ListFooterComponent={this.renderFooter}
+                    />
+                </>
 
                 {/* date picker modal */}
                 <Modal
@@ -1011,15 +982,16 @@ export default class CustomizeTripScreen extends React.Component {
                     onRequestClose={() => this.setState({ showPictures: false })}>
                     <ImageViewer imageUrls={this.state.hotelImages} />
                 </Modal>
-            </ScrollView>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%',
-        width: '100%',
+        flex: 1,
+        marginBottom: 30,
+        backgroundColor: '#eee'
     },
     blueText: {
         fontWeight: "bold",

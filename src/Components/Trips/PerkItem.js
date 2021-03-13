@@ -14,9 +14,19 @@ const PerkItem = ({ item, height }) => {
 };
 
 const styles = StyleSheet.create({
-    perk: { width: "50%", alignItems: "center" },
-    perkImage: { width: 44, height: 44, resizeMode: 'contain' },
-    perkLabel: { fontSize: 13, marginTop: 15 }
+    perk: {
+        width:"50%",
+        alignItems: "center"
+    },
+    perkImage: {
+        width: 44,
+        height: 44,
+        resizeMode: 'contain'
+    },
+    perkLabel: {
+        fontSize: 13,
+        marginTop: 15
+    }
 })
 
 export default PerkItem;

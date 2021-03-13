@@ -107,5 +107,7 @@
     "email": "Email",
     "title": "Title",
     "phoneNumber": "Phone Number",
-    "sendRequest": "SEND REQUEST"
+    "sendRequest": "SEND REQUEST",
+    "addOtherGame": "Add other game to this trip",
+    "closeAll": "Close all"
 }

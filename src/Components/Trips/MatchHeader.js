@@ -1,16 +1,9 @@
 import React from "react";
-import {
-    StyleSheet,
-    Text,
-    Image,
-    View,
-    TouchableOpacity,
-    ActivityIndicator,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { StyleSheet, Text, Image, View, TouchableOpacity, ActivityIndicator, FlatList } from "react-native";
+import OtherMatchHeader from "components/CustomizeTrip/OtherMatchHeader";
+import MatchHeaderItem from "components/Trips/MatchHeaderItem";
 import { formatBundle } from "helpers/tripHelper";
 import { translate } from "helpers/utils";
-import moment from 'moment';
 import R from "res/R";
 
 export class MatchHeader extends React.PureComponent {
@@ -20,6 +13,7 @@ export class MatchHeader extends React.PureComponent {
 
         this.state = {
             bundle: props.bundle,
+            otherMatches: [],
             details: {},
             game: {},
             hotel: {},
@@ -35,9 +29,18 @@ export class MatchHeader extends React.PureComponent {
     }
 
     initBundle = () => {
-        var bundle = { ...this.props.bundle }
+        const bundle = { ...this.props.bundle }
         const [details, game, hotel, seating, perks] = formatBundle(bundle);
-        this.setState({ bundle, details, game, hotel, seating, perks })
+        var otherMatches = bundle.OtherMatches;
+
+        if (otherMatches != null) {
+            otherMatches.forEach((match, index) => {
+                var found = bundle.MatchBundleDetail?.findIndex(m => m.Game?.idMatch == match.idMatch) > 0
+                otherMatches[index].Selected = found;
+            });
+        }
+
+        this.setState({ bundle, details, game, hotel, seating, perks, otherMatches })
     }
 
 
@@ -86,46 +89,54 @@ export class MatchHeader extends React.PureComponent {
         return this.state.details?.BasePricePerFan + hotel + ticket + perks + this.state.details?.ExtraFeesPerFan;
     }
 
+    selectMatch = (index) => {
+        var otherMatches = [...this.state.otherMatches]
+        otherMatches[index].Selected = !otherMatches[index].Selected;
+        this.setState({ otherMatches })
+    }
+
+    addMatch = (item) => {
+        if (this.props.isCustomize)
+            this.props.addMatch(item);
+    }
+
+    gamesKeyExtractor = (item) => {
+        return 'game-' + item.Game?.idMatch;
+    }
+
+    gamesListKey = (item) => {
+        return 'game-list-' + item.Game?.idMatch;
+    }
+
+    renderGames = ({ item }) => {
+        return <MatchHeaderItem item={item} />
+    }
+
+    otherKeyExtractor = (item) => {
+        return 'other-match-' + item.idMatch;
+    }
+
+    otherListKey = (item) => {
+        return 'other-match-list-' + item.idMatch;
+    }
+
+    renderOtherMatch = ({ item, index }) => {
+        return <OtherMatchHeader item={item} index={index} selectMatch={this.selectMatch} />
+    }
+
     render() {
         return (
             <>
                 {this.props.isLoading ? <ActivityIndicator size="large" color={R.colors.blue} style={{ marginTop: 120 }} /> :
-                    <View style={[styles.container, {}]}>
-                        {/* game */}
-                        <View style={{ flexDirection: "row" }}>
-                            {/* teams */}
-                            <View style={{ width: "50%", padding: 20 }}>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <LinearGradient
-                                        colors={[this.state.game?.Team1Color1, this.state.game?.Team1Color2]}
-                                        style={R.styles.linearGradient}
-                                        start={[0, 0]}
-                                        end={[1, 0]}
-                                        locations={[0.5, 0.5]}
-                                    />
-                                    <Text style={[styles.blueText, { marginStart: 10 }]}>
-                                        {this.state.game?.HomeTeam}
-                                    </Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <LinearGradient
-                                        colors={[this.state.game?.Team2Color1, this.state.game?.Team2Color2]}
-                                        style={R.styles.linearGradient}
-                                        start={[0, 0]}
-                                        end={[1, 0]}
-                                        locations={[0.5, 0.5]}
-                                    />
-                                    <Text style={[styles.blueText, { marginStart: 10 }]}>
-                                        {this.state.game?.AwayTeam}
-                                    </Text>
-                                </View>
-                            </View>
-
-                            {/* game date */}
-                            <Text style={[styles.blueText, { width: "50%", padding: 20 }]}>
-                                {moment(this.state.game?.GameDate).format('DD.MM.YY')}
-                            </Text>
-                        </View>
+                    <View style={[styles.container]}>
+                        {/* games */}
+                        <FlatList
+                            data={this.state.bundle?.MatchBundleDetail}
+                            extraData={this.state.bundle}
+                            renderItem={this.renderGames}
+                            keyExtractor={this.gamesKeyExtractor}
+                            listKey={this.gamesListKey}
+                        />
 
                         {/* trip info */}
                         <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
@@ -244,6 +255,32 @@ export class MatchHeader extends React.PureComponent {
                                 </Text>
                             </TouchableOpacity>
                         </TouchableOpacity>
+
+                        {this.props.isCustomize && this.state.otherMatches != null && this.state.otherMatches.length > 0 ?
+                            <>
+                                {/* add other games */}
+                                <TouchableOpacity style={styles.addGames}>
+                                    <Text style={styles.textButton}>
+                                        + {translate('addOtherGame')}
+                                    </Text>
+                                </TouchableOpacity>
+                                <View style={{ backgroundColor: R.colors.lightGrey }}>
+                                    <FlatList
+                                        data={this.state.otherMatches}
+                                        extraData={this.state}
+                                        renderItem={this.renderOtherMatch}
+                                        keyExtractor={this.otherKeyExtractor}
+                                        listKey={this.otherListKey}
+                                    />
+                                    <TouchableOpacity style={styles.closeAllButton} onPress={() => this.addMatch(this.state.otherMatches)}>
+                                        <Text style={styles.textButton}>
+                                            {translate('closeAll')}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </>
+                            : null}
                     </View>
                 }
             </>
@@ -253,6 +290,8 @@ export class MatchHeader extends React.PureComponent {
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
+        height:'auto',
         backgroundColor: "white",
         marginStart: 15,
         marginEnd: 15,
@@ -264,22 +303,32 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 5,
     },
-    blueText: {
-        fontWeight: "bold",
-        color: R.colors.blue,
-        fontSize: 17.5
-    },
     darkText: {
         fontWeight: "normal",
         color: "#151b20",
         fontSize: 14
     },
     priceDetailsContainer: {
-        height: 170,
+        flex:1,
+        height: 'auto',
         width: "100%",
         backgroundColor: R.colors.lightGrey,
         padding: 20,
         zIndex: 2,
         borderTopWidth: 0.5
+    },
+    closeAllButton: {
+        backgroundColor: R.colors.grey,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textButton: {
+        color: 'white',
+        textTransform: 'uppercase'
+    },
+    addGames: {
+        backgroundColor: R.colors.lightGreen,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
