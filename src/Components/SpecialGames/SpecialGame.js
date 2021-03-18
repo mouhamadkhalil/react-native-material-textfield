@@ -285,7 +285,9 @@ export default class specialGames extends React.Component {
                             end={[1, 0]}
                             locations={[0.5, 0.5]}
                         ></LinearGradient>
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginStart: 15 }}>{item.AwayTeam}</Text>
+                        <Text style={{ fontSize: 20, marginStart: 15, fontFamily: 'BarlowCondensed-Bold', }}>
+                            {item.AwayTeam}
+                            </Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <LinearGradient
@@ -296,7 +298,9 @@ export default class specialGames extends React.Component {
                             locations={[0.5, 0.5]}
                         >
                         </LinearGradient>
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginStart: 15 }}>{item.HomeTeam}</Text>
+                        <Text style={{ fontSize: 20, marginStart: 15, fontFamily: 'BarlowCondensed-Bold' }}>
+                            {item.HomeTeam}
+                            </Text>
                     </View>
                 </View>
                 <View style={{ alignItems: "flex-end" }}>
@@ -544,7 +548,9 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     specialGameMeta: {
-        color: "white", fontSize: 18
+        color: "white", 
+        fontSize: 20,
+        fontFamily: 'BarlowCondensed-Bold'
     },
     image: {
         borderRadius: 20,

@@ -306,8 +306,12 @@ export default class CustomizeTripScreen extends React.Component {
 
     selectSeat = (option, index) => {
         var bundle = { ...this.state.bundle };
+        var option = { ...option };
         option.Selected = true;
-        bundle.MatchBundleDetail[index].GameSeat = { ...option };
+        var match = { ...this.state.bundle.MatchBundleDetail[index] };
+        match.GameSeat = { ...option };
+        bundle.MatchBundleDetail = [...this.state.bundle.MatchBundleDetail];
+        bundle.MatchBundleDetail[index] = match;
         this.setState({ bundle })
     }
 
@@ -547,98 +551,107 @@ export default class CustomizeTripScreen extends React.Component {
         var selected = this.state.bundle?.SelectedHotel?.HotelId === item.HotelId;
         var policy = this.state.cancelPolicies.find(p => p.HotelId === item.HotelId);
         return (
-            <View style={{ flex: 1, flexDirection: 'column', backgroundColor: selected ? R.colors.blue : 'white', height: 200, marginTop: 10, marginStart: 15, marginEnd: 15 }}>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    {/* images */}
-                    <View style={{ width: '30%', height: '100%' }}>
-                        <TouchableOpacity style={{ width: '100%', height: '100%' }} onPress={() => this.openPictures(item.Images)}>
-                            <View>
-                                <View style={{ position: 'absolute', zIndex: 2, width: '100%', height: '100%', backgroundColor: 'black', opacity: 0.7, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Icon name='eye-outline' style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }} />
+            <>
+                {this.state.isCustomized ?
+                    <View style={{ width: '100%', height: '100%', position: 'absolute', backgroundColor: 'black', opacity: 0.5, zIndex: 2 }} >
+                        {this.state.isBrowsing ?
+                            <ActivityIndicator size='large' color={R.colors.lightGreen} />
+                            : null}
+                    </View>
+                    : null}
+                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: selected ? R.colors.blue : 'white', height: 200, marginTop: 10, marginStart: 15, marginEnd: 15 }}>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        {/* images */}
+                        <View style={{ width: '30%', height: '100%' }}>
+                            <TouchableOpacity style={{ width: '100%', height: '100%' }} onPress={() => this.openPictures(item.Images)}>
+                                <View>
+                                    <View style={{ position: 'absolute', zIndex: 2, width: '100%', height: '100%', backgroundColor: 'black', opacity: 0.7, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Icon name='eye-outline' style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }} />
+                                    </View>
+                                    <Image source={{ uri: item.Image }} style={{ width: "100%", height: '100%' }} />
                                 </View>
-                                <Image source={{ uri: item.Image }} style={{ width: "100%", height: '100%' }} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-                    {/* details */}
-                    <View style={{ width: '70%', flex: 1, flexDirection: 'column', padding: 10 }}>
-                        {/* hotel name */}
-                        <Text style={{ fontSize: 14, fontWeight: 'bold', color: selected ? 'white' : 'black' }}>
-                            {item.HotelName}
-                        </Text>
-
-                        {/* rating + cost */}
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <RatingStars rating={rating} tag={item.HotelId} />
-                            </View>
-                            <Text style={{ fontWeight: 'bold', color: selected ? R.colors.lightGreen : 'black', alignSelf: 'flex-end', }}>
-                                + {item.SelectedCategory.ExtraCostPerFan} $
-                            </Text>
+                            </TouchableOpacity>
                         </View>
 
-                        {/* category */}
-                        {item.SelectedCategory?.Name ? (
-                            <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <Image source={selected ? R.images.bedWhite : R.images.bedGrey} style={{ width: 25 }} />
-                                <Text numberOfLines={1} ellipsizeMode='tail' style={{ width: '80%', color: selected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>{item.SelectedCategory.Name}</Text>
-                            </View>
-                        ) : null}
-
-                        {/* breakfast */}
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            <Image source={selected ? R.images.coffeeCupWhite : R.images.coffeeCupGrey} style={{ width: 25 }} />
-                            <Text style={{ color: selected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>
-                                {item.SelectedCategory.NoBreakFast ? translate('noBreakfast') : translate('includeBreakfast')}
+                        {/* details */}
+                        <View style={{ width: '70%', flex: 1, flexDirection: 'column', padding: 10 }}>
+                            {/* hotel name */}
+                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: selected ? 'white' : 'black' }}>
+                                {item.HotelName}
                             </Text>
-                        </View>
 
-                        {/* policy */}
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            {this.state.isGettingPolicy && selected ? (<ActivityIndicator size='small' color='white' />) : null}
-                            {policy != undefined ?
-                                <>
-                                    {policy.Refundable ?
-                                        (<>
-                                            <Image source={selected ? R.images.refundWhite : R.images.refundGrey} style={{ width: 25 }} />
-                                            <Text style={{ color: selected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>
-                                                {translate('refundable')}
-                                            </Text>
-                                            <Tooltip popover={<Text>{policy.RefundableText}</Text>} withOverlay={false} width={350} backgroundColor='white'>
-                                                <Image source={selected ? R.images.infoWhite : R.images.infoGrey} style={{ width: 25 }} />
-                                            </Tooltip>
-                                        </>
-                                        )
-                                        :
-                                        (
-                                            <>
-                                                <Image source={selected ? R.images.norefundWhite : R.images.norefundGrey} style={{ width: 25, resizeMode: 'contain' }} />
+                            {/* rating + cost */}
+                            <View style={{ flex: 1, flexDirection: 'row' }}>
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <RatingStars rating={rating} tag={item.HotelId} />
+                                </View>
+                                <Text style={{ fontWeight: 'bold', color: selected ? R.colors.lightGreen : 'black', alignSelf: 'flex-end', }}>
+                                    + {item.SelectedCategory.ExtraCostPerFan} $
+                            </Text>
+                            </View>
+
+                            {/* category */}
+                            {item.SelectedCategory?.Name ? (
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <Image source={selected ? R.images.bedWhite : R.images.bedGrey} style={{ width: 25 }} />
+                                    <Text numberOfLines={1} ellipsizeMode='tail' style={{ width: '80%', color: selected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>{item.SelectedCategory.Name}</Text>
+                                </View>
+                            ) : null}
+
+                            {/* breakfast */}
+                            <View style={{ flex: 1, flexDirection: 'row' }}>
+                                <Image source={selected ? R.images.coffeeCupWhite : R.images.coffeeCupGrey} style={{ width: 25 }} />
+                                <Text style={{ color: selected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>
+                                    {item.SelectedCategory.NoBreakFast ? translate('noBreakfast') : translate('includeBreakfast')}
+                                </Text>
+                            </View>
+
+                            {/* policy */}
+                            <View style={{ flex: 1, flexDirection: 'row' }}>
+                                {this.state.isGettingPolicy && selected ? (<ActivityIndicator size='small' color='white' />) : null}
+                                {policy != undefined ?
+                                    <>
+                                        {policy.Refundable ?
+                                            (<>
+                                                <Image source={selected ? R.images.refundWhite : R.images.refundGrey} style={{ width: 25 }} />
                                                 <Text style={{ color: selected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>
-                                                    {translate('nonRefundable')}
+                                                    {translate('refundable')}
                                                 </Text>
+                                                <Tooltip popover={<Text>{policy.RefundableText}</Text>} withOverlay={false} width={350} backgroundColor='white'>
+                                                    <Image source={selected ? R.images.infoWhite : R.images.infoGrey} style={{ width: 25, height: 25, resizeMode: 'contain', marginStart: 10 }} />
+                                                </Tooltip>
                                             </>
-                                        )
-                                    }
-                                </>
-                                : null}
+                                            )
+                                            :
+                                            (
+                                                <>
+                                                    <Image source={selected ? R.images.norefundWhite : R.images.norefundGrey} style={{ width: 25, height: 25, resizeMode: 'contain' }} />
+                                                    <Text style={{ color: selected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>
+                                                        {translate('nonRefundable')}
+                                                    </Text>
+                                                </>
+                                            )
+                                        }
+                                    </>
+                                    : null}
+                            </View>
                         </View>
                     </View>
-                </View>
 
-                {/* selection */}
-                <View style={{ borderTopWidth: 0.2 }}>
-                    <CheckBox title={translate('selectHotel')}
-                        checked={selected}
-                        containerStyle={{ backgroundColor: selected ? R.colors.blue : 'white', borderWidth: 0 }}
-                        checkedColor='white'
-                        textStyle={{ color: selected ? 'white' : 'black', textTransform: 'uppercase' }}
-                        center
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        onPress={() => this.selectHotel(item)} />
+                    {/* selection */}
+                    <View style={{ borderTopWidth: 0.2 }}>
+                        <CheckBox title={translate('selectHotel')}
+                            checked={selected}
+                            containerStyle={{ backgroundColor: selected ? R.colors.blue : 'white', borderWidth: 0 }}
+                            checkedColor='white'
+                            textStyle={{ color: selected ? 'white' : 'black', textTransform: 'uppercase' }}
+                            center
+                            checkedIcon='dot-circle-o'
+                            uncheckedIcon='circle-o'
+                            onPress={() => this.selectHotel(item)} />
+                    </View>
                 </View>
-            </View>
+            </>
         );
     }
 
@@ -817,23 +830,15 @@ export default class CustomizeTripScreen extends React.Component {
             <View style={styles.container}>
 
                 {/* hotels list */}
-                <>
-                    {this.state.isCustomized && !this.state.isCustomized ?
-                        <View style={{ width: '100%', height: '100%', position: 'absolute', backgroundColor: 'black', opacity: 0.5, zIndex: 2 }} >
-                            {this.state.isBrowsing ?
-                                <ActivityIndicator size='large' color={R.colors.lightGreen} />
-                                : null}
-                        </View>
-                        : null}
-                    <FlatList
-                        data={this.state.hotelList}
-                        extraData={this.state}
-                        keyExtractor={this.hotelsKeyExtractor}
-                        ListHeaderComponent={this.renderHeader}
-                        renderItem={this.renderHotels}
-                        ListFooterComponent={this.renderFooter}
-                    />
-                </>
+                <FlatList
+                    data={this.state.hotelList}
+                    extraData={this.state}
+                    keyExtractor={this.hotelsKeyExtractor}
+                    ListHeaderComponent={this.renderHeader}
+                    renderItem={this.renderHotels}
+                    ListFooterComponent={this.renderFooter}
+                    //stickyHeaderIndices={[0]}
+                />
 
                 {/* date picker modal */}
                 <Modal
@@ -991,7 +996,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: 30,
-        backgroundColor: '#eee'
+        backgroundColor: '#eee',
+        width: '100%',
+        height: '100%',
     },
     blueText: {
         fontWeight: "bold",

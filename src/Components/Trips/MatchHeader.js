@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity, ActivityIndicator, FlatList } from "react-native";
+import isEqual from "react-fast-compare";
 import OtherMatchHeader from "components/CustomizeTrip/OtherMatchHeader";
 import MatchHeaderItem from "components/Trips/MatchHeaderItem";
 import { formatBundle } from "helpers/tripHelper";
@@ -12,27 +13,29 @@ export class MatchHeader extends React.PureComponent {
         super(props);
 
         this.state = {
-            bundle: props.bundle,
+            bundle: {},
             otherMatches: [],
             details: {},
-            game: {},
+            matches: [],
             hotel: {},
             seating: {},
             perks: [],
-            isButtonPressed: false,
             hotelUpgrade: 0,
             ticketUpgrade: 0,
             perksUpgrade: 0,
             totalPerFan: 0,
+            totalOnSpot: 0,
             total: 0,
+            isButtonPressed: false,
+            isOtherGameCollapse: true
         };
     }
 
-    initBundle = () => {
-        const bundle = { ...this.props.bundle }
+    initBundle = (prevProps, prevState) => {
+        const bundle = { ...this.props.bundle };
         const [details, game, hotel, seating, perks] = formatBundle(bundle);
+        const matches = [...bundle.MatchBundleDetail];
         var otherMatches = bundle.OtherMatches;
-
         if (otherMatches != null) {
             otherMatches.forEach((match, index) => {
                 var found = bundle.MatchBundleDetail?.findIndex(m => m.Game?.idMatch == match.idMatch) > 0
@@ -40,53 +43,67 @@ export class MatchHeader extends React.PureComponent {
             });
         }
 
-        this.setState({ bundle, details, game, hotel, seating, perks, otherMatches })
-    }
+        var hotelUpgrade = this.state.hotelUpgrade, ticketUpgrade = this.state.ticketUpgrade,
+            perksUpgrade = this.state.perksUpgrade;
+        if (prevState.hotel != hotel) {
+            hotelUpgrade = this.calculHotel(hotel);
+        }
+        if (!isEqual(prevProps.bundle?.MatchBundleDetail, matches)) {
+            ticketUpgrade = this.calculTicket(matches);
+        }
+        if (!isEqual(prevState.perks, perks)) {
+            perksUpgrade = this.calculPerks(perks);
+        }
 
+        const [totalPerFan, totalOnSpot, total] = this.calculTotals(details, hotelUpgrade, ticketUpgrade, perksUpgrade);
+
+        this.setState({ bundle, details, hotel, perks, matches, otherMatches, hotelUpgrade, ticketUpgrade, perksUpgrade, totalPerFan, totalOnSpot, total })
+    }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.bundle != this.props.bundle) {
-            this.initBundle();
-        }
-        if (prevState.hotel !== this.state.hotel) {
-            this.calculHotel();
-        }
-        if (prevState.seating !== this.state.seating) {
-            this.calculTicket();
-        }
-        if (prevState.perks !== this.state.perks) {
-            this.calculPerks();
+            this.initBundle(prevProps, prevState);
         }
     }
 
-    calculHotel = () => {
-        if (this.state.hotel != null) {
-            var hotelUpgrade = this.state.hotel?.SelectedCategory?.ExtraCostPerFan;
-            var totalPerFan = this.calculPerFan(hotelUpgrade, this.state.ticketUpgrade, this.state.perksUpgrade);
-            var total = totalPerFan * this.state.details?.NumberOfTravelers;
-            this.setState({ hotelUpgrade, totalPerFan, total });
+    calculHotel = (hotel) => {
+        if (hotel?.SelectedCategory != undefined) {
+            var hotelUpgrade = hotel?.SelectedCategory?.ExtraCostPerFan;
+            return hotelUpgrade;
         }
+        return 0;
     }
 
-    calculTicket = () => {
-        var ticketUpgrade = this.state.seating?.ExtraCostPerFan;
-        var totalPerFan = this.calculPerFan(this.state.hotelUpgrade, ticketUpgrade, this.state.perksUpgrade);
-        var total = totalPerFan * this.state.details?.NumberOfTravelers;
-        this.setState({ ticketUpgrade, totalPerFan, total });
+    calculTicket = (matches) => {
+        var ticketUpgrade = matches?.reduce((total, match) => total + match?.GameSeat?.ExtraCostPerFan, 0);
+        return ticketUpgrade;
     }
 
-    calculPerks = () => {
-        var selectedPerks = this.state.perks.filter((perk, index) => perk.Selected == true && index > 0);
-        var perksUpgrade = selectedPerks.reduce(function (total, perk) {
-            return total + perk.Price
-        }, 0);
-        var totalPerFan = this.calculPerFan(this.state.hotelUpgrade, this.state.ticketUpgrade, perksUpgrade);
-        var total = totalPerFan * this.state.details?.NumberOfTravelers;
-        this.setState({ perksUpgrade, totalPerFan, total });
+    calculPerks = (perks) => {
+        var selectedPerks = perks?.filter((perk, index) => perk.Selected == true && index > 1);
+        var perksUpgrade = selectedPerks.reduce((total, perk) => total + perk?.Price, 0);
+        return perksUpgrade;
     }
 
-    calculPerFan = (hotel, ticket, perks) => {
-        return this.state.details?.BasePricePerFan + hotel + ticket + perks + this.state.details?.ExtraFeesPerFan;
+    calculTotalOnSpot = () => {
+        var bundle = this.props.bundle;
+        var totalOnSpot = bundle?.ExtraFeesPerFan;
+        totalOnSpot += bundle?.MatchBundleDetail?.reduce((total, match) => total + match?.GameSeat?.ExtraFeesPerFan, 0);
+        if (bundle?.SelectedHotel != undefined)
+            totalOnSpot += bundle?.SelectedHotel?.SelectedCategory?.ExtraFeesPerFan;
+
+        return totalOnSpot;
+    }
+
+    calculTotals = (details, hotelUpgrade, ticketUpgrade, perksUpgrade) => {
+        var totalPerFan = details?.BasePricePerFan + hotelUpgrade + ticketUpgrade + perksUpgrade;
+        var totalOnSpot = this.calculTotalOnSpot();
+        var total = (totalPerFan + totalOnSpot) * details?.NumberOfTravelers;
+        return [totalPerFan, totalOnSpot, total];
+    }
+
+    expandOtherGame = () => {
+        this.setState({ isOtherGameCollapse: false })
     }
 
     selectMatch = (index) => {
@@ -96,8 +113,10 @@ export class MatchHeader extends React.PureComponent {
     }
 
     addMatch = (item) => {
-        if (this.props.isCustomize)
+        if (this.props.isCustomize) {
             this.props.addMatch(item);
+            this.setState({ isOtherGameCollapse: true })
+        }
     }
 
     gamesKeyExtractor = (item) => {
@@ -144,7 +163,7 @@ export class MatchHeader extends React.PureComponent {
                                 {this.state.details?.TripDays + " " + translate('days')}
                             </Text>
                             <Text style={[styles.darkText, { width: "50%", padding: 20, textTransform: "uppercase" }]}>
-                                {this.state.game?.StadeCity}
+                                {this.state.matches[0]?.Game?.StadeCity}
                             </Text>
                         </View>
 
@@ -226,7 +245,7 @@ export class MatchHeader extends React.PureComponent {
                                         + {translate('onSpotService')}
                                     </Text>
                                     <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>
-                                        {this.state.details?.ExtraFeesPerFan}$
+                                        {this.state.totalOnSpot}$
                                     </Text>
                                 </View>
 
@@ -236,7 +255,7 @@ export class MatchHeader extends React.PureComponent {
                                         {translate('totalFan')}
                                     </Text>
                                     <Text style={{ fontWeight: "bold", color: R.colors.green }}>
-                                        {this.state.totalPerFan}$
+                                        {this.state.totalPerFan + this.state.totalOnSpot}$
                                     </Text>
                                 </View>
 
@@ -257,29 +276,31 @@ export class MatchHeader extends React.PureComponent {
                         </TouchableOpacity>
 
                         {this.props.isCustomize && this.state.otherMatches != null && this.state.otherMatches.length > 0 ?
-                            <>
-                                {/* add other games */}
-                                <TouchableOpacity style={styles.addGames}>
-                                    <Text style={styles.textButton}>
-                                        + {translate('addOtherGame')}
-                                    </Text>
-                                </TouchableOpacity>
-                                <View style={{ backgroundColor: R.colors.lightGrey }}>
-                                    <FlatList
-                                        data={this.state.otherMatches}
-                                        extraData={this.state}
-                                        renderItem={this.renderOtherMatch}
-                                        keyExtractor={this.otherKeyExtractor}
-                                        listKey={this.otherListKey}
-                                    />
-                                    <TouchableOpacity style={styles.closeAllButton} onPress={() => this.addMatch(this.state.otherMatches)}>
+                            <View style={{flex:1, display:'flex', height:'auto'}}>
+                                {this.state.isOtherGameCollapse ?
+                                    /* add other games */
+                                    <TouchableOpacity style={styles.addGames} onPress={this.expandOtherGame }>
                                         <Text style={styles.textButton}>
-                                            {translate('closeAll')}
+                                            + {translate('addOtherGame')}
                                         </Text>
                                     </TouchableOpacity>
-                                </View>
-
-                            </>
+                                    :
+                                    <View style={{ backgroundColor: R.colors.lightGrey }}>
+                                        <FlatList
+                                            data={this.state.otherMatches}
+                                            extraData={this.state}
+                                            renderItem={this.renderOtherMatch}
+                                            keyExtractor={this.otherKeyExtractor}
+                                            listKey={this.otherListKey}
+                                        />
+                                        <TouchableOpacity style={styles.closeAllButton} onPress={() => this.addMatch(this.state.otherMatches)}>
+                                            <Text style={styles.textButton}>
+                                                {translate('closeAll')}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
+                            </View>
                             : null}
                     </View>
                 }
@@ -290,8 +311,8 @@ export class MatchHeader extends React.PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
-        height:'auto',
+        flex: 1,
+        height: 'auto',
         backgroundColor: "white",
         marginStart: 15,
         marginEnd: 15,
@@ -309,7 +330,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     priceDetailsContainer: {
-        flex:1,
+        flex: 1,
         height: 'auto',
         width: "100%",
         backgroundColor: R.colors.lightGrey,
@@ -320,7 +341,8 @@ const styles = StyleSheet.create({
     closeAllButton: {
         backgroundColor: R.colors.grey,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 40
     },
     textButton: {
         color: 'white',
@@ -329,6 +351,7 @@ const styles = StyleSheet.create({
     addGames: {
         backgroundColor: R.colors.lightGreen,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 40
     }
 });

@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "gray",
         fontWeight: "bold",
-        marginBottom: 15
+        marginBottom: 15,
+        textTransform:'uppercase'
     }
 });

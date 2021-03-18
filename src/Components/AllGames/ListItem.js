@@ -46,10 +46,10 @@ const ListItem = ({ item }) => {
             <View style={{ flex: 1, flexDirection: "row", height: 120 }}>
                 {/* game date */}
                 <View style={{ width: '15%', alignItems: 'center', borderEndColor: "grey", borderEndWidth: 1, paddingTop: 10 }}>
-                    <Text style={{ fontSize: 26, fontWeight: "bold", textTransform: 'uppercase' }}>
+                    <Text style={{ fontSize: 30, fontFamily: 'BarlowCondensed-Bold', textTransform: 'uppercase' }}>
                         {Moment(new Date(item.GameDate)).format('DD')}
                     </Text>
-                    <Text style={{ fontSize: 16, fontWeight: "bold", textTransform: 'uppercase' }}>
+                    <Text style={{ fontSize: 20, fontFamily: 'BarlowCondensed-Bold', textTransform: 'uppercase' }}>
                         {Moment(new Date(item.GameDate)).format('MMM')}
                     </Text>
                     <Text style={{ fontSize: 12, marginTop: 20, textTransform: 'uppercase' }}>
@@ -68,7 +68,7 @@ const ListItem = ({ item }) => {
                             end={[1, 0]}
                             locations={[0.5, 0.5]}
                         />
-                        <Text style={{ fontSize: 14, fontWeight: "bold", textTransform: 'uppercase', paddingStart: 5 }}>
+                        <Text style={R.styles.teamName}>
                             {item.HomeTeam}
                         </Text>
                     </View>
@@ -81,7 +81,7 @@ const ListItem = ({ item }) => {
                             end={[1, 0]}
                             locations={[0.5, 0.5]}
                         />
-                        <Text style={{ fontSize: 14, fontWeight: "bold", textTransform: 'uppercase', paddingStart: 5 }}>
+                        <Text style={R.styles.teamName}>
                             {item.AwayTeam}
                         </Text>
                     </View>
@@ -113,7 +113,7 @@ const ListItem = ({ item }) => {
                 </View>
             </View>
 
-            <View style={{ flexDirection: 'row', height: 50, marginTop: 10, borderTopColor: "grey", borderTopWidth: 1 }}>
+            <View style={{ flexDirection: 'row', height: 50, borderTopColor: "grey", borderTopWidth: 1 }}>
                 {/* price */}
                 <View style={{ alignSelf: 'flex-start', width: '60%' }}>
                     {item.Price != null && item.Price > 0 ?

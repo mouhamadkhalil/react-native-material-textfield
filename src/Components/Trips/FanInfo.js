@@ -62,6 +62,7 @@ export class FanInfo extends React.PureComponent {
                             <TextInput
                                 multiline={false}
                                 value={this.state.FirstName}
+                                placeholder='Name as per passport'
                                 onChangeText={(FirstName) => this.setState({ FirstName }, function () { this.props.updateContact(this.props.index, this.state); })}
                                 style={{ borderBottomWidth: 1, borderColor: "#ccc" }}
                             />
@@ -73,13 +74,14 @@ export class FanInfo extends React.PureComponent {
                             <TextInput
                                 multiline={false}
                                 value={this.state.LastName}
+                                placeholder='Surname as per passport'
                                 onChangeText={(LastName) => this.setState({ LastName }, function () { this.props.updateContact(this.props.index, this.state); })}
                                 style={{ borderBottomWidth: 1, borderColor: "#ccc" }}
                             />
                         </View>
                         <View style={{ marginBottom: 30 }}>
                             <Text style={{ color: "gray", fontWeight: "bold" }}>
-                                {translate("email")}*
+                                {translate("email") }{ this.state.IsMainContact? '*' : '' }
                                 </Text>
                             <TextInput
                                 autoCapitalize="none"
@@ -93,7 +95,7 @@ export class FanInfo extends React.PureComponent {
                         </View>
                         <View style={{ marginBottom: 30 }}>
                             <Text style={{ color: "gray", fontWeight: "bold" }}>
-                                {translate("phoneNumber")}*
+                                {translate("phoneNumber") } {this.state.IsMainContact? '*' : '' }
                                 </Text>
                             <TextInput
                                 value={this.state.Phone}

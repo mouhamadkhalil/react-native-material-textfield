@@ -27,7 +27,8 @@ export const servicesUrl = {
     saveBundleMulti: '/mobile/game/saveBundleMulti',
     saveBundle: '/mobile/game/saveBundle',
     getExtraServices: '/mobile/game/getExtraServices',
-    addGames: "/mobile/game/addGames"
+    addGames: "/mobile/game/addGames",
+    intent: "/mobile/game/stripe/intent",
 }
 
 export async function setUserCredentials(email, password) {

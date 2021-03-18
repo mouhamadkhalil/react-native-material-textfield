@@ -16,6 +16,7 @@
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		036A9F73F36B463484CE8DCA /* Hellix-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBE923C923E349B6B4A9FF1C /* Hellix-Bold.ttf */; };
 		F4302332A73A4FB98A739276 /* Hellix-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8712CF53F704783B9C611C2 /* Hellix-Regular.ttf */; };
+		F7C4635EE1FF448C874305AF /* BarlowCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 593BF7024FA742819E17CBFE /* BarlowCondensed-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		CBE923C923E349B6B4A9FF1C /* Hellix-Bold.ttf */ = {isa = PBXFileReference; name = "Hellix-Bold.ttf"; path = "../src/res/fonts/Hellix-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		C8712CF53F704783B9C611C2 /* Hellix-Regular.ttf */ = {isa = PBXFileReference; name = "Hellix-Regular.ttf"; path = "../src/res/fonts/Hellix-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		593BF7024FA742819E17CBFE /* BarlowCondensed-Bold.ttf */ = {isa = PBXFileReference; name = "BarlowCondensed-Bold.ttf"; path = "../src/res/fonts/BarlowCondensed-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 			children = (
 				CBE923C923E349B6B4A9FF1C /* Hellix-Bold.ttf */,
 				C8712CF53F704783B9C611C2 /* Hellix-Regular.ttf */,
+				593BF7024FA742819E17CBFE /* BarlowCondensed-Bold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				5B3E469C565F496BA624D13D /* Hellix-Regular.ttf in Resources */,
 				036A9F73F36B463484CE8DCA /* Hellix-Bold.ttf in Resources */,
 				F4302332A73A4FB98A739276 /* Hellix-Regular.ttf in Resources */,
+				F7C4635EE1FF448C874305AF /* BarlowCondensed-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
