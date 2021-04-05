@@ -3,8 +3,9 @@ import {
     StyleSheet,
     Text,
     View,
+    Image
 } from "react-native";
-import Image from 'react-native-remote-svg';
+import Svg from 'components/Common/Svg';
 import { translate } from "helpers/utils";
 import R from "res/R";
 
@@ -48,13 +49,13 @@ export class SeatingOptions extends React.PureComponent {
                             {this.props.game?.Stade}, {this.props.game?.StadeCity}
                         </Text>
                     </View>
-                    <View style={R.styles.flexRow}>
+                    <View style={[R.styles.flexRow, {marginTop:5}]}>
                         <Image source={R.images.seatsGrey} />
                         <Text style={{ color: "gray", fontSize: 16, marginStart: 10 }}>
                             {this.props.details?.NumberOfTravelers + " " + translate('seats')}
                         </Text>
                     </View>
-                    <Image source={{ uri: this.props.seating?.StadiumMap_SVG_v3 }}
+                    <Svg source={{ uri: this.props.seating?.StadiumMap_SVG_v3 }}
                         style={{ width: "100%", height: 230, marginTop: 20 }} />
                 </View>
             </View>

@@ -53,7 +53,7 @@ export default class SummaryScreen extends React.Component {
                 {/* match header */}
                 <MatchHeader isLoading={this.state.isLoading} bundle={{ ...this.state.bundle }} />
 
-                {/* package details */}
+                {/* booking summary */}
                 <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
                     {translate('bookingSummary')}
                 </Text>
@@ -90,6 +90,13 @@ export default class SummaryScreen extends React.Component {
                         </>
                     }
                 </View>
+
+                {/* flight summary */}
+                <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
+                    {translate('flightSummary')}
+                </Text>
+                <FlightItem item={this.state.bundle.SelectedFlight} index={0} sessionId={this.state.bundle?.flightSession}  />
+
             </ScrollView >
         );
     }

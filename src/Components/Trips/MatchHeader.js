@@ -20,6 +20,8 @@ export class MatchHeader extends React.PureComponent {
             hotel: {},
             seating: {},
             perks: [],
+            flight: 0,
+            onlineBooking: 0,
             hotelUpgrade: 0,
             ticketUpgrade: 0,
             perksUpgrade: 0,
@@ -34,6 +36,8 @@ export class MatchHeader extends React.PureComponent {
     initBundle = (prevProps, prevState) => {
         const bundle = { ...this.props.bundle };
         const [details, game, hotel, seating, perks] = formatBundle(bundle);
+        var flight = bundle?.FlightExtraPricePerFan;
+        var onlineBooking = bundle?.OnlineBookingFeesPerFan;
         const matches = [...bundle.MatchBundleDetail];
         var otherMatches = bundle.OtherMatches;
         if (otherMatches != null) {
@@ -55,9 +59,9 @@ export class MatchHeader extends React.PureComponent {
             perksUpgrade = this.calculPerks(perks);
         }
 
-        const [totalPerFan, totalOnSpot, total] = this.calculTotals(details, hotelUpgrade, ticketUpgrade, perksUpgrade);
+        const [totalPerFan, totalOnSpot, total] = this.calculTotals(details, flight, onlineBooking, hotelUpgrade, ticketUpgrade, perksUpgrade);
 
-        this.setState({ bundle, details, hotel, perks, matches, otherMatches, hotelUpgrade, ticketUpgrade, perksUpgrade, totalPerFan, totalOnSpot, total })
+        this.setState({ bundle, details, hotel, perks, matches, otherMatches, flight, onlineBooking, hotelUpgrade, ticketUpgrade, perksUpgrade, totalPerFan, totalOnSpot, total })
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -95,10 +99,10 @@ export class MatchHeader extends React.PureComponent {
         return totalOnSpot;
     }
 
-    calculTotals = (details, hotelUpgrade, ticketUpgrade, perksUpgrade) => {
-        var totalPerFan = details?.BasePricePerFan + hotelUpgrade + ticketUpgrade + perksUpgrade;
+    calculTotals = (details, flight, onlineBooking, hotelUpgrade, ticketUpgrade, perksUpgrade) => {
+        var totalPerFan = details?.BasePricePerFan + hotelUpgrade + ticketUpgrade + perksUpgrade + flight;
         var totalOnSpot = this.calculTotalOnSpot();
-        var total = (totalPerFan + totalOnSpot) * details?.NumberOfTravelers;
+        var total = (totalPerFan + totalOnSpot + onlineBooking) * details?.NumberOfTravelers;
         return [totalPerFan, totalOnSpot, total];
     }
 
@@ -239,8 +243,34 @@ export class MatchHeader extends React.PureComponent {
                                     null
                                 }
 
+                                {/* flight */}
+                                {this.state.flight > 0 ?
+                                    <>
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
+                                            <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                {translate('flight')}
+                                            </Text>
+                                            <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                {this.state.flight}$
+                                            </Text>
+                                        </View>
+
+                                        {/* flight booking fees */}
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15, marginBottom:5 }}>
+                                            <Text style={{ fontSize: 11.5, color: R.colors.blue, fontWeight: 'bold', textTransform: 'uppercase' }}>
+                                                + {translate('flightBookingFees')}
+                                            </Text>
+                                            <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>
+                                                {this.state.onlineBooking}$
+                                            </Text>
+                                        </View>
+                                    </>
+                                    :
+                                    <View style={{marginBottom:15}}/>
+                                }
+
                                 {/* on spot serive */}
-                                <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15, marginBottom: 15 }}>
+                                <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 15 }}>
                                     <Text style={{ fontSize: 11.5, color: R.colors.blue, fontWeight: 'bold', textTransform: 'uppercase' }}>
                                         + {translate('onSpotService')}
                                     </Text>
@@ -276,10 +306,10 @@ export class MatchHeader extends React.PureComponent {
                         </TouchableOpacity>
 
                         {this.props.isCustomize && this.state.otherMatches != null && this.state.otherMatches.length > 0 ?
-                            <View style={{flex:1, display:'flex', height:'auto'}}>
+                            <View style={{ flex: 1, display: 'flex', height: 'auto' }}>
                                 {this.state.isOtherGameCollapse ?
                                     /* add other games */
-                                    <TouchableOpacity style={styles.addGames} onPress={this.expandOtherGame }>
+                                    <TouchableOpacity style={styles.addGames} onPress={this.expandOtherGame}>
                                         <Text style={styles.textButton}>
                                             + {translate('addOtherGame')}
                                         </Text>
