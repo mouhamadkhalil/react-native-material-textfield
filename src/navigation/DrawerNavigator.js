@@ -2,6 +2,7 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StartStackNavigator } from "./StackNavigator";
 import LeaguesScreen from "../screens/Trips/LeaguesScreen"
+import TeamsScreen from "../screens/Trips/TeamsScreen"
 import { TripTabs, BookingsTabs, MoreTabs, ContactTabs, AllGamesTabs } from "./TabNavigator";
 import { ManageTripStackNavigator } from "./StackNavigator";
 
@@ -10,14 +11,12 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
     return (
         <Drawer.Navigator>
-            <Drawer.Screen name="login" component={StartStackNavigator} />
-            <Drawer.Screen name="book a trip" component={TripTabs} />
+            <Drawer.Screen name="Book a trip" component={TripTabs} />
             <Drawer.Screen name="ManageTrip" options={{ title: 'Manage trip' }} component={ManageTripStackNavigator} />
-            <Drawer.Screen name="leagues" component={LeaguesScreen} />
-            <Drawer.Screen name="all games" component={AllGamesTabs} />
-            <Drawer.Screen name="my bookings" component={BookingsTabs} />
-            <Drawer.Screen name="more" component={MoreTabs} />
-            <Drawer.Screen name="contact us" component={ContactTabs} />
+            <Drawer.Screen name="Teams" component={TeamsScreen} />
+            <Drawer.Screen name="Leagues" component={LeaguesScreen} />
+            <Drawer.Screen name="All games" component={AllGamesTabs} />
+            <Drawer.Screen name="My bookings" component={BookingsTabs} />
         </Drawer.Navigator>
     );
 };

@@ -24,13 +24,10 @@ export default class AllGames extends React.PureComponent {
             teams: [],
             cities: [],
             competitions: [],
-            gamesList: [],
+            gamesList: null,
             gamesCalendar: [],
             isLoading: true,
             isLoadingMore: false,
-            pageCount: 1,
-            pageNumber: 1,
-            pageSize: 15,
             viewMode: 'list',
             orderBy: "date",
             fromDate: null,
@@ -53,8 +50,8 @@ export default class AllGames extends React.PureComponent {
     getAllGames = (orderBy = '', reload = true) => {
         if (orderBy === '')
             orderBy = this.state.orderBy;
-        const pageNumber = reload ? 1 : this.state.pageNumber;
-        const pageSize = this.state.pageSize;
+        const pageNumber = reload ? 1 : this.state.gamesList?.PageNumber +1;
+        const pageSize = this.state.gamesList? this.state.gamesList?.PageSize : 15;
         const fromDate = this.state.fromDate ? '&date1=' + this.state.fromDate.format('yyyy-MM-DD') : '';
         const toDate = this.state.toDate ? '&date2=' + this.state.toDate.format('yyyy-MM-DD') : '';
         const idTeam = this.state.idTeam ? '&idTeam=' + this.state.idTeam : '';
@@ -62,32 +59,22 @@ export default class AllGames extends React.PureComponent {
         const idLeague = this.state.idLeague ? '&idLeague=' + this.state.idLeague : '';
         const params = `?pageNumber=${pageNumber}&pageSize=${pageSize}&order=${orderBy}${fromDate}${toDate}${idTeam}${idCity}${idLeague}`;
         getWithToken(servicesUrl.getAllGames + params).then((response) => {
-            var data = response.Items.map(function (item) {
-                var game = item.MatchBundleDetail[0].Game;
-                return {
-                    idMatch: game.idMatch,
-                    BundleCode: item.BundleCode,
-                    City: game.City,
-                    Stade: game.Stade,
-                    GameDate: game.GameDate,
-                    LeagueName: game.LeagueName,
-                    GameCode: game.GameCode,
-                    HomeTeam: game.HomeTeamShortName,
-                    AwayTeam: game.AwayTeamShortName,
-                    StadeCity: game.StadeCity,
-                    Team1Color1: game.Team1Color1,
-                    Team1Color2: game.Team1Color2,
-                    Team2Color1: game.Team2Color1,
-                    Team2Color2: game.Team2Color2,
-                    Price: item.FinalPricePerFan,
-                    Flagged: item.Flagged,
-                    TripDays: getTripDays(item.StartDate, item.EndDate),
-                };
+            var gamesList = this.state.gamesList;
+            var joined;
+            if (gamesList && gamesList.Items) {
+                joined = [...gamesList.Items];
+            }
+            response.Items.map(function (item) {
+                item.MatchBundleDetail.map(matchBundle => {
+                    matchBundle.Game.TripDays = getTripDays(item.StartDate, item.EndDate);
+                });
             });
-            var joined = data;
-            if (!reload)
-                joined = this.state.gamesList.concat(data);
-            this.setState({ gamesList: joined, pageNumber, pageCount: response.PageCount, isLoading: false, isLoadingMore: false });
+            gamesList = response;
+            if (!reload) {
+                joined = joined.concat(response.Items);
+                gamesList.Items = joined;
+            }
+            this.setState({ gamesList, isLoading: false, isLoadingMore: false });
         });
     };
 
@@ -165,14 +152,14 @@ export default class AllGames extends React.PureComponent {
 
     loadMore = () => {
         if (!this.state.isLoadingMore) {
-            this.setState({ isLoadingMore: true, pageNumber: this.state.pageNumber + 1 }, () => {
+            this.setState({ isLoadingMore: true }, () => {
                 this.getAllGames('', false);
             });
         }
     };
 
     keyExtractor = (item, index) => {
-        return "match-" + item.idMatch
+        return "match-" + index + '-' + item.idMatch
     }
 
     renderHeader = () => {
@@ -206,31 +193,33 @@ export default class AllGames extends React.PureComponent {
                 {this.state.viewMode === 'list' ?
                     <View style={{
                         flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'flex-end', width: '90%', height: 20, marginTop: 10, ...(Platform.OS !== 'android' && {
-                            zIndex: 10
+
                         })
                     }}>
                         <Text style={{ fontSize: 14, color: R.colors.blue, alignSelf: 'center', textTransform: 'uppercase', marginTop: 10, zIndex: 2 }}>
                             {translate('sortBy')}
                         </Text>
-                        <DropDownPicker
-                            items={[
-                                { label: translate("date"), value: "date" },
-                                { label: translate("price"), value: "price" },
-                            ]}
-                            defaultValue={this.state.orderBy}
-                            containerStyle={{ height: 30 }}
-                            selectedLabelStyle={{ color: R.colors.blue, textDecorationLine: 'underline' }}
-                            style={{ backgroundColor: '#eee', borderWidth: 0, width: 100, marginStart: -10 }}
-                            itemStyle={{ justifyContent: "flex-start", textTransform: 'uppercase' }}
-                            arrowStyle={{ color: 'red' }}
-                            dropDownStyle={{ width: 100 }}
-                            onChangeItem={(item) => {
-                                this.reload(item.value)
-                            }
-                            }
-                            placeholder={translate('sortBy') + ' '}
-                            placeholderStyle={{ textTransform: 'uppercase' }}
-                        />
+                        <View style={{ zIndex: 10 }}>
+                            <DropDownPicker
+                                items={[
+                                    { label: translate("date"), value: "date" },
+                                    { label: translate("price"), value: "price" },
+                                ]}
+                                defaultValue={this.state.orderBy}
+                                containerStyle={{ height: 30 }}
+                                selectedLabelStyle={{ color: R.colors.blue, textDecorationLine: 'underline' }}
+                                style={{ backgroundColor: '#eee', borderWidth: 0, width: 100, marginStart: -10 }}
+                                itemStyle={{ justifyContent: "flex-start", textTransform: 'uppercase' }}
+                                arrowStyle={{ color: 'red' }}
+                                dropDownStyle={{ width: 100 }}
+                                onChangeItem={(item) => {
+                                    this.reload(item.value)
+                                }
+                                }
+                                placeholder={translate('sortBy') + ' '}
+                                placeholderStyle={{ textTransform: 'uppercase' }}
+                            />
+                        </View>
                     </View>
                     : null}
             </>
@@ -244,8 +233,8 @@ export default class AllGames extends React.PureComponent {
     renderFooter = () => {
         return (
             //Footer View with Load More button
-            <View >
-                {this.state.pageCount > this.state.pageNumber ? (
+            < >
+                {!this.state.gamesList?.IsLastPage ? (
                     <TouchableOpacity
                         activeOpacity={0.9}
                         onPress={this.loadMore}
@@ -259,7 +248,7 @@ export default class AllGames extends React.PureComponent {
                         }
                     </TouchableOpacity>
                 ) : null}
-            </View>
+            </>
         );
     };
 
@@ -269,20 +258,18 @@ export default class AllGames extends React.PureComponent {
                 {/* render games */}
                 {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120 }} />
                     :
-                    <View style={{ zIndex: 1 }}>
-                        <FlatList
-                            data={this.state.viewMode === 'list' ?
-                                this.state.gamesList
-                                :
-                                this.state.gamesCalendar}
-                            ListHeaderComponent={this.renderHeader}
-                            renderItem={this.renderItem}
-                            keyExtractor={this.keyExtractor}
-                            ListFooterComponent={this.state.viewMode === 'list' ?
-                                this.renderFooter.bind(this)
-                                : null}
-                        />
-                    </View>
+                    <FlatList
+                        data={this.state.viewMode === 'list' ?
+                            this.state.gamesList?.Items
+                            :
+                            this.state.gamesCalendar}
+                        ListHeaderComponent={this.renderHeader}
+                        renderItem={this.renderItem}
+                        keyExtractor={this.keyExtractor}
+                        ListFooterComponent={this.state.viewMode === 'list' ?
+                            this.renderFooter.bind(this)
+                            : null}
+                    />
                 }
 
                 {/* Filter modal */}

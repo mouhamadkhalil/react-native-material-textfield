@@ -1,5 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
-import { API_URL, API_TOKEN } from "@env";
+import {  API_TOKEN } from "@env";
+const API_URL = "https://beta.fly-foot.com/api"
 
 export const servicesUrl = {
     /* GET */
@@ -17,17 +18,21 @@ export const servicesUrl = {
     getSuggestedGames: '/mobile/game/getSuggestedGames',
     getGameSearch: '/mobile/game/search?text=',
     getTeamSearch: '/mobile/team/search?text=',
+    GetFlightRule : "/mobile/game/flight/GetFlightRule",
 
     /* POST */
     login: '/mobile/profile/login',
     searchFlights: '/mobile/game/SearchFlight',
+    searchFlightInventory: '/mobile/game/searchFlightInventory',
+    getPagedFlights: '/mobile/game/getPagedFlights',
     searchHotel: '/mobile/game/SearchHotel',
     getPagedHotels: '/mobile/game/getPagedHotels',
     viewCancelPolicy: '/mobile/hotel/ViewCancelPolicyV2',
     saveBundleMulti: '/mobile/game/saveBundleMulti',
     saveBundle: '/mobile/game/saveBundle',
     getExtraServices: '/mobile/game/getExtraServices',
-    addGames: "/mobile/game/addGames"
+    addGames: "/mobile/game/addGames",
+    intent: "/mobile/game/stripe/intent",
 }
 
 export async function setUserCredentials(email, password) {
@@ -84,9 +89,9 @@ export async function get(path) {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "ff_version": 10,
-            "ff_language": "en",
-            "source": "mobile",
+            "ff-version": 10,
+            "ff-language": "en",
+            "is-mobile": true,
             "gps_location": location
         },
     })
@@ -106,9 +111,9 @@ export async function getWithToken(path) {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "ff_version": 10,
-            "ff_language": "en",
-            "source": "mobile",
+            "ff-version": 10,
+            "ff-language": "en",
+            "is-mobile": true,
             "gps_location": location,
             "Authorization": 'Bearer ' + token
         },
@@ -129,9 +134,9 @@ export async function post(path, data) {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "ff_version": 10,
-            "ff_language": "en",
-            "source": "mobile",
+            "ff-version": 10,
+            "ff-language": "en",
+            "is-mobile": true,
             "gps_location": location,
             "Authorization": 'Bearer ' + token
         },
@@ -152,9 +157,9 @@ export async function postLogin(path, data) {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "ff_version": 10,
-            "ff_language": "en",
-            "source": "mobile",
+            "ff-version": 10,
+            "ff-language": "en",
+            "is-mobile": true,
             "gps_location": location,
         },
         body: JSON.stringify(data)

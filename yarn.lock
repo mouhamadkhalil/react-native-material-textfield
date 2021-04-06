@@ -2053,10 +2053,22 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+"@react-native-community/datetimepicker@3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.0.4.tgz#ad3efa90fab78fc3c0710abf3cb06d2976603140"
+  integrity sha512-IsBkemz1XYubH5twfQPC/xleZdILA5SEUaLJ2C86IbnIOctb6suk8tB6uT9VxQkCsw4zjkrlqt9p9LGx9DJ97w==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/masked-view@0.1.10":
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
+
+"@react-native-picker/picker@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.12.0.tgz#215d7c950935c8f1a834af0832a93122b4bab0f1"
+  integrity sha512-LxtFcuQ/jxsNwH9byM4mMSusqGfaj0LHXTh6fJgvIKOBjAWwV+FjWHszQSPCbnycdezirf8dFLhF9phcNuE8CA==
 
 "@react-navigation/bottom-tabs@^5.11.2":
   version "5.11.8"
@@ -7755,6 +7767,11 @@ react-event-listener@^0.6.2, react-event-listener@^0.6.6:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
+react-fast-compare@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
+  integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
+
 react-image-lightbox@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-5.1.1.tgz#872d1a4336b5a6410ea7909b767cf59014081004"
@@ -7910,7 +7927,7 @@ react-native-lightbox-v2@^0.8.7:
   dependencies:
     prop-types "^15.7.2"
 
-"react-native-material-textfield@github:vishaljadav24/react-native-material-textfield":
+react-native-material-textfield@vishaljadav24/react-native-material-textfield:
   version "0.16.1"
   resolved "https://codeload.github.com/vishaljadav24/react-native-material-textfield/tar.gz/e2d155446ab9057fc7bf6251492fe445d47c07c2"
   dependencies:

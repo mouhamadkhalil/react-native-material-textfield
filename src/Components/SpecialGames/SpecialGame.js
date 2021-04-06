@@ -4,6 +4,7 @@ import {
     Text,
     ScrollView,
     View,
+    Image,
     ImageBackground,
     TouchableOpacity,
     TouchableHighlight,
@@ -15,11 +16,11 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
-import Image from 'react-native-remote-svg';
-import moment from 'moment';
-import { get, servicesUrl } from "helpers/services.js";
+import Svg from 'components/Common/Svg';
+import { get, getWithToken, servicesUrl } from "helpers/services.js";
 import { getTripDays } from "helpers/tripHelper.js";
 import { translate } from "helpers/utils.js";
+import moment from 'moment';
 import R from "res/R";
 
 const sliderWidth = Dimensions.get('window').width;
@@ -61,7 +62,7 @@ export default class specialGames extends React.Component {
     }
 
     getData = () => {
-        get(servicesUrl.getHomePageData)
+        getWithToken(servicesUrl.getHomePageData)
             .then(response => {
                 // Special Games Data
                 var specialGames = response.SpecialGames.map(function (item) {
@@ -285,7 +286,9 @@ export default class specialGames extends React.Component {
                             end={[1, 0]}
                             locations={[0.5, 0.5]}
                         ></LinearGradient>
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginStart: 15 }}>{item.AwayTeam}</Text>
+                        <Text style={{ fontSize: 20, marginStart: 15, fontFamily: 'BarlowCondensed-Bold', }}>
+                            {item.AwayTeam}
+                            </Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <LinearGradient
@@ -296,7 +299,9 @@ export default class specialGames extends React.Component {
                             locations={[0.5, 0.5]}
                         >
                         </LinearGradient>
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginStart: 15 }}>{item.HomeTeam}</Text>
+                        <Text style={{ fontSize: 20, marginStart: 15, fontFamily: 'BarlowCondensed-Bold' }}>
+                            {item.HomeTeam}
+                            </Text>
                     </View>
                 </View>
                 <View style={{ alignItems: "flex-end" }}>
@@ -363,8 +368,9 @@ export default class specialGames extends React.Component {
     popularTeamsItem = ({ item, index }) => {
         const image = { uri: item.Image };
         return (
-            <Pressable key={'team' + index} style={{ width: 130, height: 180, margin: 20, backgroundColor: "#fff", borderRadius: 20, justifyContent: "center", shadowColor: { width: 0, height: 8, }, shadowOpacity: .44, shadowRadius: 10, elevation: 15, justifyContent: "center", alignItems: "center" }}>
-                <Image source={image} style={{ width: 80, height: 80 }} />
+            <Pressable key={'team' + index} style={{ width: 130, height: 180, margin: 20, backgroundColor: "#fff", borderRadius: 20, justifyContent: "center", shadowColor: { width: 0, height: 8, }, shadowOpacity: .44, shadowRadius: 10, elevation: 15, justifyContent: "center", alignItems: "center" }}
+            onPress={()=>{ this.props.navigation.navigate('allGames', {idTeam: item.idTeams})}}>
+                <Svg source={image} style={{ width: 80, height: 80 }} />
                 <Text style={{ fontSize: 16, fontWeight: 'bold', width: "80%", textAlign: "center", marginTop: 7 }}>{item.TeamName}</Text>
             </Pressable>
         );
@@ -374,7 +380,7 @@ export default class specialGames extends React.Component {
     competitionItem({ item, index, state }) {
         const image = { uri: item.ImageReference };
         return (
-            <View style={{ width: 250, marginTop: 60, height: 200 }}>
+            <TouchableOpacity style={{ width: 250, marginTop: 60, height: 200 }} onPress={()=> { this.props.navigation.navigate('allGames', {idLeague: item.LeagueId})}}>
                 <ImageBackground source={image} style={[styles.image, { width: 250, height: 200 }]} imageStyle={{ borderRadius: 20 }}>
                     <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: '30%', margin: '2%', borderRightWidth: 4, borderRightColor: '#76FF02', borderRadius: 50 }}></View>
@@ -382,7 +388,7 @@ export default class specialGames extends React.Component {
                         <View style={{ height: '30%', margin: '2%', borderRightWidth: 4, borderRightColor: '#76FF02', borderRadius: 50 }}></View>
                     </View>
                 </ImageBackground>
-            </View>
+            </TouchableOpacity>
         );
     }
 
@@ -418,7 +424,7 @@ export default class specialGames extends React.Component {
                                 <View style={styles.pageTitleBar}></View>
                                 <Text style={styles.pageTitleText}>{translate('popularGames')}</Text>
                             </View>
-                            <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center', paddingLeft: 15, paddingRight: 15 }}>
+                            <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center', paddingLeft: 15, paddingRight: 15}}>
                                 <FlatList
                                     keyExtractor={(item, index) => 'popular'+item.idMatch}
                                     data={this.state.popularGames}
@@ -462,7 +468,7 @@ export default class specialGames extends React.Component {
                                     sliderWidth={Screen.width}
                                     itemWidth={150}
                                     itemHeight={200}
-                                    renderItem={this.popularTeamsItem}
+                                    renderItem={this.popularTeamsItem.bind(this)}
                                     firstItem={1}
                                     initialScrollIndex={1}
                                     getItemLayout={(data, index) => (
@@ -486,7 +492,7 @@ export default class specialGames extends React.Component {
                                     data={this.state.competitions}
                                     sliderWidth={Screen.width}
                                     itemWidth={290}
-                                    renderItem={this.competitionItem}
+                                    renderItem={this.competitionItem.bind(this)}
                                 />
                             </View>
                         </View>
@@ -544,7 +550,9 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     specialGameMeta: {
-        color: "white", fontSize: 18
+        color: "white", 
+        fontSize: 20,
+        fontFamily: 'BarlowCondensed-Bold'
     },
     image: {
         borderRadius: 20,
@@ -558,7 +566,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: "#F7F7F7",
-        marginTop: 30,
         borderRadius: 5,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 5 },
@@ -567,6 +574,8 @@ const styles = StyleSheet.create({
         elevation: 5,
         padding: 10,
         marginEnd: 15,
-        marginStart: 15
+        marginStart: 15,
+        marginTop: 20,
+        marginBottom: 10,
     }
 });

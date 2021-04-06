@@ -89,6 +89,12 @@ const AllGamesStackNavigator = ({ navigation }) => {
             <Stack.Screen name="tripOverview" navigationProps={navigation} component={TripOverViewScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="experiences" navigationProps={navigation} component={ExperiencesScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="summary" navigationProps={navigation} component={SummaryScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutFanInfo" navigationProps={navigation} component={CheckoutFanInfoScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutSummary" navigationProps={navigation} component={CheckoutSummaryScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutPayment" navigationProps={navigation} component={CheckoutPaymentScreen} options={HeaderOptions({ navigation })} />
+            
         </Stack.Navigator>
     );
 };

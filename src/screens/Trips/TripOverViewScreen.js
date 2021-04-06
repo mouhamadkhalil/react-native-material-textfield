@@ -91,11 +91,14 @@ export default class TripOverViewScreen extends React.PureComponent {
 
                         <View style={{ marginStart: 15, marginEnd: 15, backgroundColor: "white", marginTop: 30 }}>
                             {/* trip details + hotel */}
-                            <TripDetails details={this.state.details} game={this.state.game} hotel={this.state.hotel} />
+                            <TripDetails details={this.state.details} game={this.state.game} hotel={this.state.hotel} matchBundleHotels={this.state.bundle?.MatchBundleHotels} />
 
                             {/* seating options */}
-                            <SeatingOptions details={this.state.details} game={this.state.game} seating={this.state.seating} />
-
+                            {this.state.bundle?.MatchBundleDetail.map((matchBundle)=> {
+                                return <SeatingOptions key={"seat-"+matchBundle.idMatchBundleDetail} 
+                                        details={this.state.details} game={matchBundle.Game} seating={matchBundle.GameSeat} />
+                            })}
+                            
                             {/* perks */}
                             <Perks perks={this.state.perks} />
                         </View>
