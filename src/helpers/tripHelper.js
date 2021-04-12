@@ -54,7 +54,7 @@ export function formatBundle(bundle) {
         hotel.HotelRoomType = bundle.HotelRoomType;
         hotel.NumberOfRooms = bundle.NumberOfRooms;
     }
-    var seating = bundle.MatchBundleDetail[0].GameSeat;
+    var seating = bundle.MatchBundleDetail[0]?.GameSeat;
     var perks = [
         {
             Title: translate('onSpotService'),

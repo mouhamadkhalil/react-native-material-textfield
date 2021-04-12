@@ -3,7 +3,7 @@ import { StyleSheet, Text, ScrollView, View, TouchableHighlight, ActivityIndicat
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
 import { FanInfo } from "components/Trips/FanInfo";
-import { post, servicesUrl } from "helpers/services.js";
+import { post, get, servicesUrl } from "helpers/services.js";
 import { translate } from "helpers/utils";
 import R from "res/R";
 
@@ -14,36 +14,79 @@ export default class CheckoutFanInfoScreen extends React.Component {
         this.state = {
             isLoading: true,
             bundle: props?.route?.params?.bundle,
+            countries: []
         };
     }
-    
-        componentDidMount = () => {
-            var offerContacts = new Array(this.state.bundle.NumberOfTravelers);;
-            for (let i = 0; i < this.state.bundle.NumberOfTravelers; i++) {
-                offerContacts[i] = {
-                    Title: '',
-                    FirstName: '',
-                    LastName: '',
-                    DOB: '',
-                    CountryName: '',
-                    idCountry: 0,
-                    PhonePrefix: '',
-                    Phone: '',
-                    Email: '',
-                    Sequence: i + 1,
-                    IsChild: false,
-                    IsFlightOnly: false,
-                    IsMainContact: i == 0,
-                };
-            }
-            var bundle = {...this.state.bundle};
-            bundle.OfferContacts = offerContacts;
-            this.setState({ bundle, isLoading: false });
-        }
 
-    updateContact = (index, state) => {
-        var bundle = this.state.bundle;
-        bundle.OfferContacts[index] = state;
+    componentDidMount() {
+        try {
+            this.init();
+        } catch { }
+    }
+
+    init = async () => {
+        var offerContacts = new Array(this.state.bundle.NumberOfTravelers);;
+        for (let i = 0; i < this.state.bundle.NumberOfTravelers; i++) {
+            offerContacts[i] = {
+                Title: '',
+                FirstName: '',
+                LastName: '',
+                DOB: '',
+                CountryName: '',
+                idCountry: 0,
+                PhonePrefix: '',
+                //Phone: '',
+                //Email: '',
+                Sequence: i + 1,
+                IsChild: false,
+                IsFlightOnly: false,
+                IsMainContact: i == 0,
+            };
+        }
+        var bundle = { ...this.state.bundle };
+        bundle.OfferContacts = offerContacts;
+        var countries = await this.getCountries();
+        this.setState({ bundle, countries, isLoading: false })
+    }
+
+    getCountries = () => {
+        return get(servicesUrl.getCountry)
+            .then((response) => {
+                var countries = [];
+                if (response) {
+                    countries = response.map(function (country) {
+                        return {
+                            value: country.ID,
+                            label: country.Value,
+                            phonePrefix: country.ExtraField
+                        };
+                    });
+                }
+                return countries;
+            });
+    }
+
+    updateContact = (index, contact) => {
+        var bundle = { ...this.state.bundle };
+        bundle.OfferContacts[index] = {
+            Title: contact.Title,
+            FirstName: contact.FirstName,
+            LastName: contact.LastName,
+            DOB: contact.DOB,
+            CountryName: contact.CountryName,
+            idCountry: contact.idCountry,
+            PhonePrefix: contact.PhonePrefix,
+            IsChild: contact.IsChild,
+            IsFlightOnly: contact.IsFlightOnly,
+            IsMainContact: contact.IsMainContact,
+            Sequence: contact.Sequence
+        };
+        if (contact.Phone !== '')
+            bundle.OfferContacts[index].Phone = contact.Phone;
+
+        if (contact.Email !== '')
+            bundle.OfferContacts[index].Email = contact.Email;
+
         this.setState({ bundle });
     }
 
@@ -54,12 +97,12 @@ export default class CheckoutFanInfoScreen extends React.Component {
     continue = () => {
         post(servicesUrl.saveBundle, this.state.bundle)
             .then((response) => {
-                this.props.navigation.navigate('checkoutSummary', { bundle: {...response} });
+                this.props.navigation.navigate('checkoutSummary', { bundle: { ...response } });
             });
     };
 
     renderItem = ({ item, index }) => {
-        return <FanInfo index={index} updateContact={this.updateContact} />
+        return <FanInfo index={index} countries={this.state.countries} updateContact={this.updateContact} />
     }
 
     keyExtractor = (item, index) => 'fan-' + item.Sequence;
@@ -78,7 +121,6 @@ export default class CheckoutFanInfoScreen extends React.Component {
                     {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120, marginStart: 15 }} />
                         :
                         <>
-
                             <View style={{ marginStart: 15, marginEnd: 15, marginTop: 30 }}>
                                 <FlatList
                                     data={this.state.bundle.OfferContacts}

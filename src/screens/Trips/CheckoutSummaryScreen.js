@@ -58,7 +58,7 @@ export default class CheckoutSummaryScreen extends React.Component {
                 <HeaderBackground title={translate('checkout')} image={R.images.trip_bg} />
 
                 {/* match header */}
-                <MatchHeader isLoading={this.state.isLoading} bundle={this.props.bundle } />
+                <MatchHeader isLoading={this.state.isLoading} bundle={{ ...this.state.bundle }} />
 
                 {/* package details */}
                 <View style={{ marginStart: 15, marginEnd: 15 }}>
@@ -70,15 +70,43 @@ export default class CheckoutSummaryScreen extends React.Component {
                             {this.state.bundle.RequestCode}
                         </Text>
                     </View>
-                    <View style={{marginTop:10}}>
-                    {/* trip details + hotel */}
-                    <TripDetails details={this.state.details} game={this.state.game} hotel={this.state.hotel} />
+                    <View style={{ marginTop: 10 }}>
+                        <View style={{ marginStart: 15, marginEnd: 15, backgroundColor: "white", marginTop: 30 }}>
+                            {/* trip details + hotel */}
+                            <TripDetails details={this.state.details} game={this.state.game} hotel={this.state.hotel} matchBundleHotels={this.state.bundle?.MatchBundleHotels} />
 
-                    {/* seating options */}
-                    <SeatingOptions details={this.state.details} game={this.state.game} seating={this.state.seating} />
+                            {/* seating options */}
+                            {this.state.bundle?.MatchBundleDetail.map((matchBundle) => {
+                                return <SeatingOptions key={"seat-" + matchBundle.idMatchBundleDetail}
+                                    details={this.state.details} game={matchBundle.Game} seating={matchBundle.GameSeat} />
+                            })}
+                            {/* perks */}
+                            <Perks perks={this.state.perks} />
+                        </View>
 
-                    {/* perks */}
-                    <Perks perks={this.state.perks} />
+                        {/* flight summary */}
+                        {this.state.bundle.NoFlight ? null :
+                            <View style={{ marginStart: 15, marginEnd: 15, backgroundColor: "white", marginTop: 30 }}>
+                                <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
+                                    {translate('flightSummary')}
+                                </Text>
+                                <FlightItem item={this.state.bundle.SelectedFlight} price={this.state.bundle.FlightExtraPricePerFan} index={0} sessionId={this.state.bundle?.flightSession} isSummary={true} />
+                            </View>
+                        }
+
+                        {/* experiences summary */}
+                        {this.state.bundle.ExtraServices != null && this.state.bundle.ExtraServices.includes((service) => service.isAdded) ? null
+                            :
+                            <View style={{ marginStart: 15, marginEnd: 15, backgroundColor: "white", marginTop: 30 }}>
+                                <Text style={{ color: "gray", fontWeight: "bold", fontSize: 17, marginTop: 30, marginStart: 15, marginEnd: 15 }}>
+                                    {translate('experiences')}
+                                </Text>
+                                {this.state.bundle.ExtraServices.map((item) => {
+                                    return (<Experience key={"exp-" + item.idExtraService} details={this.state.details} item={item} showMoreInfo={this.showMoreInfo} isSummary={true} />)
+                                })}
+                            </View>
+                        }
+
                     </View>
                 </View>
             </>
@@ -88,7 +116,7 @@ export default class CheckoutSummaryScreen extends React.Component {
 
     renderItem = ({ item, index }) => {
         return (
-            <View style={{ marginTop: 20, marginStart:15, marginEnd:15 }}>
+            <View style={{ marginTop: 20, marginStart: 15, marginEnd: 15 }}>
                 {/* fan number */}
                 <Text style={{ color: 'grey', fontWeight: 'bold', fontSize: 20 }}>
                     {index == 0 ? translate('mainFan') : translate('fan') + " #" + (index + 1)}
@@ -150,7 +178,7 @@ export default class CheckoutSummaryScreen extends React.Component {
 
     renderFooter = () => {
         return (
-            <View style={{marginStart:15, marginEnd:15}}>
+            <View style={{ marginStart: 15, marginEnd: 15 }}>
                 {/* buttons */}
                 <View style={{ height: 60, flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
                     <TouchableHighlight style={R.styles.blackButton}
@@ -196,9 +224,9 @@ export default class CheckoutSummaryScreen extends React.Component {
                         {/* fans */}
                         <FlatList
                             data={this.state.bundle.OfferContacts}
-                            ListHeaderComponent={this.renderHeader}
-                            renderItem={this.renderItem}
                             keyExtractor={this.keyExtractor}
+                            ListHeaderComponent={this.renderHeader.bind(this)}
+                            renderItem={this.renderItem}
                             ListFooterComponent={this.renderFooter.bind(this)}
                         />
                     </>

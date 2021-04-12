@@ -10,6 +10,7 @@ export const servicesUrl = {
     getAllTeams: '/mobile/team/all',
     getAllCities: '/mobile/city/destinationCity',
     getAllLeagues: '/mobile/leagues/all',
+    getCountry: '/mobile/country',
     getCountriesWithTeams: '/mobile/team/countriesWithTeams',
     getSearchTeam: '/mobile/team/search?text=',
     getGameV2: '/mobile/game/v2/',

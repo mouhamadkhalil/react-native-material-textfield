@@ -24,7 +24,7 @@ export class TripDetails extends React.PureComponent {
     }
 
     componentDidMount = () => {
-        var matchBundleHotels = this.props.matchBundleHotels;
+        var matchBundleHotels = [...this.props.matchBundleHotels];
         var hotelImages = [];
 
         if (this.props.hotel) {

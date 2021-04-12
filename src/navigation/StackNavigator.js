@@ -23,12 +23,14 @@ import CheckoutFanInfoScreen from "screens/Trips/CheckoutFanInfoScreen";
 import CheckoutSummaryScreen from "screens/Trips/CheckoutSummaryScreen";
 import CheckoutPaymentScreen from "screens/Trips/CheckoutPaymentScreen";
 
+import WhereToEatScreen from "components/Schedule/WhereToEat";
+
+
 import MyTripsScreen from "components/SpecialGames/MyTrips";
 import MyProfileScreen from "components/Profile/MyProfile";
 import QuizScreen from "components/WebView/Quiz";
 import LeaderBoardScreen from "components/WebView/LeaderBoard";
 import ActivityCardScreen from "components/Schedule/ActivityCard";
-import WhereToEatScreen from "components/Schedule/WhereToEat";
 import RestaurantScreen from "components/Schedule/Restaurant";
 import WhatToDoScreen from "components/Schedule/WhatToDo";
 import MuseumScreen from "components/Schedule/Museum";
@@ -54,6 +56,8 @@ const StartStackNavigator = ({ navigation }) => {
 const TripStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
+            <Stack.Screen name="Login" navigationProps={navigation} component={Login} />
+            <Stack.Screen name="Signup" navigationProps={navigation} component={Signup} />
             <Stack.Screen name="book a trip" navigationProps={navigation} component={SpecialGames} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="teams" navigationProps={navigation} component={TeamsScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="leagues" navigationProps={navigation} component={LeaguesScreen} options={HeaderOptions({ navigation })} />
@@ -76,6 +80,25 @@ const TripStackNavigator = ({ navigation }) => {
             <Stack.Screen name="leader board" navigationProps={navigation} component={LeaderBoardScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="confirmation" navigationProps={navigation} component={MultitripConfirmationScreen} options={HeaderOptions({ navigation })} />
 
+        </Stack.Navigator>
+    );
+};
+
+
+const WhereToEatStackNavigator = ({ navigation }) => {
+    return (
+        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
+            <Stack.Screen name="whereToEat" navigationProps={navigation} component={WhereToEatScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="tripOverview" navigationProps={navigation} component={TripOverViewScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="experiences" navigationProps={navigation} component={ExperiencesScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="summary" navigationProps={navigation} component={SummaryScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutFanInfo" navigationProps={navigation} component={CheckoutFanInfoScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutSummary" navigationProps={navigation} component={CheckoutSummaryScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutPayment" navigationProps={navigation} component={CheckoutPaymentScreen} options={HeaderOptions({ navigation })} />
+            
         </Stack.Navigator>
     );
 };
@@ -145,4 +168,4 @@ const ManageTripStackNavigator = ({ navigation }) => {
 
 
 
-export { StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator };
+export { StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator, WhereToEatStackNavigator };

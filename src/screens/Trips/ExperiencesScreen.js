@@ -19,7 +19,6 @@ export default class ExperiencesScreen extends React.Component {
             experience: null,
             isLoading: true,
             isShowMoreInfo: false,
-            isShowDatePicker: false
         };
     }
 
@@ -32,19 +31,32 @@ export default class ExperiencesScreen extends React.Component {
     initBundle = () => {
         var details = formatDetails(this.state.bundle);
         var extraServices = [...this.state.extraServices];
-        extraServices.map(function (experience) {
+        /*extraServices.map(function (experience) {
             experience.Qty = details.NumberOfTravelers;
             experience.isAdded = false;
-        })
-        this.setState({ details, extraServices, isLoading: false });
+        })*/
+        var bundle = { ... this.state.bundle };
+        bundle.ExtraServices = [...extraServices];
+        this.setState({ bundle, details, isLoading: false });
     }
 
     showMoreInfo = (item) => {
         this.setState({ isShowMoreInfo: true, experience: item })
     }
 
-    showDatePicker = (item) => {
-        this.setState({ isShowDatePicker: true, experience: item })
+    addToTrip = (item, index) => {
+        var bundle = { ...this.state.bundle };
+        if (item.Qty == 0)
+            item.Qty = bundle.NumberOfTravelers;
+        item.isAdded = !item.isAdded;
+        if (item.isAdded)
+            bundle.ExtraServiceCount++;
+        else
+            bundle.ExtraServiceCount++;
+        var extraServices = [...bundle.ExtraServices];
+        extraServices[index] = { ...item }
+        bundle.ExtraServices = [...extraServices];
+        this.setState({ bundle })
     }
 
     goBack = () => {
@@ -55,13 +67,13 @@ export default class ExperiencesScreen extends React.Component {
         this.props.navigation.navigate('summary', { bundle: this.state.bundle });
     };
 
-    renderItem = ({ item }) => {
+    renderItem = ({ item, index }) => {
         return <Experience details={this.state.details} matchDate={this.state.bundle?.MatchBundleDetail[0]?.Game?.GameDate}
-            item={item} showMoreInfo={this.showMoreInfo} 
+            item={item} index={index} showMoreInfo={this.showMoreInfo} addToTrip={this.addToTrip}
         />
     }
 
-    keyExtractor = (item, index) => 'exp-' + index;
+    keyExtractor = (item, index) => 'exp-' + item.idExtraService
 
     render() {
         return (
@@ -83,7 +95,7 @@ export default class ExperiencesScreen extends React.Component {
                             <View style={{ marginStart: 15, marginEnd: 15 }}>
                                 {/* render experiences */}
                                 <FlatList
-                                    data={this.state.extraServices}
+                                    data={this.state.bundle?.ExtraServices}
                                     extraData={this.state}
                                     renderItem={this.renderItem}
                                     keyExtractor={this.keyExtractor}
@@ -131,14 +143,6 @@ export default class ExperiencesScreen extends React.Component {
                                 {this.state.experience?.Description}
                             </Text>
                         </View>
-                    </View>
-                </Modal>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={this.state.isShowDatePicker}>
-                    <View style={styles.modalView}>
-                        
                     </View>
                 </Modal>
             </ScrollView >

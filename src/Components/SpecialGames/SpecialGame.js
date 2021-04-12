@@ -153,7 +153,8 @@ export default class specialGames extends React.Component {
                 });
                 const allTeams = ["@allTeams", JSON.stringify(response.CountriesWithTeams)];
                 const allLeagues = ["@allLeagues", JSON.stringify(response.AllLeagues)];
-                AsyncStorage.multiSet([allTeams, allLeagues]);
+                const whereToEat = ["@whereToEat", JSON.stringify(response.WhereToEat)];
+                AsyncStorage.multiSet([allTeams, allLeagues, whereToEat]);
                 this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: response.GamesList.PageCount, pageSize: response.GamesList.PageSize, isLoading: false });
             });
     };

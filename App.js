@@ -39,7 +39,7 @@ export default class App extends React.Component {
       return;
     }
     let location = await Location.getCurrentPositionAsync({});
-    await SecureStore.setItemAsync('location', location);
+    await SecureStore.setItemAsync('location', JSON.stringify(location.coords));
   }
 
   render() {

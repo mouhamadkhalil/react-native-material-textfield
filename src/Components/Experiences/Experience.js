@@ -6,9 +6,9 @@ import { translate } from "helpers/utils.js";
 import moment from 'moment';
 import R from "res/R";
 
-const Experience = ({ details, matchDate, item, showMoreInfo }) => {
+const Experience = ({ details, matchDate, item, index, showMoreInfo, addToTrip, isSummary }) => {
 
-    const [experience, setExperience] = useState(item);
+    const [experience, setExperience] = useState({ ...item });
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     const incrementFan = () => {
@@ -23,11 +23,6 @@ const Experience = ({ details, matchDate, item, showMoreInfo }) => {
             experience.Qty--;
             setExperience({ ...experience });
         }
-    }
-
-    const addToTrip = () => {
-        experience.isAdded = !experience.isAdded;
-        setExperience({ ...experience });
     }
 
     return (
@@ -77,16 +72,21 @@ const Experience = ({ details, matchDate, item, showMoreInfo }) => {
                             </TouchableOpacity>
                         }
                     </View>
-                    <View style={{width:200, height:200}}>
-                    {showDatePicker && (
-                        <DatePicker
-                            value={moment(details.StartDate)}
-                            mode="date"
-                            display="default"
-                            maximumDate={moment(details.StartDate)}
-                            minimumDate={moment(details.EndDate)}
-                        />
-                    )}
+                    <View style={{ width: 200, height: 200 }}>
+                        {showDatePicker && (
+                            <DatePicker
+                                value={new Date(details.StartDate)}
+                                mode="date"
+                                display="default"
+                                minimumDate={new Date(details.StartDate)}
+                                maximumDate={new Date(details.EndDate)}
+                                onChange={(event, date) => {
+                                    experience.Date = date;
+                                    setExperience({ ...experience });
+                                    setShowDatePicker(false);
+                                }}
+                            />
+                        )}
                     </View>
                 </View>
 
@@ -99,7 +99,7 @@ const Experience = ({ details, matchDate, item, showMoreInfo }) => {
                         <View style={{ flexDirection: 'row', marginTop: 10 }}>
                             {experience.isAdded ?
                                 <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10, color: R.colors.lightGreen }}>
-                                    {experience.Qty}
+                                    {experience.Qty > 0 }
                                 </Text>
                                 :
                                 <>
@@ -107,7 +107,7 @@ const Experience = ({ details, matchDate, item, showMoreInfo }) => {
                                         <Icon name='remove-circle-outline' style={styles.textStyle} />
                                     </TouchableOpacity>
                                     <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10, color: "black" }}>
-                                        {experience.Qty}
+                                    {experience.Qty > 0 ? experience.Qty : details.NumberOfTravelers }
                                     </Text>
                                     <TouchableOpacity style={{ width: 50 }} onPress={() => incrementFan()}>
                                         <Icon name='add-circle-outline' style={styles.textStyle} />
@@ -125,18 +125,18 @@ const Experience = ({ details, matchDate, item, showMoreInfo }) => {
                         </Text>
                         <View style={[R.styles.flexRow, { marginTop: 5, alignItems: 'center' }]}>
                             <Text style={{ fontSize: 16, color: experience.isAdded ? R.colors.lightGreen : R.colors.blue }}>
-                                {experience.UnitPrice * experience.Qty}$
+                                {experience.UnitPrice * (experience.Qty > 0 ? experience.Qty: details.NumberOfTravelers)}$
                             </Text>
-                            {experience.Qty > 1 ?
+                            {experience.Qty > 1 || details.NumberOfTravelers?
                                 <Text style={{ marginStart: 5, fontSize: 14, color: experience.isAdded ? R.colors.lightGreen : R.colors.blue }}>
                                     ({experience.UnitPrice} $/fan)
                                 </Text>
                                 : null}
                         </View>
                     </View>
-                    {experience.isAdded ?
+                    {(experience.isAdded && !isSummary) ?
                         <TouchableOpacity style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 15 }}
-                            onPress={() => addToTrip()}>
+                            onPress={() => addToTrip(experience, index)}>
                             <View style={[R.styles.flexRow, { justifyContent: 'center' }]}>
                                 <Icon name="checkmark-outline" size={20} style={{ color: R.colors.lightGreen }} />
                                 <Text style={{ textTransform: 'uppercase', marginStart: 10, color: R.colors.lightGreen }}>
@@ -150,12 +150,19 @@ const Experience = ({ details, matchDate, item, showMoreInfo }) => {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                        :
-                        <TouchableOpacity style={styles.greenButton} onPress={() => addToTrip()}>
-                            <Text style={{ textTransform: 'uppercase', alignSelf: 'center' }}>
-                                + {translate('addToTrip')}
-                            </Text>
-                        </TouchableOpacity>
+                        : !isSummary ?
+                            <TouchableOpacity style={styles.greenButton} onPress={() => addToTrip(experience, index)}>
+                                <Text style={{ textTransform: 'uppercase', alignSelf: 'center' }}>
+                                    + {translate('addToTrip')}
+                                </Text>
+                            </TouchableOpacity>
+                            :
+                            <View style={[R.styles.flexRow, { justifyContent: 'center', alignContent: 'center', alignItems: 'center' }]}>
+                                <Icon name="checkmark-outline" size={20} style={{ color: R.colors.lightGreen }} />
+                                <Text style={{ textTransform: 'uppercase', marginStart: 10, color: R.colors.lightGreen }}>
+                                    {translate('added')}
+                                </Text>
+                            </View>
                     }
                 </View>
             </View>

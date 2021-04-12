@@ -51,6 +51,13 @@ export default class TripOverViewScreen extends React.PureComponent {
         if (bundle == null)
             bundle = { ...this.state.bundle };
         const [details, game, hotel, seating, perks] = formatBundle(bundle);
+        bundle.Days = details?.TripDays;
+        bundle.CustomPageIsClicked = false;
+        bundle.ExtraServiceCount = 0;
+        bundle.flightClass = 2;
+        bundle.firstGame = bundle?.MatchBundleDetail[0];
+        if (bundle.OtherMatches == null)
+            bundle.OtherMatches = [];
         this.setState({ bundle, details, game, hotel, seating, perks, isLoading: false })
     }
 
@@ -59,7 +66,7 @@ export default class TripOverViewScreen extends React.PureComponent {
     };
 
     flight = () => {
-        this.props.navigation.navigate('flight', { bundle: this.state.bundle });
+        this.props.navigation.navigate('flight', { bundleCode: this.state.bundleCode, hotelId: this.state.bundle.HotelCode });
     };
 
     keyExtractor = (item, index) => {
@@ -94,23 +101,25 @@ export default class TripOverViewScreen extends React.PureComponent {
                             <TripDetails details={this.state.details} game={this.state.game} hotel={this.state.hotel} matchBundleHotels={this.state.bundle?.MatchBundleHotels} />
 
                             {/* seating options */}
-                            {this.state.bundle?.MatchBundleDetail.map((matchBundle)=> {
-                                return <SeatingOptions key={"seat-"+matchBundle.idMatchBundleDetail} 
-                                        details={this.state.details} game={matchBundle.Game} seating={matchBundle.GameSeat} />
+                            {this.state.bundle?.MatchBundleDetail.map((matchBundle) => {
+                                return <SeatingOptions key={"seat-" + matchBundle.idMatchBundleDetail}
+                                    details={this.state.details} game={matchBundle.Game} seating={matchBundle.GameSeat} />
                             })}
-                            
+
                             {/* perks */}
                             <Perks perks={this.state.perks} />
                         </View>
 
                         {/* buttons */}
                         <View style={{ marginStart: 15, marginEnd: 15, alignSelf: 'center', flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
-                            <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }} onPress={this.customize}>
+                            <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.blue, alignItems: "center", justifyContent: "center" }}
+                                onPress={this.customize}>
                                 <Text style={{ fontWeight: "bold", color: "#fff", textTransform: 'uppercase' }}>
                                     {translate('customize')}
                                 </Text>
                             </TouchableHighlight>
-                            <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }} onPress={this.flight}>
+                            <TouchableHighlight style={{ width: "50%", height: 60, backgroundColor: R.colors.lightGreen, alignItems: "center", justifyContent: "center" }}
+                                onPress={this.flight}>
                                 <Text style={{ fontWeight: "bold", textTransform: 'uppercase' }}>
                                     {translate('selectFlight')}
                                 </Text>

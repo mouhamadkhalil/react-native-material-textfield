@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { CheckBox } from 'react-native-elements';
-import Svg from 'react-native-remote-svg';
+import Svg from 'components/Common/Svg';
 import { translate } from "helpers/utils.js";
 import R from "res/R";
 
@@ -16,7 +16,8 @@ export class Stadium extends React.Component {
     }
 
     selectSeat = (option, index) => {
-        this.props.selectSeat({ ...option }, index);
+        if (!option.SoldOut)
+            this.props.selectSeat({ ...option }, index);
     }
 
     keyExtractor = (item) => {
@@ -56,9 +57,10 @@ export class Stadium extends React.Component {
                                             {option.SeatCode}
                                         </Text>
                                         <Text style={{ color: checked ? 'white' : 'black' }}>
-                                            +{option.ExtraCostPerFan}$
+                                            {!option.SoldOut ? "+" + option.ExtraCostPerFan + "$" : "On request"}
                                         </Text>
-                                    </View>}
+                                    </View>
+                                }
                                     checked={checked}
                                     containerStyle={checked ? styles.checkboxContainerActive : styles.checkboxContainerInActive}
                                     checkedColor='white'

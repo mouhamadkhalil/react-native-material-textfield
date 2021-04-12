@@ -546,7 +546,70 @@ export default class CustomizeTripScreen extends React.Component {
         )
     }
 
-    renderHotels = ({ item }) => {
+    renderRooms = (index, roomInfoList) => {
+        return (
+            <>
+                {/* rooms */}
+                <View key={"rooms-" + index} style={{ backgroundColor: 'white', marginTop: 10 }}>
+                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: "white", height: 'auto', marginTop: 5, padding: 20 }}>
+                        <View style={{ height: 80 }}>
+                            <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
+                                {translate('rooms')}
+                            </Text>
+
+                            {/* increment/decrement */}
+                            <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
+                                <TouchableOpacity style={{ width: 25 }} onPress={this.decrementRoom}>
+                                    <Icon name='remove-circle-outline' style={styles.textStyle} />
+                                </TouchableOpacity>
+                                <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10 }}>
+                                    {this.state.bundle?.NumberOfRooms}
+                                </Text>
+                                <TouchableOpacity style={{ width: 25 }} onPress={this.incrementRoom}>
+                                    <Icon name='add-circle-outline' style={styles.textStyle} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                        {/* rooms details */}
+                        <View style={{ width: '100%' }}>
+                            <FlatList
+                                data={this.state.bundle?.RoomInfoList? this.state.bundle?.RoomInfoList : roomInfoList}
+                                extraData={this.state}
+                                renderItem={this.roomItem}
+                                keyExtractor={(item, index) => 'room-' + index}
+                                listKey={(item, index) => 'room-list-' + index}
+                            />
+                        </View>
+                    </View>
+
+                    {/* browse */}
+                    {this.state.isCustomized ?
+                        <View style={{ width: '60%', marginTop: 40, padding: 20 }}>
+                            <TouchableOpacity style={{ backgroundColor: R.colors.lightGreen, height: 60, alignItems: 'center', justifyContent: 'center' }}
+                                onPress={this.browseHotels}>
+                                <Text style={{ fontSize: 20, textTransform: 'uppercase' }}>
+                                    {translate('browse')}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        : null}
+
+                    {/* filter */}
+                    <TouchableOpacity style={{ marginTop: 10, height: 60, backgroundColor: '#ccc' }} onPress={() => this.setState({ showFilter: true })}>
+                        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ fontSize: 16, color: '#222', textTransform: 'uppercase' }}>
+                                {translate('filter')}
+                            </Text>
+                            <Icon name='chevron-down-outline' style={{ fontSize: 16, color: '#222', marginStart: 5 }} />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </>
+        )
+    }
+
+    renderHotel = (item) => {
         var rating = parseInt(item.Rating);
         var selected = this.state.bundle?.SelectedHotel?.HotelId === item.HotelId;
         var policy = this.state.cancelPolicies.find(p => p.HotelId === item.HotelId);
@@ -559,7 +622,7 @@ export default class CustomizeTripScreen extends React.Component {
                             : null}
                     </View>
                     : null}
-                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: selected ? R.colors.blue : 'white', height: 200, marginTop: 10, marginStart: 15, marginEnd: 15 }}>
+                <View key={"hotel-" + item.HotelId} style={{ flex: 1, flexDirection: 'column', backgroundColor: selected ? R.colors.blue : 'white', height: 200, marginTop: 10 }}>
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         {/* images */}
                         <View style={{ width: '30%', height: '100%' }}>
@@ -656,6 +719,18 @@ export default class CustomizeTripScreen extends React.Component {
     }
 
     renderHeader = () => {
+        var bundleHotels = null;
+        if (this.state.bundle?.MatchBundleHotels && this.state.bundle?.MatchBundleHotels?.length > 0) {
+            var bundleHotels = [...this.state.bundle.MatchBundleHotels];
+            bundleHotels.map((bundleHotel) => {
+                var hotelList = [...bundleHotel.LocalHotels];
+                if (bundleHotel.HotelList != null)
+                    bundleHotel.HotelList.Items.map((hotel) => {
+                        hotelList.push({ ...hotel })
+                    })
+                bundleHotel.HotelList = hotelList;
+            })
+        }
         return (
             <>
                 {/* banner */}
@@ -707,69 +782,30 @@ export default class CustomizeTripScreen extends React.Component {
                             </View>
                         </View>
 
-                        {/* hotels */}
-                        <View style={{ flex: 1, flexDirection: 'column', marginTop: 50 }}>
-                            <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
-                                {translate('hotel')}
-                            </Text>
-
-                            {/* rooms */}
-                            <View style={{ backgroundColor: 'white', marginTop: 10 }}>
-                                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: "white", height: 'auto', marginTop: 5, padding: 20 }}>
-                                    <View style={{ height: 80 }}>
-                                        <Text style={{ color: R.colors.grey, fontWeight: "bold", textTransform: 'uppercase' }}>
-                                            {translate('rooms')}
-                                        </Text>
-
-                                        {/* increment/decrement */}
-                                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
-                                            <TouchableOpacity style={{ width: 25 }} onPress={this.decrementRoom}>
-                                                <Icon name='remove-circle-outline' style={styles.textStyle} />
-                                            </TouchableOpacity>
-                                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginStart: 10, marginEnd: 10 }}>
-                                                {this.state.bundle?.NumberOfRooms}
-                                            </Text>
-                                            <TouchableOpacity style={{ width: 25 }} onPress={this.incrementRoom}>
-                                                <Icon name='add-circle-outline' style={styles.textStyle} />
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-
-                                    {/* rooms details */}
-                                    <View style={{ width: '100%' }}>
-                                        <FlatList
-                                            data={this.state.bundle?.RoomInfoList}
-                                            extraData={this.state}
-                                            renderItem={this.roomItem}
-                                            keyExtractor={(item, index) => 'room-' + index}
-                                            listKey={(item, index) => 'room-list-' + index}
-                                        />
-                                    </View>
-                                </View>
-
-                                {/* browse */}
-                                {this.state.isCustomized ?
-                                    <View style={{ width: '60%', marginTop: 40, padding: 20 }}>
-                                        <TouchableOpacity style={{ backgroundColor: R.colors.lightGreen, height: 60, alignItems: 'center', justifyContent: 'center' }}
-                                            onPress={this.browseHotels}>
-                                            <Text style={{ fontSize: 20, textTransform: 'uppercase' }}>
-                                                {translate('browse')}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    : null}
-
-                                {/* filter */}
-                                <TouchableOpacity style={{ marginTop: 10, height: 60, backgroundColor: '#ccc' }} onPress={() => this.setState({ showFilter: true })}>
-                                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text style={{ fontSize: 16, color: '#222', textTransform: 'uppercase' }}>
-                                            {translate('filter')}
-                                        </Text>
-                                        <Icon name='chevron-down-outline' style={{ fontSize: 16, color: '#222', marginStart: 5 }} />
-                                    </View>
-                                </TouchableOpacity>
+                        {bundleHotels != null ?
+                            /* 2 hotels */
+                            bundleHotels.map((bundleHotel, index) => {
+                                return (<View key={"bundle-hotel-" + index} style={{ flex: 1, flexDirection: 'column', marginTop: 50 }}>
+                                    <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
+                                        {translate('hotel')}
+                                    </Text>
+                                    {this.renderRooms(index, bundleHotel.RoomInfoList)}
+                                    {bundleHotel.HotelList.map((hotel) => {
+                                        return (this.renderHotel(hotel));
+                                    })}
+                                </View>)
+                            })
+                            :
+                            <View style={{ flex: 1, flexDirection: 'column', marginTop: 50 }}>
+                                <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
+                                    {translate('hotel')}
+                                </Text>
+                                {this.renderRooms(0)}
+                                {this.state.bundle?.HotelList?.Items.map((hotel) => {
+                                    return (this.renderHotel(hotel));
+                                })}
                             </View>
-                        </View>
+                        }
                     </View>
                 }
             </>
@@ -835,9 +871,8 @@ export default class CustomizeTripScreen extends React.Component {
                     extraData={this.state}
                     keyExtractor={this.hotelsKeyExtractor}
                     ListHeaderComponent={this.renderHeader}
-                    renderItem={this.renderHotels}
+                    renderItem={null}
                     ListFooterComponent={this.renderFooter}
-                    //stickyHeaderIndices={[0]}
                 />
 
                 {/* date picker modal */}
