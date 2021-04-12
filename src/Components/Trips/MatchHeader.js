@@ -20,6 +20,7 @@ export class MatchHeader extends React.PureComponent {
             hotel: {},
             seating: {},
             perks: [],
+            extraServices: [],
             flight: 0,
             onlineBooking: 0,
             hotelUpgrade: 0,
@@ -33,13 +34,25 @@ export class MatchHeader extends React.PureComponent {
         };
     }
 
+    componentDidMount() {
+        //this.initBundle();
+        this.setState({bundle: {...this.props.bundle}});
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.bundle != this.props.bundle) {
+            this.initBundle(prevProps, prevState);
+        }
+    }
+
     initBundle = (prevProps, prevState) => {
         const bundle = { ...this.props.bundle };
         const [details, game, hotel, seating, perks] = formatBundle(bundle);
         var flight = bundle?.FlightExtraPricePerFan;
         var onlineBooking = bundle?.OnlineBookingFeesPerFan;
+        const extraServices = bundle.ExtraServices ? [...bundle.ExtraServices] : [];
         const matches = [...bundle.MatchBundleDetail];
-        var otherMatches = bundle.OtherMatches;
+        var otherMatches = [...bundle.OtherMatches];
         if (otherMatches != null) {
             otherMatches.forEach((match, index) => {
                 var found = bundle.MatchBundleDetail?.findIndex(m => m.Game?.idMatch == match.idMatch) > 0
@@ -55,19 +68,14 @@ export class MatchHeader extends React.PureComponent {
         if (!isEqual(prevProps.bundle?.MatchBundleDetail, matches)) {
             ticketUpgrade = this.calculTicket(matches);
         }
-        if (!isEqual(prevState.perks, perks)) {
+        if (!isEqual(prevState.perks, perks) || !isEqual(prevState.extraServices, extraServices)) {
             perksUpgrade = this.calculPerks(perks);
+            perksUpgrade += this.calculExtraServices(extraServices);
         }
 
         const [totalPerFan, totalOnSpot, total] = this.calculTotals(details, flight, onlineBooking, hotelUpgrade, ticketUpgrade, perksUpgrade);
 
-        this.setState({ bundle, details, hotel, perks, matches, otherMatches, flight, onlineBooking, hotelUpgrade, ticketUpgrade, perksUpgrade, totalPerFan, totalOnSpot, total })
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.bundle != this.props.bundle) {
-            this.initBundle(prevProps, prevState);
-        }
+        this.setState({ bundle, details, hotel, perks, extraServices, matches, otherMatches, flight, onlineBooking, hotelUpgrade, ticketUpgrade, perksUpgrade, totalPerFan, totalOnSpot, total })
     }
 
     calculHotel = (hotel) => {
@@ -87,6 +95,15 @@ export class MatchHeader extends React.PureComponent {
         var selectedPerks = perks?.filter((perk, index) => perk.Selected == true && index > 1);
         var perksUpgrade = selectedPerks.reduce((total, perk) => total + perk?.Price, 0);
         return perksUpgrade;
+    }
+
+    calculExtraServices = (extraServices) => {
+        if (extraServices && extraServices.length > 0) {
+            var selectedServices = extraServices?.filter((service) => service.isAdded == true);
+            var perksUpgrade = selectedServices.reduce((total, service) => total + service?.UnitPrice, 0);
+            return perksUpgrade;
+        }
+        return 0;
     }
 
     calculTotalOnSpot = () => {
@@ -256,7 +273,7 @@ export class MatchHeader extends React.PureComponent {
                                         </View>
 
                                         {/* flight booking fees */}
-                                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15, marginBottom:5 }}>
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15, marginBottom: 5 }}>
                                             <Text style={{ fontSize: 11.5, color: R.colors.blue, fontWeight: 'bold', textTransform: 'uppercase' }}>
                                                 + {translate('flightBookingFees')}
                                             </Text>
@@ -266,7 +283,7 @@ export class MatchHeader extends React.PureComponent {
                                         </View>
                                     </>
                                     :
-                                    <View style={{marginBottom:15}}/>
+                                    <View style={{ marginBottom: 15 }} />
                                 }
 
                                 {/* on spot serive */}

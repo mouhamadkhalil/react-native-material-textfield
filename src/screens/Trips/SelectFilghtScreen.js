@@ -29,6 +29,8 @@ export default class SelectFlightScreen extends React.Component {
         super(props);
         this.state = {
             bundle: props?.route?.params?.bundle,
+            bundleCode: props?.route?.params?.bundleCode,
+            hotelId: props?.route?.params?.hotelId,
             details: {},
             cities: [],
             airlines: [],
@@ -56,9 +58,68 @@ export default class SelectFlightScreen extends React.Component {
 
     init = async () => {
         var bundle = this.state.bundle;
+        if (this.state.bundle == null || this.state.bundle == undefined) {
+            bundle = await this.getBundle();
+            await this.getCancelPolicy(bundle);
+        }
         var details = formatDetails(bundle);
         var cities = await this.getCities();
-        this.setState({ details, cities, isLoading: false })
+
+        bundle.Days = details?.TripDays;
+        bundle.CustomPageIsClicked = false;
+        bundle.ExtraServiceCount = 0;
+        bundle.flightClass = 2;
+        bundle.firstGame = bundle?.MatchBundleDetail[0];
+        bundle.sortHotelBy = "cheapest";
+        if (bundle.OtherMatches == null)
+            bundle.OtherMatches = [];
+        bundle.RoomInfoList.map((room, index) => {
+            room.ChildAges.ChildAge = [null, null];
+            room.id = index+1;
+        })
+
+        delete bundle.RequestSource;
+        
+        this.setState({ bundle, details, cities, isLoading: false })
+    }
+
+    getBundle = () => {
+        const params = `?customize=true&validateHotelPrice=false&hotelId=${this.state.hotelId}`;
+        return get(servicesUrl.getGameV2 + this.state.bundleCode + params)
+            .then((response) => {
+                return response;
+            });
+    }
+
+    getCancelPolicy = async (bundle) => {
+        try {
+            var cancelPolicyRequest = {
+                bundleCode: bundle.BundleCode,
+                cancelPolicyID: "-1",
+                checkIn: moment(bundle.StartDate).format('YYYY-MM-DD'),
+                checkout: moment(bundle.EndDate).format('YYYY-MM-DD'),
+                flagAvail: false,
+                hotel: bundle.SelectedHotel,
+                hotelId: bundle.SelectedHotel.HotelId,
+                hotelSource: bundle.HotelSource,
+                hotelUniqueKey: bundle.uniqueKey,
+                idMatchBundle: bundle.MatchBundleDetail[0].idMatchBundle,
+                internalCode: null,
+                roomInfo: bundle.RoomInfoList
+            }
+            post(servicesUrl.viewCancelPolicy, cancelPolicyRequest)
+                .then((response) => {
+                    if (response) {
+                        var hotel = bundle.HotelList?.Items[0];
+                        hotel.HasPolicy = true;
+                        hotel.Policies = response;
+                        hotel.SelectedPolicy = response.Policy[0];
+                        bundle.SelectedHotel.HasPolicy = true;
+                        bundle.SelectedHotel.Policies = response;
+                        bundle.SelectedHotel.SelectedPolicy = response.Policy[0];
+                    }
+                });
+        } catch { }
     }
 
     getCities = () => {
@@ -74,14 +135,13 @@ export default class SelectFlightScreen extends React.Component {
             });
     }
 
-
     filterFlight = () => {
         if (!this.state.isBrowsing) {
             var bundle = this.state.bundle;
             if (this.state.flightClass != bundle.flightClass)
                 this.searchFlights(this.state.selectedCity, bundle.flightClass);
             else {
-                this.setState({ isBrowsing: true }, function () {
+                this.setState({ isBrowsing: true, showFilter: false }, function () {
                     var _this = this;
                     var params = `?pageNumber=1&pageSize=${bundle.FlightList.PageSize}`;
                     post(servicesUrl.getPagedFlights + params, bundle)
@@ -147,7 +207,7 @@ export default class SelectFlightScreen extends React.Component {
             bundle.idDepartureCity = value;
             bundle.flightClass = flightClass;
 
-            this.setState({ bundle, selectedCity, flightClass, selectedFlight, isBrowsing: true }, function () {
+            this.setState({ bundle, selectedCity, flightClass, selectedFlight, isBrowsing: true, showFilter: false }, function () {
                 post(servicesUrl.searchFlights, bundle)
                     .then((response) => {
                         if (response) {
@@ -304,6 +364,7 @@ export default class SelectFlightScreen extends React.Component {
         var bundle = { ...this.state.bundle };
         bundle.NoFlight = !bundle.NoFlight;
         if (bundle.NoFlight) {
+            bundle.SelectedFlight = null;
             bundle.FlightExtraPrice = 0;
             bundle.OnlineBookingFees = 0;
             bundle.FlightExtraPricePerFan = 0;
@@ -386,7 +447,7 @@ export default class SelectFlightScreen extends React.Component {
                 {/* match header */}
                 <MatchHeader isLoading={this.state.isLoading} bundle={{ ...this.state.bundle }} />
 
-                {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120 }}  />
+                {this.state.isLoading ? <ActivityIndicator size="large" color="blue" style={{ marginTop: 120 }} />
                     :
                     <>
                         {/* flight options */}

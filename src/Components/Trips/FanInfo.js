@@ -1,7 +1,11 @@
 import React from "react";
-import { StyleSheet, TextInput, Text, View } from "react-native";
+import { StyleSheet, TextInput, Text, View, TouchableOpacity, Image } from "react-native";
+import DatePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from "react-native-dropdown-picker";
+import { Picker } from '@react-native-picker/picker';
 import { translate } from "helpers/utils";
+import moment from "moment";
+import R from "res/R";
 
 export class FanInfo extends React.PureComponent {
     constructor(props) {
@@ -11,16 +15,18 @@ export class FanInfo extends React.PureComponent {
             Title: '',
             FirstName: '',
             LastName: '',
-            DOB: '2009-03-04',
+            DOB: '2009-04-01T00:00:00.000',
             CountryName: 'Lebanon',
             idCountry: 1107,
             PhonePrefix: '+961',
-            Phone: '',
+            Phone: this.props.index == 0 ? '1234567' : '',
             Email: this.props.index == 0 ? 'nassir@gmail.com' : '',
-            Sequence: this.props?.index + 1,
+            Sequence: this.props.index + 1,
             IsChild: false,
+            IsMainContact: this.props.index == 0,
             IsFlightOnly: false,
-            IsMainContact: this.props?.index == 0,
+            showDatePicker: false,
+            defaultDate: moment().subtract(12, 'years').format('DD-MM-YYYY')
         };
     }
 
@@ -31,7 +37,7 @@ export class FanInfo extends React.PureComponent {
                     {this.props.index == 0 ? translate("mainFan") : translate("fan") + " #" + (this.props.index + 1)}
                 </Text>
                 <View style={{ backgroundColor: "white" }}>
-                    
+
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>
                         {translate("title")}*
                         </Text>
@@ -42,7 +48,6 @@ export class FanInfo extends React.PureComponent {
                                     { label: "Mr.", value: "Mr." },
                                     { label: "Ms.", value: "Ms." },
                                 ]}
-                                defaultValue={this.state.country}
                                 containerStyle={{ height: 50 }}
                                 style={{ backgroundColor: "#fafafa" }}
                                 itemStyle={{ justifyContent: "flex-start", }}
@@ -81,8 +86,55 @@ export class FanInfo extends React.PureComponent {
                         </View>
                         <View style={{ marginBottom: 30 }}>
                             <Text style={{ color: "gray", fontWeight: "bold" }}>
-                                {translate("email") }{ this.state.IsMainContact? '*' : '' }
-                                </Text>
+                                {translate("dateOfBirth")}*
+                            </Text>
+                            <TouchableOpacity style={{ borderBottomWidth: 0.5 }} onPress={() => this.setState({ showDatePicker: true })}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ height: 30, fontSize: 20, fontWeight: 'bold', width: '90%' }}>
+                                        {moment(this.state.DOB).format('DD.MM.YYYY')}
+                                    </Text>
+                                    <Image source={R.images.calendar} style={{ width: 20, height: 20 }} />
+                                </View>
+                            </TouchableOpacity>
+                            {this.state.showDatePicker && (
+                                <DatePicker
+                                    value={new Date(this.state.DOB)}
+                                    mode="date"
+                                    display="default"
+                                    maximumDate={new Date(this.state.defaultDate)}
+                                    onChange={(event, date) => {
+                                        this.setState({ DOB: moment(date).format('YYYY-MM-DD'), showDatePicker: false }, function () {
+                                            this.props.updateContact(this.props.index, this.state);
+                                        })
+                                    }
+                                    }
+                                />
+                            )}
+                        </View>
+                        <View style={{ marginBottom: 30 }}>
+                            <Text style={{ color: "gray", fontWeight: "bold" }}>
+                                {translate("country")}*
+                            </Text>
+                            <Picker
+                                selectedValue={this.state.idCountry}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    if (this.props.countries) {
+                                        var country = this.props.countries[itemIndex];
+                                        this.setState({ idCountry: country.value, CountryName: country.label, PhonePrefix:country.phonePrefix }, function () {
+                                            this.props.updateContact(this.props.index, this.state);
+                                        })
+                                    }
+                                }
+                                }
+                                style={{ width: '100%', height: 40 }}
+                            >
+                                {this.props.countries?.map(function (country) { return <Picker.Item key={country.label} label={country.label} value={country.value} /> })}
+                            </Picker>
+                        </View>
+                        <View style={{ marginBottom: 30 }}>
+                            <Text style={{ color: "gray", fontWeight: "bold" }}>
+                                {translate("email")}{this.state.IsMainContact ? '*' : ''}
+                            </Text>
                             <TextInput
                                 autoCapitalize="none"
                                 type="email"
@@ -95,8 +147,8 @@ export class FanInfo extends React.PureComponent {
                         </View>
                         <View style={{ marginBottom: 30 }}>
                             <Text style={{ color: "gray", fontWeight: "bold" }}>
-                                {translate("phoneNumber") } {this.state.IsMainContact? '*' : '' }
-                                </Text>
+                                {translate("phoneNumber")} {this.state.IsMainContact ? '*' : ''}
+                            </Text>
                             <TextInput
                                 value={this.state.Phone}
                                 keyboardType="number-pad"
