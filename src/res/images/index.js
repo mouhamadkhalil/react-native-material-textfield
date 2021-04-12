@@ -81,6 +81,8 @@ const images = {
     teams_bg: require('../../../assets/images/bg/teams.jpg'),
     leagues_bg: require('../../../assets/images/bg/leagues.jpg'),
     football_bg: require('../../../assets/images/bg/football.jpg'),
+    whatToDo_bg: require('../../../assets/images/bg/what-to-do.jpg'),
+    whereToEat_bg: require('../../../assets/images/bg/where-to-eat.jpg'),
 
     /* brand */
     flyfoot: require('../../../assets/images/flyfoot.png'),

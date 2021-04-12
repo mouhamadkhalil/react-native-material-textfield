@@ -23,8 +23,8 @@ import CheckoutFanInfoScreen from "screens/Trips/CheckoutFanInfoScreen";
 import CheckoutSummaryScreen from "screens/Trips/CheckoutSummaryScreen";
 import CheckoutPaymentScreen from "screens/Trips/CheckoutPaymentScreen";
 
-import WhereToEatScreen from "components/Schedule/WhereToEat";
-
+import WhatToDoScreen from "screens/OnSpot/WhatToDo";
+import WhereToEatScreen from "screens/OnSpot/WhereToEat";
 
 import MyTripsScreen from "components/SpecialGames/MyTrips";
 import MyProfileScreen from "components/Profile/MyProfile";
@@ -32,7 +32,6 @@ import QuizScreen from "components/WebView/Quiz";
 import LeaderBoardScreen from "components/WebView/LeaderBoard";
 import ActivityCardScreen from "components/Schedule/ActivityCard";
 import RestaurantScreen from "components/Schedule/Restaurant";
-import WhatToDoScreen from "components/Schedule/WhatToDo";
 import MuseumScreen from "components/Schedule/Museum";
 import SagradaScreen from "components/Schedule/SagradaFamilia";
 import NightLifeScreen from "components/Schedule/NightLife";
@@ -84,6 +83,23 @@ const TripStackNavigator = ({ navigation }) => {
     );
 };
 
+const WhatToDoStackNavigator = ({ navigation }) => {
+    return (
+        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
+            <Stack.Screen name="whatToDo" navigationProps={navigation} component={WhatToDoScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="tripOverview" navigationProps={navigation} component={TripOverViewScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="experiences" navigationProps={navigation} component={ExperiencesScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="summary" navigationProps={navigation} component={SummaryScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutFanInfo" navigationProps={navigation} component={CheckoutFanInfoScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutSummary" navigationProps={navigation} component={CheckoutSummaryScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="checkoutPayment" navigationProps={navigation} component={CheckoutPaymentScreen} options={HeaderOptions({ navigation })} />
+            
+        </Stack.Navigator>
+    );
+};
 
 const WhereToEatStackNavigator = ({ navigation }) => {
     return (
@@ -102,7 +118,6 @@ const WhereToEatStackNavigator = ({ navigation }) => {
         </Stack.Navigator>
     );
 };
-
 
 const AllGamesStackNavigator = ({ navigation }) => {
     return (
@@ -129,7 +144,7 @@ const MyBookingStackNavigator = ({ navigation }) => {
             <Stack.Screen name="activity card" navigationProps={navigation} component={ActivityCardScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="WhereToEat" navigationProps={navigation} component={WhereToEatScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="restaurant" navigationProps={navigation} component={RestaurantScreen} />
-            <Stack.Screen name="WhatToDo" navigationProps={navigation} component={WhatToDoScreen} />
+            <Stack.Screen name="WhereToGo" navigationProps={navigation} component={WhereToGoScreen} />
             <Stack.Screen name="museum" navigationProps={navigation} component={MuseumScreen} />
             <Stack.Screen name="sagrada" navigationProps={navigation} component={SagradaScreen} />
             <Stack.Screen name="nightlife" navigationProps={navigation} component={NightLifeScreen} />
@@ -168,4 +183,4 @@ const ManageTripStackNavigator = ({ navigation }) => {
 
 
 
-export { StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator, WhereToEatStackNavigator };
+export { StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator,WhatToDoStackNavigator, WhereToEatStackNavigator };
