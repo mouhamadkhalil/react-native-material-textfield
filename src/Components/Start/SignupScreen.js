@@ -94,13 +94,23 @@ export default class SignUpScreen extends React.Component {
             else {
                 post(`/mobile/profile/Create`, data)
                     .then(response => {
+                        console.log("my response", response);
+                        console.log("my response error", response.Message);
+                        console.log("my check state", this.state.checked)
                         if (response.ErrorId) {
                             ToastAndroid.showWithGravity(
-                                'Something went wrong, please try again later !',
+                                response.Message,
                                 ToastAndroid.LONG,
                                 ToastAndroid.CENTER
                             );
                             window.location.reload();
+                        }
+                        if (this.state.checked === false) {
+                            ToastAndroid.showWithGravity(
+                                'Check I agree first ',
+                                ToastAndroid.LONG,
+                                ToastAndroid.CENTER
+                            );
                         }
                         else {
                             let token_id = response.Token;
@@ -264,7 +274,7 @@ export default class SignUpScreen extends React.Component {
                             </View>
                         </View>
                     </TouchableOpacity>
-                  
+
                     <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, marginLeft: 20 }}>
                         <CheckBox
                             title='By Signing up, i agree with'
