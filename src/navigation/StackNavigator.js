@@ -23,8 +23,9 @@ import CheckoutFanInfoScreen from "screens/Trips/CheckoutFanInfoScreen";
 import CheckoutSummaryScreen from "screens/Trips/CheckoutSummaryScreen";
 import CheckoutPaymentScreen from "screens/Trips/CheckoutPaymentScreen";
 
-import WhatToDoScreen from "screens/OnSpot/WhatToDo";
-import WhereToEatScreen from "screens/OnSpot/WhereToEat";
+import WhatToDoScreen from "screens/OnSpot/WhatToDoScreen";
+import WhereToEatScreen from "screens/OnSpot/WhereToEatScreen";
+import PlaceDetailsScreen from "screens/OnSpot/PlaceDetailsScreen";
 
 import MyTripsScreen from "components/SpecialGames/MyTrips";
 import MyProfileScreen from "components/Profile/MyProfile";
@@ -87,6 +88,8 @@ const WhatToDoStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
             <Stack.Screen name="whatToDo" navigationProps={navigation} component={WhatToDoScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="placeDetails" navigationProps={navigation} component={PlaceDetailsScreen} options={HeaderOptions({ navigation })} />
+            
             <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="tripOverview" navigationProps={navigation} component={TripOverViewScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />
@@ -105,6 +108,8 @@ const WhereToEatStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
             <Stack.Screen name="whereToEat" navigationProps={navigation} component={WhereToEatScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="placeDetails" navigationProps={navigation} component={PlaceDetailsScreen} options={HeaderOptions({ navigation })} />
+
             <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="tripOverview" navigationProps={navigation} component={TripOverViewScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} options={HeaderOptions({ navigation })} />

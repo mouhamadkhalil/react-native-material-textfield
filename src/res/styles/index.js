@@ -29,12 +29,6 @@ const styles = {
         height: 20,
         width: 20,
     },
-    star: {
-        color: "#f9d155",
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
     loadMoreButton: {
         backgroundColor: colors.lightGreen,
         width: 150,

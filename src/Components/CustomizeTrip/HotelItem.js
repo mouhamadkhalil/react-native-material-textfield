@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CheckBox, Tooltip } from 'react-native-elements';
-import RatingStars from "components/Common/RatingStars";
+import RatingStars from "components/Trips/RatingStars";
 import { translate } from "helpers/utils.js";
 import R from "res/R";
 

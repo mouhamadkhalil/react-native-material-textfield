@@ -27,7 +27,7 @@ import Svg from 'react-native-remote-svg';
 import RangeSlider from 'rn-range-slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { formatDetails, formatGames } from "helpers/tripHelper";
-import RatingStars from "components/Common/RatingStars";
+import RatingStars from "components/Trips/RatingStars";
 
 const data = [
     {

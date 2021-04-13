@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity, Modal } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import RatingStars from "components/Common/RatingStars";
+import RatingStars from "components/Trips/RatingStars";
 import { getHotelImages } from "helpers/tripHelper";
 import { translate } from "helpers/utils";
 import moment from 'moment';
@@ -63,7 +63,7 @@ export class TripDetails extends React.PureComponent {
                     </Text>
                 </View>
 
-                {this.state.matchBundleHotels.map((bundleHotel) => {
+                {this.state.matchBundleHotels?.map((bundleHotel) => {
                     var hotel = bundleHotel.SelectedHotel;
                     return(
                     /* hotel */ 

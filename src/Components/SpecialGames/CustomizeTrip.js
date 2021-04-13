@@ -16,7 +16,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CheckBox, Tooltip } from 'react-native-elements';
 import Svg from 'react-native-remote-svg';
-import RatingStars from "components/Common/RatingStars";
+import RatingStars from "components/Trips/RatingStars";
 
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";

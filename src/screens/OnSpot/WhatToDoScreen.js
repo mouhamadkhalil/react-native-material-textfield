@@ -28,7 +28,7 @@ export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 export const itemHeight = itemWidth;
 
-export default class WhatToDo extends React.Component {
+export default class WhatToDoScreen extends React.Component {
 
     constructor(props) {
         super(props);
@@ -50,6 +50,10 @@ export default class WhatToDo extends React.Component {
         this.setState({ whatToDo, isLoading: false });
     }
 
+    navigate = (item) => {
+        this.props.navigation.navigate('placeDetails', { place: item });
+    }
+
     keyExtractor = (item) => {
         return "category-" + item.CategoryName;
     }
@@ -57,7 +61,7 @@ export default class WhatToDo extends React.Component {
     renderRestaurant = ({ item }) => {
         const image = { uri: item.ImageReference };
         return (
-            <Pressable key={'rest' + item.Name} style={styles.card}>
+            <Pressable key={'rest' + item.Name} style={styles.card} onPress={() => this.navigate(item)}>
                 <View style={{flex:1, flexDirection:'column'}}>
                     <Image source={image} style={styles.restaurantImage} />
                     <Text style={styles.restaurantName}>
