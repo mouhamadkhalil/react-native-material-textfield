@@ -10,6 +10,7 @@ import {
     Dimensions,
     ImageBackground
 } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel from 'react-native-snap-carousel';
 import { formatWhereToEat } from "helpers/onSpotHelper";
@@ -62,7 +63,7 @@ export default class WhatToDoScreen extends React.Component {
         const image = { uri: item.ImageReference };
         return (
             <Pressable key={'rest' + item.Name} style={styles.card} onPress={() => this.navigate(item)}>
-                <View style={{flex:1, flexDirection:'column'}}>
+                <View style={{ flex: 1, flexDirection: 'column' }}>
                     <Image source={image} style={styles.restaurantImage} />
                     <Text style={styles.restaurantName}>
                         {item.Name}
@@ -101,6 +102,14 @@ export default class WhatToDoScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
+                <LinearGradient
+                    colors={["#FF6310", "#DA353D"]}
+                    style={styles.linearGradient}
+                    start={[0, 0]}
+                    end={[0, 1]}
+                    locations={[0, 1]}
+                >
+                </LinearGradient>
                 <ImageBackground source={R.images.whatToDo_bg} style={styles.bg}>
                     {this.state.isLoading ?
                         <ActivityIndicator color={R.colors.blue} />
@@ -155,10 +164,19 @@ const styles = StyleSheet.create({
     },
     restaurantName: {
         position: 'absolute',
-        bottom:0,
-        start:10,
+        bottom: 0,
+        start: 10,
         fontSize: 20,
         fontWeight: 'bold',
         color: 'white'
+    },
+    linearGradient: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: 500
     },
 });
