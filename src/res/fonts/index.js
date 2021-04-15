@@ -1,7 +1,8 @@
 const fonts = {
-  'Hellix-Bold': require('./Hellix-Bold.ttf'),
-  'Hellix-Regular': require('./Hellix-Regular.ttf'),
-  'BarlowCondensed-Bold': require('./BarlowCondensed-Bold.ttf'),
+    'Hellix-Bold': require('./Hellix-Bold.ttf'),
+    'Hellix-Regular': require('./Hellix-Regular.ttf'),
+    'BarlowCondensed-Bold': require('./BarlowCondensed-Bold.ttf'),
+    'Plaak': require('./Plaak3Trial.ttf')
 }
 
 export default fonts

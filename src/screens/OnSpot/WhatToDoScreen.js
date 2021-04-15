@@ -103,22 +103,27 @@ export default class WhatToDoScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <LinearGradient
-                    colors={["#FF6310", "#DA353D"]}
+                    colors={["#8a21ac", "#5d05d4"]}
                     style={styles.linearGradient}
                     start={[0, 0]}
                     end={[0, 1]}
                     locations={[0, 1]}
                 >
                 </LinearGradient>
-                <ImageBackground source={R.images.whatToDo_bg} style={styles.bg}>
+                <ImageBackground style={{ width: "100%" }} source={R.images.whatToDo_bg} imageStyle={styles.bg}>
                     {this.state.isLoading ?
                         <ActivityIndicator color={R.colors.blue} />
                         :
-                        <FlatList
-                            data={this.state.whatToDo}
-                            keyExtractor={this.keyExtractor}
-                            renderItem={this.renderItem}
-                        />
+                        <>
+                            <Text style={{ color: "#fff", fontSize: 50, textTransform: "uppercase", marginStart: "auto", marginEnd: "auto", fontFamily: "Plaak", marginTop: 30 }}>What to do</Text>
+                            <Text style={{ color: "#fff", fontSize: 14, textTransform: "uppercase", marginStart: "auto", marginEnd: "auto", fontWeight: "bold" }}>In Barcelona</Text>
+                            <Text style={{ color: "#fff", textAlign: "center", marginTop: 15 }}>Liquorice pudding jelly caramels cheesecake tart. Carrot cake jujubes muffin cake pie.</Text>
+                            <FlatList
+                                data={this.state.whatToDo}
+                                keyExtractor={this.keyExtractor}
+                                renderItem={this.renderItem}
+                            />
+                        </>
                     }
                 </ImageBackground>
             </View>
@@ -133,8 +138,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF",
     },
     bg: {
-        flex: 1,
-        resizeMode: "cover",
+        resizeMode: "contain",
+        alignSelf: "flex-end",
+        marginBottom: -350
     },
     box: { width: "100%", marginTop: 30, alignSelf: 'center' },
     pageTitleWrap: {
@@ -177,6 +183,6 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         width: "100%",
-        height: 500
+        height: "100%"
     },
 });
