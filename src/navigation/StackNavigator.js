@@ -4,9 +4,10 @@ import Login from "components/Start/LoginScreen";
 import Signup from "components/Start/SignupScreen";
 import SpecialGames from "components/SpecialGames/SpecialGame";
 import AnyDayScreen from "components/Schedule/AnyDayScreen";
-import InfoScreen from "components/More/Info";
+import MoreScreen from "screens/More/MoreScreen";
+import ContactUsScreen from "screens/ContactUs/ContactUsScreen";
+
 import Help1Screen from "components/Help/Help1Screen";
-import Help2Screen from "components/Help/Help2Screen";
 import ManageTripScreen from 'components/ManageTrip/ManageTripScreen'
 import TeamsScreen from "screens/Trips/TeamsScreen";
 import LeaguesScreen from "screens/Trips/LeaguesScreen";
@@ -163,7 +164,7 @@ const MyBookingStackNavigator = ({ navigation }) => {
 const MoreStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="more" navigationProps={navigation} component={InfoScreen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="more" navigationProps={navigation} component={MoreScreen} options={HeaderOptions({ navigation })} />
             <Stack.Screen name="FAQ" navigationProps={navigation} component={Help1Screen} options={HeaderOptions({ navigation })} />
         </Stack.Navigator>
     );
@@ -172,7 +173,7 @@ const MoreStackNavigator = ({ navigation }) => {
 const ContactStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="contact us" navigationProps={navigation} component={Help2Screen} options={HeaderOptions({ navigation })} />
+            <Stack.Screen name="contactUs" navigationProps={navigation} component={ContactUsScreen} options={HeaderOptions({ navigation })} />
         </Stack.Navigator>
     );
 };

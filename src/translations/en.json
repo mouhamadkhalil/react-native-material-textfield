@@ -118,11 +118,13 @@
     "dateOfBirth": "Date of birth",
     "country" : "Country",
     "nationality": "Nationality",
+    "phone" : "Phone",
+    "address": "Address",
+    "description": "Description",
     "chatWithUs": "chat with us?",
     "messenger": "Messenger",
     "whatsapp": "Whatsapp",
     "feedback": "Feedback",
-    "msgNotFound": "Not found!",
     "yourContactDetails": "Your Contact Details",
     "name": "Name",
     "surname": "Surname",
@@ -131,5 +133,9 @@
     "phoneNumber": "Phone Number",
     "sendRequest": "SEND REQUEST",
     "addOtherGame": "Add other game to this trip",
-    "closeAll": "Close all"
+    "closeAll": "Close all",
+    "submit" : "Submit",
+    "msgNotFound": "Not found!",
+    "msgFeedbackSent" : "Feedback has been sent!",
+    "msgErrorOccurred": "Error occurred please try again later!"
 }

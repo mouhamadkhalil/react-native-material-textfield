@@ -34,6 +34,7 @@ export const servicesUrl = {
     getExtraServices: '/mobile/game/getExtraServices',
     addGames: "/mobile/game/addGames",
     intent: "/mobile/game/stripe/intent",
+    contactUs: "/mobile/about/contactus"
 }
 
 export async function setUserCredentials(email, password) {
@@ -41,7 +42,7 @@ export async function setUserCredentials(email, password) {
         await SecureStore.setItemAsync('email', email);
         await SecureStore.setItemAsync('password', password);
     } catch (error) {
-        console.error("Error: ", error);
+        global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
     }
 }
 
@@ -55,7 +56,7 @@ export async function getUserCredentials() {
         if (password == null)
             password = '';
     } catch (error) {
-        console.error("Error: ", error);
+        global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
     }
     return [email, password];
 }
@@ -68,7 +69,7 @@ getToken = async () => {
             return value
         }
     } catch (error) {
-        console.error("Error: ", error);
+        global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
     }
 };
 getLocation = async () => {
@@ -78,7 +79,7 @@ getLocation = async () => {
             return value
         }
     } catch (error) {
-        console.error("Error: ", error);
+        global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
     }
 };
 
@@ -97,7 +98,7 @@ export async function get(path) {
         },
     })
         .then((res) => res.json())
-        .catch((error) => console.error("Error: ", error))
+        .catch((error) =>global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
         .then((response) => {
             return response;
         });
@@ -120,7 +121,7 @@ export async function getWithToken(path) {
         },
     })
         .then((res) => res.json())
-        .catch((error) => console.error("Error: ", error))
+        .catch((error) => global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
         .then((response) => {
             return response;
         });
@@ -144,7 +145,7 @@ export async function post(path, data) {
         body: JSON.stringify(data)
     })
         .then((res) => res.json())
-        .catch((error) => console.error("Error: ", error))
+        .catch((error) => global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
         .then((response) => {
             return response;
         });
@@ -166,7 +167,7 @@ export async function postLogin(path, data) {
         body: JSON.stringify(data)
     })
         .then((res) => res.json())
-        .catch((error) => console.error("Error: ", error))
+        .catch((error) => global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
         .then((response) => {
             return response;
         });

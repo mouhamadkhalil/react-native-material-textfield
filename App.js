@@ -5,6 +5,7 @@ import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from "./src/navigation/DrawerNavigator";
+import Toast from "react-native-fast-toast";
 import * as Location from 'expo-location';
 import { setI18nConfig } from 'helpers/utils.js';
 import fonts from 'fonts';
@@ -47,6 +48,7 @@ export default class App extends React.Component {
       this.state.fontsLoaded ?
         <NavigationContainer>
           <DrawerNavigator />
+          <Toast ref={(ref) => global['toast'] = ref} />
         </NavigationContainer>
         :
         <AppLoading />)

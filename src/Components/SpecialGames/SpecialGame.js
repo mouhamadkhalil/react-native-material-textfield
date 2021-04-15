@@ -155,7 +155,8 @@ export default class specialGames extends React.Component {
                 const allLeagues = ["@allLeagues", JSON.stringify(response.AllLeagues)];
                 const whatToDo = ["@whatToDo", JSON.stringify(response.WhatToDo)];
                 const whereToEat = ["@whereToEat", JSON.stringify(response.WhereToEat)];
-                AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat]);
+                const menuLinks = ["@menuLinks", JSON.stringify(response.MenuLinks)];
+                AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat, menuLinks]);
                 this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: response.GamesList.PageCount, pageSize: response.GamesList.PageSize, isLoading: false });
             });
     };
