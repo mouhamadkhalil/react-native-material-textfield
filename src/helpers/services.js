@@ -1,6 +1,8 @@
 import * as SecureStore from 'expo-secure-store';
-import {  API_TOKEN } from "@env";
-const API_URL = "https://beta.fly-foot.com/api"
+import { translate } from "helpers/utils";
+
+export const Server_URL = "https://beta.fly-foot.com/"
+export const API_URL = "https://beta.fly-foot.com/api"
 
 export const servicesUrl = {
     /* GET */
@@ -62,7 +64,7 @@ export async function getUserCredentials() {
 }
 
 
-getToken = async () => {
+export async function getToken () {
     try {
         const value = await SecureStore.getItemAsync('token');
         if (value !== null) {
@@ -72,6 +74,7 @@ getToken = async () => {
         global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
     }
 };
+
 getLocation = async () => {
     try {
         const value = await SecureStore.getItemAsync('location');
@@ -172,6 +175,31 @@ export async function postLogin(path, data) {
             return response;
         });
 }
+
+export async function postConnection(path, connectionId) {
+    const token = await getToken();
+    const location = await getLocation();
+    const url = `${API_URL}${path}`;
+    return fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "ff-version": 10,
+            "ff-language": "en",
+            "is-mobile": true,
+            "gps_location": location,
+            "Authorization": 'Bearer ' + token,
+            "signalr-connectionid" : connectionId
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
+        .then((response) => {
+            return response;
+        });
+}
+
 
 
 

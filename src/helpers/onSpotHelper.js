@@ -1,7 +1,3 @@
-import moment from 'moment';
-import { translate } from 'helpers/utils';
-import R from "res/R";
-
 
 export function formatWhereToEat(whereToEat) {
 
