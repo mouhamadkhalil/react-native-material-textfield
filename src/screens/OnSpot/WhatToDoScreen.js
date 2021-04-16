@@ -82,19 +82,17 @@ export default class WhatToDoScreen extends React.Component {
                             {item.CategoryName}
                         </Text>
                     </View>
-                    <View style={{ marginBottom: 0, paddingBottom: 50 }}>
-                        <Carousel
-                            layout={"default"}
-                            data={item.Places}
-                            renderItem={this.renderRestaurant}
-                            sliderWidth={sliderWidth}
-                            itemWidth={itemWidth}
-                            itemHeight={itemHeight}
-                            inactiveSlideScale={0.70}
-                            inactiveSlideOpacity={0.7}
-                            activeSlideAlignment={'start'}
-                        />
-                    </View>
+                    <Carousel
+                        layout={"default"}
+                        data={item.Places}
+                        renderItem={this.renderRestaurant}
+                        sliderWidth={sliderWidth}
+                        itemWidth={itemWidth}
+                        itemHeight={itemHeight}
+                        inactiveSlideScale={0.70}
+                        inactiveSlideOpacity={0.7}
+                        activeSlideAlignment={'start'}
+                    />
                 </View>
             </>
         )
@@ -117,11 +115,12 @@ export default class WhatToDoScreen extends React.Component {
                         <>
                             <Text style={{ color: "#fff", fontSize: 50, textTransform: "uppercase", marginStart: "auto", marginEnd: "auto", fontFamily: "Plaak", marginTop: 30 }}>What to do</Text>
                             <Text style={{ color: "#fff", fontSize: 14, textTransform: "uppercase", marginStart: "auto", marginEnd: "auto", fontWeight: "bold" }}>In Barcelona</Text>
-                            <Text style={{ color: "#fff", textAlign: "center", marginTop: 15 }}>Liquorice pudding jelly caramels cheesecake tart. Carrot cake jujubes muffin cake pie.</Text>
+                            <Text style={{ color: "#fff", textAlign: "center", marginTop: 15, paddingStart: 30, paddingEnd: 30 }}>Liquorice pudding jelly caramels cheesecake tart. Carrot cake jujubes muffin cake pie.</Text>
                             <FlatList
                                 data={this.state.whatToDo}
                                 keyExtractor={this.keyExtractor}
                                 renderItem={this.renderItem}
+                            // style={{ borderColor: "red", borderWidth: 2 }}
                             />
                         </>
                     }
@@ -155,7 +154,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "white",
         fontSize: 20,
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        marginBottom: 30
     },
     card: {
         width: itemWidth - 20,
@@ -172,9 +172,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         start: 10,
-        fontSize: 20,
+        end: 10,
+        bottom: 10,
+        fontSize: 24,
         fontWeight: 'bold',
-        color: 'white'
+        color: 'white',
     },
     linearGradient: {
         alignItems: 'center',
