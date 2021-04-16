@@ -36,6 +36,8 @@ const images = {
     norefundWhite: require('../../../assets/images/icons/norefund-white.png'),
     connectionIcon: require('../../../assets/images/icons/connection-icon.svg'),
 
+    whatToDoIcon: require('../../../assets/images/icons/what-to-do-2x.png'),
+
     /*perks*/
     onspot: require('../../../assets/images/icons/onspot.png'),
     onspotWhite: require('../../../assets/images/icons/onspot-white.png'),
@@ -81,7 +83,8 @@ const images = {
     teams_bg: require('../../../assets/images/bg/teams.jpg'),
     leagues_bg: require('../../../assets/images/bg/leagues.jpg'),
     football_bg: require('../../../assets/images/bg/football.jpg'),
-    whatToDo_bg: require('../../../assets/images/bg/what-to-do.jpg'),
+    // whatToDo_bg: require('../../../assets/images/bg/what-to-do.jpg'),
+    whatToDo_bg: require('../../../assets/images/bg/bg-field.png'),
     whereToEat_bg: require('../../../assets/images/bg/where-to-eat.jpg'),
 
     /* brand */

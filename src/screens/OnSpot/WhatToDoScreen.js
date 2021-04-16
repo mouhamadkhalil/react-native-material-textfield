@@ -10,6 +10,7 @@ import {
     Dimensions,
     ImageBackground
 } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Carousel from 'react-native-snap-carousel';
 import { formatWhereToEat } from "helpers/onSpotHelper";
@@ -62,7 +63,7 @@ export default class WhatToDoScreen extends React.Component {
         const image = { uri: item.ImageReference };
         return (
             <Pressable key={'rest' + item.Name} style={styles.card} onPress={() => this.navigate(item)}>
-                <View style={{flex:1, flexDirection:'column'}}>
+                <View style={{ flex: 1, flexDirection: 'column' }}>
                     <Image source={image} style={styles.restaurantImage} />
                     <Text style={styles.restaurantName}>
                         {item.Name}
@@ -81,19 +82,17 @@ export default class WhatToDoScreen extends React.Component {
                             {item.CategoryName}
                         </Text>
                     </View>
-                    <View style={{ marginBottom: 0, paddingBottom: 50 }}>
-                        <Carousel
-                            layout={"default"}
-                            data={item.Places}
-                            renderItem={this.renderRestaurant}
-                            sliderWidth={sliderWidth}
-                            itemWidth={itemWidth}
-                            itemHeight={itemHeight}
-                            inactiveSlideScale={0.70}
-                            inactiveSlideOpacity={0.7}
-                            activeSlideAlignment={'start'}
-                        />
-                    </View>
+                    <Carousel
+                        layout={"default"}
+                        data={item.Places}
+                        renderItem={this.renderRestaurant}
+                        sliderWidth={sliderWidth}
+                        itemWidth={itemWidth}
+                        itemHeight={itemHeight}
+                        inactiveSlideScale={0.70}
+                        inactiveSlideOpacity={0.7}
+                        activeSlideAlignment={'start'}
+                    />
                 </View>
             </>
         )
@@ -101,15 +100,29 @@ export default class WhatToDoScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <ImageBackground source={R.images.whatToDo_bg} style={styles.bg}>
+                <LinearGradient
+                    colors={["#8a21ac", "#5d05d4"]}
+                    style={styles.linearGradient}
+                    start={[0, 0]}
+                    end={[0, 1]}
+                    locations={[0, 1]}
+                >
+                </LinearGradient>
+                <ImageBackground style={{ width: "100%" }} source={R.images.whatToDo_bg} imageStyle={styles.bg}>
                     {this.state.isLoading ?
                         <ActivityIndicator color={R.colors.blue} />
                         :
-                        <FlatList
-                            data={this.state.whatToDo}
-                            keyExtractor={this.keyExtractor}
-                            renderItem={this.renderItem}
-                        />
+                        <>
+                            <Text style={{ color: "#fff", fontSize: 50, textTransform: "uppercase", marginStart: "auto", marginEnd: "auto", fontFamily: "Plaak", marginTop: 30 }}>What to do</Text>
+                            <Text style={{ color: "#fff", fontSize: 14, textTransform: "uppercase", marginStart: "auto", marginEnd: "auto", fontWeight: "bold" }}>In Barcelona</Text>
+                            <Text style={{ color: "#fff", textAlign: "center", marginTop: 15, paddingStart: 30, paddingEnd: 30 }}>Liquorice pudding jelly caramels cheesecake tart. Carrot cake jujubes muffin cake pie.</Text>
+                            <FlatList
+                                data={this.state.whatToDo}
+                                keyExtractor={this.keyExtractor}
+                                renderItem={this.renderItem}
+                            // style={{ borderColor: "red", borderWidth: 2 }}
+                            />
+                        </>
                     }
                 </ImageBackground>
             </View>
@@ -124,8 +137,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF",
     },
     bg: {
-        flex: 1,
-        resizeMode: "cover",
+        resizeMode: "contain",
+        alignSelf: "flex-end",
+        marginBottom: -350
     },
     box: { width: "100%", marginTop: 30, alignSelf: 'center' },
     pageTitleWrap: {
@@ -140,7 +154,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "white",
         fontSize: 20,
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        marginBottom: 30
     },
     card: {
         width: itemWidth - 20,
@@ -155,10 +170,21 @@ const styles = StyleSheet.create({
     },
     restaurantName: {
         position: 'absolute',
-        bottom:0,
-        start:10,
-        fontSize: 20,
+        bottom: 0,
+        start: 10,
+        end: 10,
+        bottom: 10,
+        fontSize: 24,
         fontWeight: 'bold',
-        color: 'white'
+        color: 'white',
+    },
+    linearGradient: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%"
     },
 });
