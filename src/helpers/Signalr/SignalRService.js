@@ -10,9 +10,9 @@ exports.SignalrService = void 0;
 var react = require("react-native");
 var signalR = require("@microsoft/signalr");
 var services = require("../services");
+var signalRModels = require("./Signalr-models");
 var SignalrService = /** @class */ (function () {
     function SignalrService() {
-        var _this = this;
         this.hubConnection = null;
         this.connectionState = signalR.HubConnectionState.Disconnected;
         this.connectionUrl = "";
@@ -21,20 +21,21 @@ var SignalrService = /** @class */ (function () {
         this.connectionChanged = react.DeviceEventEmitter;
         this.channelCreated = react.DeviceEventEmitter;
         this.channelRemoved = react.DeviceEventEmitter;
-        this.connect = function () {
-            if (services.getToken() == null) {
-                return;
-            }
-            if (!_this.hubConnection || _this.hubConnection.state !== signalR.HubConnectionState.Connected) {
-                _this.startConnection();
-                _this.addListeners();
-            }
-        };
-        this.connectionUrl = services.API_URL + '/mainhub';
+        this.connectionUrl = services.Server_URL + 'mainhub';
     }
 
+    SignalrService.prototype.connect = function () {
+        if (services.getToken() == null) {
+            return;
+        }
+        if (!this.hubConnection || this.hubConnection.state !== signalR.HubConnectionState.Connected) {
+            this.startConnection();
+            this.addListeners();
+        }
+    };
+
     SignalrService.prototype.getConnectionId = function () {
-        return 1;//this.hubConnection?.connectionId;
+        return this.hubConnection?.connectionId;
     };
 
     SignalrService.prototype.getConnection = function () {
@@ -67,18 +68,19 @@ var SignalrService = /** @class */ (function () {
                 console.log("SignalR connection success! connectionId: " + _this.hubConnection.connectionId + " ");
                 _this.connectionState = _this.hubConnection.state;
                 _this.connectionChanged.emit(_this.hubConnection.state);
+                _this.UpdateSignalrUserInfo();
             })
             .catch(function (err) {
                 console.log('error while establishing signalr connection: ' + err);
                 _this.connectionState = _this.hubConnection.state;
-                setTimeout(function () { _this.connect(); }, 1000 * 60);
+                setTimeout(function () { _this.connect(); }, 1000 * 120);
                 _this.connectionChanged.emit(_this.hubConnection.state);
             });
         this.hubConnection.onclose(function (error) {
             _this.connectionState = _this.hubConnection.state;
             _this.connectionChanged.emit(_this.hubConnection.state);
             console.log("xxxyyy, onClose", error);
-            setTimeout(function () { _this.connect(); }, 1000 * 60);
+            setTimeout(function () { _this.connect(); }, 1000 * 60 * 60 * 3);
         });
     };
 
@@ -86,7 +88,7 @@ var SignalrService = /** @class */ (function () {
         var _this = this;
         this.hubConnection.on("ReceiveChat", function (chatModel, channelName) {
             console.log("ReceiveChat", chatModel, channelName);
-            _this.chatReceived.emit({ ChannelName: channelName, ChatModel: chatModel });
+            _this.chatReceived.emit('chatReceived', { ChannelName: channelName, ChatModel: chatModel });
         });
         this.hubConnection.on("newUserConnected", function (data) {
             console.log("newUserConnected", data);
@@ -94,18 +96,82 @@ var SignalrService = /** @class */ (function () {
         });
         this.hubConnection.on("ChannelRemoved", function (data) {
             console.log("ChannelRemoved", data);
-            _this.channelCreated.emit(data);
+            _this.channelRemoved.emit(data);
         });
         this.hubConnection.on("NewChannel", function (data) {
             console.log("NewChannel", data);
-            _this.channelRemoved.emit(data);
+            _this.channelCreated.emit(data);
         });
     };
 
     SignalrService.prototype.UpdateSignalrUserInfo = function () {
-        return services.postConnection('/Notifications/UpdateSignalrUserInfo', this.getConnectionId())
+        return services.postConnection('/backend/Notifications/UpdateSignalrUserInfo', this.getConnectionId(), null)
             .then((response) => { return response; });
     };
+
+    SignalrService.prototype.getChannels = function (channelName) {
+        var params = '';
+        if (channelName) {
+            params = '?channelName=' + channelName;
+        }
+        return services.getConnection('/backend/Notifications/getChannels' + params, this.getConnectionId())
+            .then((response) => { return response; });
+    }
+
+    SignalrService.prototype.selectChannel = function (lastId, channel) {
+        var params = '';
+        if (lastId)
+            params = '?lastId=' + lastId.toString();
+        const msgObj = this.buildChatMessage('', channel);
+
+        return services.postConnection('/backend/Notifications/selectChannel' + params, this.getConnectionId(), msgObj)
+            .then((response) => { return response; });
+    }
+
+    SignalrService.prototype.sendChatMessage = function (message, channel) {
+        const msgObj = this.buildChatMessage(message, channel);
+        return services.postConnection("/backend/Notifications/SendChatMessage", this.getConnectionId(), msgObj)
+            .then((response) => { return response; });
+    }
+
+    SignalrService.prototype.SendMediaMessage = function (message, channel, file) {
+        const msgObj = this.buildChatMessage(message, channel);
+
+        const formData = new FormData();
+        if (file) {
+            formData.append('file', {
+                uri: file,                  // this is the path to your file. see Expo ImagePicker or React Native ImagePicker
+                type: `image/png`,  // example: image/jpg
+                name: `upload.png`    // example: upload.jpg
+            }, file.name);
+        }
+        formData.append('document', JSON.stringify(msgObj));
+        return services.postConnection("/backend/Notifications/SendMediaMessage", this.getConnectionId(), formData)
+            .then((response) => { return response; });
+    }
+
+
+    SignalrService.prototype.buildChatMessage = function (message, channel) {
+        var _this = this;
+        var user = global.user?.FirstName; 
+        var email = global.user?.Email;
+        var idUser = global.user?.Id;
+
+        const d = new Date();
+        return {
+            UserFullName: user,
+            UserName: email,
+            ConnectionId: _this.getConnectionId(),
+            Token: null,
+            RequestObject: message,
+            DateTime: new Date(),
+            Channel: channel,
+            idUser: idUser,
+            TimeZoneOffset: d.getTimezoneOffset(),
+            Type: signalRModels.NotificationType.ChatText
+        };
+    }
+
 
     /*SignalrService = __decorate([
         core_1.Injectable({

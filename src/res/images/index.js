@@ -95,6 +95,11 @@ const images = {
     /* plus and minus */
     plus: require('../../../assets/images/icons/icon-plus.svg'),
     minus: require('../../../assets/images/icons/icon-minus.svg'),
+
+    /* others */
+    notification: require('../../../assets/images/icons/notification.png'),
+    notificationUnread: require('../../../assets/images/icons/notification-unread.png'),
+
 }
 
 export default images

@@ -11,12 +11,13 @@ import {
     ToastAndroid,
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
+import { CheckBox } from 'react-native-elements';
 import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import { Ionicons } from '@expo/vector-icons';
 import { get, postLogin, servicesUrl, getUserCredentials, setUserCredentials } from "helpers/services.js";
-import { CheckBox } from 'react-native-elements';
+import { SignalrService } from 'helpers/Signalr/SignalRService';
 import R from 'res/R';
 
 export default class LoginScreen extends React.Component {
@@ -32,9 +33,11 @@ export default class LoginScreen extends React.Component {
             checked: false,
             isLoading: true
         };
+        this.signalR;
     }
 
     componentDidMount = async () => {
+        var _this = this;
         const [email, password] = await getUserCredentials();
         if (email !== '' && password !== '') {
             const data = {
@@ -44,27 +47,26 @@ export default class LoginScreen extends React.Component {
             postLogin(servicesUrl.login, data)
                 .then(response => {
                     if (response.ErrorId) {
-                        this.setState({isLoading:false})
-                        ToastAndroid.showWithGravity(
-                            'Error: The user name or password is incorrect',
-                            ToastAndroid.LONG,
-                            ToastAndroid.CENTER
-                        );
-                        window.location.reload();
+                        this.setState({ isLoading: false })
+                        global.toast.show(translate('msgIncorrectCredentials'), { type: "danger" })                        
                     } else {
+                        global['user']= response;
                         SecureStore.setItemAsync('token', response.Token);
+
+                        // connect to the signal R service
+                        _this.signalR = new SignalrService();
+                        _this.signalR.UpdateSignalrUserInfo()
+                            .then(_this.signalR.newUserConnected)
+                            .then(_this.signalR.chatReceived)
+                            .then(_this.signalR.connect());
+                        global['signalR'] = _this.signalR;
+
                         this.props.navigation.navigate('book a trip');
-                        ToastAndroid.showWithGravity(
-                            'you are successfully logged in !',
-                            ToastAndroid.SHORT,
-                            ToastAndroid.CENTER
-                        );
                     }
                 });
         }
-        else
-        {
-            this.setState({isLoading:false})
+        else {
+            this.setState({ isLoading: false })
         }
     }
 
@@ -186,7 +188,7 @@ export default class LoginScreen extends React.Component {
         const { showAlert } = this.state;
         return (
             this.state.isLoading ?
-                <ActivityIndicator size='large' color={R.colors.green}/>
+                <ActivityIndicator size='large' color={R.colors.green} />
                 :
                 <ScrollView style={styles.container}>
                     <View style={{ flex: 1, flexDirection: 'column' }}>

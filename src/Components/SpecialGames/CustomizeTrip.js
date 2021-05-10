@@ -174,16 +174,14 @@ export default class CustomizeTripScreen extends React.Component {
         this.setState({ bundle, game, hotel, hotelImages, hotelList, perks, details, isLoading: false },
             function () {
                 if (hotel != null)
-                    this.getCancelPolicy(hotel.HotelId);
+                    this.getCancelPolicy();
             })
     }
 
-    getCancelPolicy = (hotelId) => {
+    getCancelPolicy = () => {
         try {
-            // check if the policy already exist
-            const policy = this.state.cancelPolicies.find(policy => policy.HotelId === hotelId);
-
-            if (policy != undefined)
+            var hotel = this.state.bundle.SelectedHotel;
+            if (hotel.HasPolicy)
                 return;
             else {
                 this.setState({ isGettingPolicy: true }, function () {
@@ -205,16 +203,52 @@ export default class CustomizeTripScreen extends React.Component {
                     post(servicesUrl.viewCancelPolicy, cancelPolicyRequest)
                         .then((response) => {
                             bundle.SelectedHotel.Policies = response;
+                            this.setPolicy(bundle.SelectedHotel);
                             var cancelPolicy = response.Policy[0];
                             cancelPolicy.HotelId = bundle.SelectedHotel.HotelId;
 
                             var cancelPolicies = this.state.cancelPolicies;
                             cancelPolicies.push(cancelPolicy)
-                            this.setState({ cancelPolicies, isGettingPolicy: false });
+                            this.setState({ bundle, cancelPolicies, isGettingPolicy: false });
                         });
                 })
             }
         } catch { }
+    }
+
+    setPolicy(hotel) {
+        hotel.SelectedPolicy = null;
+        if (hotel.HotelSource == "R" && hotel.Policies && hotel.Policies.Policy) {
+            hotel.SelectedPolicy = hotel.Policies.Policy[0];
+            hotel.HasPolicy = true;
+            return;
+        }
+
+        const categ = hotel.SelectedCategory.Code;
+        const bfType = hotel.SelectedCategory.BFType;
+        hotel.HasPolicy = true;
+        if (hotel && hotel.Policies && hotel.Policies.Policy) {
+            let list = hotel.Policies.Policy.find(a => a.RoomCatgCode && a.RoomCatgCode.Text == categ && a.RoomCatgCode.BFType == bfType);
+            if (list) {
+                hotel.SelectedPolicy = list;
+                return;
+            }
+            list = hotel.Policies.Policy.find(a => a.RoomCatgCode && a.RoomCatgCode.Text == categ && a.RoomCatgCode.BFType == null);
+            if (list) {
+                hotel.SelectedPolicy = list;
+                return;
+            }
+
+            list = hotel.Policies.Policy.find(a => a.RoomCatgCode == null || a.RoomCatgCode.Text == null);
+            if (list) {
+                hotel.SelectedPolicy = list;
+                return;
+            }
+        }
+        hotel.SelectedPolicy = {
+            Refundable: false,
+            ExCancelDays: 9999999
+        };
     }
 
     browseHotels = () => {
@@ -574,7 +608,7 @@ export default class CustomizeTripScreen extends React.Component {
                         {/* rooms details */}
                         <View style={{ width: '100%' }}>
                             <FlatList
-                                data={this.state.bundle?.RoomInfoList? this.state.bundle?.RoomInfoList : roomInfoList}
+                                data={this.state.bundle?.RoomInfoList ? this.state.bundle?.RoomInfoList : roomInfoList}
                                 extraData={this.state}
                                 renderItem={this.roomItem}
                                 keyExtractor={(item, index) => 'room-' + index}
@@ -612,7 +646,7 @@ export default class CustomizeTripScreen extends React.Component {
     renderHotel = (item) => {
         var rating = parseInt(item.Rating);
         var selected = this.state.bundle?.SelectedHotel?.HotelId === item.HotelId;
-        var policy = this.state.cancelPolicies.find(p => p.HotelId === item.HotelId);
+        var policy = item.SelectedPolicy;
         return (
             <>
                 {this.state.isCustomized ?
@@ -672,7 +706,7 @@ export default class CustomizeTripScreen extends React.Component {
                             {/* policy */}
                             <View style={{ flex: 1, flexDirection: 'row' }}>
                                 {this.state.isGettingPolicy && selected ? (<ActivityIndicator size='small' color='white' />) : null}
-                                {policy != undefined ?
+                                {item.HasPolicy ?
                                     <>
                                         {policy.Refundable ?
                                             (<>

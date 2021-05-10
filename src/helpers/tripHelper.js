@@ -5,8 +5,10 @@ import R from "res/R";
 // convert array of string to array of objects
 export function getHotelImages(images) {
     var hotelImages = [];
-    for (let img of images) {
-        hotelImages.push({ url: img });
+    if (images) {
+        for (let img of images) {
+            hotelImages.push({ url: img });
+        }
     }
     return hotelImages;
 }

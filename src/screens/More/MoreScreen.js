@@ -7,9 +7,12 @@ import {
     Image,
     FlatList,
     Linking,
-    TouchableOpacity
+    TouchableOpacity,
+    Modal
 } from "react-native";
+import { WebView } from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ModalHeader from "components/Common/ModalHeader";
 import R from "res/R";
 
 export default class MoreScreen extends React.Component {
@@ -18,6 +21,8 @@ export default class MoreScreen extends React.Component {
         super(props);
         this.state = {
             menuLinks: [],
+            uri: '',
+            modalVisible: false,
             isLoading: true
         };
     }
@@ -49,7 +54,7 @@ export default class MoreScreen extends React.Component {
 
     renderItem = ({ item }) => {
         return (
-            <TouchableOpacity style={styles.linkButton} onPress={() => this.openLink(item.Link)}>
+            <TouchableOpacity style={styles.linkButton} onPress={() => this.setState({ modalVisible:true, uri: item.Link })}>
                 <Image source={R.images.arrow_right_sm} />
                 <Text style={styles.linkText}>
                     {item.Name}
@@ -58,6 +63,7 @@ export default class MoreScreen extends React.Component {
         )
     }
     render() {
+        var uri = this.state.uri;
         return (
             <View style={styles.container}>
                 {this.state.isLoading ?
@@ -69,7 +75,18 @@ export default class MoreScreen extends React.Component {
                         renderItem={this.renderItem}
                     />
                 }
-            </View>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => this.setState({ modalVisible: false })}>
+                    <View style={styles.modalView}>
+                        {/* logo + close */}
+                        <ModalHeader close={() => this.setState({ modalVisible: false })} />
+                        <WebView source={{ uri: uri }} />
+                    </View>
+                </Modal>
+            </View >
         )
     }
 }
@@ -107,5 +124,10 @@ const styles = StyleSheet.create({
         color: "blue",
         fontSize: 15,
         marginStart: 15
+    },
+    modalView: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#fff',
     },
 });

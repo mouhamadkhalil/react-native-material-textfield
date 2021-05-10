@@ -7,14 +7,12 @@ import {
     ScrollView,
     Pressable,
     ImageBackground,
-    Platform,
-    Linking
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import RatingStars from "components/OnSpot/RatingStars";
 import PricingReview from "components/OnSpot/PricingReview";
-import { translate } from "helpers/utils";
+import { translate, openLink } from "helpers/utils";
 import R from "res/R";
 
 export default class PlaceDetailsScreen extends React.Component {
@@ -29,27 +27,6 @@ export default class PlaceDetailsScreen extends React.Component {
 
     componentDidMount() {
         this.setState({ isLoading: false });
-    }
-
-    openLink = (type, data) => {
-
-        switch (type) {
-            case 'web':
-                Linking.openURL(data);
-                break;
-            case 'location':
-                const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
-                const latLng = `${38.8951},${-77.0364}`;
-                const label = 'Custom Label';
-                const url = Platform.select({
-                    ios: `${scheme}${label}@${latLng}`,
-                    android: `${scheme}${latLng}(${label})`
-                });
-                Linking.openURL(url);
-            default:
-                Linking.openURL(`${type}:${data}`)
-                break;
-        }
     }
 
     render() {
@@ -108,7 +85,7 @@ export default class PlaceDetailsScreen extends React.Component {
 
                             {/* location */}
                             {place.Location ?
-                                <Pressable style={R.styles.flexRow} onPress={() => this.openLink('location', place.Location)}>
+                                <Pressable style={R.styles.flexRow} onPress={() => openLink('location', place.Location)}>
                                     <Icon name='location-outline' style={styles.icon} />
                                     <Text style={styles.info}>
                                         {place.Location}
@@ -119,7 +96,7 @@ export default class PlaceDetailsScreen extends React.Component {
 
                             {/* phone */}
                             {place.Phone ?
-                                <Pressable style={R.styles.flexRow} onPress={() => this.openLink('tel', place.phone)}>
+                                <Pressable style={R.styles.flexRow} onPress={() => openLink('tel', place.phone)}>
                                     <Icon name='call-outline' style={styles.icon} />
                                     <Text style={styles.info}>
                                         {place.Phone}
@@ -130,7 +107,7 @@ export default class PlaceDetailsScreen extends React.Component {
 
                             {/* email */}
                             {place.Email ?
-                                <Pressable style={R.styles.flexRow} onPress={() => this.openLink('mailto', place.Email)}>
+                                <Pressable style={R.styles.flexRow} onPress={() => openLink('mailto', place.Email)}>
                                     <Icon name='mail-outline' style={styles.icon} />
                                     <Text style={styles.info}>
                                         {place.Email}
@@ -141,7 +118,7 @@ export default class PlaceDetailsScreen extends React.Component {
 
                             {/* website */}
                             {place.Website ?
-                                <Pressable style={R.styles.flexRow} onPress={() => this.openLink('web', place.Website)}>
+                                <Pressable style={R.styles.flexRow} onPress={() => openLink('web', place.Website)}>
                                     <Icon name='earth-outline' style={styles.icon} />
                                     <Text style={styles.info}>
                                         {place.Website}

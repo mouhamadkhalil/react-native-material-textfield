@@ -2,7 +2,7 @@ import { I18nManager } from "react-native";
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better performance
-import { Platform } from 'react-native'
+import { Platform, Linking } from 'react-native'
 
 const translate = memoize(
   (key, config) => i18n.t(key, config),
@@ -31,5 +31,25 @@ const testID = (id) => {
   return Platform.OS === 'android' ? { accessible: true, accessibilityLabel: id } : { testID: id }
 }
 
-export { translate, setI18nConfig, testID } 
+const openLink = (type, data) => {
+  switch (type) {
+    case 'web':
+      Linking.openURL(data);
+      break;
+    case 'location':
+      const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+      const latLng = `${38.8951},${-77.0364}`;
+      const label = 'Custom Label';
+      const url = Platform.select({
+        ios: `${scheme}${label}@${latLng}`,
+        android: `${scheme}${latLng}(${label})`
+      });
+      Linking.openURL(url);
+    default:
+      Linking.openURL(`${type}:${data}`)
+      break;
+  }
+}
+
+export { translate, setI18nConfig, testID, openLink }
 

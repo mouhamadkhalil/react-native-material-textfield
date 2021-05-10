@@ -14,7 +14,6 @@ import {
 import { API_URL, API_TOKEN } from "@env";
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from 'react-native-datepicker';
-import RadioButtonRN from 'radio-buttons-react-native';
 import Chat from "../FanChat/chat";
 import R from "res/R";
 import { get, post } from "../../helpers/services.js";

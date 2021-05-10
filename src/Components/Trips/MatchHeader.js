@@ -36,7 +36,7 @@ export class MatchHeader extends React.PureComponent {
 
     componentDidMount() {
         //this.initBundle();
-        this.setState({bundle: {...this.props.bundle}});
+        this.setState({ bundle: { ...this.props.bundle } });
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -178,150 +178,157 @@ export class MatchHeader extends React.PureComponent {
                             listKey={this.gamesListKey}
                         />
 
+
                         {/* trip info */}
                         <View style={{ flexDirection: "row", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#eee" }}>
                             <Text style={[styles.darkText, { width: "50%", padding: 20, textTransform: "uppercase", borderRightWidth: 1, borderColor: "#eee" }]}>
-                                {this.state.details?.TripDays + " " + translate('days')}
+                            {this.props.isInvoice? "4 Days": this.state.details?.TripDays + " " + translate('days')}
                             </Text>
                             <Text style={[styles.darkText, { width: "50%", padding: 20, textTransform: "uppercase" }]}>
-                                {this.state.matches[0]?.Game?.StadeCity}
+                            {this.props.isInvoice? "madrid" : this.state.matches[0]?.Game?.City}
                             </Text>
                         </View>
-
-                        {/* trip price */}
-                        <TouchableOpacity style={{ backgroundColor: "#fff", zIndex: 1 }}
-                            onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
-                            {/* price */}
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 20 }}>
-                                <View>
-                                    <Text style={{ fontSize: 17.5, color: R.colors.green, fontWeight: "bold" }}>
-                                        {this.state.totalPerFan + "$ /" + translate('fan')}
-                                    </Text>
-                                    <Text style={{ fontSize: 14, marginTop: 5 }}>
-                                        {this.state.total + "$ " + translate('total') + " *"}
-                                    </Text>
-                                </View>
-                                <Image source={R.images.arrow_down} style={{ height: 14, width: 12 }} />
+                        {this.props.isInvoice ?
+                            <View style={{height:60, justifyContent:'center', paddingStart:15}}>
+                                <Text style={{fontSize:16, fontWeight:'bold', color:R.colors.lightGreen}}> {this.state.bundle.FinalPrice + "$ " + translate('total') + " *"}</Text>
                             </View>
-
-                            {/* price details */}
-                            <TouchableOpacity style={[styles.priceDetailsContainer, { display: this.state.isButtonPressed ? "flex" : "none", }]}
-                                onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })} >
-
-                                {/* base price */}
-                                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                    <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                        {translate('basePrice')}
-                                    </Text>
-                                    <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                        {this.state.details?.BasePricePerFan}$
-                                    </Text>
-                                </View>
-
-                                {/* hotel upgrade */}
-                                {this.state.hotelUpgrade > 0 ?
-                                    <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
-                                        <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                            {translate('hotelUpgrade')}
-                                        </Text>
-                                        <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                            {this.state.hotelUpgrade}$
-                                    </Text>
-                                    </View>
-                                    :
-                                    null
-                                }
-
-                                {/* ticket upgrade */}
-                                {this.state.ticketUpgrade > 0 ?
-                                    <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
-                                        <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                            {translate('ticketUpgrade')}
-                                        </Text>
-                                        <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                            {this.state.ticketUpgrade}$
-                                    </Text>
-                                    </View>
-                                    :
-                                    null
-                                }
-
-                                {/* perks upgrade */}
-                                {this.state.perksUpgrade > 0 ?
-                                    <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
-                                        <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                            {translate('perksUpgrade')}
-                                        </Text>
-                                        <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                            {this.state.perksUpgrade}$
-                                    </Text>
-                                    </View>
-                                    :
-                                    null
-                                }
-
-                                {/* flight */}
-                                {this.state.flight > 0 ?
-                                    <>
-                                        <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
-                                            <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                                {translate('flight')}
+                            :
+                            <>
+                                {/* trip price */}
+                                <TouchableOpacity style={{ backgroundColor: "#fff", zIndex: 1 }}
+                                    onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })}>
+                                    {/* price */}
+                                    <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 20 }}>
+                                        <View>
+                                            <Text style={{ fontSize: 17.5, color: R.colors.green, fontWeight: "bold" }}>
+                                                {this.state.totalPerFan + "$ /" + translate('fan')}
                                             </Text>
-                                            <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
-                                                {this.state.flight}$
+                                            <Text style={{ fontSize: 14, marginTop: 5 }}>
+                                                {this.state.total + "$ " + translate('total') + " *"}
                                             </Text>
                                         </View>
+                                        <Image source={R.images.arrow_down} style={{ height: 14, width: 12 }} />
+                                    </View>
 
-                                        {/* flight booking fees */}
-                                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15, marginBottom: 5 }}>
+                                    {/* price details */}
+                                    <TouchableOpacity style={[styles.priceDetailsContainer, { display: this.state.isButtonPressed ? "flex" : "none", }]}
+                                        onPress={() => this.setState({ isButtonPressed: !this.state.isButtonPressed })} >
+
+                                        {/* base price */}
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                                            <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                {translate('basePrice')}
+                                            </Text>
+                                            <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                {this.state.details?.BasePricePerFan}$
+                                    </Text>
+                                        </View>
+
+                                        {/* hotel upgrade */}
+                                        {this.state.hotelUpgrade > 0 ?
+                                            <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
+                                                <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                    {translate('hotelUpgrade')}
+                                                </Text>
+                                                <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                    {this.state.hotelUpgrade}$
+                                    </Text>
+                                            </View>
+                                            :
+                                            null
+                                        }
+
+                                        {/* ticket upgrade */}
+                                        {this.state.ticketUpgrade > 0 ?
+                                            <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
+                                                <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                    {translate('ticketUpgrade')}
+                                                </Text>
+                                                <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                    {this.state.ticketUpgrade}$
+                                    </Text>
+                                            </View>
+                                            :
+                                            null
+                                        }
+
+                                        {/* perks upgrade */}
+                                        {this.state.perksUpgrade > 0 ?
+                                            <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
+                                                <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                    {translate('perksUpgrade')}
+                                                </Text>
+                                                <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                    {this.state.perksUpgrade}$
+                                    </Text>
+                                            </View>
+                                            :
+                                            null
+                                        }
+
+                                        {/* flight */}
+                                        {this.state.flight > 0 ?
+                                            <>
+                                                <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 5 }}>
+                                                    <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                        {translate('flight')}
+                                                    </Text>
+                                                    <Text style={{ fontSize: 13, fontWeight: "bold", color: "#666" }}>
+                                                        {this.state.flight}$
+                                            </Text>
+                                                </View>
+
+                                                {/* flight booking fees */}
+                                                <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 15, marginBottom: 5 }}>
+                                                    <Text style={{ fontSize: 11.5, color: R.colors.blue, fontWeight: 'bold', textTransform: 'uppercase' }}>
+                                                        + {translate('flightBookingFees')}
+                                                    </Text>
+                                                    <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>
+                                                        {this.state.onlineBooking}$
+                                            </Text>
+                                                </View>
+                                            </>
+                                            :
+                                            <View style={{ marginBottom: 15 }} />
+                                        }
+
+                                        {/* on spot serive */}
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 15 }}>
                                             <Text style={{ fontSize: 11.5, color: R.colors.blue, fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                                + {translate('flightBookingFees')}
+                                                + {translate('onSpotService')}
                                             </Text>
                                             <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>
-                                                {this.state.onlineBooking}$
-                                            </Text>
+                                                {this.state.totalOnSpot}$
+                                    </Text>
                                         </View>
-                                    </>
-                                    :
-                                    <View style={{ marginBottom: 15 }} />
-                                }
 
-                                {/* on spot serive */}
-                                <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 15 }}>
-                                    <Text style={{ fontSize: 11.5, color: R.colors.blue, fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                        + {translate('onSpotService')}
+                                        {/* total/fan */}
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                                            <Text style={{ fontSize: 13, color: "#212121" }}>
+                                                {translate('totalFan')}
+                                            </Text>
+                                            <Text style={{ fontWeight: "bold", color: R.colors.green }}>
+                                                {this.state.totalPerFan + this.state.totalOnSpot}$
                                     </Text>
-                                    <Text style={{ fontSize: 11.5, fontWeight: "bold", color: R.colors.blue }}>
-                                        {this.state.totalOnSpot}$
-                                    </Text>
-                                </View>
+                                        </View>
 
-                                {/* total/fan */}
-                                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                    <Text style={{ fontSize: 13, color: "#212121" }}>
-                                        {translate('totalFan')}
+                                        {/* total */}
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                                            <Text style={{ fontSize: 16, color: "#212121" }}>
+                                                {translate('total')}
+                                            </Text>
+                                            <Text style={{ fontWeight: "bold", color: R.colors.green }}>
+                                                {this.state.total}$
                                     </Text>
-                                    <Text style={{ fontWeight: "bold", color: R.colors.green }}>
-                                        {this.state.totalPerFan + this.state.totalOnSpot}$
-                                    </Text>
-                                </View>
+                                        </View>
 
-                                {/* total */}
-                                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                                    <Text style={{ fontSize: 16, color: "#212121" }}>
-                                        {translate('total')}
-                                    </Text>
-                                    <Text style={{ fontWeight: "bold", color: R.colors.green }}>
-                                        {this.state.total}$
-                                    </Text>
-                                </View>
-
-                                <Text style={{ fontSize: 9, color: "#999", marginTop: 10, marginBottom: 10 }}>
-                                    *Price for 2 fans traveling together
+                                        <Text style={{ fontSize: 9, color: "#999", marginTop: 10, marginBottom: 10 }}>
+                                            *Price for 2 fans traveling together
                                 </Text>
-                            </TouchableOpacity>
-                        </TouchableOpacity>
-
+                                    </TouchableOpacity>
+                                </TouchableOpacity>
+                            </>
+                        }
                         {this.props.isCustomize && this.state.otherMatches != null && this.state.otherMatches.length > 0 ?
                             <View style={{ flex: 1, display: 'flex', height: 'auto' }}>
                                 {this.state.isOtherGameCollapse ?

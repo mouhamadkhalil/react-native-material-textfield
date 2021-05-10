@@ -23,10 +23,10 @@ export default class ContactUsScreen extends React.Component {
             showForm: false,
             isLoading: true,
             form: {
-                FullName: 'nassir',
+                FullName: global.user?.FullName,
                 Address: '',
-                Phone: '0096112341234',
-                Email: 'nassir@gmail.com',
+                Phone: global.user?.PhoneNumber,
+                Email: global.user?.Email,
                 Description: ''
             }
         };

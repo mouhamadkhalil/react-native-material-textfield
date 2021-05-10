@@ -43,7 +43,7 @@ const TripTabs = ({navigation}) => {
                         />
                     );
                 }
-                else if (route.name === 'my bookings') {
+                else if (route.name === 'myBookings') {
                     return (
                         <Ionicons
                             name={focused ? 'list-circle-outline' : 'list-circle-outline'}
@@ -61,7 +61,7 @@ const TripTabs = ({navigation}) => {
             navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
-            <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
+            <Tab.Screen name="myBookings" component={MyBookingStackNavigator} />
             <Tab.Screen name="more" component={MoreStackNavigator} />
             <Tab.Screen name="contact us" component={ContactStackNavigator} />
         </Tab.Navigator>
@@ -70,7 +70,7 @@ const TripTabs = ({navigation}) => {
 
 const BookingsTabs = ({ navigation }) => {
     return (
-        <Tab.Navigator initialRouteName= "my bookings" screenOptions={({ route }) => ({
+        <Tab.Navigator initialRouteName= "myBookings" screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
                 if (route.name === 'book a trip') {
                     return (
@@ -106,7 +106,7 @@ const BookingsTabs = ({ navigation }) => {
                         />
                     );
                 }
-                else if (route.name === 'my bookings') {
+                else if (route.name === 'myBookings') {
                     return (
                         <Ionicons
                             name={focused ? 'list-circle-outline' : 'list-circle-outline'}
@@ -124,7 +124,7 @@ const BookingsTabs = ({ navigation }) => {
             navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
-            <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
+            <Tab.Screen name="myBookings" component={MyBookingStackNavigator} />
             <Tab.Screen name="more" component={MoreStackNavigator} />
             <Tab.Screen name="contact us" component={ContactStackNavigator} />
         </Tab.Navigator>
@@ -169,7 +169,7 @@ const MoreTabs = ({ navigation }) => {
                         />
                     );
                 }
-                else if (route.name === 'my bookings') {
+                else if (route.name === 'myBookings') {
                     return (
                         <Ionicons
                             name={focused ? 'list-circle-outline' : 'list-circle-outline'}
@@ -187,7 +187,7 @@ const MoreTabs = ({ navigation }) => {
             navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
-            <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
+            <Tab.Screen name="myBookings" component={MyBookingStackNavigator} />
             <Tab.Screen name="more" component={MoreStackNavigator} />
             <Tab.Screen name="contact us" component={ContactStackNavigator} />
         </Tab.Navigator>
@@ -232,7 +232,7 @@ const ContactTabs = ({ navigation }) => {
                         />
                     );
                 }
-                else if (route.name === 'my bookings') {
+                else if (route.name === 'myBookings') {
                     return (
                         <Ionicons
                             name={focused ? 'list-circle-outline' : 'list-circle-outline'}
@@ -250,7 +250,7 @@ const ContactTabs = ({ navigation }) => {
             navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={TripStackNavigator} />
-            <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
+            <Tab.Screen name="myBookings" component={MyBookingStackNavigator} />
             <Tab.Screen name="more" component={MoreStackNavigator} />
             <Tab.Screen name="contact us" component={ContactStackNavigator} />
         </Tab.Navigator>
@@ -296,7 +296,7 @@ const AllGamesTabs = ({ navigation }) => {
                         />
                     );
                 }
-                else if (route.name === 'my bookings') {
+                else if (route.name === 'myBookings') {
                     return (
                         <Ionicons
                             name={focused ? 'list-circle-outline' : 'list-circle-outline'}
@@ -314,7 +314,7 @@ const AllGamesTabs = ({ navigation }) => {
             navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={AllGamesStackNavigator} />
-            <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
+            <Tab.Screen name="myBookings" component={MyBookingStackNavigator} />
             <Tab.Screen name="more" component={MoreStackNavigator} />
             <Tab.Screen name="contact us" component={ContactStackNavigator} />
         </Tab.Navigator>
@@ -360,7 +360,7 @@ const WhereToEatTabs = ({ navigation }) => {
                         />
                     );
                 }
-                else if (route.name === 'my bookings') {
+                else if (route.name === 'myBookings') {
                     return (
                         <Ionicons
                             name={focused ? 'list-circle-outline' : 'list-circle-outline'}
@@ -378,7 +378,7 @@ const WhereToEatTabs = ({ navigation }) => {
             navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={WhereToEatStackNavigator} />
-            <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
+            <Tab.Screen name="myBookings" component={MyBookingStackNavigator} />
             <Tab.Screen name="more" component={MoreStackNavigator} />
             <Tab.Screen name="contact us" component={ContactStackNavigator} />
         </Tab.Navigator>
@@ -423,7 +423,7 @@ const WhatToDoTabs = ({ navigation }) => {
                         />
                     );
                 }
-                else if (route.name === 'my bookings') {
+                else if (route.name === 'myBookings') {
                     return (
                         <Ionicons
                             name={focused ? 'list-circle-outline' : 'list-circle-outline'}
@@ -441,7 +441,7 @@ const WhatToDoTabs = ({ navigation }) => {
             navigationProps={navigation}
         >
             <Tab.Screen name="book a trip" component={WhatToDoStackNavigator} />
-            <Tab.Screen name="my bookings" component={MyBookingStackNavigator} />
+            <Tab.Screen name="myBookings" component={MyBookingStackNavigator} />
             <Tab.Screen name="more" component={MoreStackNavigator} />
             <Tab.Screen name="contact us" component={ContactStackNavigator} />
         </Tab.Navigator>

@@ -13,14 +13,14 @@ export class FanInfo extends React.PureComponent {
 
         this.state = {
             Title: '',
-            FirstName: '',
-            LastName: '',
-            DOB: '2009-04-01T00:00:00.000',
-            CountryName: 'Lebanon',
-            idCountry: 1107,
+            FirstName: this.props.index == 0 ? global.user?.FirstName : '',
+            LastName: this.props.index == 0 ? global.user?.LastName : '',
+            DOB: global.user?.DOB,
+            CountryName: global.user?.CountryName,
+            idCountry: global.user?.idCountry,
             PhonePrefix: '+961',
-            Phone: this.props.index == 0 ? '1234567' : '',
-            Email: this.props.index == 0 ? 'nassir@gmail.com' : '',
+            Phone: this.props.index == 0 ? global.user?.PhoneNumber : '',
+            Email: this.props.index == 0 ? global.user?.Email : '',
             Sequence: this.props.index + 1,
             IsChild: false,
             IsMainContact: this.props.index == 0,
@@ -30,14 +30,23 @@ export class FanInfo extends React.PureComponent {
         };
     }
 
+    componentDidMount = () => {
+        if (this.props.countries) {
+            var country = this.props.countries.find(c => c.value == this.state.idCountry);
+            if (country)
+                this.setState({ PhonePrefix: country.phonePrefix });
+        }
+    }
+
     render() {
         return (
             <View style={{ marginTop: 30 }}>
-                <Text style={{ fontSize: 19.25, color: "gray", fontWeight: "bold", marginBottom: 15 }}>
-                    {this.props.index == 0 ? translate("mainFan") : translate("fan") + " #" + (this.props.index + 1)}
-                </Text>
+                {this.props.isRequest ? null :
+                    <Text style={{ fontSize: 19.25, color: "gray", fontWeight: "bold", marginBottom: 15 }}>
+                        {this.props.index == 0 ? translate("mainFan") : translate("fan") + " #" + (this.props.index + 1)}
+                    </Text>
+                }
                 <View style={{ backgroundColor: "white" }}>
-
                     <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 30, marginTop: 20 }}>
                         {translate("title")}*
                         </Text>
@@ -45,8 +54,8 @@ export class FanInfo extends React.PureComponent {
                         <View style={{ marginBottom: 30 }}>
                             <DropDownPicker
                                 items={[
-                                    { label: "Mr.", value: "Mr." },
-                                    { label: "Ms.", value: "Ms." },
+                                    { label: translate("mr."), value: "Mr." },
+                                    { label: translate("ms."), value: "Ms." },
                                 ]}
                                 containerStyle={{ height: 50 }}
                                 style={{ backgroundColor: "#fafafa" }}
@@ -120,7 +129,7 @@ export class FanInfo extends React.PureComponent {
                                 onValueChange={(itemValue, itemIndex) => {
                                     if (this.props.countries) {
                                         var country = this.props.countries[itemIndex];
-                                        this.setState({ idCountry: country.value, CountryName: country.label, PhonePrefix:country.phonePrefix }, function () {
+                                        this.setState({ idCountry: country.value, CountryName: country.label, PhonePrefix: country.phonePrefix }, function () {
                                             this.props.updateContact(this.props.index, this.state);
                                         })
                                     }

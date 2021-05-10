@@ -9,6 +9,10 @@
       "image": "./assets/images/splash.png",
       "backgroundColor": "#FFFFFF"
     },
+    "icon":"./assets/images/flyfoot-1024x1024.png",
+    "notification": {
+      "icon":"./assets/images/notification.png"
+    },
     "facebookAutoInitEnabled": true,
     "facebookScheme": "fb431386654654341",
     "facebookDisplayName": "Fly Foot",

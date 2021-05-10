@@ -7,10 +7,10 @@ import {
     ActivityIndicator,
     TouchableOpacity,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import Accordion from 'react-native-collapsible/Accordion';
 import { LinearGradient } from 'expo-linear-gradient';
-import { get, servicesUrl } from "helpers/services.js";
 import { translate } from "helpers/utils";
 import R from "res/R";
 
@@ -20,7 +20,7 @@ export default class Teams extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
-            list: [],
+            allTeams: [],
             activeSections: [],
         };
     }
@@ -28,28 +28,16 @@ export default class Teams extends React.Component {
     componentDidMount() {
         try {
             this.getData();
-        } catch { }
+        } catch (error) {
+            global.toast.show(translate('msgErrorOccurred'), { type: "danger" })
+        }
     }
 
-    /* get the data from the async storage
+    /* get the data from the async storage*/
     getData = async () => {
         var allTeams = JSON.parse(await AsyncStorage.getItem('@allTeams'));
-        this.setState({ allLeagues, isLoading: false });
-    }*/
-
-    getData = () => {
-        get(servicesUrl.getCountriesWithTeams)
-            .then((response) => {
-                var data = response.map(function (item) {
-                    return {
-                        id: item.idCountry,
-                        title: item.Name,
-                        content: item.Teams
-                    };
-                });
-                this.setState({ list: data, isLoading: false });
-            });
-    };
+        this.setState({ allTeams, isLoading: false });
+    }
 
     renderTeam(team) {
         return (
@@ -80,7 +68,7 @@ export default class Teams extends React.Component {
         return (
             <View style={styles.accordionHeader}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                    {section.title}
+                    {section.Name}
                 </Text>
             </View>
         );
@@ -89,7 +77,7 @@ export default class Teams extends React.Component {
     renderContent = section => {
         return (
             <View style={styles.accordionContent}>
-                {section.content.map(this.renderTeam.bind(this))}
+                {section.Teams.map(this.renderTeam.bind(this))}
             </View>
         );
     };
@@ -119,7 +107,7 @@ export default class Teams extends React.Component {
                         <ActivityIndicator size="large" color="blue" style={{ marginTop: 22, marginLeft: 0 }} />
                         :
                         <Accordion
-                            sections={this.state.list}
+                            sections={this.state.allTeams}
                             activeSections={this.state.activeSections}
                             renderSectionTitle={this.renderSectionTitle}
                             renderHeader={this.renderHeader}

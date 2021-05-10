@@ -28,7 +28,9 @@ export default class LeaguesScreen extends React.Component {
     componentDidMount() {
         try {
             this.getData();
-        } catch { }
+        } catch (error) {
+            global.toast.show(translate('msgErrorOccurred'), { type: "danger" })
+        }
     }
 
     // get the data from the async storage
@@ -51,7 +53,7 @@ export default class LeaguesScreen extends React.Component {
         );
     };
 
-    /* reader leagues */
+    /* render leagues */
     renderItem = ({ item }) => {
         return (
             this.state.isLoading ?

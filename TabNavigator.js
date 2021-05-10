@@ -55,7 +55,7 @@ const BottomTabNavigator = () => {
                             />
                         );
                     }
-                    else if (route.name === 'my bookings') {
+                    else if (route.name === 'myBookings') {
                         return (
                             <Ionicons
                                 name={focused ? 'list-circle-outline' : 'list-circle-outline'}
@@ -73,7 +73,7 @@ const BottomTabNavigator = () => {
         >
             <Tab.Screen name="home" component={MainStackNavigator} />
             <Tab.Screen name="book a trip" component={GameDayStackNavigator} />
-            <Tab.Screen name="my bookings" component={BookingStackNavigator} />
+            <Tab.Screen name="myBookings" component={BookingStackNavigator} />
             <Tab.Screen name="more" component={InfoStackNavigator} />
             <Tab.Screen name="contact us" component={HelpStackNavigator} />
         </Tab.Navigator>

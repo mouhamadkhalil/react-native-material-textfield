@@ -7,7 +7,6 @@ import {
     Image,
     ImageBackground,
     TouchableOpacity,
-    TouchableHighlight,
     Dimensions,
     FlatList,
     ActivityIndicator,
@@ -58,12 +57,15 @@ export default class specialGames extends React.Component {
     componentDidMount() {
         try {
             this.getData();
-        } catch { }
+        } catch { } 
     }
 
     getData = () => {
         getWithToken(servicesUrl.getHomePageData)
             .then(response => {
+
+                this.props.navigation.setParams({ notificationsNumber: response.NotReadNotifications, notifications: response.Notifications });
+
                 // Special Games Data
                 var specialGames = response.SpecialGames.map(function (item) {
                     var game = item.MatchBundleDetail[0].Game;
@@ -156,7 +158,8 @@ export default class specialGames extends React.Component {
                 const whatToDo = ["@whatToDo", JSON.stringify(response.WhatToDo)];
                 const whereToEat = ["@whereToEat", JSON.stringify(response.WhereToEat)];
                 const menuLinks = ["@menuLinks", JSON.stringify(response.MenuLinks)];
-                AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat, menuLinks]);
+                const upComingInvoices = ["@upComingInvoices", JSON.stringify(response.UpComingInvoices)];
+                AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat, menuLinks, upComingInvoices]);
                 this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: response.GamesList.PageCount, pageSize: response.GamesList.PageSize, isLoading: false });
             });
     };

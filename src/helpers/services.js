@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import { translate } from "helpers/utils";
 
-export const Server_URL = "https://beta.fly-foot.com/"
+export const Server_URL = "https://apitest.fly-foot.com/"
 export const API_URL = "https://beta.fly-foot.com/api"
 
 export const servicesUrl = {
@@ -21,7 +21,9 @@ export const servicesUrl = {
     getSuggestedGames: '/mobile/game/getSuggestedGames',
     getGameSearch: '/mobile/game/search?text=',
     getTeamSearch: '/mobile/team/search?text=',
-    GetFlightRule : "/mobile/game/flight/GetFlightRule",
+    GetFlightRule: '/mobile/game/flight/GetFlightRule',
+    GetNotificationList: '/mobile/getNotificationList',
+    GetToken: '/mobile/getToken',
 
     /* POST */
     login: '/mobile/profile/login',
@@ -49,7 +51,7 @@ export async function setUserCredentials(email, password) {
 }
 
 export async function getUserCredentials() {
-    var email = '', password='';
+    var email = '', password = '';
     try {
         var email = await SecureStore.getItemAsync('email');
         if (email == null)
@@ -64,7 +66,7 @@ export async function getUserCredentials() {
 }
 
 
-export async function getToken () {
+export async function getToken() {
     try {
         const value = await SecureStore.getItemAsync('token');
         if (value !== null) {
@@ -101,7 +103,7 @@ export async function get(path) {
         },
     })
         .then((res) => res.json())
-        .catch((error) =>global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
+        .catch((error) => global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
         .then((response) => {
             return response;
         });
@@ -176,10 +178,10 @@ export async function postLogin(path, data) {
         });
 }
 
-export async function postConnection(path, connectionId) {
+export async function getConnection(path, connectionId) {
     const token = await getToken();
     const location = await getLocation();
-    const url = `${API_URL}${path}`;
+    const url = `https://botest.fly-foot.com/api${path}`;
     return fetch(url, {
         method: "GET",
         headers: {
@@ -190,16 +192,46 @@ export async function postConnection(path, connectionId) {
             "is-mobile": true,
             "gps_location": location,
             "Authorization": 'Bearer ' + token,
-            "signalr-connectionid" : connectionId
+            "signalr-connectionid": connectionId
         },
     })
         .then((res) => res.json())
-        .catch((error) => global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
-        .then((response) => {
+        .catch((error) =>
+            global.toast.show(translate('msgErrorOccurred'), { type: "danger" })
+        )
+        .then(response => {
             return response;
         });
 }
 
-
-
+export async function postConnection(path, connectionId, data) {
+    const token = await getToken();
+    const location = await getLocation();
+    if (data && data.UserFullName)
+        data.token = token;
+    else if (data && data._parts) {
+        var array = data._parts[1];
+        array[1] = array[1].replace('"Token":null', '"Token":"' + token + '"');
+    }
+    const url = `https://botest.fly-foot.com/api${path}`;
+    return fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": data && data._parts ? "" : "application/json",
+            "Accept": "application/json",
+            "ff-version": 10,
+            "ff-language": "en",
+            "is-mobile": true,
+            "gps_location": location,
+            "Authorization": 'Bearer ' + token,
+            "signalr-connectionid": connectionId,
+        },
+        body: data != null && data._parts ? data : JSON.stringify(data)
+    })
+        .catch((error) =>
+            global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
+        .then(response => {
+            return response;
+        });
+}
 
