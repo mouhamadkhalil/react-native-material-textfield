@@ -3,6 +3,8 @@ const images = {
     arrow_down: require('../../../assets/images/icons/arrow_down.png'),
     arrow_right: require('../../../assets/images/icons/arrow_right2.png'),
     arrow_right_sm: require('../../../assets/images/icons/arrow_right1.png'),
+    arrow_left: require('../../../assets/images/icons/arrow-left.png'),
+    caret_right: require('../../../assets/images/icons/caret-right.png'),
     calendar: require('../../../assets/images/icons/calendar.png'),
     calendar_grey: require('../../../assets/images/icons/calendar-grey.png'),
     calendar_blue: require('../../../assets/images/icons/calendar-blue.png'),

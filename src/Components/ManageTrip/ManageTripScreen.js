@@ -1,170 +1,128 @@
 import React from "react";
 import {
-  StyleSheet,
-  Text,
-  Image,
-  View,
-  ScrollView,
-  TouchableOpacity,
+    StyleSheet,
+    Text,
+    Image,
+    View,
+    ScrollView,
+    TouchableOpacity,
 } from "react-native";
 import R from "res/R";
 
 export default class ManageTripScreen extends React.Component {
 
-  Back = () => {
-    this.props.navigation.navigate('Menu');
-  }
+    Back = () => {
+        this.props.navigation.navigate('Menu');
+    }
 
-  Payment = () => {
-    this.props.navigation.navigate('Complete Payment');
-  };
+    Payment = () => {
+        this.props.navigation.navigate('Complete Payment');
+    };
 
-  UploadPassport = () => {
-    this.props.navigation.navigate('Upload Passport 1');
-  };
+    UploadPassport = () => {
+        this.props.navigation.navigate('Upload Passport 1');
+    };
 
-  Changes = () => {
-    this.props.navigation.navigate('Changes 1');
-  };
+    Changes = () => {
+        this.props.navigation.navigate('Changes 1');
+    };
 
-  Join = () => {
-    this.props.navigation.navigate('Join 1');
-  };
+    Join = () => {
+        this.props.navigation.navigate('Join 1');
+    };
 
-  render() {
+    render() {
 
-    return (
-      <ScrollView style={styles.container}>
-        <ScrollView style={{ backgroundColor: "blue", width: "50%", height: 60 }}>
-          <TouchableOpacity onPress={this.Back} style={{ marginTop: 5, width: 100, height: 200, marginBottom: 30 }}>
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: 30, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
-          </TouchableOpacity>
-        </ScrollView>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 19,
-            fontWeight: "bold",
-            textAlign: "center",
-            marginTop: -45,
-            marginLeft: -440
-          }}
-        >
-          manage trip
-          </Text>
-        <ScrollView style={{ width: "50%", height: 600, backgroundColor: "#E6F5F3", marginTop: 30 }}>
-          <Text
-            style={{
-              color: "#DC1579",
-              fontWeight: "bold",
-              marginTop: 30,
-              marginLeft: 40,
-            }}
-          >
-            GENERAL
-          </Text>
-          <ScrollView
-            style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></ScrollView>
+        return (
+            <ScrollView style={styles.container}>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={this.Back} style={styles.backButton}>
+                        <Image source={R.images.arrow_left} />
+                    </TouchableOpacity>
+                    <Text
+                        style={styles.pageTitle}
+                    >manage trip</Text>
+                </View>
 
-          <TouchableOpacity onPress={this.Payment}>
-            <Text
-              style={{
-                color: "blue",
-                fontWeight: "bold",
-                marginTop: 25,
-                marginLeft: 40,
-                fontSize: 18
-              }}
-            >
-              Complete payment
-            </Text>
-            <Image source={R.images.arrow_right_sm} style={{ marginLeft: 320, marginTop: -15, width: 15, height: 15 }} />
-          </TouchableOpacity>
-          <ScrollView
-            style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></ScrollView>
-          <TouchableOpacity onPress={this.UploadPassport}>
-            <Text
-              style={{
-                color: "blue",
-                fontWeight: "bold",
-                marginTop: 30,
-                marginLeft: 40,
-                fontSize: 18
-              }}
-            >
-              Upload passport
-            </Text>
-            <Image source={R.images.arrow_right_sm} style={{ marginLeft: 320, marginTop: -15, width: 15, height: 15 }} />
+                <ScrollView style={{ padding: 30 }}>
 
-          </TouchableOpacity>
-          <ScrollView
-            style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></ScrollView>
+                    <Text style={styles.sectionTitle}>GENERAL</Text>
 
-          <Text
-            style={{
-              color: "#DC1579",
-              fontWeight: "bold",
-              marginTop: 40,
-              marginLeft: 40,
-            }}
-          >
-            EDIT
-          </Text>
-          <ScrollView
-            style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></ScrollView>
-          <TouchableOpacity onPress={this.Changes}>
-            <Text
-              style={{
-                color: "blue",
-                fontWeight: "bold",
-                marginTop: 30,
-                marginLeft: 40,
-                width: 500,
-                fontSize: 18
-              }}
-            >
-              Changes and cancellations
-            </Text>
-            <Image source={R.images.arrow_right_sm} style={{ marginLeft: 320, marginTop: -15, width: 15, height: 15 }} />
+                    <TouchableOpacity onPress={this.Payment} style={styles.sectionLink}>
+                        <Text style={styles.sectionLinkTitle}>Complete payment</Text>
+                        <Image source={R.images.caret_right} style={styles.sectionLinkImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.UploadPassport} style={styles.sectionLink}>
+                        <Text style={styles.sectionLinkTitle}>Upload passport</Text>
+                        <Image source={R.images.caret_right} style={styles.sectionLinkImage} />
+                    </TouchableOpacity>
 
-          </TouchableOpacity>
-          <ScrollView
-            style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></ScrollView>
-          <TouchableOpacity onPress={this.Join}>
-            <Text
-              style={{
-                color: "blue",
-                fontWeight: "bold",
-                marginTop: 30,
-                marginLeft: 40,
-                width: 700,
-                fontSize: 18
-              }}
-            >
-              Travellers (invite to join)
-            </Text>
-            <Image source={R.images.arrow_right_sm} style={{ marginLeft: 320, marginTop: -15, width: 15, height: 15 }} />
+                    <Text style={styles.sectionTitle}>EDIT</Text>
 
-          </TouchableOpacity>
-          <ScrollView
-            style={{ height: 1, backgroundColor: "white", marginTop: 20 }}
-          ></ScrollView>
-        </ScrollView>
-      </ScrollView>
-    );
-  }
+                    <TouchableOpacity onPress={this.Changes} style={styles.sectionLink}>
+                        <Text style={styles.sectionLinkTitle}>Changes and cancellations</Text>
+                        <Image source={R.images.caret_right} style={styles.sectionLinkImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.Join} style={styles.sectionLink}>
+                        <Text style={styles.sectionLinkTitle}>Travellers (invite to join)</Text>
+                        <Image source={R.images.caret_right} style={styles.sectionLinkImage} />
+                    </TouchableOpacity>
+
+                </ScrollView>
+            </ScrollView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: 700,
-    marginLeft: 0,
-    marginTop: 0,
-    width: 800,
-  },
+    container: {
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#F7F7F7"
+    },
+    header: {
+        backgroundColor: "#374BBF",
+        height: 70,
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    pageTitle: {
+        color: "#fff",
+        fontSize: 25,
+        fontWeight: "bold",
+        marginStart: "auto",
+        marginEnd: "auto"
+    },
+    backButton: {
+        position: "absolute",
+        start: 30
+    },
+    sectionTitle: {
+        color: "#96A0DA",
+        fontWeight: "bold",
+        fontSize: 14,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingTop: 25,
+        paddingBottom: 5,
+        borderBottomWidth: 2,
+        borderBottomColor: "#fff"
+    },
+    sectionLink: {
+        flexDirection: "row",
+        height: 60,
+        alignItems: "center",
+        borderBottomWidth: 2,
+        borderBottomColor: "#fff"
+    },
+    sectionLinkTitle: {
+        color: "#374BBF",
+        fontWeight: "bold",
+        fontSize: 18
+    },
+    sectionLinkImage: {
+        width: 15,
+        height: 15,
+        marginStart: "auto"
+    }
 });
