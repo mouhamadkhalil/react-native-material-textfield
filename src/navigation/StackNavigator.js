@@ -41,6 +41,7 @@ import WhereToEatScreen from "screens/OnSpot/WhereToEatScreen";
 import PlaceDetailsScreen from "screens/OnSpot/PlaceDetailsScreen";
 
 import upcomingScreen from "screens/MyBookings/UpcomingScreen";
+import anyDay from "screens/MyBookings/AnyDay";
 import upcomingDetailsScreen from "screens/MyBookings/UpcomingDetailsScreen";
 
 import MyTripsScreen from "components/SpecialGames/MyTrips";
@@ -197,7 +198,7 @@ const AllGamesStackNavigator = ({ navigation }) => {
 const MyBookingStackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="myBookings" component={upcomingScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
+            <Stack.Screen name="myBookings" component={anyDay} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
             <Stack.Screen name="upcomingDetails" component={upcomingDetailsScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
             <Stack.Screen name="notifications" options={{ title: translate("notifications") }} component={NotificationsScreen} />
             <Stack.Screen name="notificationsDetails" options={{ title: translate("notificationsDetails") }} component={NotificationsDetailsScreen} />

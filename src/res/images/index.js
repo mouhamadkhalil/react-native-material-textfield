@@ -3,6 +3,8 @@ const images = {
     arrow_down: require('../../../assets/images/icons/arrow_down.png'),
     arrow_right: require('../../../assets/images/icons/arrow_right2.png'),
     arrow_right_sm: require('../../../assets/images/icons/arrow_right1.png'),
+    arrow_left: require('../../../assets/images/icons/arrow-left.png'),
+    caret_right: require('../../../assets/images/icons/caret-right.png'),
     calendar: require('../../../assets/images/icons/calendar.png'),
     calendar_grey: require('../../../assets/images/icons/calendar-grey.png'),
     calendar_blue: require('../../../assets/images/icons/calendar-blue.png'),
@@ -100,6 +102,12 @@ const images = {
     notification: require('../../../assets/images/icons/notification.png'),
     notificationUnread: require('../../../assets/images/icons/notification-unread.png'),
 
+    /* weather */
+    weather: require('../../../assets/images/icons/weather.png'),
+    guideWhatToDo: require('../../../assets/images/icons/Icon_medium_what_to_do.png'),
+    guideWhereToEat: require('../../../assets/images/icons/Icon_medium_where_to_eat.png'),
+    otherDownloadFlights: require('../../../assets/images/icons/Icon_other.png'),
+    tourLocation: require('../../../assets/images/icons/Icon_small_tour.png'),
 }
 
 export default images
