@@ -3,7 +3,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import LeaguesScreen from "../screens/Trips/LeaguesScreen";
 import TeamsScreen from "../screens/Trips/TeamsScreen";
 import { TripTabs, AllGamesTabs, WhatToDoTabs, WhereToEatTabs } from "./TabNavigator";
-import { ChatStackNavigator, ManageTripStackNavigator } from "./StackNavigator";
+import { ManageTripStackNavigator } from "./StackNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -17,7 +17,6 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="All games" component={AllGamesTabs} />
             <Drawer.Screen name="What To Do" component={WhatToDoTabs} />
             <Drawer.Screen name="Where To Eat" component={WhereToEatTabs} />
-            <Drawer.Screen name="Chat" component={ChatStackNavigator} />
         </Drawer.Navigator>
     );
 };

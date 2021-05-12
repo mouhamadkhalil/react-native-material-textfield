@@ -79,8 +79,9 @@ var SignalrService = /** @class */ (function () {
         this.hubConnection.onclose(function (error) {
             _this.connectionState = _this.hubConnection.state;
             _this.connectionChanged.emit(_this.hubConnection.state);
+            _this.removeListeners();
             console.log("xxxyyy, onClose", error);
-            setTimeout(function () { _this.connect(); }, 1000 * 60 * 60 * 3);
+            setTimeout(function () { _this.connect(); }, 1000 * 120);
         });
     };
 
@@ -90,8 +91,8 @@ var SignalrService = /** @class */ (function () {
             console.log("ReceiveChat", chatModel, channelName);
             _this.chatReceived.emit('chatReceived', { ChannelName: channelName, ChatModel: chatModel });
         });
-        this.hubConnection.on("newUserConnected", function (data) {
-            console.log("newUserConnected", data);
+        this.hubConnection.on("NewUserConnected", function (data) {
+            console.log("NewUserConnected", data);
             _this.newUserConnected.emit(data);
         });
         this.hubConnection.on("ChannelRemoved", function (data) {
@@ -103,6 +104,13 @@ var SignalrService = /** @class */ (function () {
             _this.channelCreated.emit(data);
         });
     };
+
+    SignalrService.prototype.removeListeners = function () {
+        this.chatReceived.removeListener();
+        this.newUserConnected.removeListener();
+        this.channelRemoved.removeListener();
+        this.channelCreated.removeListener();
+    }
 
     SignalrService.prototype.UpdateSignalrUserInfo = function () {
         return services.postConnection('/backend/Notifications/UpdateSignalrUserInfo', this.getConnectionId(), null)

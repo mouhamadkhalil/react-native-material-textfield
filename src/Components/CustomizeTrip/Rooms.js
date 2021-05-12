@@ -7,7 +7,7 @@ import {
     FlatList
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
-import RoomItem from "components/CustomizeTrip/RoomItem";
+import {RoomItem} from "components/CustomizeTrip/RoomItem";
 import { translate } from "helpers/utils.js";
 import R from "res/R";
 
@@ -59,7 +59,7 @@ export class Rooms extends React.PureComponent {
             bundle.NumberOfRooms = roomNumbers;
             bundle.RoomInfoList = roomInfoList;
             this.props.setIsCustomized(true);
-            this.setState({ roomsHeight});
+            this.setState({ roomsHeight });
         }
     };
 
@@ -101,7 +101,8 @@ export class Rooms extends React.PureComponent {
             bundle.NumberOfRooms = roomNumbers;
             bundle.RoomInfoList = roomInfoList;
             this.props.setIsCustomized(true);
-            this.setState({ roomsHeight});        }
+            this.setState({ roomsHeight });
+        }
     };
 
     renderItem = ({ item, index }) => {
@@ -158,16 +159,27 @@ export class Rooms extends React.PureComponent {
                         : null}
 
                     {/* filter */}
-                    <TouchableOpacity style={{ marginTop: 10, height: 60, backgroundColor: '#ccc' }} onPress={() => this.props.showFilter(true)}>
-                        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ fontSize: 16, color: '#222', textTransform: 'uppercase' }}>
-                                {translate('filter')}
-                            </Text>
-                            <Icon name='chevron-down-outline' style={{ fontSize: 16, color: '#222', marginStart: 5 }} />
-                        </View>
-                    </TouchableOpacity>
+                    {this.props.setShowFilter == null ? <></> :
+                        <TouchableOpacity style={{ marginTop: 10, height: 60, backgroundColor: '#ccc' }} onPress={() => this.props.setShowFilter(true)}>
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 16, color: '#222', textTransform: 'uppercase' }}>
+                                    {translate('filter')}
+                                </Text>
+                                <Icon name='chevron-down-outline' style={{ fontSize: 16, color: '#222', marginStart: 5 }} />
+                            </View>
+                        </TouchableOpacity>
+                    }
                 </View>
             </>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    textStyle: {
+        color: R.colors.blue,
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+});

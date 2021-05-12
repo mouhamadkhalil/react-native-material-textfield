@@ -16,12 +16,32 @@ export default class ChatScreen extends Component {
     }
   }
 
+  pageEmit;
+  focus;
+  selectedChannel;
+  
   componentDidMount() {
-    this.getChannels();
-    DeviceEventEmitter.addListener('chatReceived', this.onReceive);
+    this.init();
   }
 
   componentWillUnmount() {
+    this.pageEmit && this.pageEmit.remove();
+    this.focus && this.focus();
+  }
+
+  init = () => {
+    this.props.navigation.setOptions({
+      headerStyle: {
+        backgroundColor: R.colors.blue,
+      },
+      headerTintColor: 'white',
+    })
+    var _this = this;
+    this.getChannels();
+    this.pageEmit = DeviceEventEmitter.addListener('chatReceived', this.onReceive);
+    this.focus = this.props.navigation.addListener('focus', () => {
+      _this.selectedChannel = "";
+    });
   }
 
   getChannels = () => {
@@ -31,17 +51,24 @@ export default class ChatScreen extends Component {
   }
 
   onReceive = (chat) => {
-    var channels = this.state.channels;
-    var channel = channels.find(c => c.Channel === chat.ChannelName);
-    if (channel) {
-      msg = chat.ChatModel;
-      channel.UnreadMsgs ++;
-      channel.Msgs.unshift(msg);
-      this.setState(channels);
+    var channels = [...this.state.channels];
+    if (channels) {
+      var channel = channels.find((c) => c.Channel == chat.ChannelName);
+      if (channel) {
+        var msg = chat.ChatModel;
+        channel.TotalMsgs++;
+        channel.Msgs.push(msg);
+        if(this.selectedChannel != channel.Channel )
+        {
+          channel.UnreadMsgs++;
+        }
+        this.setState(channels);
+      }
     }
   }
 
   openChatRoom = (item) => {
+    this.selectedChannel = item.Channel;
     this.props.navigation.navigate('chatRoom', { channel: item });
   }
 
@@ -77,6 +104,7 @@ export default class ChatScreen extends Component {
         <View style={styles.container} accessible accessibilityLabel='main' testID='main'>
           <FlatList
             data={this.state.channels}
+            extraData={this.state}
             renderItem={this.renderItem}
             keyExtractor={this.keyExtractor}
           />

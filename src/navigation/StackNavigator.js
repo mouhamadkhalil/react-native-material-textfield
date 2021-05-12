@@ -207,8 +207,8 @@ const MyBookingStackNavigator = () => {
 
 const MoreStackNavigator = ({ navigation }) => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="more" navigationProps={navigation} component={MoreScreen} />
+        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' }}}>
+            <Stack.Screen name="more" options={{ title: translate("more") }} navigationProps={navigation} component={MoreScreen} />
             <Stack.Screen name="FAQ" navigationProps={navigation} component={Help1Screen} />
         </Stack.Navigator>
     );
@@ -216,8 +216,10 @@ const MoreStackNavigator = ({ navigation }) => {
 
 const ContactStackNavigator = ({ navigation }) => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="contactUs" navigationProps={navigation} component={ContactUsScreen} />
+        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' }}}>
+            <Stack.Screen name="contactUs" options={{ title: translate("contactUs") }} navigationProps={navigation} component={ContactUsScreen} />
+            <Stack.Screen name="chats" options={{ title: translate("chats") }} navigationProps={navigation} component={ChatScreen} />
+            <Stack.Screen name="chatRoom" options={{ title: translate("chatRoom") }} navigationProps={navigation} component={ChatRoomScreen} />
         </Stack.Navigator>
     );
 };

@@ -57,11 +57,9 @@ export default class LoginScreen extends React.Component {
                         _this.signalR = new SignalrService();
                         _this.signalR.UpdateSignalrUserInfo()
                             .then(_this.signalR.newUserConnected)
-                            .then(_this.signalR.chatReceived)
                             .then(_this.signalR.connect());
                         global['signalR'] = _this.signalR;
-
-                        this.props.navigation.navigate('book a trip');
+                        _this.props.navigation.navigate('book a trip');
                     }
                 });
         }

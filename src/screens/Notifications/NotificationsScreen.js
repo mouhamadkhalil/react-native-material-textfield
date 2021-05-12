@@ -48,6 +48,7 @@ export default class NotificationsScreen extends React.Component {
         var notifications = this.state.notifications;
         notifications.Items.Unshift(notification);
         this.setState(notifications);
+        global.toast.show(translate('msgNotificationReceived'), { type: "success" })
     }
 
     loadMore = () => {

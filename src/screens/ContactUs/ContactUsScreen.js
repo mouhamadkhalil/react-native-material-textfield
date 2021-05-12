@@ -82,6 +82,12 @@ export default class ContactUsScreen extends React.Component {
                                 {translate('feedback')}
                             </Text>
                         </TouchableOpacity>
+                        <TouchableOpacity style={styles.linkButton} onPress={() => { this.props.navigation.navigate('chats')}}>
+                            <Icon name="users" style={[styles.linkIcon, { color: 'blueviolet' }]}  />
+                            <Text style={[styles.linkText, { color: 'blueviolet' }]}>
+                                {translate('groupChat')}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 }
 

@@ -10,7 +10,9 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CheckBox, Tooltip } from 'react-native-elements';
 import RatingStars from "components/Trips/RatingStars";
+import { post, servicesUrl } from "helpers/services.js";
 import { translate } from "helpers/utils.js";
+import moment from 'moment';
 import R from "res/R";
 
 export class HotelItem extends React.PureComponent {
@@ -33,33 +35,18 @@ export class HotelItem extends React.PureComponent {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.bundle != this.props.bundle) {
+            this.init();
+        }
+    }
+
     init = () => {
+        //var isSelected = this.props.bundle.SelectedHotel.HotelId == this.props.item.HotelId;
+        //this.setState({ isSelected });
         if (this.state.isSelected)
             this.getCancelPolicy();
     }
-
-    selectHotel = () => {
-        try {
-            getCancelPolicy();
-            this.props.bundle.SelectedHotel = item;
-            this.setState({ isSelected: true });
-        } catch (error) {
-            global.toast.show(translate('msgErrorOccurred'), { type: "danger" })
-        }
-    }
-
-    /*selectHotel = (selectedHotel) => {
-        try {
-            var bundle = { ...this.state.bundle };
-            var hotel = { ...bundle.SelectedHotel };
-            selectedHotel.Selected = true;
-            bundle.SelectedHotel = hotel = selectedHotel;
-            this.setState({ bundle, hotel }, function () {
-                this.getCancelPolicy(hotel.HotelId);
-            })
-        }
-        catch { }
-    };*/
 
     getCancelPolicy = () => {
         try {
@@ -87,7 +74,7 @@ export class HotelItem extends React.PureComponent {
                     post(servicesUrl.viewCancelPolicy, cancelPolicyRequest)
                         .then((response) => {
                             item.Policies = response;
-                            setPolicy(item);
+                            this.setPolicy(item);
                             bundle.SelectedHotel = item;
                             this.setState({ isGettingPolicy: false })
                         });
@@ -136,6 +123,7 @@ export class HotelItem extends React.PureComponent {
     }
 
     render() {
+        var item = this.props.item;
         return (
             <View style={[R.styles.flexColumn, { backgroundColor: this.state.isSelected ? R.colors.blue : 'white', height: 200, marginTop: 10 }]} >
                 <View style={R.styles.flexRow}>
@@ -159,8 +147,8 @@ export class HotelItem extends React.PureComponent {
                         </Text>
 
                         {/* rating + cost */}
-                        <View style={R.styles.flexRow}>
-                            <RatingStars rating={rating} tag={item.HotelId} />
+                        <View style={{flexDirection:'row'}}>
+                            <RatingStars rating={this.state.rating} tag={item.HotelId} />
                             <Text style={{ fontWeight: 'bold', color: this.state.isSelected ? R.colors.lightGreen : 'black', alignSelf: 'flex-end', }}>
                                 + {item.SelectedCategory.ExtraCostPerFan} $
                         </Text>
@@ -186,17 +174,17 @@ export class HotelItem extends React.PureComponent {
 
                         {/* policy */}
                         <View style={{ flex: 1, flexDirection: 'row' }}>
-                            {isGettingPolicy ? (<ActivityIndicator size='small' color='white' />) : null}
+                            {this.state.isGettingPolicy ? (<ActivityIndicator size='small' color='white' />) : null}
                             {item.HasPolicy ?
                                 <>
-                                    {policy.Refundable ?
+                                    {item.SelectedPolicy.Refundable ?
                                         (<>
                                             <Image source={this.state.isSelected ? R.images.refundWhite : R.images.refundGrey} style={{ width: 25 }} />
-                                            <Text style={{ color: this.state.isSelected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10 }}>
+                                            <Text style={{ color: this.state.isSelected ? R.colors.lightGrey : R.colors.grey, paddingStart: 10, paddingTop:5 }}>
                                                 {translate('refundable')}
                                             </Text>
-                                            <Tooltip popover={<Text>{policy.RefundableText}</Text>} withOverlay={false} width={350} backgroundColor='white'>
-                                                <Image source={this.state.isSelected ? R.images.infoWhite : R.images.infoGrey} style={{ width: 25 }} />
+                                            <Tooltip popover={<Text>{item.SelectedPolicy.RefundableText}</Text>} withOverlay={false} width={350} backgroundColor='white'>
+                                                <Image source={this.state.isSelected ? R.images.infoWhite : R.images.infoGrey} style={{ width: 20, marginStart:5, marginTop:5 }} />
                                             </Tooltip>
                                         </>
                                         )
@@ -226,7 +214,7 @@ export class HotelItem extends React.PureComponent {
                         center
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
-                        onPress={this.selectHotel} />
+                        onPress={this.props.selectHotel(this.props.item)} />
                 </View >
             </View >
         );

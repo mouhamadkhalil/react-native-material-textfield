@@ -251,6 +251,8 @@ export default class CustomizeTripScreen extends React.Component {
         };
     }
 
+    
+
     browseHotels = () => {
         try {
             if (!this.state.isBrowsing) {
@@ -280,6 +282,10 @@ export default class CustomizeTripScreen extends React.Component {
                     });
             }
         } catch { }
+    }
+
+    setIsCustomized = (isCustomized) => {
+        this.setState({isCustomized});
     }
 
     openPictures = (images) => {
@@ -325,9 +331,7 @@ export default class CustomizeTripScreen extends React.Component {
             var hotel = { ...bundle.SelectedHotel };
             selectedHotel.Selected = true;
             bundle.SelectedHotel = hotel = selectedHotel;
-            this.setState({ bundle, hotel }, function () {
-                this.getCancelPolicy(hotel.HotelId);
-            })
+            this.setState({ bundle, hotel })
         }
         catch { }
     };
@@ -816,30 +820,9 @@ export default class CustomizeTripScreen extends React.Component {
                             </View>
                         </View>
 
-                        {bundleHotels != null ?
-                            /* 2 hotels */
-                            bundleHotels.map((bundleHotel, index) => {
-                                return (<View key={"bundle-hotel-" + index} style={{ flex: 1, flexDirection: 'column', marginTop: 50 }}>
-                                    <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
-                                        {translate('hotel')}
-                                    </Text>
-                                    {this.renderRooms(index, bundleHotel.RoomInfoList)}
-                                    {bundleHotel.HotelList.map((hotel) => {
-                                        return (this.renderHotel(hotel));
-                                    })}
-                                </View>)
-                            })
-                            :
-                            <View style={{ flex: 1, flexDirection: 'column', marginTop: 50 }}>
-                                <Text style={{ color: R.colors.grey, fontWeight: "bold", fontSize: 20 }}>
-                                    {translate('hotel')}
-                                </Text>
-                                {this.renderRooms(0)}
-                                {this.state.bundle?.HotelList?.Items.map((hotel) => {
-                                    return (this.renderHotel(hotel));
-                                })}
-                            </View>
-                        }
+                        {/* hotels */}
+                        <Hotels bundle={this.state.bundle} isCustomized={this.state.isCustomized} setIsCustomized={this.setIsCustomized} 
+                        openPictures={this.openPictures} selectHotel={this.selectHotel} />
                     </View>
                 }
             </>
@@ -899,7 +882,6 @@ export default class CustomizeTripScreen extends React.Component {
         return (
             <View style={styles.container}>
 
-                {/* hotels list */}
                 <FlatList
                     data={this.state.hotelList}
                     extraData={this.state}

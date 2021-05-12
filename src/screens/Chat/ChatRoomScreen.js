@@ -5,14 +5,9 @@ import { StyleSheet, View, Text, Platform, Dimensions, DeviceEventEmitter, Activ
 import { Bubble, GiftedChat, SystemMessage, Send } from "react-native-gifted-chat";
 import CustomActions from "components/FanChat/CustomActions";
 import { translate, openLink } from "helpers/utils";
-
-const user = {
-  _id: 1,
-  name: global.user?.FullName,
-}
+import R from "res/R";
 
 const { width } = Dimensions.get('window');
-
 
 export default class ChatRoomScreen extends Component {
 
@@ -29,20 +24,42 @@ export default class ChatRoomScreen extends Component {
       isLoadingEarlier: false,
       isLoading: true,
       isTyping: false,
-      channel: props?.route?.params?.channel
+      channel: props?.route?.params?.channel,
+      user: {
+        _id: 1,
+        name: global.user?.FullName
+      }
     }
   }
 
   pageEmit;
-  _isMounted = false
+  _isMounted = false;
 
   componentDidMount() {
+    this.init();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
+    this.pageEmit && this.pageEmit.remove();
+  }
+
+  init = () => {
+    this.props.navigation.setOptions({
+      headerStyle: {
+        backgroundColor: R.colors.blue,
+      },
+      headerTintColor: 'white',
+      title: this.state.channel?.Channel
+    })
     var _this = this;
     this._isMounted = true;
     var channel = this.state.channel;
+    channel.UnreadMsgs = 0;
     global.signalR.selectChannel(null, channel.Channel).then(() => {
       var messages = _this.formatChat([...channel.Msgs].reverse());
       _this.setState({
+        channel,
         messages,
         earlierMessages: [],
         isLoading: false,
@@ -51,14 +68,11 @@ export default class ChatRoomScreen extends Component {
     });
 
     this.pageEmit = DeviceEventEmitter.addListener('chatReceived', this.onReceive);
-  }
 
-  componentWillUnmount() {
-    this._isMounted = false
-    this.pageEmit && this.pageEmit.remove();
   }
 
   formatChat = (msgs) => {
+    var _this = this;
     if (msgs == null || msgs.length == 0)
       return [];
     return msgs.map(function (msg) {
@@ -66,9 +80,9 @@ export default class ChatRoomScreen extends Component {
         _id: Math.round(Math.random() * 1000000),
         createdAt: msg.Date,
         user: {
-          _id: msg.User === user.name ? 1 : 2,
+          _id: msg.User === global.user?.FullName ? 1 : 2,
           name: msg.User,
-          avatar: msg.User === user.name ? '' : 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
+          //avatar: msg.User == global.user?.FullName ? '' : 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
         }
       }
       switch (msg.Type) {
@@ -118,11 +132,15 @@ export default class ChatRoomScreen extends Component {
   }
 
   onSend = (messages = []) => {
-    global.signalR.sendChatMessage(messages[0].text, this.state.channel);
+    global.signalR.sendChatMessage(messages[0].text, this.state.channel.Channel);
   }
 
   onSendMedia = (message) => {
-    global.signalR.SendMediaMessage(message.text, this.state.channel, message.image);
+    try {
+      global.signalR.SendMediaMessage(message.text, this.state.channel.Channel, message.image);
+    } catch (error) {
+      global.toast.show(translate('msgErrorOccurred'), { type: "danger" })
+    }
   }
 
   botSend = (step = 0) => {
@@ -153,11 +171,10 @@ export default class ChatRoomScreen extends Component {
 
   onReceive = (chat) => {
     if (chat.ChannelName === this.state.channel.Channel) {
-      msg = chat.ChatModel;
+      var msg = chat.ChatModel;
       // update selected channel;
       var channel = this.state.channel;
-      channel.Msgs.append(msg);
-      channel.TotalMsgs++;
+      channel.UnreadMsgs = 0;
 
       this.setState((previousState) => {
         return {
@@ -169,9 +186,9 @@ export default class ChatRoomScreen extends Component {
                 text: msg.Message,
                 createdAt: msg.Date,
                 user: {
-                  _id: msg.User === user.name ? 1 : 2,
+                  _id: msg.User === global.user?.FullName ? 1 : 2,
                   name: msg.User,
-                  avatar: msg.User === user.name ? '' : 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
+                  //avatar: msg.User == global.user?.FullName ? '' : 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
                 }
               },
             ],
@@ -268,7 +285,7 @@ export default class ChatRoomScreen extends Component {
             onLoadEarlier={this.onLoadEarlier}
             isLoadingEarlier={this.state.isLoadingEarlier}
             parsePatterns={this.parsePatterns}
-            user={user}
+            user={this.state.user}
             scrollToBottom
             onLongPressAvatar={user => alert(JSON.stringify(user))}
             onPressAvatar={() => alert('short press')}
