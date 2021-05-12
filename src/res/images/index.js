@@ -102,6 +102,12 @@ const images = {
     notification: require('../../../assets/images/icons/notification.png'),
     notificationUnread: require('../../../assets/images/icons/notification-unread.png'),
 
+    /* weather */
+    weather: require('../../../assets/images/icons/weather.png'),
+    guideWhatToDo: require('../../../assets/images/icons/Icon_medium_what_to_do.png'),
+    guideWhereToEat: require('../../../assets/images/icons/Icon_medium_where_to_eat.png'),
+    otherDownloadFlights: require('../../../assets/images/icons/Icon_other.png'),
+    tourLocation: require('../../../assets/images/icons/Icon_small_tour.png'),
 }
 
 export default images
