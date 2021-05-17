@@ -19,9 +19,20 @@ import ChatRoomScreen from "screens/Chat/ChatRoomScreen";
 import NotificationsScreen from "screens/Notifications/NotificationsScreen";
 import NotificationsDetailsScreen from "screens/Notifications/NotificationsDetailsScreen";
 
+/* manage trip */
+import ManageTripScreen from "components/ManageTrip/ManageTripScreen";
+import CompletePaymentScreen from "components/ManageTrip/CompletePaymentScreen";
+import UploadPassport1Screen from "components/ManageTrip/UploadPassport1Screen";
+import UploadPassport2Screen from "components/ManageTrip/UploadPassport2Screen";
+import UploadPassport3Screen from "components/ManageTrip/UploadPassport3Screen";
+import Changes1Screen from "components/Changes/Changes1Screen";
+import Changes2Screen from "components/Changes/Changes2Screen";
+import Changes3Screen from "components/Changes/Changes3Screen";
+import InviteToJoin1Screen from "components/InviteToJoin/InviteToJoin1Screen";
+import InviteToJoin2Screen from "components/InviteToJoin/InviteToJoin2Screen";
+import InviteToJoin3Screen from "components/InviteToJoin/InviteToJoin3Screen";
 
 import Help1Screen from "components/Help/Help1Screen";
-import ManageTripScreen from 'components/ManageTrip/ManageTripScreen'
 import TeamsScreen from "screens/Trips/TeamsScreen";
 import LeaguesScreen from "screens/Trips/LeaguesScreen";
 import AllGamesScreen from "screens/Trips/AllGamesScreen";
@@ -101,7 +112,7 @@ function TripStackNavigator() {
     return (
         <Stack.Navigator screenOptions={{
             headerStyle: { backgroundColor: '#F7F7F7' },
-            headerTintColor: 'white',
+            headerTintColor: R.colors.blue,
             headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
         }}>
             <Stack.Screen name="Login" component={Login} />
@@ -136,46 +147,6 @@ function TripStackNavigator() {
         </Stack.Navigator>)
 }
 
-const WhatToDoStackNavigator = ({ navigation }) => {
-    return (
-        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
-            <Stack.Screen name="whatToDo" navigationProps={navigation} component={WhatToDoScreen} />
-            <Stack.Screen name="placeDetails" navigationProps={navigation} component={PlaceDetailsScreen} />
-
-            <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} />
-            <Stack.Screen name="tripOverview" navigationProps={navigation} component={TripOverViewScreen} />
-            <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} />
-            <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} />
-            <Stack.Screen name="experiences" navigationProps={navigation} component={ExperiencesScreen} />
-            <Stack.Screen name="summary" navigationProps={navigation} component={SummaryScreen} />
-            <Stack.Screen name="checkoutFanInfo" navigationProps={navigation} component={CheckoutFanInfoScreen} />
-            <Stack.Screen name="checkoutSummary" navigationProps={navigation} component={CheckoutSummaryScreen} />
-            <Stack.Screen name="checkoutPayment" navigationProps={navigation} component={CheckoutPaymentScreen} />
-
-        </Stack.Navigator>
-    );
-};
-
-const WhereToEatStackNavigator = ({ navigation }) => {
-    return (
-        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
-            <Stack.Screen name="whereToEat" navigationProps={navigation} component={WhereToEatScreen} />
-            <Stack.Screen name="placeDetails" navigationProps={navigation} component={PlaceDetailsScreen} />
-
-            <Stack.Screen name="request" navigationProps={navigation} component={RequestScreen} />
-            <Stack.Screen name="tripOverview" navigationProps={navigation} component={TripOverViewScreen} />
-            <Stack.Screen name="customize" navigationProps={navigation} component={CustomizeTripScreen} />
-            <Stack.Screen name="flight" navigationProps={navigation} component={SelectFlightScreen} />
-            <Stack.Screen name="experiences" navigationProps={navigation} component={ExperiencesScreen} />
-            <Stack.Screen name="summary" navigationProps={navigation} component={SummaryScreen} />
-            <Stack.Screen name="checkoutFanInfo" navigationProps={navigation} component={CheckoutFanInfoScreen} />
-            <Stack.Screen name="checkoutSummary" navigationProps={navigation} component={CheckoutSummaryScreen} />
-            <Stack.Screen name="checkoutPayment" navigationProps={navigation} component={CheckoutPaymentScreen} />
-
-        </Stack.Navigator>
-    );
-};
-
 const AllGamesStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#F7F7F7' } }}>
@@ -197,8 +168,15 @@ const AllGamesStackNavigator = ({ navigation }) => {
 
 const MyBookingStackNavigator = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+            headerStyle: { backgroundColor: '#F7F7F7' },
+            headerTintColor: R.colors.blue,
+            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
+        }}>
             <Stack.Screen name="myBookings" component={anyDay} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
+            <Stack.Screen name="whereToEat" options={{ title: translate("whereToEat") }} component={WhereToEatScreen} />
+            <Stack.Screen name="whatToDo" options={{ title: translate("whatToDo") }} component={WhatToDoScreen} />
+            <Stack.Screen name="placeDetails" options={{ title: translate("placeDetails") }} component={PlaceDetailsScreen} />
             <Stack.Screen name="upcomingDetails" component={upcomingDetailsScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
             <Stack.Screen name="notifications" options={{ title: translate("notifications") }} component={NotificationsScreen} />
             <Stack.Screen name="notificationsDetails" options={{ title: translate("notificationsDetails") }} component={NotificationsDetailsScreen} />
@@ -208,7 +186,7 @@ const MyBookingStackNavigator = () => {
 
 const MoreStackNavigator = ({ navigation }) => {
     return (
-        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' }}}>
+        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' } }}>
             <Stack.Screen name="more" options={{ title: translate("more") }} navigationProps={navigation} component={MoreScreen} />
             <Stack.Screen name="FAQ" navigationProps={navigation} component={Help1Screen} />
         </Stack.Navigator>
@@ -217,7 +195,7 @@ const MoreStackNavigator = ({ navigation }) => {
 
 const ContactStackNavigator = ({ navigation }) => {
     return (
-        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' }}}>
+        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' } }}>
             <Stack.Screen name="contactUs" options={{ title: translate("contactUs") }} navigationProps={navigation} component={ContactUsScreen} />
             <Stack.Screen name="chats" options={{ title: translate("chats") }} navigationProps={navigation} component={ChatScreen} />
             <Stack.Screen name="chatRoom" options={{ title: translate("chatRoom") }} navigationProps={navigation} component={ChatRoomScreen} />
@@ -225,10 +203,24 @@ const ContactStackNavigator = ({ navigation }) => {
     );
 };
 
-const ManageTripStackNavigator = ({ navigation }) => {
+const ManageTripStackNavigator = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="ManageTrip" options={{ title: 'Manage trip' }} navigationProps={navigation} component={ManageTripScreen} />
+        <Stack.Navigator screenOptions={{
+            headerStyle: { backgroundColor: R.colors.blue },
+            headerTintColor: 'white',
+            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
+        }}>
+            <Stack.Screen name="manageTrip" options={{ title: translate("manageTrip") }} component={ManageTripScreen} />
+            <Stack.Screen name="completePayment" options={{ title: translate("completePayment") }} component={CompletePaymentScreen} />
+            <Stack.Screen name="uploadPassport1" options={{ title: translate("uploadPassport") }} component={UploadPassport1Screen} />
+            <Stack.Screen name="uploadPassport2" options={{ title: translate("uploadPassport") }} component={UploadPassport2Screen} />
+            <Stack.Screen name="uploadPassport3" options={{ title: translate("uploadPassport") }} component={UploadPassport3Screen} />
+            <Stack.Screen name="Changes1" options={{ title: translate("changesCancellations") }} component={Changes1Screen} />
+            <Stack.Screen name="Changes2" options={{ title: translate("changesCancellations") }} component={Changes2Screen} />
+            <Stack.Screen name="Changes3" options={{ title: translate("changesCancellations") }} component={Changes3Screen} />
+            <Stack.Screen name="InviteToJoin1" options={{ title: translate("inviteTravellers") }} component={InviteToJoin1Screen} />
+            <Stack.Screen name="InviteToJoin2" options={{ title: translate("inviteTravellers") }} component={InviteToJoin2Screen} />
+            <Stack.Screen name="InviteToJoin3" options={{ title: translate("inviteTravellers") }} component={InviteToJoin3Screen} />
         </Stack.Navigator>
     );
 };
@@ -236,4 +228,4 @@ const ManageTripStackNavigator = ({ navigation }) => {
 
 
 
-export { ChatStackNavigator, NotificationsStackNavigator, StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator, WhatToDoStackNavigator, WhereToEatStackNavigator };
+export { ChatStackNavigator, NotificationsStackNavigator, StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator };

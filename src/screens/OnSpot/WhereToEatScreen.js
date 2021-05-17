@@ -48,7 +48,6 @@ export default class WhereToEatScreen extends React.Component {
     // get the data from the async storage
     getData = async () => {
         var whereToEat = JSON.parse(await AsyncStorage.getItem('@whereToEat'));
-        whereToEat = formatWhereToEat(whereToEat)
         this.setState({ whereToEat, isLoading: false });
     }
 

@@ -33,9 +33,9 @@ export default class NotificationsScreen extends React.Component {
     init = () => {
         this.props.navigation.setOptions({
             headerStyle: {
-              backgroundColor: R.colors.blue,
+                backgroundColor: R.colors.blue,
             },
-          })
+        })
         // add listner notification.
         this.pageEmit = DeviceEventEmitter.addListener('notifications', this.onReceive);
     }
@@ -129,7 +129,9 @@ export default class NotificationsScreen extends React.Component {
                 data={this.state.notifications?.Items}
                 renderItem={this.renderItem}
                 keyExtractor={this.keyExtractor}
-                ListFooterComponent={this.renderFooter}
+                onEndReached={this.loadMore}
+                onEndReachedThreshold={0.1}
+                //ListFooterComponent={this.renderFooter}
             />
         )
     };

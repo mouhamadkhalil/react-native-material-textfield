@@ -20,7 +20,7 @@ export class HotelItem extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            isSelected: this.props.bundle.SelectedHotel.HotelId == this.props.item.HotelId,
+            isSelected: false,
             isGettingPolicy: false,
             rating: parseInt(this.props.item.Rating),
             policy: this.props.item.SelectedPolicy
@@ -42,9 +42,9 @@ export class HotelItem extends React.PureComponent {
     }
 
     init = () => {
-        //var isSelected = this.props.bundle.SelectedHotel.HotelId == this.props.item.HotelId;
-        //this.setState({ isSelected });
-        if (this.state.isSelected)
+        var isSelected = this.props.bundle.SelectedHotel.HotelId == this.props.item.HotelId;
+        this.setState({ isSelected });
+        if (isSelected)
             this.getCancelPolicy();
     }
 
@@ -147,9 +147,11 @@ export class HotelItem extends React.PureComponent {
                         </Text>
 
                         {/* rating + cost */}
-                        <View style={{flexDirection:'row'}}>
+                        <View style={{flex:1,flexDirection:'row', justifyContent:'space-between'}}>
+                            <View style={R.styles.flexRow}>
                             <RatingStars rating={this.state.rating} tag={item.HotelId} />
-                            <Text style={{ fontWeight: 'bold', color: this.state.isSelected ? R.colors.lightGreen : 'black', alignSelf: 'flex-end', }}>
+                            </View>
+                            <Text style={{ fontWeight: 'bold', color: this.state.isSelected ? R.colors.lightGreen : 'black' }}>
                                 + {item.SelectedCategory.ExtraCostPerFan} $
                         </Text>
                         </View>
@@ -214,7 +216,7 @@ export class HotelItem extends React.PureComponent {
                         center
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
-                        onPress={this.props.selectHotel(this.props.item)} />
+                        onPress={() => this.props.selectHotel(this.props.item)} />
                 </View >
             </View >
         );

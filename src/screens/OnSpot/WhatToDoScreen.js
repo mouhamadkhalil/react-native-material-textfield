@@ -47,7 +47,6 @@ export default class WhatToDoScreen extends React.Component {
     // get the data from the async storage
     getData = async () => {
         var whatToDo = JSON.parse(await AsyncStorage.getItem('@whatToDo'));
-        whatToDo = formatWhereToEat(whatToDo)
         this.setState({ whatToDo, isLoading: false });
     }
 

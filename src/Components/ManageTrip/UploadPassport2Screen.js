@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import Zomato from "../../assets/images/zomato.png";
+import Zomato from "../../../assets/images/zomato.png";
 
 export default class UploadPassport2Screen extends React.Component {
 

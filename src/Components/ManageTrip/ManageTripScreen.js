@@ -16,34 +16,25 @@ export default class ManageTripScreen extends React.Component {
     }
 
     Payment = () => {
-        this.props.navigation.navigate('Complete Payment');
+        this.props.navigation.navigate('completePayment');
     };
 
     UploadPassport = () => {
-        this.props.navigation.navigate('Upload Passport 1');
+        this.props.navigation.navigate('uploadPassport1');
     };
 
     Changes = () => {
-        this.props.navigation.navigate('Changes 1');
+        this.props.navigation.navigate('Changes1');
     };
 
     Join = () => {
-        this.props.navigation.navigate('Join 1');
+        this.props.navigation.navigate('InviteToJoin1');
     };
 
     render() {
 
         return (
             <ScrollView style={styles.container}>
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={this.Back} style={styles.backButton}>
-                        <Image source={R.images.arrow_left} />
-                    </TouchableOpacity>
-                    <Text
-                        style={styles.pageTitle}
-                    >manage trip</Text>
-                </View>
-
                 <ScrollView style={{ padding: 30 }}>
 
                     <Text style={styles.sectionTitle}>GENERAL</Text>
@@ -80,19 +71,6 @@ const styles = StyleSheet.create({
         height: "100%",
         backgroundColor: "#F7F7F7"
     },
-    header: {
-        backgroundColor: "#374BBF",
-        height: 70,
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    pageTitle: {
-        color: "#fff",
-        fontSize: 25,
-        fontWeight: "bold",
-        marginStart: "auto",
-        marginEnd: "auto"
-    },
     backButton: {
         position: "absolute",
         start: 30
@@ -123,6 +101,7 @@ const styles = StyleSheet.create({
     sectionLinkImage: {
         width: 15,
         height: 15,
-        marginStart: "auto"
+        marginStart: "auto",
+        resizeMode:'contain'
     }
 });

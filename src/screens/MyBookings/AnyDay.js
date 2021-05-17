@@ -7,13 +7,12 @@ import {
     Image,
     ImageBackground,
     ActivityIndicator,
-    FlatList,
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Invoice } from "components/Upcoming/Invoice";
 import { translate } from "helpers/utils.js";
 import R from "res/R";
+import { TouchableOpacity } from "react-native";
 
 export default class UpcomingScreen extends React.Component {
 
@@ -39,26 +38,39 @@ export default class UpcomingScreen extends React.Component {
         this.setState({ upComingInvoices, isLoading: false });
     }
 
-    keyExtractor = (item, index) => {
-        return "trip-" + index;
+    navigateToGuide = (type) => {
+        var screenName = 'whatToDo';
+        switch(type) {
+            case 2: screenName =  'whereToEat'
+            break;
+        }
+        this.props.navigation.navigate(screenName)
     }
 
     renderGuide = ({ type }) => {
-        return <LinearGradient style={styles.guideBox}
-            colors={type == 1 ? ["#5D05D5", "#8B22AC"] : ["#DA353D", "#FF6310"]}
-            start={[0, 0]}
-            end={[0, 1]}
-            locations={[0, 1]}>
-            <Text style={styles.guideCategory}>Guide</Text>
-            <Text style={styles.guideName}>{type == 1 ? "What to do" : "Where to eat"}</Text>
-            <Image source={type == 1 ? R.images.guideWhatToDo : R.images.guideWhereToEat} />
-        </LinearGradient>
+        return <TouchableOpacity onPress={()=> this.navigateToGuide(type)}>
+            <LinearGradient style={styles.guideBox}
+                colors={type == 1 ? ["#5D05D5", "#8B22AC"] : ["#DA353D", "#FF6310"]}
+                start={[0, 0]}
+                end={[0, 1]}
+                locations={[0, 1]}>
+                <Text style={styles.guideCategory}>
+                    Guide
+                </Text>
+                <Text style={styles.guideName}>
+                    {type == 1 ? "What to do" : "Where to eat"}
+                </Text>
+                <Image source={type == 1 ? R.images.guideWhatToDo : R.images.guideWhereToEat} />
+            </LinearGradient>
+        </TouchableOpacity>
     }
+
     renderOther = ({ type }) => {
         return <ImageBackground style={styles.otherBox} source={type == 1 ? R.images.otherDownloadFlights : null} resizeMode="cover" >
             <Text style={styles.otherName}>{type == 1 ? "Download Flights" : ""}</Text>
         </ImageBackground>
     }
+
     renderTour = ({ name, background }) => {
         return <ImageBackground style={styles.otherBox} source={background} resizeMode="cover" >
             <Text style={styles.tourCategory}>Tour</Text>

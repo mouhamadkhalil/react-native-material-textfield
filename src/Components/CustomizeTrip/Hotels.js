@@ -33,8 +33,8 @@ export class Hotels extends React.PureComponent {
     }
 
     init = () => {
-        var bundle = {...this.props.bundle};
-        this.setState({bundle})
+        var bundle = { ...this.props.bundle };
+        this.setState({ bundle })
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -63,16 +63,20 @@ export class Hotels extends React.PureComponent {
             if (!this.state.isLoadingMore) {
                 var bundle = this.props.bundle;
                 var params = `?pageNumber=${bundle.HotelList.PageNumber + 1}&pageSize=${bundle.HotelList.PageSize}&getCancellationPolicy=false`;
-                this.setState({ isLoadingMore: true });
-                post(servicesUrl.getPagedHotels + params, bundle)
-                    .then((response) => {
-                        var joined = this.state.hotelList.concat(response.Items);
-                        bundle.HotelList.PageNumber = response.PageNumber;
-                        bundle.HotelList.PageCount = response.PageCount;
-                        this.setState({ bundle: bundle, hotelList: joined, isLoadingMore: false })
-                    });
+                this.setState({ isLoadingMore: true }, () => {
+                    post(servicesUrl.getPagedHotels + params, bundle)
+                        .then((response) => {
+                            var joined = [...bundle.HotelList.Items.concat(response.Items)];
+                            bundle.HotelList.PageNumber = response.PageNumber;
+                            bundle.HotelList.PageCount = response.PageCount;
+                            bundle.HotelList.Items = joined;
+                            this.setState({ bundle: { ...bundle }, isLoadingMore: false })
+                        });
+                });
             }
-        } catch { }
+        } catch (error) {
+            global.toast.show(translate('msgErrorOccurred'), { type: "danger" })
+        }
     }
 
     keyExtractor = (item) => { return 'hotel-' + item.HotelId }
@@ -88,7 +92,7 @@ export class Hotels extends React.PureComponent {
                 {this.props.bundle?.HotelList != undefined && this.props.bundle?.HotelList.IsLastPage ? (
                     <TouchableOpacity
                         activeOpacity={0.9}
-                        onPress={this.loadMoreHotels}
+                        onPress={this.init}
                         style={[R.styles.loadMoreButton, { marginTop: 10 }]}>
                         {this.state.isLoadingMore ?
                             <ActivityIndicator color="white" />
@@ -152,8 +156,8 @@ export class Hotels extends React.PureComponent {
                                 </View>
                                 : null}
                             <FlatList
-                                data={this.props.bundle?.HotelList?.Items}
-                                extraData={this.state.bundle?.SelectedHotel}
+                                data={this.state.bundle?.HotelList?.Items}
+                                extraData={this.state.bundle}
                                 renderItem={this.renderHotels}
                                 keyExtractor={this.keyExtractor}
                                 ListFooterComponent={this.renderFooter}

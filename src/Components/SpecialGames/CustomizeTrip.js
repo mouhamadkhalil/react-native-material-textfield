@@ -251,7 +251,7 @@ export default class CustomizeTripScreen extends React.Component {
         };
     }
 
-    
+
 
     browseHotels = () => {
         try {
@@ -272,20 +272,21 @@ export default class CustomizeTripScreen extends React.Component {
             if (!this.state.isLoadingMore) {
                 var bundle = this.state.bundle;
                 var params = `?pageNumber=${bundle.HotelList.PageNumber + 1}&pageSize=${bundle.HotelList.PageSize}&getCancellationPolicy=false`;
-                this.setState({ isLoadingMore: true });
-                post(servicesUrl.getPagedHotels + params, bundle)
-                    .then((response) => {
-                        var joined = this.state.hotelList.concat(response.Items);
-                        bundle.HotelList.PageNumber = response.PageNumber;
-                        bundle.HotelList.PageCount = response.PageCount;
-                        this.setState({ bundle: bundle, hotelList: joined, isLoadingMore: false })
-                    });
+                this.setState({ isLoadingMore: true }, () => {
+                    post(servicesUrl.getPagedHotels + params, bundle)
+                        .then((response) => {
+                            var joined = this.state.hotelList.concat(response.Items);
+                            bundle.HotelList.PageNumber = response.PageNumber;
+                            bundle.HotelList.PageCount = response.PageCount;
+                            this.setState({ bundle: bundle, hotelList: joined, isLoadingMore: false })
+                        });
+                });
             }
         } catch { }
     }
 
     setIsCustomized = (isCustomized) => {
-        this.setState({isCustomized});
+        this.setState({ isCustomized });
     }
 
     openPictures = (images) => {
@@ -821,8 +822,8 @@ export default class CustomizeTripScreen extends React.Component {
                         </View>
 
                         {/* hotels */}
-                        <Hotels bundle={this.state.bundle} isCustomized={this.state.isCustomized} setIsCustomized={this.setIsCustomized} 
-                        openPictures={this.openPictures} selectHotel={this.selectHotel} />
+                        <Hotels bundle={this.state.bundle} isCustomized={this.state.isCustomized} setIsCustomized={this.setIsCustomized}
+                            openPictures={this.openPictures} selectHotel={this.selectHotel} />
                     </View>
                 }
             </>
