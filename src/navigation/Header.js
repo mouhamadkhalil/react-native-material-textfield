@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, Platform, DeviceEventEmitter } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Notifications from 'expo-notifications';
 import Autocomplete from 'react-native-autocomplete-input';
 import { get, servicesUrl } from 'helpers/services';
+import { translate } from "helpers/utils.js";
 import R from "res/R";
-import { ImageBackground } from 'react-native';
 
 function HeaderOptions2(navigation, route) {
 
@@ -47,6 +47,11 @@ function HeaderOptions2(navigation, route) {
             },
             body: JSON.stringify(message),
         });
+    }
+
+    const onReceive = (notification) => {
+
+        global.toast.show(translate('msgNotificationReceived'), { type: "success" })
     }
 
     const findAll = str => {
@@ -257,10 +262,13 @@ const styles = StyleSheet.create({
 });
 
 
-function HeaderOptions(navigation, route) {
+function HeaderOptions(navigation) {
 
     return (
         {
+            headerStyle: { backgroundColor: '#F7F7F7' },
+            headerTintColor: R.colors.blue,
+            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
             title: "",
             headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.toggleDrawer()}><DrawerButton /></TouchableOpacity>
@@ -270,11 +278,27 @@ function HeaderOptions(navigation, route) {
                 const [suggestedGames, setSuggestedGames] = useState([]);
                 const [expoPushToken, setExpoPushToken] = useState('');
                 const [notification, setNotification] = useState(false);
+                const [notifications, setNotifications] = useState({});
                 const notificationListener = useRef();
                 const responseListener = useRef();
+                var pageEmit = null;
+
+                const onReceive = (notifications) => {
+                    setNotifications({...notifications});
+                }
+
+                /* get the data from the async storage*/
+                /*const getNotifications = useCallback(async () => {
+                    return JSON.parse(await AsyncStorage.getItem('@notifications'));
+                });*/
+
 
                 useEffect(() => {
                     //registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+                    var notifications = global.notifications;
+                    if (notifications)
+                        setNotifications({...notifications});
 
                     // This listener is fired whenever a notification is received while the app is foregrounded
                     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -286,9 +310,13 @@ function HeaderOptions(navigation, route) {
                         console.log(response);
                     });
 
+                    pageEmit = DeviceEventEmitter.addListener('notifications', onReceive);
+
                     return () => {
                         Notifications.removeNotificationSubscription(notificationListener.current);
                         Notifications.removeNotificationSubscription(responseListener.current);
+                        if (pageEmit != null)
+                            pageEmit.remove();
                     };
                 }, []);
 
@@ -306,12 +334,12 @@ function HeaderOptions(navigation, route) {
                         <View style={{ marginLeft: 10, marginRight: 10, width: 40 }}>
                             <Image source={R.images.search} style={{ height: 40, width: 40 }} />
                         </View>
-                        <TouchableOpacity onPress={() => navigation.navigate('notifications', { notifications: route?.params?.notifications })} style={{ flex: 1, flexDirection: 'row', width: 40 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('notifications', { notifications: notifications })} style={{ flex: 1, flexDirection: 'row', width: 40 }}>
                             <ImageBackground source={R.images.bell} style={{ height: 40, width: 40 }} >
-                                {route?.params?.notificationsNumber > 0 ?
+                                {notifications?.NotReadNotifications > 0 ?
                                     <View style={{ backgroundColor: 'red', borderRadius: 40, width: 20, alignSelf: 'flex-end' }}>
                                         <Text style={{ color: 'white', fontSize: 12, alignSelf: 'center' }}>
-                                            {route?.params?.notificationsNumber}
+                                            {notifications?.NotReadNotifications}
                                         </Text>
                                     </View> : null}
                             </ImageBackground>

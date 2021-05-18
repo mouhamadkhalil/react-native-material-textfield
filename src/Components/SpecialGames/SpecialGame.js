@@ -10,7 +10,8 @@ import {
     Dimensions,
     FlatList,
     ActivityIndicator,
-    Pressable
+    Pressable,
+    DeviceEventEmitter
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -57,14 +58,12 @@ export default class specialGames extends React.Component {
     componentDidMount() {
         try {
             this.getData();
-        } catch { } 
+        } catch { }
     }
 
     getData = () => {
         getWithToken(servicesUrl.getHomePageData)
             .then(response => {
-
-                this.props.navigation.setParams({ notificationsNumber: response.NotReadNotifications, notifications: response.Notifications });
 
                 // Special Games Data
                 var specialGames = response.SpecialGames.map(function (item) {
@@ -153,6 +152,13 @@ export default class specialGames extends React.Component {
                         ImageReference: league.ImageReference
                     };
                 });
+
+                // send notifications via event to headers
+                let notifications = { ...response.Notifications };
+                notifications.NotReadNotifications = response.NotReadNotifications
+                DeviceEventEmitter.emit('notifications', notifications);
+                global['notifications'] = notifications;
+
                 const allTeams = ["@allTeams", JSON.stringify(response.CountriesWithTeams)];
                 const allLeagues = ["@allLeagues", JSON.stringify(response.AllLeagues)];
                 const whatToDo = ["@whatToDo", JSON.stringify(response.WhatToDo)];
@@ -160,6 +166,7 @@ export default class specialGames extends React.Component {
                 const menuLinks = ["@menuLinks", JSON.stringify(response.MenuLinks)];
                 const upComingInvoices = ["@upComingInvoices", JSON.stringify(response.UpComingInvoices)];
                 AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat, menuLinks, upComingInvoices]);
+
                 this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: response.GamesList.PageCount, pageSize: response.GamesList.PageSize, isLoading: false });
             });
     };
@@ -294,7 +301,7 @@ export default class specialGames extends React.Component {
                         ></LinearGradient>
                         <Text style={{ fontSize: 20, marginStart: 15, fontFamily: 'BarlowCondensed-Bold', }}>
                             {item.AwayTeam}
-                            </Text>
+                        </Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <LinearGradient
@@ -307,7 +314,7 @@ export default class specialGames extends React.Component {
                         </LinearGradient>
                         <Text style={{ fontSize: 20, marginStart: 15, fontFamily: 'BarlowCondensed-Bold' }}>
                             {item.HomeTeam}
-                            </Text>
+                        </Text>
                     </View>
                 </View>
                 <View style={{ alignItems: "flex-end" }}>
@@ -375,7 +382,7 @@ export default class specialGames extends React.Component {
         const image = { uri: item.Image };
         return (
             <Pressable key={'team' + index} style={{ width: 130, height: 180, margin: 20, backgroundColor: "#fff", borderRadius: 20, justifyContent: "center", shadowColor: { width: 0, height: 8, }, shadowOpacity: .44, shadowRadius: 10, elevation: 15, justifyContent: "center", alignItems: "center" }}
-            onPress={()=>{ this.props.navigation.navigate('allGames', {idTeam: item.idTeams})}}>
+                onPress={() => { this.props.navigation.navigate('allGames', { idTeam: item.idTeams }) }}>
                 <Svg source={image} style={{ width: 80, height: 80 }} />
                 <Text style={{ fontSize: 16, fontWeight: 'bold', width: "80%", textAlign: "center", marginTop: 7 }}>{item.TeamName}</Text>
             </Pressable>
@@ -386,7 +393,7 @@ export default class specialGames extends React.Component {
     competitionItem({ item, index, state }) {
         const image = { uri: item.ImageReference };
         return (
-            <TouchableOpacity style={{ width: 250, marginTop: 60, height: 200 }} onPress={()=> { this.props.navigation.navigate('allGames', {idLeague: item.LeagueId})}}>
+            <TouchableOpacity style={{ width: 250, marginTop: 60, height: 200 }} onPress={() => { this.props.navigation.navigate('allGames', { idLeague: item.LeagueId }) }}>
                 <ImageBackground source={image} style={[styles.image, { width: 250, height: 200 }]} imageStyle={{ borderRadius: 20 }}>
                     <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: '30%', margin: '2%', borderRightWidth: 4, borderRightColor: '#76FF02', borderRadius: 50 }}></View>
@@ -430,9 +437,9 @@ export default class specialGames extends React.Component {
                                 <View style={styles.pageTitleBar}></View>
                                 <Text style={styles.pageTitleText}>{translate('popularGames')}</Text>
                             </View>
-                            <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center', paddingLeft: 15, paddingRight: 15}}>
+                            <View style={{ flex: 1, flexDirection: 'column', width: '100%', alignSelf: 'center', paddingLeft: 15, paddingRight: 15 }}>
                                 <FlatList
-                                    keyExtractor={(item, index) => 'popular'+item.idMatch}
+                                    keyExtractor={(item, index) => 'popular' + item.idMatch}
                                     data={this.state.popularGames}
                                     renderItem={item => this.popularGameItem(item)}
                                     ListFooterComponent={this.renderPopularGamesFooter}
@@ -556,7 +563,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     specialGameMeta: {
-        color: "white", 
+        color: "white",
         fontSize: 20,
         fontFamily: 'BarlowCondensed-Bold'
     },

@@ -9,7 +9,7 @@ const translate = memoize(
   (key, config) => (config ? key + JSON.stringify(config) : key)
 );
 
-const setI18nConfig = () => {
+const setI18nConfig = async () => {
 
   // fallback if no available language fits
   const languageTag = Localization.locale, isRTL = false;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { DeviceEventEmitter } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import AppLoading from 'expo-app-loading';
 import Constants from 'expo-constants';
@@ -9,6 +10,7 @@ import DrawerNavigator from "./src/navigation/DrawerNavigator";
 import Toast from "react-native-fast-toast";
 import * as Location from 'expo-location';
 import { setI18nConfig } from 'helpers/utils.js';
+import { translate } from "helpers/utils.js";
 import fonts from 'fonts';
 
 Notifications.setNotificationHandler({
@@ -49,7 +51,7 @@ export default class App extends React.Component {
     } else {
       alert('Must use physical device for Push Notifications');
     }
-  
+
     if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {
         name: 'default',
@@ -58,28 +60,42 @@ export default class App extends React.Component {
         lightColor: '#FF231F7C',
       });
     }
-    };
+  };
 
   componentDidMount = async () => {
-    // load fonts
-    await this.loadFontsAsync();
+
+
+    // init I18 config
+    await setI18nConfig();
     // init push notifications
     await this.registerForPushNotificationsAsync();
-    // init I18 config
-    setI18nConfig();
+    DeviceEventEmitter.addListener('MobileNotification', this.onReceive);
+
+    // load fonts
+    await this.loadFontsAsync();
 
     // get location
     if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({ErrorMsg : 'Oops, this will not work on Snack in an Android emulator. Try it on your device!'});
+      this.setState({ ErrorMsg: 'Oops, this will not work on Snack in an Android emulator. Try it on your device!' });
       return;
     }
     let { status } = await Location.requestPermissionsAsync();
     if (status !== 'granted') {
-      this.setState({ErrorMsg : 'Permission to access location was denied'});
+      this.setState({ ErrorMsg: 'Permission to access location was denied' });
       return;
     }
     let location = await Location.getCurrentPositionAsync({});
     await SecureStore.setItemAsync('location', JSON.stringify(location.coords));
+  }
+
+  onReceive = (notification) => {
+    var notifications = global.notifications;
+    notifications.newNotification = notification;
+    notifications.NotReadNotifications++;
+    //notifications.Items?.Unshift(notification);
+    global.notifications = notifications;
+    DeviceEventEmitter.emit('notifications', notifications);
+    global.toast.show(translate('msgNotificationReceived'), { type: "success" })
   }
 
   render() {

@@ -44,11 +44,10 @@ export default class NotificationsScreen extends React.Component {
         this.pageEmit && this.pageEmit.remove();
     }
 
-    onReceive = (notification) => {
+    onReceive = (notifications, newNotification) => {
         var notifications = this.state.notifications;
-        notifications.Items.Unshift(notification);
+        notifications.Items.Unshift(newNotification);
         this.setState(notifications);
-        global.toast.show(translate('msgNotificationReceived'), { type: "success" })
     }
 
     loadMore = () => {

@@ -110,29 +110,26 @@ const NotificationsStackNavigator = ({ navigation }) => {
 
 function TripStackNavigator() {
     return (
-        <Stack.Navigator screenOptions={{
-            headerStyle: { backgroundColor: '#F7F7F7' },
-            headerTintColor: R.colors.blue,
-            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
-        }}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Signup" component={Signup} />
-            <Stack.Screen name="book a trip" component={SpecialGames} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-
+        <Stack.Navigator
+            screenOptions={({ navigation, route }) => (HeaderOptions(navigation, route))}
+        >
+            <Stack.Screen name="Login" component={Login} options={{ title: translate("login"), headerRight: null, headerLeft: null }} />
+            <Stack.Screen name="Signup" component={Signup} options={{ title: translate("signup"), headerRight: null, headerLeft: null }} />
+            <Stack.Screen name="book a trip" component={SpecialGames} />
             <Stack.Screen name="teams" component={TeamsScreen} />
             <Stack.Screen name="leagues" component={LeaguesScreen} />
-            <Stack.Screen name="allGames" component={AllGamesScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="request" component={RequestScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="giftcard" component={GiftCardScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="giftcard2" component={GiftCard2Screen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="tripOverview" component={TripOverViewScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="customize" component={CustomizeTripScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="flight" component={SelectFlightScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="experiences" component={ExperiencesScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="summary" component={SummaryScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="checkoutFanInfo" component={CheckoutFanInfoScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="checkoutSummary" component={CheckoutSummaryScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
-            <Stack.Screen name="checkoutPayment" component={CheckoutPaymentScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
+            <Stack.Screen name="allGames" component={AllGamesScreen} />
+            <Stack.Screen name="request" component={RequestScreen} />
+            <Stack.Screen name="giftcard" component={GiftCardScreen} />
+            <Stack.Screen name="giftcard2" component={GiftCard2Screen} />
+            <Stack.Screen name="tripOverview" component={TripOverViewScreen} />
+            <Stack.Screen name="customize" component={CustomizeTripScreen} />
+            <Stack.Screen name="flight" component={SelectFlightScreen} />
+            <Stack.Screen name="experiences" component={ExperiencesScreen} />
+            <Stack.Screen name="summary" component={SummaryScreen} />
+            <Stack.Screen name="checkoutFanInfo" component={CheckoutFanInfoScreen} />
+            <Stack.Screen name="checkoutSummary" component={CheckoutSummaryScreen} />
+            <Stack.Screen name="checkoutPayment" component={CheckoutPaymentScreen} />
 
             <Stack.Screen name="my trips" component={MyTripsScreen} />
             <Stack.Screen name="my profile" component={MyProfileScreen} />
@@ -168,16 +165,12 @@ const AllGamesStackNavigator = ({ navigation }) => {
 
 const MyBookingStackNavigator = () => {
     return (
-        <Stack.Navigator screenOptions={{
-            headerStyle: { backgroundColor: '#F7F7F7' },
-            headerTintColor: R.colors.blue,
-            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
-        }}>
-            <Stack.Screen name="myBookings" component={anyDay} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
+        <Stack.Navigator screenOptions={({ navigation, route }) => (HeaderOptions(navigation, route))}>
+            <Stack.Screen name="myBookings" component={anyDay} />
             <Stack.Screen name="whereToEat" options={{ title: translate("whereToEat") }} component={WhereToEatScreen} />
             <Stack.Screen name="whatToDo" options={{ title: translate("whatToDo") }} component={WhatToDoScreen} />
             <Stack.Screen name="placeDetails" options={{ title: translate("placeDetails") }} component={PlaceDetailsScreen} />
-            <Stack.Screen name="upcomingDetails" component={upcomingDetailsScreen} options={({ navigation, route }) => (HeaderOptions(navigation, route))} />
+            <Stack.Screen name="upcomingDetails" component={upcomingDetailsScreen} />
             <Stack.Screen name="notifications" options={{ title: translate("notifications") }} component={NotificationsScreen} />
             <Stack.Screen name="notificationsDetails" options={{ title: translate("notificationsDetails") }} component={NotificationsDetailsScreen} />
         </Stack.Navigator>

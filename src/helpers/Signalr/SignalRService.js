@@ -21,6 +21,7 @@ var SignalrService = /** @class */ (function () {
         this.connectionChanged = react.DeviceEventEmitter;
         this.channelCreated = react.DeviceEventEmitter;
         this.channelRemoved = react.DeviceEventEmitter;
+        this.notification = react.DeviceEventEmitter;
         this.connectionUrl = services.Server_URL + 'mainhub';
     }
 
@@ -102,6 +103,10 @@ var SignalrService = /** @class */ (function () {
         this.hubConnection.on("NewChannel", function (data) {
             console.log("NewChannel", data);
             _this.channelCreated.emit(data);
+        });
+        this.hubConnection.on("MobileNotification", function (data) {
+            console.log("MobileNotification", data);
+            _this.notification.emit('MobileNotification', data);
         });
     };
 

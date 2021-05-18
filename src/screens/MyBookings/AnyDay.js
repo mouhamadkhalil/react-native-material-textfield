@@ -81,7 +81,7 @@ export default class UpcomingScreen extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 {/* banner */}
                 <View style={styles.pageHeader}>
                     <Text style={styles.pageTitle}>Day 3</Text>
@@ -97,7 +97,7 @@ export default class UpcomingScreen extends React.Component {
                     </LinearGradient>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <ScrollView style={styles.pageContent} contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={styles.pageContent} contentContainerStyle={{ flexGrow: 1 }}>
                         <View style={styles.weatherBox}>
                             <Image style={styles.weatherIcon} source={R.images.weather} />
                             <Text style={styles.weatherText}>Chance of rain in Barcelona, don’t forget your umbrella!</Text>
@@ -115,9 +115,9 @@ export default class UpcomingScreen extends React.Component {
                             <View style={styles.spacer}></View>
                             {this.renderOther({ type: 1 })}
                         </View>
-                    </ScrollView>
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         )
     };
 
