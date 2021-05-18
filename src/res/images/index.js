@@ -69,7 +69,7 @@ const images = {
     /* chat */
     chat: require('../../../assets/images/icons/chat1.png'),
     feedback: require('../../../assets/images/icons/feedback.png'),
-    messenger: require('../../../assets/images/icons/messenger.png'),
+    //messenger: require('../../../assets/images/icons/messenger.png'),
     whatsapp: require('../../../assets/images/icons/whatsapp.png'),
 
     /* images */

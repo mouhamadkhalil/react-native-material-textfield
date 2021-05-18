@@ -34,7 +34,7 @@ export default class chat extends React.Component {
                 <View style={{ height: 200, width: 200 }}>
                     <TouchableOpacity>
                         <Text style={{ marginTop: 20, marginStart: 80 }}>{translate('messenger')}</Text>
-                        <Image source={R.images.messenger} style={{ width: 40, height: 40, marginStart: 30, marginTop: -20 }} />
+                        <Image  style={{ width: 40, height: 40, marginStart: 30, marginTop: -20 }} />
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Text style={{ marginTop: 20, marginStart: 80 }}>{translate('whatsapp')}</Text>

@@ -68,7 +68,7 @@ export default class App extends React.Component {
     // init I18 config
     await setI18nConfig();
     // init push notifications
-    await this.registerForPushNotificationsAsync();
+    //await this.registerForPushNotificationsAsync();
     DeviceEventEmitter.addListener('MobileNotification', this.onReceive);
 
     // load fonts

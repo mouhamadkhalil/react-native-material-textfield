@@ -9,7 +9,6 @@ import {
     Modal,
     ScrollView
 } from "react-native";
-//import RNFetchBlob from 'react-native-fetch-blob'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
