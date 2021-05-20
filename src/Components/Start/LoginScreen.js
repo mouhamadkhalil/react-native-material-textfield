@@ -9,6 +9,8 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     ToastAndroid,
+    KeyboardAvoidingView,
+    Platform
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import { CheckBox } from 'react-native-elements';
@@ -16,7 +18,8 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import { Ionicons } from '@expo/vector-icons';
-import { get, postLogin, servicesUrl, getUserCredentials, setUserCredentials } from "helpers/services.js";
+import { get, postLogin, servicesUrl } from "helpers/services.js";
+import { getUserCredentials, setUserCredentials, translate } from "helpers/utils.js";
 import { SignalrService } from 'helpers/Signalr/SignalRService';
 import R from 'res/R';
 
@@ -30,41 +33,51 @@ export default class LoginScreen extends React.Component {
             password: "",
             Token: "",
             forgotPassword: "",
-            checked: false,
-            isLoading: true
+            remember: false,
+            isLoading: true,
+            isLogin: false
         };
         this.signalR;
     }
 
     componentDidMount = async () => {
-        var _this = this;
         const [email, password] = await getUserCredentials();
         if (email !== '' && password !== '') {
             const data = {
                 username: email,
                 password: password,
             };
-            postLogin(servicesUrl.login, data)
-                .then(response => {
-                    if (response.ErrorId) {
-                        this.setState({ isLoading: false })
-                        global.toast.show(translate('msgIncorrectCredentials'), { type: "danger" })                        
-                    } else {
-                        global['user']= response;
-                        SecureStore.setItemAsync('token', response.Token);
-
-                        // connect to the signal R service
-                        _this.signalR = new SignalrService();
-                        _this.signalR.UpdateSignalrUserInfo()
-                            .then(_this.signalR.newUserConnected)
-                            .then(_this.signalR.connect());
-                        global['signalR'] = _this.signalR;
-                        _this.props.navigation.navigate('book a trip');
-                    }
-                });
+            this.login(data);
         }
         else {
             this.setState({ isLoading: false })
+        }
+    }
+
+    login = (data) => {
+        var _this = this;
+        if (!this.state.isLogin) {
+            this.setState({ isLogin: true }, () => {
+                postLogin(servicesUrl.login, data)
+                    .then(response => {
+                        if (response.ErrorId) {
+                            this.setState({ isLoading: false, isLogin: false });
+                            global.toast.show(translate('msgIncorrectCredentials'), { type: "danger" })
+                        } else {
+                            this.setState({ isLoading: false, isLogin: false });
+                            global['user'] = response;
+                            SecureStore.setItemAsync('token', response.Token);
+                            if (this.state.remember)
+                                setUserCredentials(this.state.username, this.state.password);
+                            // connect to the signal R service
+                            _this.signalR = new SignalrService();
+                            _this.signalR.UpdateSignalrUserInfo()
+                                .then(_this.signalR.connect());
+                            global['signalR'] = _this.signalR;
+                            _this.props.navigation.navigate('book a trip');
+                        }
+                    });
+            })
         }
     }
 
@@ -102,46 +115,18 @@ export default class LoginScreen extends React.Component {
     };
 
 
-    SubmitLoginBtn = (event) => {
-        const _this = this;
-        const data = {
-            username: this.state.username,
-            password: this.state.password,
-        };
+    loginClick = () => {
         if (this.state.username === "" || this.state.password === "") {
-            ToastAndroid.showWithGravity(
-                'please fill out mandatory fields !',
-                ToastAndroid.LONG,
-                ToastAndroid.CENTER
-            );
+            global.toast.show(translate('msgEnterCredentials'), { type: "danger" })
         }
         else {
-            if (this.state.username != ' ' && this.state.password != ' ') {
-                postLogin(servicesUrl.login, data)
-                    .then(response => {
-                        if (response.ErrorId) {
-                            ToastAndroid.showWithGravity(
-                                'Error: The user name or password is incorrect',
-                                ToastAndroid.LONG,
-                                ToastAndroid.CENTER
-                            );
-                            window.location.reload();
-                        } else {
-                            setUserCredentials(this.state.username, this.state.password);
-                            SecureStore.setItemAsync('token', response.Token);
-                            this.props.navigation.navigate('book a trip');
-                            ToastAndroid.showWithGravity(
-                                'you are successfully logged in !',
-                                ToastAndroid.SHORT,
-                                ToastAndroid.CENTER
-                            );
-                        }
-                    });
-            }
+            const data = {
+                username: this.state.username,
+                password: this.state.password,
+            };
+            this.login(data);
         }
     };
-
-    SubmitLoginBtn = this.SubmitLoginBtn.bind(this);
 
     async FBLogin() {
         try {
@@ -182,22 +167,21 @@ export default class LoginScreen extends React.Component {
     };
 
     render() {
-        const { navigation } = this.props;
         const { showAlert } = this.state;
         return (
             this.state.isLoading ?
-                <ActivityIndicator size='large' color={R.colors.green} />
+                <ActivityIndicator size='large' color={R.colors.green} marginTop={20} />
                 :
                 <ScrollView style={styles.container}>
                     <View style={{ flex: 1, flexDirection: 'column' }}>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
                             <Image
-                                source={R.images.flyfoot}
-                                style={{ width: 60, height: 60 }}
+                                source={R.images.flyfoot_grey}
+                                style={{ height: 60, resizeMode: 'contain' }}
                             />
                         </View>
                         <TouchableOpacity onPress={this.FBLogin.bind(this)} style={{ marginRight: 35, marginLeft: 35 }}>
-                            <View style={{ flex: 1, flexDirection: 'row', marginTop: 30, backgroundColor: '#37568F' }}>
+                            <View style={{ flex: 1, flexDirection: 'row', marginTop: 10, backgroundColor: '#37568F' }}>
                                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
                                     login  with  facebook
                             </Text>
@@ -228,7 +212,6 @@ export default class LoginScreen extends React.Component {
                             required
                             value={this.state.email}
                             type="email"
-                            autoCapitalize="none"
                             keyboardType="email-address"
                         />
                         <Text style={{ marginTop: 30, marginLeft: 35 }}>
@@ -259,34 +242,24 @@ export default class LoginScreen extends React.Component {
                                 <Text style={{ marginLeft: 35, color: "gray", fontSize: 16, textDecorationLine: "underline" }}>Forgot password?</Text>
                             </TouchableOpacity>
 
+                            {/* remember me */}
                             <View style={{ marginLeft: 25, marginTop: 20 }}>
-
-                                <CheckBox
-                                    title='remember me'
-                                    checked={this.state.checked}
-                                    onPress={() => this.setState({
-                                        checked: !this.state.checked
-                                    })}
-                                />
+                                <CheckBox title='remember me' checked={this.state.remember} onPress={() => this.setState({ remember: !this.state.remember })} />
                             </View>
 
                         </View>
-                        <TouchableOpacity style={styles.loginBtn} onPress={(this.SubmitLoginBtn)}>
-                            <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <Text style={styles.loginText}>
-                                    login
+                        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                        <TouchableOpacity style={styles.loginBtn} onPress={() => this.loginClick()}>
+                            <Text style={styles.loginText}>
+                                {translate('login')}
                             </Text>
-                                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                    <Ionicons
-                                        name='chevron-forward-outline'
-                                        size={20}
-                                        color='white'
-                                        style={{ marginRight: 20 }}
-                                    />
-                                </View>
-
-                            </View>
+                            {this.state.isLogin ?
+                                <ActivityIndicator size='small' color='white' />
+                                :
+                                <Ionicons name='chevron-forward-outline' size={20} color='white' />
+                            }
                         </TouchableOpacity>
+                        </KeyboardAvoidingView>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>
                             <Text
                                 style={{
@@ -338,12 +311,17 @@ const styles = StyleSheet.create({
         marginBottom: 0,
     },
     loginBtn: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         backgroundColor: "#374BBE",
         height: 60,
         marginTop: 20,
         marginBottom: 10,
         marginLeft: 35,
         marginRight: 35,
+        padding: 20,
     },
     loginTextF: {
         color: "white",
@@ -354,10 +332,8 @@ const styles = StyleSheet.create({
         paddingTop: 6,
     },
     loginText: {
-        paddingLeft: 20,
         fontSize: 18,
         fontWeight: 'bold',
-        lineHeight: 60,
         color: "white",
         letterSpacing: 2,
         textTransform: 'uppercase'

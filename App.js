@@ -34,41 +34,49 @@ export default class App extends React.Component {
   }
 
   registerForPushNotificationsAsync = async () => {
-    if (Constants.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
+    try {
+      if (Constants.isDevice) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+          const { status } = await Notifications.requestPermissionsAsync();
+          finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+          alert('Failed to get push token for push notification!');
+          return;
+        }
+        let experienceId = '@mouhamadkhalil/flyfoot';
+        /*if (!Constants.manifest) {
+          // Absence of the manifest means we're in bare workflow
+          experienceId = '@mouhamadkhalil/flyfoot';
+        }*/
+        const token = (await Notifications.getExpoPushTokenAsync({ experienceId, })).data;
+        alert(token);
+        /*this.setState({ expoPushToken: token });*/
+      } else {
+        alert('Must use physical device for Push Notifications');
       }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
-      const token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-      this.setState({ expoPushToken: token });
-    } else {
-      alert('Must use physical device for Push Notifications');
-    }
 
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
+      if (Platform.OS === 'android') {
+        Notifications.setNotificationChannelAsync('default', {
+          name: 'default',
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: '#FF231F7C',
+        });
+      }
+    }
+    catch (error) {
+      alert(error);
     }
   };
 
   componentDidMount = async () => {
-
-
     // init I18 config
     await setI18nConfig();
     // init push notifications
-    //await this.registerForPushNotificationsAsync();
+    await this.registerForPushNotificationsAsync();
     DeviceEventEmitter.addListener('MobileNotification', this.onReceive);
 
     // load fonts

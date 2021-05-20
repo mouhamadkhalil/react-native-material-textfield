@@ -6,7 +6,6 @@ import R from 'res/R';
 import Login from "components/Start/LoginScreen";
 import Signup from "components/Start/SignupScreen";
 import SpecialGames from "components/SpecialGames/SpecialGame";
-import AnyDayScreen from "components/Schedule/AnyDayScreen";
 import RequestScreen from "screens/Trips/RequestScreen";
 import MoreScreen from "screens/More/MoreScreen";
 import ContactUsScreen from "screens/ContactUs/ContactUsScreen";
@@ -31,6 +30,9 @@ import Changes3Screen from "components/Changes/Changes3Screen";
 import InviteToJoin1Screen from "components/InviteToJoin/InviteToJoin1Screen";
 import InviteToJoin2Screen from "components/InviteToJoin/InviteToJoin2Screen";
 import InviteToJoin3Screen from "components/InviteToJoin/InviteToJoin3Screen";
+
+/* trip documents */
+import DocumentScreen from "components/TripDocs/DocumentScreen";
 
 import Help1Screen from "components/Help/Help1Screen";
 import TeamsScreen from "screens/Trips/TeamsScreen";
@@ -218,7 +220,19 @@ const ManageTripStackNavigator = () => {
     );
 };
 
+const TripDocumentsStackNavigator = () => {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerStyle: { backgroundColor: R.colors.blue },
+            headerTintColor: 'white',
+            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
+        }}>
+            <Stack.Screen name="tripDocuments" options={{ title: translate("tripDocuments") }} component={DocumentScreen} />
+        </Stack.Navigator>
+    );
+};
 
 
 
-export { ChatStackNavigator, NotificationsStackNavigator, StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator };
+
+export { ChatStackNavigator, NotificationsStackNavigator, StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator, TripDocumentsStackNavigator };

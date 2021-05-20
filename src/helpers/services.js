@@ -41,31 +41,6 @@ export const servicesUrl = {
     contactUs: "/mobile/about/contactus"
 }
 
-export async function setUserCredentials(email, password) {
-    try {
-        await SecureStore.setItemAsync('email', email);
-        await SecureStore.setItemAsync('password', password);
-    } catch (error) {
-        global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
-    }
-}
-
-export async function getUserCredentials() {
-    var email = '', password = '';
-    try {
-        var email = await SecureStore.getItemAsync('email');
-        if (email == null)
-            email = '';
-        var password = await SecureStore.getItemAsync('password');
-        if (password == null)
-            password = '';
-    } catch (error) {
-        global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
-    }
-    return [email, password];
-}
-
-
 export async function getToken() {
     try {
         const value = await SecureStore.getItemAsync('token');

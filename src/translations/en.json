@@ -219,7 +219,8 @@
     "msgChangeRequestSent": "Your change request has been sent",
     "msgWithin24hrs": "Please do this within 24 hours from booking",
     "msgNotFound": "Not found!",
-    "msgNotificationReceived": "new notification received!",
+    "msgEnterCredentials": "Please enter your email and password!",
+    "msgNotificationReceived": "New notification received!",
     "msgFeedbackSent": "Feedback has been sent!",
     "msgIncorrectCredentials": "Error: The user name or password is incorrect!",
     "msgErrorOccurred": "Error occurred please try again later!"

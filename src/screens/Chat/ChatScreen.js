@@ -19,9 +19,12 @@ export default class ChatScreen extends Component {
   pageEmit;
   focus;
   selectedChannel;
-  
+
   componentDidMount() {
-    this.init();
+    try {
+      this.init();
+    }
+    catch (error) { alert(error) }
   }
 
   componentWillUnmount() {
@@ -58,8 +61,7 @@ export default class ChatScreen extends Component {
         var msg = chat.ChatModel;
         channel.TotalMsgs++;
         channel.Msgs.push(msg);
-        if(this.selectedChannel != channel.Channel )
-        {
+        if (this.selectedChannel != channel.Channel) {
           channel.UnreadMsgs++;
         }
         this.setState(channels);

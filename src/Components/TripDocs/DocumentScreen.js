@@ -1,263 +1,109 @@
 import React from "react";
 import {
   StyleSheet,
-  TextInput,
   Text,
   View,
   Image,
   TouchableOpacity,
+  FlatList,
+  ActivityIndicator
 } from "react-native";
-import User from "../../assets/images/user.png";
-import Airplane from "../../assets/images/airplane.jpg";
-import Hotel from "../../assets/images/hotel.jpg";
-import Download from "../../assets/images/download.jpg";
-import SignupScreen from "../Start/SignupScreen";
-import HotelScreen from "../TripInfo/HotelScreen";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { getWithToken, servicesUrl } from "helpers/services.js";
+import { translate } from "helpers/utils.js";
+import R from "res/R";
 
 export default class DocumentScreen extends React.Component {
 
-  Back = () => {
-    this.props.navigation.navigate('Menu');
+  constructor(props) {
+    super(props);
+    this.state = {
+      documents: [],
+      token: "",
+      isLoading: true,
+    };
   }
 
-  Flight1 = () => {
-    this.props.navigation.navigate('Flights 2');
+  componentDidMount() {
+    this.init();
   }
 
-  Pickup = () => {
-    this.props.navigation.navigate('Pick up');
+  init = async () => {
+    var upComingInvoices = await this.getData();
+    if (upComingInvoices && upComingInvoices.length > 0)
+      getWithToken(servicesUrl.GetToken).then((response) => {
+        this.setState({ documents: upComingInvoices[0].Documents, token: response.Value, isLoading: false });
+      })
+    else
+      this.setState({ isLoading: false });
   }
 
-  Hotel = () => {
-    this.props.navigation.navigate('Hotel');
+  // get the data from the async storage
+  getData = async () => {
+    return JSON.parse(await AsyncStorage.getItem('@upComingInvoices'));
   }
 
-  Game = () => {
-    this.props.navigation.navigate('Game');
+  download = (idDocument) => {
+    /*let fileURL = "https://beta.fly-foot.com/api/mobile/download/" + idDocument + "?session=" + this.state.token;
+    RNFetchBlob.config({
+      fileCache: true,
+      addAndroidDownloads: {
+        notification: true,
+        title: 'Great ! Download Success ! ',
+        // File description (not notification description)
+        description: 'A travel document file.',
+        // Make the file scannable  by media scanner
+        mediaScannable: true,
+      }
+    })
+      .fetch('GET', fileURL)
+      .then((resp) => {
+        // ...
+      })
+      .catch((err) => {
+        // ...
+      })*/
   }
 
-  Sagrada = () => {
-    this.props.navigation.navigate('Perk');
+  keyExtractor = (item, index) => {
+    return "download-" + item.idDocument;
   }
 
-  Restaurant = () => {
-    this.props.navigation.navigate('Pick up');
+  renderItem = ({ item }) => {
+    return (
+      <View style={styles.item}>
+        <View style={{ backgroundColor: "#48D52C", width: 7, height:'100%' }} />
+        <Image style={{ height: '100%', width: 30, resizeMode:"contain" }} source={R.images.airplane} />
+        <View >
+          <Text style={{ color: "blue", fontWeight: "bold" }}>
+            FLIGHT
+          </Text>
+          <Text style={{ color: "gray", }}>
+            Reference no:JZ9213
+          </Text>
+        </View>
+        <TouchableOpacity onPress={() => { this.download(item.idDocument) }}>
+          <Icon name='arrow-down-circle' style={styles.icon} />
+        </TouchableOpacity>
+      </View>
+    )
   }
-
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ backgroundColor: "blue", width: "100%", height: 60, marginTop: -100 }}>
-          <TouchableOpacity style={{ width: 110, marginLeft: 100, height: 60, marginTop: 0 }} onPress={this.Back} >
-            <Text style={{ fontSize: 35, color: "yellow", marginLeft: -80, marginTop: 0, fontWeight: "bold" }}>&#8592;</Text>
-          </TouchableOpacity>
-          <Text
-            style={{
-              color: "white",
-              fontSize: 19,
-              fontWeight: "bold",
-              textAlign: "center",
-              marginTop: -45,
-              marginLeft: -260
-            }}
-          >
-            documents
-          </Text>
-        </View>
-        <View style={{ width: "100%", height: 1000, backgroundColor: "#F6EAEA" }}>
-          <View style={{ marginLeft: 125, marginTop: 25 }}>
-            <View style={{ backgroundColor: "white", marginLeft: -100, width: 320, height: 60 }}>
-              <TouchableOpacity onPress={this.Flight1} style={{ height: 60, width: 250 }}>
-                <Text style={{ color: "blue", fontWeight: "bold", marginTop: 10, marginLeft: 100 }}>FLIGHT</Text>
-                <Image
-                  style={{ marginLeft: 30, height: 30, width: 30, marginTop: -14 }}
-                  source={Airplane}
-                ></Image>
-              </TouchableOpacity>
-              <View
-                style={{
-                  backgroundColor: "#48D52C",
-                  width: 7,
-                  marginLeft: 0,
-                  height: 60,
-                  marginTop: -60,
-                  paddingTop: -100,
-                }}
-              ></View>
-              <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: 97 }}>
-                {" "}
-              Reference no:JZ9213
-            </Text>
-            </View>
-            <TouchableOpacity style={{ height: 30, width: 30, marginLeft: 190, marginTop: -30 }} Download="true">
-              <Image
-                style={{ marginLeft: -10, marginTop: -20, height: 40, width: 40 }}
-                source={Download}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ marginLeft: 125, marginTop: 25 }}>
-            <View style={{ backgroundColor: "white", marginLeft: -100, width: 320, height: 60 }}>
-              <TouchableOpacity onPress={this.Pickup} style={{ height: 60, width: 250 }}>
-                <Text style={{ color: "blue", fontWeight: "bold", marginTop: 10, marginLeft: 100 }}>AIRPORT PICKUP</Text>
-                <Image
-                  style={{ marginLeft: 30, height: 30, width: 30, marginTop: -14 }}
-                  source={Airplane}
-                ></Image>
-              </TouchableOpacity>
-              <View
-                style={{
-                  backgroundColor: "#48D52C",
-                  width: 7,
-                  marginLeft: 0,
-                  height: 60,
-                  marginTop: -60,
-                  paddingTop: -100,
-                }}
-              ></View>
-              <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: 97 }}>
-                {" "}
-              Reference no:JZ9213
-            </Text>
-            </View>
-            <TouchableOpacity style={{ height: 30, width: 30, marginLeft: 190, marginTop: -30 }} Download="true">
-              <Image
-                style={{ marginLeft: -10, marginTop: -20, height: 40, width: 40 }}
-                source={Download}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ marginLeft: 125, marginTop: 25 }}>
-            <View style={{ backgroundColor: "white", marginLeft: -100, width: 320, height: 60 }}>
-              <TouchableOpacity onPress={this.Hotel} style={{ height: 60, width: 250 }}>
-                <Text style={{ color: "blue", fontWeight: "bold", marginTop: 10, marginLeft: 100 }}>HOTEL RESERVATION</Text>
-                <Image
-                  style={{ marginLeft: 30, height: 30, width: 30, marginTop: -14 }}
-                  source={Hotel}
-                ></Image>
-              </TouchableOpacity>
-              <View
-                style={{
-                  backgroundColor: "#48D52C",
-                  width: 7,
-                  marginLeft: 0,
-                  height: 60,
-                  marginTop: -60,
-                  paddingTop: -100,
-                }}
-              ></View>
-              <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: 97 }}>
-                {" "}
-              Reference no:JZ9213
-            </Text>
-            </View>
-            <TouchableOpacity style={{ height: 30, width: 30, marginLeft: 190, marginTop: -30 }} Download="true">
-              <Image
-                style={{ marginLeft: -10, marginTop: -20, height: 40, width: 40 }}
-                source={Download}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ marginLeft: 125, marginTop: 25 }}>
-            <View style={{ backgroundColor: "white", marginLeft: -100, width: 320, height: 60 }}>
-              <TouchableOpacity onPress={this.Game} style={{ height: 60, width: 250 }}>
-                <Text style={{ color: "blue", fontWeight: "bold", marginTop: 10, marginLeft: 100 }}>GAME TICKETS</Text>
-                <Image
-                  style={{ marginLeft: 30, height: 30, width: 30, marginTop: -14 }}
-                  source={Hotel}
-                ></Image>
-              </TouchableOpacity>
-              <View
-                style={{
-                  backgroundColor: "#48D52C",
-                  width: 7,
-                  marginLeft: 0,
-                  height: 60,
-                  marginTop: -60,
-                  paddingTop: -100,
-                }}
-              ></View>
-              <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: 97 }}>
-                {" "}
-              Reference no:JZ9213
-            </Text>
-            </View>
-            <TouchableOpacity style={{ height: 30, width: 30, marginLeft: 190, marginTop: -30 }} Download="true">
-              <Image
-                style={{ marginLeft: -10, marginTop: -20, height: 40, width: 40 }}
-                source={Download}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ marginLeft: 125, marginTop: 25 }}>
-            <View style={{ backgroundColor: "white", marginLeft: -100, width: 320, height: 60 }}>
-              <TouchableOpacity onPress={this.Game} style={{ height: 60, width: 250 }}>
-                <Text style={{ color: "blue", fontWeight: "bold", marginTop: 10, marginLeft: 100 }}>GAME TICKETS</Text>
-                <Image
-                  style={{ marginLeft: 30, height: 30, width: 30, marginTop: -14 }}
-                  source={Hotel}
-                ></Image>
-              </TouchableOpacity>
-              <View
-                style={{
-                  backgroundColor: "#48D52C",
-                  width: 7,
-                  marginLeft: 0,
-                  height: 60,
-                  marginTop: -60,
-                  paddingTop: -100,
-                }}
-              ></View>
-              <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: 97 }}>
-                {" "}
-              Reference no:JZ9213
-            </Text>
-            </View>
-            <TouchableOpacity style={{ height: 30, width: 30, marginLeft: 190, marginTop: -30 }} Download="true">
-              <Image
-                style={{ marginLeft: -10, marginTop: -20, height: 40, width: 40 }}
-                source={Download}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ marginLeft: 125, marginTop: 25 }}>
-            <View style={{ backgroundColor: "white", marginLeft: -100, width: 320, height: 60 }}>
-              <TouchableOpacity onPress={this.Hotel} style={{ height: 60, width: 250 }}>
-                <Text style={{ color: "blue", fontWeight: "bold", marginTop: 10, marginLeft: 100 }}>DINNER AT RAO</Text>
-                <Image
-                  style={{ marginLeft: 30, height: 30, width: 30, marginTop: -14 }}
-                  source={Hotel}
-                ></Image>
-              </TouchableOpacity>
-              <View
-                style={{
-                  backgroundColor: "#48D52C",
-                  width: 7,
-                  marginLeft: 0,
-                  height: 60,
-                  marginTop: -60,
-                  paddingTop: -100,
-                }}
-              ></View>
-              <Text style={{ color: "gray", marginTop: -30, width: 400, marginLeft: 97 }}>
-                {" "}
-              Reference no:JZ9213
-            </Text>
-            </View>
-            <TouchableOpacity style={{ height: 30, width: 30, marginLeft: 190, marginTop: -30 }} Download="true">
-              <Image
-                style={{ marginLeft: -10, marginTop: -20, height: 40, width: 40 }}
-                source={Download}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {this.state.isLoading ? <ActivityIndicator size="large" color="blue" />
+          :
+          <FlatList
+            data={this.state.documents}
+            renderItem={this.renderItem}
+            keyExtractor={this.keyExtractor}
+            getItemLayout={(data, index) => (
+              { length: 60, offset: 60 * index, index }
+            )}
+          />
+        }
       </View>
     );
   }
@@ -265,11 +111,21 @@ export default class DocumentScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 800,
-    marginLeft: 0,
-    marginTop: 100,
-    width: 500,
-    marginBottom: 0,
-    backgroundColor: "white"
+    flex: 1,
+    margin: 30
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: "white",
+    justifyContent: 'space-between',
+    height: 60,
+    marginBottom: 10,
+    alignItems:'center'
+  },
+  icon: {
+    fontSize: 40,
+    color: R.colors.lightGreen,
+    margin:10
   },
 });

@@ -3,6 +3,8 @@ import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better performance
 import { Platform, Linking } from 'react-native'
+import * as SecureStore from 'expo-secure-store';
+
 
 const translate = memoize(
   (key, config) => i18n.t(key, config),
@@ -51,5 +53,35 @@ const openLink = (type, data) => {
   }
 }
 
-export { translate, setI18nConfig, testID, openLink }
+const setUserCredentials = async(email, password) => {
+  try {
+      await SecureStore.setItemAsync('email', email);
+      await SecureStore.setItemAsync('password', password);
+  } catch (error) {
+      global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
+  }
+}
+
+const getUserCredentials = async() => {
+  var email = '', password = '';
+  try {
+      var email = await SecureStore.getItemAsync('email');
+      if (email == null)
+          email = '';
+      var password = await SecureStore.getItemAsync('password');
+      if (password == null)
+          password = '';
+  } catch (error) {
+      global.toast.show(translate('msgErrorOccurred'), { type: "danger" });
+  }
+  return [email, password];
+}
+
+const resetUserCredentials = async () => {
+  global.user = null;
+  await setUserCredentials('', '');
+  SecureStore.setItemAsync('token', '');
+}
+
+export { translate, setI18nConfig, testID, openLink, setUserCredentials, getUserCredentials, resetUserCredentials }
 
