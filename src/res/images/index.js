@@ -20,7 +20,6 @@ const images = {
     question: require('../../../assets/images/icons/faq1.png'),
     setting: require('../../../assets/images/icons/setting1.png'),
 
-
     seatsGrey: require('../../../assets/images/icons/seats-grey.png'),
     fork: require('../../../assets/images/icons/fork.png'),
     line: require('../../../assets/images/icons/line2.png'),
@@ -106,6 +105,7 @@ const images = {
     weather: require('../../../assets/images/icons/weather.png'),
     guideWhatToDo: require('../../../assets/images/icons/Icon_medium_what_to_do.png'),
     guideWhereToEat: require('../../../assets/images/icons/Icon_medium_where_to_eat.png'),
+    guideWhereToEat_blue: require('../../../assets/images/icons/Icon_medium_where_to_eat-blue.png'),
     otherDownloadFlights: require('../../../assets/images/icons/Icon_other.png'),
     tourLocation: require('../../../assets/images/icons/Icon_small_tour.png'),
 }

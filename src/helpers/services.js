@@ -38,7 +38,11 @@ export const servicesUrl = {
     getExtraServices: '/mobile/game/getExtraServices',
     addGames: "/mobile/game/addGames",
     intent: "/mobile/game/stripe/intent",
-    contactUs: "/mobile/about/contactus"
+    contactUs: "/mobile/about/contactus",
+
+    /*documents*/
+    documentDownload: API_URL +'/mobile/download/'
+
 }
 
 export async function getToken() {
