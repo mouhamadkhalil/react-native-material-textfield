@@ -7,7 +7,7 @@ import * as Font from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from "./src/navigation/DrawerNavigator";
-import Toast from "react-native-fast-toast";
+import Toast from "react-native-toast-notifications";
 import * as Location from 'expo-location';
 import { setI18nConfig } from 'helpers/utils.js';
 import { translate } from "helpers/utils.js";

@@ -16,8 +16,8 @@ import * as SecureStore from 'expo-secure-store';
 import { CheckBox } from 'react-native-elements';
 import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
-import PasswordInputText from 'react-native-hide-show-password-input';
 import { Ionicons } from '@expo/vector-icons';
+import PasswordInputText from "components/Common/PasswordInput";
 import { get, postLogin, servicesUrl } from "helpers/services.js";
 import { getUserCredentials, setUserCredentials, translate } from "helpers/utils.js";
 import { SignalrService } from 'helpers/Signalr/SignalRService';
@@ -184,7 +184,7 @@ export default class LoginScreen extends React.Component {
                             <View style={{ flex: 1, flexDirection: 'row', marginTop: 10, backgroundColor: '#37568F' }}>
                                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
                                     login  with  facebook
-                            </Text>
+                                </Text>
                                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                                     <Ionicons
                                         name='logo-facebook'
@@ -204,7 +204,7 @@ export default class LoginScreen extends React.Component {
                         </View>
                         <Text style={{ paddingTop: 30, marginLeft: 35 }}>
                             Email
-                    </Text>
+                        </Text>
                         <TextInput
                             style={{ height: 40, borderColor: 'gray', borderBottomWidth: 2, marginLeft: 35, marginRight: 35 }}
                             onChangeText={(username) => this.setState({ username })}
@@ -216,7 +216,7 @@ export default class LoginScreen extends React.Component {
                         />
                         <Text style={{ marginTop: 30, marginLeft: 35 }}>
                             Password
-                    </Text>
+                        </Text>
                         <PasswordInputText
                             style={{ marginLeft: 35, marginRight: 35, marginTop: -25 }}
                             label=''
@@ -249,16 +249,16 @@ export default class LoginScreen extends React.Component {
 
                         </View>
                         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => this.loginClick()}>
-                            <Text style={styles.loginText}>
-                                {translate('login')}
-                            </Text>
-                            {this.state.isLogin ?
-                                <ActivityIndicator size='small' color='white' />
-                                :
-                                <Ionicons name='chevron-forward-outline' size={20} color='white' />
-                            }
-                        </TouchableOpacity>
+                            <TouchableOpacity style={styles.loginBtn} onPress={() => this.loginClick()}>
+                                <Text style={styles.loginText}>
+                                    {translate('login')}
+                                </Text>
+                                {this.state.isLogin ?
+                                    <ActivityIndicator size='small' color='white' />
+                                    :
+                                    <Ionicons name='chevron-forward-outline' size={20} color='white' />
+                                }
+                            </TouchableOpacity>
                         </KeyboardAvoidingView>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 20 }}>
                             <Text
@@ -269,7 +269,7 @@ export default class LoginScreen extends React.Component {
                                 }}
                             >
                                 Don't have an account?
-                        </Text>
+                            </Text>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
                                 <Text style={{ marginLeft: 5, fontSize: 18, textDecorationLine: 'underline' }}>Sign up here </Text>
                             </TouchableOpacity>

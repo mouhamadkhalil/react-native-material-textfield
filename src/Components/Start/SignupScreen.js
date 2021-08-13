@@ -7,18 +7,16 @@ import {
     Image,
     View,
     TouchableOpacity,
-    Picker,
     Linking,
-    AsyncStorage,
     ActivityIndicator,
     ToastAndroid
 } from "react-native";
 import R from 'res/R';
-import { API_URL, API_TOKEN } from "@env";
+import * as SecureStore from 'expo-secure-store';
 import * as Facebook from 'expo-facebook';
-import PasswordInputText from 'react-native-hide-show-password-input';
+import PasswordInputText from "components/Common/PasswordInput";
 import { Ionicons } from '@expo/vector-icons';
-import { get, post } from "../../helpers/services.js";
+import { get, post } from "helpers/services.js";
 import { CheckBox } from 'react-native-elements';
 
 export default class SignUpScreen extends React.Component {
@@ -113,9 +111,7 @@ export default class SignUpScreen extends React.Component {
                             );
                         }
                         else {
-                            let token_id = response.Token;
-                            this.setState({ Token: token_id });
-                            AsyncStorage.setItem("token", this.state.Token);
+                            SecureStore.setItemAsync('token', response.Token);
                             ToastAndroid.showWithGravity(
                                 'you have successfully registered !',
                                 ToastAndroid.LONG,
@@ -167,13 +163,13 @@ export default class SignUpScreen extends React.Component {
                         />
                         <Text style={{ marginTop: 10, marginLeft: 10, fontSize: 25, fontWeight: "bold" }}>
                             FLY-FOOT
-                </Text>
+                        </Text>
                     </View>
                     <TouchableOpacity onPress={this.FBLogin.bind(this)} style={{ marginRight: 35, marginLeft: 35 }}>
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: 30, backgroundColor: '#37568F' }}>
                             <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FAFDFD', height: 60, lineHeight: 60, paddingLeft: 20, textTransform: 'uppercase' }}>
                                 signup  with  facebook
-                                </Text>
+                            </Text>
                             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <Ionicons
                                     name='logo-facebook'
@@ -246,19 +242,6 @@ export default class SignUpScreen extends React.Component {
                     <Text style={{ paddingTop: 30, marginLeft: 35, width: 300, color: "gray" }}>
                         Favourite Team
                     </Text>
-                    <Picker
-                        selectedValue={this.state.FavouriteTeam1}
-                        style={{ height: 50, marginLeft: 28, marginRight: 15, borderBottomWidth: 1, borderColor: 'gray' }}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ FavouriteTeam1: itemValue })}>
-                        <Picker.Item label={this.state.FavouriteTeam1} value={this.state.FavouriteTeam1} />
-                        <Picker.Item label={this.state.FavouriteTeam2} value={this.state.FavouriteTeam2} />
-                        <Picker.Item label={this.state.FavouriteTeam3} value={this.state.FavouriteTeam3} />
-                        <Picker.Item label={this.state.FavouriteTeam4} value={this.state.FavouriteTeam4} />
-                        <Picker.Item label={this.state.FavouriteTeam5} value={this.state.FavouriteTeam5} />
-                        <Picker.Item label={this.state.FavouriteTeam6} value={this.state.FavouriteTeam6} />
-                        <Picker.Item label={this.state.FavouriteTeam7} value={this.state.FavouriteTeam7} />
-                        <Picker.Item label={this.state.FavouriteTeam8} value={this.state.FavouriteTeam8} />
-                    </Picker>
                     <TouchableOpacity style={styles.loginBtn} onPress={this.SubmitRegisterBtn}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <Text style={styles.loginText}>
@@ -283,13 +266,6 @@ export default class SignUpScreen extends React.Component {
                                 checked: !this.state.checked
                             })}
                         />
-                        <Text style={{
-                            color: "gray",
-                            marginLeft: 35,
-                            fontSize: 16,
-                        }}>
-
-                        </Text>
                         <TouchableOpacity onPress={() => { Linking.openURL('https://fly-foot.com/en/about/TC'); }}>
                             <Text style={{ fontSize: 12, marginTop: 19, marginLeft: -40, textDecorationLine: 'underline', }}>FFT Terms.</Text>
                         </TouchableOpacity>
