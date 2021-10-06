@@ -1,4 +1,12 @@
 {
+    "Trip information":"Trip information",
+    "8th October 15:00h":"8th October 15:00h",
+    "Airport Pickup":"Airport Pickup",
+    "#123456":"#123456",
+    "Travel":"Travel",
+    "Reference no:JZ9213":"Reference no:JZ9213",
+    "Flight":"Flight",
+    "TripInfoScreen":"TripInfoScreen",
     "specialGames": "special games",
     "popularGames": "popular games",
     "hotGames": "hot games",
@@ -225,4 +233,6 @@
     "msgFeedbackSent": "Feedback has been sent!",
     "msgIncorrectCredentials": "Error: The user name or password is incorrect!",
     "msgErrorOccurred": "Error occurred please try again later!"
+
+
 }

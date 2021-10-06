@@ -7,15 +7,15 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import User from "../../assets/images/user.png";
-import Airplane from "../../assets/images/airplane.jpg";
-import Hotel from "../../assets/images/hotel.jpg";
-import Download from "../../assets/images/download.jpg";
-import Ticket from "../../assets/images/ticket.png";
-import Car from "../../assets/images/car.jpg";
-import Hotel2 from "../../assets/images/Hotel2.jpg";
-import Sea from "../../assets/images/Sea.jpg";
-import Arrow from "../../assets/Images_Design/arrow_right1.png";
+// import User from "../../assets/images/user.png";
+// import Airplane from "../../assets/images/airplane.jpg";
+// import Hotel from "../../assets/images/hotel.jpg";
+// // import Download from "../../assets/images/download.jpg";
+// import Ticket from "../../assets/images/ticket.png";
+// import Car from "../../assets/images/car.jpg";
+// import Hotel2 from "../../assets/images/Hotel2.jpg";
+// import Sea from "../../assets/images/Sea.jpg";
+// import Arrow from "../../assets/Images_Design/arrow_right1.png";
 
 export default class TripScreen extends React.Component {
 

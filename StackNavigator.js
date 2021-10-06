@@ -28,6 +28,8 @@ import UploadPassport3Screen from "./Components/Manage Trip/UploadPassport3Scree
 import ManageTripScreen from "./Components/Manage Trip/ManageTripScreen";
 import CompletePaymentScreen from "./Components/Manage Trip/CompletePaymentScreen";
 
+import TripInfoScreen from "./src/screens/TripInfo/TripInfoScreen";
+
 import Help1Screen from "./Components/Help/Help1Screen";
 import Help2Screen from "./Components/Help/Help2Screen";
 
@@ -118,6 +120,9 @@ const MainStackNavigator = () => {
             <Stack.Screen name="Upload Passport 3" component={UploadPassport3Screen} />
             <Stack.Screen name="Manage Trip" component={ManageTripScreen} />
             <Stack.Screen name="Complete Payment" component={CompletePaymentScreen} />
+
+            {/* trip info */}
+            <Stack.Screen name="tripInfo" component={TripInfoScreen} />
 
             {/* Fan Chat */}
             <Stack.Screen name="Group 2b Screen" component={Group2bScreen} />

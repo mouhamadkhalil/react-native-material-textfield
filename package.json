@@ -49,6 +49,7 @@
     "mdbreact": "^5.0.1",
     "moment": "^2.29.1",
     "nodemon": "^2.0.6",
+    "pod": "^0.9.0",
     "radio-buttons-react-native": "^1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -82,7 +83,8 @@
     "react-native-web": "^0.15.0",
     "react-native-webview": "^11.0.0",
     "rn-pdf-reader-js": "^4.1.1",
-    "rn-range-slider": "^2.0.4"
+    "rn-range-slider": "^2.0.4",
+    "uglify-es": "^3.2.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

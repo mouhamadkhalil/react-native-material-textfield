@@ -11,7 +11,7 @@ import Toast from "react-native-toast-notifications";
 import * as Location from 'expo-location';
 import { setI18nConfig } from 'helpers/utils.js';
 import { translate } from "helpers/utils.js";
-import fonts from 'fonts';
+import fonts from './src/res/fonts';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

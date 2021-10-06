@@ -2,8 +2,9 @@ import React from "react";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
 import LeaguesScreen from "../screens/Trips/LeaguesScreen";
 import TeamsScreen from "../screens/Trips/TeamsScreen";
+import TripInfoScreen from "../screens/TripInfo/TripInfoScreen";
 import { TripTabs, AllGamesTabs } from "./TabNavigator";
-import { ManageTripStackNavigator, TripDocumentsStackNavigator } from "./StackNavigator";
+import { ManageTripStackNavigator, TripDocumentsStackNavigator,TripInfoStackNavigator } from "./StackNavigator";
 import { resetUserCredentials, translate } from "helpers/utils.js";
 import { PointPropType } from "react-native";
 
@@ -42,6 +43,9 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="All games" component={AllGamesTabs} />
             <Drawer.Screen name="manageTrip" options={{ title: translate('manageTrip') }} component={ManageTripStackNavigator} />
             <Drawer.Screen name="tripDocuments" options={{ title: translate('tripDocuments') }} component={TripDocumentsStackNavigator} />
+            <Drawer.Screen name="TripInfoScreen" options={{ title: translate('TripInfoScreen') }} component={TripInfoStackNavigator} />
+      
+      
         </Drawer.Navigator>
     );
 };
