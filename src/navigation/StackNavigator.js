@@ -39,6 +39,7 @@ import InviteToJoin3Screen from "components/InviteToJoin/InviteToJoin3Screen";
 import DocumentScreen from "components/TripDocs/DocumentScreen";
 /* trip  info */
 import TripInfoScreen from "screens/TripInfo/TripInfoScreen";
+import MyFlightsScreen from "screens/TripInfo/MyFlightsScreen";
 
 import Help1Screen from "components/Help/Help1Screen";
 import TeamsScreen from "screens/Trips/TeamsScreen";
@@ -236,8 +237,9 @@ const TripInfoStackNavigator = () => {
           
         }}>
              
-<Stack.Screen name="TripInfoScreen" options={{ title: translate("Trip information") }} component={TripInfoScreen} />
-     
+        <Stack.Screen name="TripInfoScreen" options={{ title: translate("Trip information") }} component={TripInfoScreen} />
+        <Stack.Screen name="MyFlightsScreen" options={{ title: translate("My flights") }} component={MyFlightsScreen} />
+  
         </Stack.Navigator>
     );
 };    

@@ -113,6 +113,7 @@ const images = {
     /*  travel icon*/
     airplaneLightblue:require('../../../assets/images/icons/airplane-lightblue.png'),
     carLightblue:require('../../../assets/images/icons/car-lightblue.png'),
+    hotelLightblue:require('../../../assets/images/icons/hotel-lightblue.png'),
 
 }
 
