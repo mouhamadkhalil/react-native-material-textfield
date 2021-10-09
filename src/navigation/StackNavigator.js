@@ -1,4 +1,8 @@
 import React from "react";
+import {
+ Button
+} from "react-native";
+
 import { createStackNavigator } from "@react-navigation/stack";
 import { translate } from 'helpers/utils.js';
 import R from 'res/R';
@@ -26,7 +30,10 @@ import TripChangesScreen from "screens/ManageTrip/TripChangesScreen";
 import InviteToJoinScreen from "screens/ManageTrip/InviteToJoinScreen";
 
 /* trip documents */
-import DocumentScreen from "screens/TripDocuments/DocumentScreen";
+import DocumentScreen from "components/TripDocs/DocumentScreen";
+/* trip  info */
+import TripInfoScreen from "screens/TripInfo/TripInfoScreen";
+import MyFlightsScreen from "screens/TripInfo/MyFlightsScreen";
 
 import Help1Screen from "components/Help/Help1Screen";
 import TeamsScreen from "screens/Trips/TeamsScreen";
@@ -112,6 +119,7 @@ function TripStackNavigator() {
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
             <Stack.Screen name="book a trip" component={SpecialGames} />
+          
             <Stack.Screen name="teams" component={TeamsScreen} />
             <Stack.Screen name="leagues" component={LeaguesScreen} />
             <Stack.Screen name="allGames" component={AllGamesScreen} />
@@ -199,7 +207,7 @@ const ManageTripStackNavigator = () => {
             headerTintColor: 'white',
             headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
         }}>
-            <Stack.Screen name="manageTrip" options={{ title: translate("manageTrip") }} component={ManageTripScreen} />
+               <Stack.Screen name="manageTrip" options={{ title: translate("manageTrip") }} component={ManageTripScreen} />
             <Stack.Screen name="completePayment" options={{ title: translate("completePayment") }} component={CompletePaymentScreen} />
             <Stack.Screen name="uploadPassport" options={{ title: translate("uploadPassport") }} component={UploadPassportScreen} />
             <Stack.Screen name="tripChanges" options={{ title: translate("changesCancellations") }} component={TripChangesScreen} />
@@ -207,6 +215,22 @@ const ManageTripStackNavigator = () => {
         </Stack.Navigator>
     );
 };
+
+const TripInfoStackNavigator = () => {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerStyle: { backgroundColor: R.colors.blue },
+            headerTintColor: 'white',
+            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
+          
+        }}>
+             
+        <Stack.Screen name="TripInfoScreen" options={{ title: translate("Trip information") }} component={TripInfoScreen} />
+        <Stack.Screen name="MyFlightsScreen" options={{ title: translate("My flights") }} component={MyFlightsScreen} />
+  
+        </Stack.Navigator>
+    );
+};    
 
 const TripDocumentsStackNavigator = () => {
     return (
@@ -223,4 +247,4 @@ const TripDocumentsStackNavigator = () => {
 
 
 
-export { ChatStackNavigator, NotificationsStackNavigator, StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator, TripDocumentsStackNavigator };
+export { ChatStackNavigator, NotificationsStackNavigator, StartStackNavigator, TripStackNavigator, MyBookingStackNavigator, MoreStackNavigator, ContactStackNavigator, AllGamesStackNavigator, ManageTripStackNavigator, TripDocumentsStackNavigator,TripInfoStackNavigator };

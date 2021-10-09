@@ -7,8 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import Airplane from "../../assets/images/airplane.jpg";
-import Bag from "../../assets/images/bag.jpg";
+
 
 export default class Flights1Screen extends React.Component {
 

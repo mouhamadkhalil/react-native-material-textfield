@@ -108,6 +108,13 @@ const images = {
     guideWhereToEat_blue: require('../../../assets/images/icons/Icon_medium_where_to_eat-blue.png'),
     otherDownloadFlights: require('../../../assets/images/icons/Icon_other.png'),
     tourLocation: require('../../../assets/images/icons/Icon_small_tour.png'),
+
+
+    /*  travel icon*/
+    airplaneLightblue:require('../../../assets/images/icons/airplane-lightblue.png'),
+    carLightblue:require('../../../assets/images/icons/car-lightblue.png'),
+    hotelLightblue:require('../../../assets/images/icons/hotel-lightblue.png'),
+
 }
 
 export default images
