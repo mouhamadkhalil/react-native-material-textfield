@@ -16,9 +16,7 @@ import Arrow1 from "../../assets/Images_Design/arrow_right1.png";
 import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
-import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
-import Chat from "../FanChat/chat";
 import { get } from "../../helpers/services.js";
 
 export default class PostScreen extends React.Component {
@@ -193,7 +191,6 @@ export default class PostScreen extends React.Component {
                             />}
                     </TouchableOpacity>
                 </ScrollView>
-                <Chat />
             </ScrollView>
         );
     }

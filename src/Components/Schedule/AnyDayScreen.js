@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Lightbox from 'react-native-lightbox-v2';
-import Chat from "../FanChat/chat";
 import R from "res/R";
 import { get } from "../../helpers/services.js";
 
@@ -270,7 +269,6 @@ export default class AnyDayScreen extends React.Component {
                     </TouchableOpacity>
                 </ScrollView>
                 <View style={{ marginLeft: 100 }}>
-                    <Chat />
                 </View>
             </ScrollView>
         );

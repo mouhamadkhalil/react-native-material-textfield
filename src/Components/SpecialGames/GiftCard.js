@@ -19,7 +19,6 @@ import Gift2 from "../../../assets/images/games/gift2.png";
 import Gift3 from "../../../assets/images/games/gift3.png";
 import Gift4 from "../../../assets/images/games/gift4.png";
 import Gift5 from "../../../assets/images/games/gift5.png";
-import Chat from "../FanChat/chat";
 import R from "res/R";
 
 const sliderWidth = Dimensions.get('window').width;
@@ -120,7 +119,6 @@ export default class GiftCard extends React.Component {
                             color="#52F232"
                         />
                     </View>
-                    <Chat />
                 </View>
             </ScrollView >
         );

@@ -11,7 +11,6 @@ import DropDownPicker from "react-native-dropdown-picker";
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 import { get } from "../../helpers/services.js";
-import Chat from "../FanChat/chat";
 
 export default class Deals extends React.Component {
 
@@ -224,7 +223,6 @@ export default class Deals extends React.Component {
                     }
                     {/* games list end*/}
                 </View>
-                <Chat />
             </ScrollView >
         );
     }

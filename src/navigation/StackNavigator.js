@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { translate } from 'helpers/utils.js';
 import R from 'res/R';
 
-import Login from "components/Start/LoginScreen";
+import Login from "screens/Account/LoginScreen";
 import Signup from "components/Start/SignupScreen";
 import SpecialGames from "components/SpecialGames/SpecialGame";
 import RequestScreen from "screens/Trips/RequestScreen";
@@ -19,20 +19,14 @@ import NotificationsScreen from "screens/Notifications/NotificationsScreen";
 import NotificationsDetailsScreen from "screens/Notifications/NotificationsDetailsScreen";
 
 /* manage trip */
-import ManageTripScreen from "components/ManageTrip/ManageTripScreen";
+import ManageTripScreen from "screens/ManageTrip/ManageTripScreen";
 import CompletePaymentScreen from "components/ManageTrip/CompletePaymentScreen";
-import UploadPassport1Screen from "components/ManageTrip/UploadPassport1Screen";
-import UploadPassport2Screen from "components/ManageTrip/UploadPassport2Screen";
-import UploadPassport3Screen from "components/ManageTrip/UploadPassport3Screen";
-import Changes1Screen from "components/Changes/Changes1Screen";
-import Changes2Screen from "components/Changes/Changes2Screen";
-import Changes3Screen from "components/Changes/Changes3Screen";
-import InviteToJoin1Screen from "components/InviteToJoin/InviteToJoin1Screen";
-import InviteToJoin2Screen from "components/InviteToJoin/InviteToJoin2Screen";
-import InviteToJoin3Screen from "components/InviteToJoin/InviteToJoin3Screen";
+import UploadPassportScreen from "screens/ManageTrip/UploadPassportScreen";
+import TripChangesScreen from "screens/ManageTrip/TripChangesScreen";
+import InviteToJoinScreen from "screens/ManageTrip/InviteToJoinScreen";
 
 /* trip documents */
-import DocumentScreen from "components/TripDocs/DocumentScreen";
+import DocumentScreen from "screens/TripDocuments/DocumentScreen";
 
 import Help1Screen from "components/Help/Help1Screen";
 import TeamsScreen from "screens/Trips/TeamsScreen";
@@ -115,8 +109,8 @@ function TripStackNavigator() {
         <Stack.Navigator
             screenOptions={({ navigation, route }) => (HeaderOptions(navigation, route))}
         >
-            <Stack.Screen name="Login" component={Login} options={{ title: translate("login"), headerRight: null, headerLeft: null }} />
-            <Stack.Screen name="Signup" component={Signup} options={{ title: translate("signup"), headerRight: null, headerLeft: null }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
             <Stack.Screen name="book a trip" component={SpecialGames} />
             <Stack.Screen name="teams" component={TeamsScreen} />
             <Stack.Screen name="leagues" component={LeaguesScreen} />
@@ -207,15 +201,9 @@ const ManageTripStackNavigator = () => {
         }}>
             <Stack.Screen name="manageTrip" options={{ title: translate("manageTrip") }} component={ManageTripScreen} />
             <Stack.Screen name="completePayment" options={{ title: translate("completePayment") }} component={CompletePaymentScreen} />
-            <Stack.Screen name="uploadPassport1" options={{ title: translate("uploadPassport") }} component={UploadPassport1Screen} />
-            <Stack.Screen name="uploadPassport2" options={{ title: translate("uploadPassport") }} component={UploadPassport2Screen} />
-            <Stack.Screen name="uploadPassport3" options={{ title: translate("uploadPassport") }} component={UploadPassport3Screen} />
-            <Stack.Screen name="Changes1" options={{ title: translate("changesCancellations") }} component={Changes1Screen} />
-            <Stack.Screen name="Changes2" options={{ title: translate("changesCancellations") }} component={Changes2Screen} />
-            <Stack.Screen name="Changes3" options={{ title: translate("changesCancellations") }} component={Changes3Screen} />
-            <Stack.Screen name="InviteToJoin1" options={{ title: translate("inviteTravellers") }} component={InviteToJoin1Screen} />
-            <Stack.Screen name="InviteToJoin2" options={{ title: translate("inviteTravellers") }} component={InviteToJoin2Screen} />
-            <Stack.Screen name="InviteToJoin3" options={{ title: translate("inviteTravellers") }} component={InviteToJoin3Screen} />
+            <Stack.Screen name="uploadPassport" options={{ title: translate("uploadPassport") }} component={UploadPassportScreen} />
+            <Stack.Screen name="tripChanges" options={{ title: translate("changesCancellations") }} component={TripChangesScreen} />
+            <Stack.Screen name="inviteToJoin" options={{ title: translate("inviteTravellers") }} component={InviteToJoinScreen} />
         </Stack.Navigator>
     );
 };
@@ -223,8 +211,8 @@ const ManageTripStackNavigator = () => {
 const TripDocumentsStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{
-            headerStyle: { backgroundColor: R.colors.blue },
-            headerTintColor: 'white',
+            headerStyle: { backgroundColor: '#F7F7F7' },
+            headerTintColor: R.colors.blue,
             headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' },
         }}>
             <Stack.Screen name="tripDocuments" options={{ title: translate("tripDocuments") }} component={DocumentScreen} />

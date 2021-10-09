@@ -14,7 +14,6 @@ import {
 import { API_URL, API_TOKEN } from "@env";
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from 'react-native-datepicker';
-import Chat from "../FanChat/chat";
 import R from "res/R";
 import { get, post } from "../../helpers/services.js";
 
@@ -40,7 +39,6 @@ export default class MultitripConfirmation extends React.Component {
                     <Text style={{ textTransform: 'uppercase', color: "white", paddingLeft: 40, paddingTop: 15, fontWeight: "bold" }}>Back home</Text>
                 </TouchableOpacity>
                 <View style={{ marginTop: 120, marginLeft: 100 }}>
-                    <Chat />
                 </View>
             </ScrollView>
         );

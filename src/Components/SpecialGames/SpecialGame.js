@@ -14,9 +14,9 @@ import {
     DeviceEventEmitter
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LinearGradient } from 'expo-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
 import Svg from 'components/Common/Svg';
+import TeamFlag from 'components/Common/TeamFlag';
 import { get, getWithToken, servicesUrl } from "helpers/services.js";
 import { getTripDays } from "helpers/tripHelper.js";
 import { translate } from "helpers/utils.js";
@@ -64,110 +64,130 @@ export default class specialGames extends React.Component {
     getData = () => {
         getWithToken(servicesUrl.getHomePageData)
             .then(response => {
+                if (response) {
+                    // Special Games Data
+                    var specialGames = [];
+                    if (response.SpecialGames) {
+                        specialGames = response.SpecialGames.map(function (item) {
+                            var game = item.MatchBundleDetail[0].Game;
+                            return {
+                                idMatch: game.idMatch,
+                                BundleCode: item.BundleCode,
+                                City: game.City,
+                                Stade: game.Stade,
+                                GameDate: game.GameDate,
+                                LeagueName: game.LeagueName,
+                                GameCode: game.GameCode,
+                                HomeTeam: game.HomeTeam,
+                                AwayTeam: game.AwayTeam,
+                                StadeCity: game.StadeCity,
+                                PriceCaption: item.PriceCaption,
+                                BackGroundImage: item.BackGroundImage,
+                                SharingRoomNote: item.SharingRoomNote,
+                                TripDays: getTripDays(item.StartDate, item.EndDate),
+                                PricePerFan: item.PricePerFan
+                            };
+                        });
+                    }
 
-                // Special Games Data
-                var specialGames = response.SpecialGames.map(function (item) {
-                    var game = item.MatchBundleDetail[0].Game;
-                    return {
-                        idMatch: game.idMatch,
-                        BundleCode: item.BundleCode,
-                        City: game.City,
-                        Stade: game.Stade,
-                        GameDate: game.GameDate,
-                        LeagueName: game.LeagueName,
-                        GameCode: game.GameCode,
-                        HomeTeam: game.HomeTeam,
-                        AwayTeam: game.AwayTeam,
-                        StadeCity: game.StadeCity,
-                        PriceCaption: item.PriceCaption,
-                        BackGroundImage: item.BackGroundImage,
-                        SharingRoomNote: item.SharingRoomNote,
-                        TripDays: getTripDays(item.StartDate, item.EndDate),
-                        PricePerFan: item.PricePerFan
-                    };
-                });
+                    // Popular Games Data
+                    var popularGames = [];
+                    if (response.GamesList) {
+                        popularGames = response.GamesList.Items.map(function (item) {
+                            var game = item.MatchBundleDetail[0].Game;
+                            return {
+                                idMatch: game.idMatch,
+                                BundleCode: item.BundleCode,
+                                City: game.City,
+                                Stade: game.Stade,
+                                GameDate: game.GameDate,
+                                LeagueName: game.LeagueName,
+                                GameCode: game.GameCode,
+                                HomeTeam: game.HomeTeam,
+                                AwayTeam: game.AwayTeam,
+                                StadeCity: game.StadeCity,
+                                Team1Color1: game.Team1Color1,
+                                Team1Color2: game.Team1Color2,
+                                Team2Color1: game.Team2Color1,
+                                Team2Color2: game.Team2Color2,
+                                FinalPrice: item.FinalPrice
+                            };
+                        });
+                    }
 
-                // Popular Games Data
-                var popularGames = response.GamesList.Items.map(function (item) {
-                    var game = item.MatchBundleDetail[0].Game;
-                    return {
-                        idMatch: game.idMatch,
-                        BundleCode: item.BundleCode,
-                        City: game.City,
-                        Stade: game.Stade,
-                        GameDate: game.GameDate,
-                        LeagueName: game.LeagueName,
-                        GameCode: game.GameCode,
-                        HomeTeam: game.HomeTeam,
-                        AwayTeam: game.AwayTeam,
-                        StadeCity: game.StadeCity,
-                        Team1Color1: game.Team1Color1,
-                        Team1Color2: game.Team1Color2,
-                        Team2Color1: game.Team2Color1,
-                        Team2Color2: game.Team2Color2,
-                        FinalPrice: item.FinalPrice
-                    };
-                });
+                    // Hot Games Data
+                    var hotGames = [];
+                    if (response.Deals) {
+                        hotGames = response.Deals.map(function (item) {
+                            var game = item.MatchBundleDetail[0].Game;
+                            return {
+                                idMatch: game.idMatch,
+                                BundleCode: item.BundleCode,
+                                City: game.City,
+                                Stade: game.Stade,
+                                GameDate: game.GameDate,
+                                LeagueName: game.LeagueName,
+                                GameCode: game.GameCode,
+                                HomeTeam: game.HomeTeam,
+                                AwayTeam: game.AwayTeam,
+                                StadeCity: game.StadeCity,
+                                PriceCaption: item.PriceCaption,
+                                BackGroundImage: item.BackGroundImage,
+                                SharingRoomNote: item.SharingRoomNote,
+                                TripDays: getTripDays(item.StartDate, item.EndDate),
+                                PricePerFan: item.PricePerFan
+                            };
+                        });
+                    }
 
-                // Hot Games Data
-                var hotGames = response.Deals.map(function (item) {
-                    var game = item.MatchBundleDetail[0].Game;
-                    return {
-                        idMatch: game.idMatch,
-                        BundleCode: item.BundleCode,
-                        City: game.City,
-                        Stade: game.Stade,
-                        GameDate: game.GameDate,
-                        LeagueName: game.LeagueName,
-                        GameCode: game.GameCode,
-                        HomeTeam: game.HomeTeam,
-                        AwayTeam: game.AwayTeam,
-                        StadeCity: game.StadeCity,
-                        PriceCaption: item.PriceCaption,
-                        BackGroundImage: item.BackGroundImage,
-                        SharingRoomNote: item.SharingRoomNote,
-                        TripDays: getTripDays(item.StartDate, item.EndDate),
-                        PricePerFan: item.PricePerFan
-                    };
-                });
+                    // Popular Teams Data
+                    var popularTeams = [];
+                    if (response.MainTeams) {
+                        popularTeams = response.MainTeams.map(function (team) {
+                            return {
+                                idTeams: team.idTeams,
+                                TeamName: team.TeamName,
+                                ShortName: team.ShortName,
+                                TeamColor1: team.TeamColor1,
+                                TeamColor2: team.TeamColor2,
+                                Image: team.v3ImageReference
+                            };
+                        });
+                    }
 
-                // Popular Teams Data
-                var popularTeams = response.MainTeams.map(function (team) {
-                    return {
-                        idTeams: team.idTeams,
-                        TeamName: team.TeamName,
-                        ShortName: team.ShortName,
-                        TeamColor1: team.TeamColor1,
-                        TeamColor2: team.TeamColor2,
-                        Image: team.v3ImageReference
-                    };
-                });
+                    // Competitions Data
+                    var competitions = [];
+                    if (response.MainLeagues) {
+                        competitions = response.MainLeagues.map(function (league) {
+                            return {
+                                LeagueId: league.LeagueId,
+                                LeagueCode: league.LeagueCode,
+                                LeagueName: league.LeagueName,
+                                ImageReference: league.ImageReference
+                            };
+                        });
+                    }
 
-                // Competitions Data
-                var competitions = response.MainLeagues.map(function (league) {
-                    return {
-                        LeagueId: league.LeagueId,
-                        LeagueCode: league.LeagueCode,
-                        LeagueName: league.LeagueName,
-                        ImageReference: league.ImageReference
-                    };
-                });
+                    // send notifications via event to headers
+                    let notifications = { ...response.Notifications };
+                    notifications.NotReadNotifications = response.NotReadNotifications
+                    DeviceEventEmitter.emit('notifications', notifications);
+                    global['notifications'] = notifications;
 
-                // send notifications via event to headers
-                let notifications = { ...response.Notifications };
-                notifications.NotReadNotifications = response.NotReadNotifications
-                DeviceEventEmitter.emit('notifications', notifications);
-                global['notifications'] = notifications;
+                    const allTeams = ["@allTeams", response.CountriesWithTeams ? JSON.stringify(response.CountriesWithTeams) : ''];
+                    const allLeagues = ["@allLeagues", response.AllLeagues ? JSON.stringify(response.AllLeagues) : ''];
+                    const whatToDo = ["@whatToDo", response.WhatToDo ? JSON.stringify(response.WhatToDo) : ''];
+                    const whereToEat = ["@whereToEat", response.WhereToEat ? JSON.stringify(response.WhereToEat) : ''];
+                    const menuLinks = ["@menuLinks", response.MenuLinks ? JSON.stringify(response.MenuLinks) : ''];
+                    const upComingInvoices = ["@upComingInvoices", response.UpComingInvoices ? JSON.stringify(response.UpComingInvoices) : ''];
+                    const cancellationDropdown = ["@cancellationDropdown", response.CancellationDropdown ? JSON.stringify(response.CancellationDropdown) : ''];
+                    
+                    AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat, menuLinks, upComingInvoices, cancellationDropdown]);
 
-                const allTeams = ["@allTeams", JSON.stringify(response.CountriesWithTeams)];
-                const allLeagues = ["@allLeagues", JSON.stringify(response.AllLeagues)];
-                const whatToDo = ["@whatToDo", JSON.stringify(response.WhatToDo)];
-                const whereToEat = ["@whereToEat", JSON.stringify(response.WhereToEat)];
-                const menuLinks = ["@menuLinks", JSON.stringify(response.MenuLinks)];
-                const upComingInvoices = ["@upComingInvoices", JSON.stringify(response.UpComingInvoices)];
-                AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat, menuLinks, upComingInvoices]);
-
-                this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: response.GamesList.PageCount, pageSize: response.GamesList.PageSize, isLoading: false });
+                    var pageCount = response.GamesList ? response.GamesList.PageCount : 1;
+                    var pageSize = response.GamesList ? response.GamesList.PageSize : 1;
+                    this.setState({ specialGames, popularGames, hotGames, popularTeams, competitions, pageCount: pageCount, pageSize: pageSize, isLoading: false });
+                }
             });
     };
 
@@ -292,26 +312,13 @@ export default class specialGames extends React.Component {
             <View style={styles.popularGameItem}>
                 <View>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <LinearGradient
-                            colors={[item.Team1Color1, item.Team1Color2]}
-                            style={R.styles.linearGradient}
-                            start={[0, 0]}
-                            end={[1, 0]}
-                            locations={[0.5, 0.5]}
-                        ></LinearGradient>
+                        <TeamFlag color1={item.Team1Color1} color2={item.Team1Color2} />
                         <Text style={{ fontSize: 20, marginStart: 15, fontFamily: 'BarlowCondensed-Bold', }}>
                             {item.AwayTeam}
                         </Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <LinearGradient
-                            colors={[item.Team2Color1, item.Team2Color2]}
-                            style={R.styles.linearGradient}
-                            start={[0, 0]}
-                            end={[1, 0]}
-                            locations={[0.5, 0.5]}
-                        >
-                        </LinearGradient>
+                        <TeamFlag color1={item.Team2Color1} color2={item.Team2Color2} />
                         <Text style={{ fontSize: 20, marginStart: 15, fontFamily: 'BarlowCondensed-Bold' }}>
                             {item.HomeTeam}
                         </Text>

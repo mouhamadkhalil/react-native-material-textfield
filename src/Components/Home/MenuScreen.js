@@ -20,7 +20,6 @@ import Close from "../../assets/Images_Design/close1.png";
 import Twitter from "../../assets/Images_Design/twitter2.png";
 import Facebook from "../../assets/Images_Design/facebook.png";
 import Instagram from "../../assets/Images_Design/insta1.png";
-import Chat from "../FanChat/chat";
 
 const window = Dimensions.get("window");
 const uri =
@@ -198,7 +197,6 @@ export default class MenuScreen extends React.Component {
             }}
           />
         </View>
-        <Chat />
       </View>
     );
   }

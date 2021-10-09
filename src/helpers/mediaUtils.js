@@ -1,7 +1,8 @@
-import { Linking } from 'expo'
-import * as Location from 'expo-location'
-import * as Permissions from 'expo-permissions'
-import * as ImagePicker from 'expo-image-picker'
+import { Linking } from 'expo';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 
 import { Alert } from 'react-native'
 
@@ -17,7 +18,7 @@ export default async function getPermissionAsync(permission) {
           text: "Let's go!",
           onPress: () => Linking.openURL('app-settings:'),
         },
-        { text: 'Nevermind', onPress: () => {}, style: 'cancel' },
+        { text: 'Nevermind', onPress: () => { }, style: 'cancel' },
       ],
       { cancelable: true },
     )
@@ -36,7 +37,7 @@ export async function getLocationAsync(onSend) {
   }
 }
 
-export async function pickImageAsync(onSend) {
+export async function pickImageAsync(onSend = null) {
   if (await getPermissionAsync(Permissions.MEDIA_LIBRARY)) {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -44,13 +45,14 @@ export async function pickImageAsync(onSend) {
     })
 
     if (!result.cancelled) {
+      if(onSend != null)
       onSend([{ image: result.uri }])
       return result.uri
     }
   }
 }
 
-export async function takePictureAsync(onSend) {
+export async function takePictureAsync(onSend = null) {
   if (await getPermissionAsync(Permissions.CAMERA)) {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
@@ -58,8 +60,17 @@ export async function takePictureAsync(onSend) {
     })
 
     if (!result.cancelled) {
-      onSend([{ image: result.uri }])
+      if (onSend != null)
+        onSend([{ image: result.uri }])
       return result.uri
     }
+  }
+}
+
+export async function pickDocumentAsync() {
+    const result = await DocumentPicker.getDocumentAsync({ type: 'application/pdf' })
+
+    if (!result.cancelled) {
+      return result.uri;
   }
 }

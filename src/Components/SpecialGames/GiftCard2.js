@@ -18,7 +18,6 @@ import {
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
 import Gift1 from "../../../assets/images/games/GiftCard23.png";
-import Chat from "../FanChat/chat";
 import R from "res/R";
 
 const sourceFile = require('../../helpers/services.js');
@@ -253,7 +252,6 @@ export default class GiftCard2 extends React.Component {
                         color="gray"
                     />
                 </View>
-                <Chat />
             </ScrollView >
         );
     }

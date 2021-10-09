@@ -26,7 +26,7 @@ const FlightItem = ({ item, price, index, selectFlight, sessionId, fareRules, is
             var params = `?combinationID=${combo.CombinationID.toString()}&recommendationID=${combo.RecommendationIDSpecified.toString()}`;
             params += '&passengerType=ADT&isOneWayCombinable=false&miniRuleEnabled=1&priceMessageEnabled=1&flightRuleEnabled=1&fareFamilyPackageID=0'
             params += `&sessionId=${sessionId}`
-            get(servicesUrl.GetFlightRule + params)
+            get(servicesUrl.getFlightRule + params)
                 .then((response) => {
                     combo.FareRules = response;
                 });

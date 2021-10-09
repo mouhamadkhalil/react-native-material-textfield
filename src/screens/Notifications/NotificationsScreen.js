@@ -56,7 +56,7 @@ export default class NotificationsScreen extends React.Component {
                 var pageNumber = this.state.notifications.PageNumber + 1;
                 var pageSize = this.state.notifications.PageSize;
                 const params = `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
-                getWithToken(servicesUrl.GetNotificationList + params).then((response) => {
+                getWithToken(servicesUrl.getNotificationList + params).then((response) => {
                     var notifications = this.state.notifications;
                     var joined;
                     if (notifications && notifications.Items) {

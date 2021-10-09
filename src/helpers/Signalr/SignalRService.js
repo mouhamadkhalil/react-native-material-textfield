@@ -82,7 +82,7 @@ var SignalrService = /** @class */ (function () {
             _this.connectionChanged.emit(_this.hubConnection.state);
             _this.removeListeners();
             console.log("xxxyyy, onClose", error);
-            setTimeout(function () { _this.connect(); }, 1000 * 120);
+            setTimeout(function () { _this.connect(); }, 6000 * 120);
         });
     };
 

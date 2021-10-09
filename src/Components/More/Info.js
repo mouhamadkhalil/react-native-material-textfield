@@ -9,7 +9,6 @@ import {
     Linking,
     ActivityIndicator
 } from "react-native";
-import Chat from "../FanChat/chat";
 import R from "res/R";
 
 const Info = () => {
@@ -23,7 +22,6 @@ const Info = () => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.linkButton} onpress={() => Linking.openURL('https://fly-foot.com/en/about/contact')}>
-                <Image source={Chat} style={styles.linkIcon} />
                 <Text style={styles.linkText}>Get in touch</Text>
                 <Image source={r.images.arrow_right_sm} />
             </TouchableOpacity>

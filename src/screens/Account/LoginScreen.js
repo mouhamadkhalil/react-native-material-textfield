@@ -143,7 +143,7 @@ export default class LoginScreen extends React.Component {
                     alert(response.Message);
                 }
                 else {
-                    global.toast.show(translate('msgPasswordRequestSent'), { type: "danger" })
+                    global.toast.show(translate('msgPasswordRequestSent'), { type: "success" })
                 }
             });
     };

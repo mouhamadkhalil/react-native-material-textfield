@@ -6,9 +6,9 @@ export const API_URL = "https://beta.fly-foot.com/api"
 
 export const servicesUrl = {
     /* GET */
-    getHomePageData: '/mobile/game/GetHomePageDataMobile',
+    getHomePageData: '/mobile/game/getHomePageDataMobile',
     getAllGames: '/mobile/game/getall',
-    getGameCalendar: '/mobile/game/GameCalendar',
+    getGameCalendar: '/mobile/game/gameCalendar',
     getAllTeams: '/mobile/team/all',
     getAllCities: '/mobile/city/destinationCity',
     getAllLeagues: '/mobile/leagues/all',
@@ -21,9 +21,10 @@ export const servicesUrl = {
     getSuggestedGames: '/mobile/game/getSuggestedGames',
     getGameSearch: '/mobile/game/search?text=',
     getTeamSearch: '/mobile/team/search?text=',
-    getFlightRule: '/mobile/game/flight/GetFlightRule',
+    getFlightRule: '/mobile/game/flight/getFlightRule',
     getNotificationList: '/mobile/getNotificationList',
     getToken: '/mobile/getToken',
+    getForgetPassword: '/mobile/profile/forgetpassword?email=',
 
     /* POST */
     login: '/mobile/profile/login',
@@ -39,9 +40,12 @@ export const servicesUrl = {
     addGames: "/mobile/game/addGames",
     intent: "/mobile/game/stripe/intent",
     contactUs: "/mobile/about/contactus",
+    requestChange: "/mobile/invoice/requestChange",
+    inviteToApp: "/mobile/users/inviteToApp",
 
     /*documents*/
-    documentDownload: API_URL +'/mobile/download/'
+    documentDownload: API_URL + '/mobile/download/',
+    documentUpload: API_URL + '/mobile/game/uploadDocument'
 
 }
 
@@ -56,7 +60,7 @@ export async function getToken() {
     }
 };
 
-getLocation = async () => {
+export async function getLocation() {
     try {
         const value = await SecureStore.getItemAsync('location');
         if (value !== null) {
@@ -68,27 +72,6 @@ getLocation = async () => {
 };
 
 export async function get(path) {
-    const location = await getLocation();
-    const url = `${API_URL}${path}`;
-    return fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "ff-version": 10,
-            "ff-language": "en",
-            "is-mobile": true,
-            "gps_location": location
-        },
-    })
-        .then((res) => res.json())
-        .catch((error) => global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
-        .then((response) => {
-            return response;
-        });
-}
-
-export async function getWithToken(path) {
     const token = await getToken();
     const location = await getLocation();
     const url = `${API_URL}${path}`;
@@ -125,28 +108,6 @@ export async function post(path, data) {
             "is-mobile": true,
             "gps_location": location,
             "Authorization": 'Bearer ' + token
-        },
-        body: JSON.stringify(data)
-    })
-        .then((res) => res.json())
-        .catch((error) => global.toast.show(translate('msgErrorOccurred'), { type: "danger" }))
-        .then((response) => {
-            return response;
-        });
-}
-
-export async function postLogin(path, data) {
-    const location = await getLocation();
-    const url = `${API_URL}${path}`;
-    return fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "ff-version": 10,
-            "ff-language": "en",
-            "is-mobile": true,
-            "gps_location": location,
         },
         body: JSON.stringify(data)
     })

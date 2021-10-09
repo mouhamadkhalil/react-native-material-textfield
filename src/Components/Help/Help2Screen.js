@@ -10,7 +10,6 @@ import {
     ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
-import Chat from "../FanChat/chat";
 import { get } from "../../helpers/services.js";
 
 export default class Help2Screen extends React.Component {
@@ -350,7 +349,6 @@ export default class Help2Screen extends React.Component {
                     }}
                 >
                 </ScrollView>
-                <Chat />
             </ScrollView >
         );
     }

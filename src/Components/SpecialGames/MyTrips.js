@@ -8,7 +8,6 @@ import {
     ActivityIndicator,
     AsyncStorage,
 } from "react-native";
-import Chat from "../FanChat/chat";
 const sourceFile = require('../../helpers/services.js');
 
 export default class MyTrips extends React.Component {
@@ -107,8 +106,6 @@ export default class MyTrips extends React.Component {
                     }
                 </View>
                 <View style={{ marginTop: 130, marginLeft: 80 }}>
-                    <Chat />
-
                 </View>
             </ScrollView>
         );

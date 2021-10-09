@@ -11,7 +11,8 @@ module.exports = function (api) {
           components: './src/Components',
           helpers: './src/helpers',
           res: './src/res',
-          screens : './src/screens'
+          screens : './src/screens',
+          fonts : './src/res/fonts'
         },
         extensions: [".js", ".jsx", ".tsx", ".ios.js", ".android.js"],
       }]

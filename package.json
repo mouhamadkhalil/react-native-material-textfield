@@ -82,7 +82,8 @@
     "react-native-web": "^0.15.0",
     "react-native-webview": "^11.0.0",
     "rn-pdf-reader-js": "^4.1.1",
-    "rn-range-slider": "^2.0.4"
+    "rn-range-slider": "^2.0.4",
+    "expo-document-picker": "~8.4.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

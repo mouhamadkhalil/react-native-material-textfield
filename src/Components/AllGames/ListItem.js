@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, Image, View, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
+import TeamFlag from 'components/Common/TeamFlag';
 import { getWithToken, servicesUrl } from "helpers/services.js";
 import { translate } from "helpers/utils.js";
 import Moment from 'moment';
@@ -68,26 +68,14 @@ const ListItem = ({ item }) => {
                             <View style={{ flex: 1, flexDirection: "column", width: '80%', paddingStart: 10, paddingTop: 10 }}>
                                 {/* home team */}
                                 <View style={R.styles.flexRow}>
-                                    <LinearGradient
-                                        colors={[game.Team1Color1, game.Team1Color2]}
-                                        style={R.styles.linearGradient}
-                                        start={[0, 0]}
-                                        end={[1, 0]}
-                                        locations={[0.5, 0.5]}
-                                    />
+                                    <TeamFlag color1={game.Team1Color1} color2={game.Team1Color2}/>
                                     <Text style={R.styles.teamName}>
                                         {game.HomeTeamShortName}
                                     </Text>
                                 </View>
                                 <View style={R.styles.flexRow}>
                                     {/* away team */}
-                                    <LinearGradient
-                                        colors={[game.Team2Color1, game.Team2Color2]}
-                                        style={R.styles.linearGradient}
-                                        start={[0, 0]}
-                                        end={[1, 0]}
-                                        locations={[0.5, 0.5]}
-                                    />
+                                    <TeamFlag color1={game.Team2Color1} color2={game.Team2Color2}/>
                                     <Text style={R.styles.teamName}>
                                         {game.AwayTeamShortName}
                                     </Text>

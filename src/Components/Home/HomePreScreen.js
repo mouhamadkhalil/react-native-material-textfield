@@ -17,9 +17,7 @@ import Arrow2 from "../../assets/Images_Design/arrow_right2.png";
 import Search from "../../assets/Images_Design/search1.png";
 import Notifictaion from "../../assets/Images_Design/notification1.png";
 import DownArrow from "../../assets/Images_Design/down_arrow_1.png";
-import Chat from "../../assets/Images_Design/chat1.png";
 import Lightbox from 'react-native-lightbox-v2';
-import Chat from "../FanChat/chat";
 import { get } from "../../helpers/services.js";
 
 export default class HomePreScreen extends React.Component {
@@ -278,7 +276,6 @@ export default class HomePreScreen extends React.Component {
               />}
           </TouchableOpacity>
         </ScrollView>
-        <Chat />
       </ScrollView>
     );
   }

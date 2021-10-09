@@ -8,7 +8,6 @@ import {
     ActivityIndicator
 } from "react-native";
 import { API_URL, API_TOKEN } from "@env";
-import Chat from "../FanChat/chat";
 import { get } from "../../helpers/services.js";
 
 export default class Help1Screen extends React.Component {
@@ -295,7 +294,6 @@ export default class Help1Screen extends React.Component {
                         help@fly-foot.com
           </Text>
                 </ScrollView>
-                <Chat />
             </ScrollView >
         );
     }

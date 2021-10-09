@@ -37,7 +37,7 @@ export default class UpcomingDetailsScreen extends React.Component {
     openDownload = () => {
         if (!this.state.isGettingToken) {
             this.setState({ isGettingToken: true, modalVisible: true }, function () {
-                getWithToken(servicesUrl.GetToken).then((response) => {
+                getWithToken(servicesUrl.getToken).then((response) => {
                     this.setState({ token: response.Value, isGettingToken: false });
                 })
             }

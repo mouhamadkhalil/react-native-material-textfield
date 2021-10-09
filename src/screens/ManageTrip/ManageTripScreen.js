@@ -1,12 +1,6 @@
 import React from "react";
-import {
-    StyleSheet,
-    Text,
-    Image,
-    View,
-    ScrollView,
-    TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import { translate } from "helpers/utils";
 import R from "res/R";
 
 export default class ManageTripScreen extends React.Component {
@@ -20,14 +14,14 @@ export default class ManageTripScreen extends React.Component {
     };
 
     UploadPassport = () => {
-        this.props.navigation.navigate('uploadPassport1');
+        this.props.navigation.navigate('uploadPassport');
     };
 
     Changes = () => {
-        this.props.navigation.navigate('Changes1');
+        this.props.navigation.navigate('tripChanges');
     };
 
-    Join = () => {
+    Invite = () => {
         this.props.navigation.navigate('InviteToJoin1');
     };
 
@@ -37,25 +31,25 @@ export default class ManageTripScreen extends React.Component {
             <ScrollView style={styles.container}>
                 <ScrollView style={{ padding: 30 }}>
 
-                    <Text style={styles.sectionTitle}>GENERAL</Text>
+                    <Text style={styles.sectionTitle}>{translate('general')}</Text>
 
                     <TouchableOpacity onPress={this.Payment} style={styles.sectionLink}>
-                        <Text style={styles.sectionLinkTitle}>Complete payment</Text>
+                        <Text style={styles.sectionLinkTitle}>{translate('completePayment')}</Text>
                         <Image source={R.images.caret_right} style={styles.sectionLinkImage} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={this.UploadPassport} style={styles.sectionLink}>
-                        <Text style={styles.sectionLinkTitle}>Upload passport</Text>
+                        <Text style={styles.sectionLinkTitle}>{translate('uploadPassport')}</Text>
                         <Image source={R.images.caret_right} style={styles.sectionLinkImage} />
                     </TouchableOpacity>
 
-                    <Text style={styles.sectionTitle}>EDIT</Text>
+                    <Text style={styles.sectionTitle}>{translate('edit')}</Text>
 
                     <TouchableOpacity onPress={this.Changes} style={styles.sectionLink}>
-                        <Text style={styles.sectionLinkTitle}>Changes and cancellations</Text>
+                        <Text style={styles.sectionLinkTitle}>{translate('changesCancellations')}</Text>
                         <Image source={R.images.caret_right} style={styles.sectionLinkImage} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.Join} style={styles.sectionLink}>
-                        <Text style={styles.sectionLinkTitle}>Travellers (invite to join)</Text>
+                    <TouchableOpacity onPress={this.Invite} style={styles.sectionLink}>
+                        <Text style={styles.sectionLinkTitle}>{translate('inviteTravellers')}</Text>
                         <Image source={R.images.caret_right} style={styles.sectionLinkImage} />
                     </TouchableOpacity>
 
@@ -84,7 +78,8 @@ const styles = StyleSheet.create({
         paddingTop: 25,
         paddingBottom: 5,
         borderBottomWidth: 2,
-        borderBottomColor: "#fff"
+        borderBottomColor: "#fff",
+        textTransform: "uppercase"
     },
     sectionLink: {
         flexDirection: "row",
@@ -102,6 +97,6 @@ const styles = StyleSheet.create({
         width: 15,
         height: 15,
         marginStart: "auto",
-        resizeMode:'contain'
+        resizeMode: 'contain'
     }
 });

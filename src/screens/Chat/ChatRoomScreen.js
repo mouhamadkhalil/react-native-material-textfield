@@ -3,7 +3,7 @@ import { Video } from 'expo-av';
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, Platform, Dimensions, DeviceEventEmitter, ActivityIndicator } from 'react-native'
 import { Bubble, GiftedChat, SystemMessage, Send } from "react-native-gifted-chat";
-import CustomActions from "components/FanChat/CustomActions";
+import CustomActions from "components/Chat/CustomActions";
 import { translate, openLink } from "helpers/utils";
 import R from "res/R";
 

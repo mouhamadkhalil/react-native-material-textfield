@@ -9,7 +9,6 @@ import {
 } from 'react-native'
 
 import {
-  getLocationAsync,
   pickImageAsync,
   takePictureAsync,
 } from 'helpers/mediaUtils'

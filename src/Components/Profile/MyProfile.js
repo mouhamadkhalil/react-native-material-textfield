@@ -14,7 +14,6 @@ import {
 import { API_URL, API_TOKEN } from "@env";
 import * as SecureStore from 'expo-secure-store';
 import DatePicker from 'react-native-datepicker';
-import Chat from "../FanChat/chat";
 import R from "res/R";
 
 export default class MyProfile extends React.Component {
@@ -274,7 +273,6 @@ export default class MyProfile extends React.Component {
                         />
                     </View>
                 </View>
-                <Chat />
             </ScrollView >
         );
     }
