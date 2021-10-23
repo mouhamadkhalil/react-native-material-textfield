@@ -88,14 +88,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 5
     },
-    perksRow: { flexDirection: "row" },
-    perkImage: { width: 42, height: 44 },
-    perk: { width: "50%", alignItems: "center", height: 150, flex: 0, justifyContent: "center" },
-    perkLabel: { fontSize: 13, marginTop: 15 },
-    close: {
-        color: '#fff',
-        fontSize: 30,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
 });

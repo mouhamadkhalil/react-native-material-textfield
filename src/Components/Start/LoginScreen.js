@@ -18,7 +18,7 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import * as Facebook from 'expo-facebook';
 import { Ionicons } from '@expo/vector-icons';
 import PasswordInputText from "components/Common/PasswordInput";
-import * as authentication from "services/authentication.js";
+import * as services from "services/account";
 import { getUserCredentials, setUserCredentials, translate } from "helpers/utils.js";
 import { SignalrService } from 'helpers/Signalr/SignalRService';
 import R from 'res/R';
@@ -83,7 +83,7 @@ export default class LoginScreen extends React.Component {
         var _this = this;
         if (!this.state.isLogin) {
             this.setState({ isLogin: true }, () => {
-                authentication.postLogin(data)
+                services.postLogin(data)
                     .then(response => {
                         if (response.ErrorId) {
                             this.setState({ isLoading: false, isLogin: false });
@@ -137,7 +137,7 @@ export default class LoginScreen extends React.Component {
             showAlert: false,
         });
 
-        authentication.forgetPassword(this.state.forgotPassword)
+        services.forgetPassword(this.state.forgotPassword)
             .then(response => {
                 if (response.ErrorId) {
                     alert(response.Message);

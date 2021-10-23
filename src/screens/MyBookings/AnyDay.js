@@ -7,12 +7,14 @@ import {
     Image,
     ImageBackground,
     ActivityIndicator,
+    TouchableOpacity
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CheckBox } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as services from "services/myBooking";
 import { translate } from "helpers/utils.js";
 import R from "res/R";
-import { TouchableOpacity } from "react-native";
 
 export default class UpcomingScreen extends React.Component {
 
@@ -20,6 +22,8 @@ export default class UpcomingScreen extends React.Component {
         super(props);
         this.state = {
             upComingInvoices: [],
+            customerStatuses: [],
+            isSettingStatus: false,
             isLoading: true,
         };
     }
@@ -35,20 +39,49 @@ export default class UpcomingScreen extends React.Component {
     // get the data from the async storage
     getData = async () => {
         var upComingInvoices = JSON.parse(await AsyncStorage.getItem('@upComingInvoices'));
-        this.setState({ upComingInvoices, isLoading: false });
+        var customerStatuses = JSON.parse(await AsyncStorage.getItem('@customerStatuses'));
+        this.setState({ upComingInvoices, customerStatuses, isLoading: false });
+    }
+
+    setStatus = async (statusId) => {
+        try {
+            this.setState({ isSettingStatus: true }, async() => {
+                var user = global.user;
+                var status =
+                {
+                    idCustomerStatus: statusId,
+                    contactModel: {
+                        fullName: user.FullName,
+                        address: user.Address,
+                        phone: user.PhoneNumber,
+                        email: user.Email,
+                        description: user.Description
+                    }
+                }
+                var response = await services.setStatus(status);
+                if (response) {
+                    var customerStatuses = response
+                    this.setState({ customerStatuses, isSettingStatus: false });
+                    AsyncStorage.setItem("@customerStatuses", JSON.stringify(customerStatuses))
+                }
+            });
+        } catch (error) {
+            this.setState({ isSettingStatus: false });
+            global.toast.show(translate('msgErrorOccurred'), { type: "danger" })
+        }
     }
 
     navigateToGuide = (type) => {
         var screenName = 'whatToDo';
-        switch(type) {
-            case 2: screenName =  'whereToEat'
-            break;
+        switch (type) {
+            case 2: screenName = 'whereToEat'
+                break;
         }
         this.props.navigation.navigate(screenName)
     }
 
     renderGuide = ({ type }) => {
-        return <TouchableOpacity onPress={()=> this.navigateToGuide(type)}>
+        return <TouchableOpacity onPress={() => this.navigateToGuide(type)}>
             <LinearGradient style={styles.guideBox}
                 colors={type == 1 ? ["#5D05D5", "#8B22AC"] : ["#DA353D", "#FF6310"]}
                 start={[0, 0]}
@@ -96,6 +129,23 @@ export default class UpcomingScreen extends React.Component {
                     >
                     </LinearGradient>
                 </View>
+                {this.state.customerStatuses.length > 0 ?
+                    <View style={{ backgroundColor: R.colors.lightGreen, margin: 15, padding: 10 }}>
+                        <Text style={{ fontWeight: 'bold' }}>{this.state.customerStatuses[0].Title}</Text>
+                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 10, justifyContent: 'space-between' }} >
+                            <Text>{this.state.customerStatuses[0].Caption}</Text>
+                            {this.state.isSettingStatus ?
+                                <ActivityIndicator color={R.colors.blue} size='small' />
+                                :
+                                <CheckBox
+                                    containerStyle={{ margin: 0, padding: 0 }}
+                                    checkedColor='black'
+                                    uncheckedColor='black'
+                                    onPress={() => this.setStatus(this.state.customerStatuses[0].id)} />
+                            }
+                        </View>
+                    </View>
+                    : null}
                 <View style={{ flex: 1 }}>
                     <View style={styles.pageContent} contentContainerStyle={{ flexGrow: 1 }}>
                         <View style={styles.weatherBox}>

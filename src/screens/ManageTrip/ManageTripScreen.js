@@ -22,7 +22,7 @@ export default class ManageTripScreen extends React.Component {
     };
 
     Invite = () => {
-        this.props.navigation.navigate('InviteToJoin1');
+        this.props.navigation.navigate('inviteToJoin');
     };
 
     render() {

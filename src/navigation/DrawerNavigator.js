@@ -1,12 +1,10 @@
 import React from "react";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
-import LeaguesScreen from "../screens/Trips/LeaguesScreen";
-import TeamsScreen from "../screens/Trips/TeamsScreen";
-import TripInfoScreen from "../screens/TripInfo/TripInfoScreen";
+import LeaguesScreen from "screens/Trips/LeaguesScreen";
+import TeamsScreen from "screens/Trips/TeamsScreen";
 import { TripTabs, AllGamesTabs } from "./TabNavigator";
 import { ManageTripStackNavigator, TripDocumentsStackNavigator,TripInfoStackNavigator } from "./StackNavigator";
 import { resetUserCredentials, translate } from "helpers/utils.js";
-import { PointPropType } from "react-native";
 
 const Drawer = createDrawerNavigator();
 
@@ -43,7 +41,7 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="All games" component={AllGamesTabs} />
             <Drawer.Screen name="manageTrip" options={{ title: translate('manageTrip') }} component={ManageTripStackNavigator} />
             <Drawer.Screen name="tripDocuments" options={{ title: translate('tripDocuments') }} component={TripDocumentsStackNavigator} />
-            <Drawer.Screen name="TripInfoScreen" options={{ title: translate('TripInfoScreen') }} component={TripInfoStackNavigator} />
+            <Drawer.Screen name="tripInfo" options={{ title: translate('tripInformation') }} component={TripInfoStackNavigator} />
       
       
         </Drawer.Navigator>

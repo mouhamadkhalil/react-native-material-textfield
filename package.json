@@ -30,6 +30,7 @@
     "expo-app-loading": "^1.0.1",
     "expo-av": "~8.7.0",
     "expo-constants": "^9.3.3",
+    "expo-document-picker": "~8.4.1",
     "expo-facebook": "~9.1.0",
     "expo-file-system": "~9.3.0",
     "expo-font": "~8.4.0",
@@ -77,6 +78,7 @@
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-swiper": "^1.6.0",
     "react-native-toast-notifications": "^3.1.0",
     "react-native-unimodules": "~0.12.0",
     "react-native-vector-icons": "^8.1.0",
@@ -84,8 +86,7 @@
     "react-native-webview": "^11.0.0",
     "rn-pdf-reader-js": "^4.1.1",
     "rn-range-slider": "^2.0.4",
-    "expo-document-picker": "~8.4.1",
-    "uglify-es": "^3.2.2"
+    "react-native-maps": "0.27.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

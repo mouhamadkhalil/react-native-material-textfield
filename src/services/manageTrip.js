@@ -1,4 +1,5 @@
 import * as general from "services/general";
+import { formatChangeTypes} from "helpers/manageTripHelper.js";
 
 export async function requestChange(packageChangeRequest) {
     const path = general.servicesUrl.requestChange;
@@ -31,5 +32,14 @@ export async function uploadDocument(requestCode, idContact, uri) {
 
 export async function inviteToApp(contact) {
     const path = general.servicesUrl.inviteToApp;
-    return general.post(path, contact).then(response => { return response; });
+    return await general.post(path, contact).then(response => { return response; });
 }
+
+export async function getItem(item){
+    return await general.getItem(item);
+}
+
+export async function getChangeTypes(){
+    return formatChangeTypes(JSON.parse(await this.getItem('cancellationDropdown')));
+}
+

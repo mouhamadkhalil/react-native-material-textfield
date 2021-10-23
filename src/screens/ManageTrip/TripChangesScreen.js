@@ -8,10 +8,8 @@ import {
     TouchableOpacity,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { translate } from "helpers/utils.js";
-import * as services from "services/manageTrip.js";
-import { formatChangeTypes } from "helpers/tripHelper.js";
+import { translate } from "helpers/utils";
+import * as services from "services/manageTrip";
 import R from "res/R";
 
 export default class TripChangesScreen extends React.Component {
@@ -38,7 +36,7 @@ export default class TripChangesScreen extends React.Component {
 
     // get the data from the async storage
     getData = async () => {
-        var changeTypes = formatChangeTypes(JSON.parse(await AsyncStorage.getItem('@cancellationDropdown')));
+        var changeTypes = await services.getChangeTypes();
         this.setState({ changeTypes });
     }
 
@@ -124,11 +122,9 @@ export default class TripChangesScreen extends React.Component {
                     onRequestClose={() => { this.setState({ showModal: false }) }}>
                     <View style={styles.modalView}>
                         <View style={styles.modalContainer}>
-                            <View>
-                                <Text style={styles.modalText}>
-                                    {translate('msgChangeSent')}
-                                </Text>
-                            </View>
+                            <Text style={styles.modalText}>
+                                {translate('msgChangeSent')}
+                            </Text>
                             <View style={{ height: 60, flexDirection: "row", marginTop: 50 }}>
                                 <TouchableOpacity style={R.styles.blackButton} onPress={() => this.cancel()}>
                                     <Text style={styles.textButton}>

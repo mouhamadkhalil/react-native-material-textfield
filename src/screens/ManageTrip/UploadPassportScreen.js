@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
   Text
 } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Traveller from 'components/ManageTrip/Traveller';
 import { pickImageAsync, takePictureAsync, pickDocumentAsync } from 'helpers/mediaUtils';
-import * as services from "services/manageTrip.js";
+import * as services from "services/manageTrip";
 import { translate } from "helpers/utils";
 import R from "res/R";
 
@@ -38,7 +37,7 @@ export default class UploadPassportScreen extends React.Component {
 
   // get the data from the async storage
   getData = async () => {
-    var upComingInvoices = JSON.parse(await AsyncStorage.getItem('@upComingInvoices'));
+    var upComingInvoices = await services.getItem('upComingInvoices');
     var requestCode = '';
     var contacts = [];
     if (upComingInvoices != null) {

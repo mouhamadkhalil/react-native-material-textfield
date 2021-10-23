@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { translate } from "helpers/utils";
 
 export const Server_URL = "https://apitest.fly-foot.com/"
@@ -25,6 +26,7 @@ export const servicesUrl = {
     getNotificationList: '/mobile/getNotificationList',
     getToken: '/mobile/getToken',
     getForgetPassword: '/mobile/profile/forgetpassword?email=',
+    getUser: '/mobile/profile/getUser',
 
     /* POST */
     login: '/mobile/profile/login',
@@ -42,6 +44,7 @@ export const servicesUrl = {
     contactUs: "/mobile/about/contactus",
     requestChange: "/mobile/invoice/requestChange",
     inviteToApp: "/mobile/users/inviteToApp",
+    setStatus: '/mobile/status/set',
 
     /*documents*/
     documentDownload: API_URL + '/mobile/download/',
@@ -173,5 +176,10 @@ export async function postConnection(path, connectionId, data) {
         .then(response => {
             return response;
         });
+}
+
+// get item from async storage
+export async function getItem(item) {
+    return JSON.parse(await AsyncStorage.getItem(`@${item}`));
 }
 

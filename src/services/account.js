@@ -25,7 +25,8 @@ export async function postLogin(data) {
 
 export async function forgetPassword(email) {
     const path = `${general.servicesUrl.getForgetPassword}${email}`;
-    general.get(path).then(response => { return response; });
+    return await general.get(path).then(response => { return response; });
 }
+
 
 

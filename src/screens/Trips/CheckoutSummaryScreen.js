@@ -5,6 +5,7 @@ import { HeaderBackground } from "components/Common/HeaderBackground";
 import { MatchHeader } from "components/Trips/MatchHeader";
 import { TripDetails } from "components/Trips/TripDetails";
 import { SeatingOptions } from "components/Trips/SeatingOptions";
+import FlightItem from "components/Flights/FlightItem";
 import { Perks } from "components/Trips/Perks";
 import { formatBundle } from "helpers/tripHelper";
 import { translate } from "helpers/utils";

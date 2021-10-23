@@ -25,14 +25,20 @@
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.323098123619-ul6i03vhbqea3jghjbp29nookq9i3ao0"
-        }
+        },
+        "googleMapsApiKey": "AIzaSyCi_prCG63HNFGo6gtdcxx_gnxeQkobJvs" 
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "com.ids.flyfoot",
       "versionCode": 1,
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+            "apiKey": "AIzaSyCi_prCG63HNFGo6gtdcxx_gnxeQkobJvs"
+        }
+      }
     }
   },
   "plugins": [

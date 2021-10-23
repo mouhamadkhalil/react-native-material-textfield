@@ -181,8 +181,8 @@ export default class specialGames extends React.Component {
                     const menuLinks = ["@menuLinks", response.MenuLinks ? JSON.stringify(response.MenuLinks) : ''];
                     const upComingInvoices = ["@upComingInvoices", response.UpComingInvoices ? JSON.stringify(response.UpComingInvoices) : ''];
                     const cancellationDropdown = ["@cancellationDropdown", response.CancellationDropdown ? JSON.stringify(response.CancellationDropdown) : ''];
-                    
-                    AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat, menuLinks, upComingInvoices, cancellationDropdown]);
+                    const customerStatuses = ["@customerStatuses", response.CustomerStatuses ? JSON.stringify(response.CustomerStatuses) : ''];
+                    AsyncStorage.multiSet([allTeams, allLeagues, whatToDo, whereToEat, menuLinks, upComingInvoices, cancellationDropdown, customerStatuses]);
 
                     var pageCount = response.GamesList ? response.GamesList.PageCount : 1;
                     var pageSize = response.GamesList ? response.GamesList.PageSize : 1;

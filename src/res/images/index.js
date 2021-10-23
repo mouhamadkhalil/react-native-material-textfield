@@ -15,6 +15,9 @@ const images = {
     share: require('../../../assets/images/icons/share.png'),
     location: require('../../../assets/images/icons/location-icon.png'),
     location3: require('../../../assets/images/icons/location-3.png'),
+    location_sm: require('../../../assets/images/icons/location-small.png'),
+    phone_sm: require('../../../assets/images/icons/phone-small.png'),
+    mail_sm: require('../../../assets/images/icons/mail-small.png'),
     button_green: require('../../../assets/images/icons/btn-bg.png'),
     logo_icon: require('../../../assets/images/icons/flyfoot1.png'),
     question: require('../../../assets/images/icons/faq1.png'),
@@ -31,6 +34,7 @@ const images = {
     coffeeCupWhite: require('../../../assets/images/icons/coffee-cup-white.png'),
     bedGrey: require('../../../assets/images/icons/bed-grey.png'),
     bedWhite: require('../../../assets/images/icons/bed-white.png'),
+    adult: require('../../../assets/images/icons/adult.png'),
     refundGrey: require('../../../assets/images/icons/refund-grey.png'),
     refundWhite: require('../../../assets/images/icons/refund-white.png'),
     norefundGrey: require('../../../assets/images/icons/norefund-grey.png'),
@@ -114,6 +118,7 @@ const images = {
     airplaneLightblue:require('../../../assets/images/icons/airplane-lightblue.png'),
     carLightblue:require('../../../assets/images/icons/car-lightblue.png'),
     hotelLightblue:require('../../../assets/images/icons/hotel-lightblue.png'),
+    gameTicket:require('../../../assets/images/icons/game-ticket.png'),
 
 }
 

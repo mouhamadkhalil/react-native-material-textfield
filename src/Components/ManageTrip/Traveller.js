@@ -17,7 +17,7 @@ const Traveller = ({ index, traveller, screen, action }) => {
                     <Text style={styles.text}>
                         {screen == "passport" ?
                             (traveller.PassportReference == null ? translate("addFile") : translate("replacePassport"))
-                            : (index > 0 ? translate("inviteToApp"): "")}
+                            : (traveller.IsMainContact ? "" :( traveller.Invited ? translate("resendInvitation") : translate("inviteToApp")))}
                     </Text>
                 </TouchableOpacity>
             </View>

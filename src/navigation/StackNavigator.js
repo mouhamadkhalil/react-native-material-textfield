@@ -1,7 +1,4 @@
 import React from "react";
-import {
- Button
-} from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { translate } from 'helpers/utils.js';
@@ -30,10 +27,13 @@ import TripChangesScreen from "screens/ManageTrip/TripChangesScreen";
 import InviteToJoinScreen from "screens/ManageTrip/InviteToJoinScreen";
 
 /* trip documents */
-import DocumentScreen from "components/TripDocs/DocumentScreen";
+import DocumentScreen from "screens/TripDocuments/DocumentScreen";
 /* trip  info */
 import TripInfoScreen from "screens/TripInfo/TripInfoScreen";
-import MyFlightsScreen from "screens/TripInfo/MyFlightsScreen";
+import MyFlightScreen from "screens/TripInfo/MyFlightScreen";
+import MyHotelScreen from "screens/TripInfo/MyHotelScreen";
+import MyPerkScreen from "screens/TripInfo/MyPerkScreen";
+import MyGameScreen from "screens/TripInfo/MyGameScreen";
 
 import Help1Screen from "components/Help/Help1Screen";
 import TeamsScreen from "screens/Trips/TeamsScreen";
@@ -225,8 +225,11 @@ const TripInfoStackNavigator = () => {
           
         }}>
              
-        <Stack.Screen name="TripInfoScreen" options={{ title: translate("Trip information") }} component={TripInfoScreen} />
-        <Stack.Screen name="MyFlightsScreen" options={{ title: translate("My flights") }} component={MyFlightsScreen} />
+        <Stack.Screen name="tripInfo" options={{ title: translate("tripInformation") }} component={TripInfoScreen} />
+        <Stack.Screen name="myFlight" options={{ title: translate("myFlight") }} component={MyFlightScreen} />
+        <Stack.Screen name="myHotel" options={{ title: translate("myHotel") }} component={MyHotelScreen} />
+        <Stack.Screen name="myGame" options={{ title: translate("myGame") }} component={MyGameScreen} />
+        <Stack.Screen name="myPerk" options={{ title: translate("myPerk") }} component={MyPerkScreen} />
   
         </Stack.Navigator>
     );

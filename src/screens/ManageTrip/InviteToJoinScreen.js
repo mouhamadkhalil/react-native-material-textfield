@@ -7,8 +7,8 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
+  Modal
 } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Traveller from 'components/ManageTrip/Traveller';
 import * as services from "services/manageTrip.js";
 import { translate } from "helpers/utils.js";
@@ -20,11 +20,12 @@ export default class InviteToJoinScreen extends React.Component {
     super(props);
     this.state = {
       contacts: [],
-      contact = {
+      contact: {
         ContactName: '',
         Email: '',
         Phone: ''
       },
+      idContact: 0,
       showModal: false,
       isLoading: true
     };
@@ -40,7 +41,7 @@ export default class InviteToJoinScreen extends React.Component {
 
   // get the data from the async storage
   getData = async () => {
-    var upComingInvoices = JSON.parse(await AsyncStorage.getItem('@upComingInvoices'));
+    var upComingInvoices = await services.getItem('upComingInvoices');
     var contacts = [];
     if (upComingInvoices != null) {
       contacts = upComingInvoices[0]?.OfferContacts;
@@ -50,19 +51,33 @@ export default class InviteToJoinScreen extends React.Component {
 
   inviteTraveller = (traveller) => {
     var contactName = traveller.FirstName + " " + traveller.LastName;
+    var phone = traveller.Phone != null ? traveller.PhonePrefix + traveller.Phone : '';
+    var email = traveller.Email != null ? traveller.Email : '';
     var contact = {
       ContactName: contactName,
-      Email: '',
-      Phone: ''
+      Email: email,
+      Phone: phone
     }
-    this.setState({ contact, showModal: true });
+    this.setState({ contact, idContact: traveller.idContact, showModal: true });
   }
 
-  sendInvitation = () => {
+  sendInvitation = async () => {
     try {
       var contact = this.state.contact;
-      var response = services.inviteToApp(contact);
-      global.toast.show(translate('msgInvitationSent') + contact.ContactName, { type: "danger" })
+      if (contact.Email != '' || contact.Phone != '') {
+        var response = await services.inviteToApp(contact);
+        if (response) {
+          var contacts = [...this.state.contacts];
+          var traveller = contacts.find(i => i.idContact == this.state.idContact);
+          if(traveller.Email == null)
+            traveller.Email = this.state.contact.Email;
+          if(traveller.Phone == null)
+            traveller.Phone = this.state.contact.Phone;
+          traveller.Invited = true;
+          this.setState({ contacts, showModal: false });
+          global.toast.show(translate('msgInvitationSent') + contact.ContactName, { type: "success" })
+        }
+      }
     } catch (error) {
       global.toast.show(translate('msgErrorOccurred'), { type: "danger" })
     }
@@ -97,27 +112,25 @@ export default class InviteToJoinScreen extends React.Component {
               onRequestClose={() => { this.setState({ showModal: false }) }}>
               <View style={styles.modalView}>
                 <View style={styles.modalContainer}>
-                  <View style={{ margin: 10 }} >
-                    <Text>
-                      {translate("reason")}
-                    </Text>
-                    <TextInput placeholder={translate("email")} style={styles.input}
-                      value={this.state.contact.email}
-                      onChangeText={(text) => {
-                        var contact = this.state.contact;
-                        contact.email = text;
-                        this.setState({ contact })
-                      }} />
-                    <TextInput placeholder={translate("phone")} style={styles.input}
-                      value={this.state.contact.phone}
-                      onChangeText={(text) => {
-                        var contact = this.state.contact;
-                        contact.phone = text;
-                        this.setState({ contact })
-                      }} />
-                  </View>
-                  <View style={{ height: 60, flexDirection: "row", marginTop: 50 }}>
-                    <TouchableOpacity style={R.styles.blueButton} onPress={() => this.setState({ showModal: false })}>
+                  <Text style={styles.modalText}>
+                    {translate("inviteUserToJoin").replace("{0}", this.state.contact.ContactName)}
+                  </Text>
+                  <TextInput placeholder={translate("email")} style={styles.input}
+                    value={this.state.contact.Email}
+                    onChangeText={(text) => {
+                      var contact = this.state.contact;
+                      contact.Email = text;
+                      this.setState({ contact })
+                    }} />
+                  <TextInput placeholder={translate("phone")} style={styles.input}
+                    value={this.state.contact.Phone}
+                    onChangeText={(text) => {
+                      var contact = this.state.contact;
+                      contact.Phone = text;
+                      this.setState({ contact })
+                    }} />
+                  <View style={{ height: 60, flexDirection: "row", marginTop: 20 }}>
+                    <TouchableOpacity style={R.styles.blackButton} onPress={() => this.setState({ showModal: false })}>
                       <Text style={styles.textButton}>
                         {translate('cancel')}
                       </Text>
@@ -145,7 +158,9 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     borderBottomColor: 'black',
-    marginBottom: 30
+    marginBottom: 30,
+    marginTop: 10,
+    width: '80%'
   },
   textButton: {
     fontSize: 17,
@@ -164,7 +179,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: '85%',
-    height: '50%',
+    height: '40%',
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center'
@@ -173,5 +188,6 @@ const styles = StyleSheet.create({
     color: R.colors.blue,
     fontSize: 20,
     textAlign: 'center',
+    marginTop: 20
   }
 });
